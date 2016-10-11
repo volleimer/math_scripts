@@ -1,0 +1,132 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}[thm]{} % same for example numbers
+
+\numberwithin{equation}{section}
+
+%opening
+\title{Vorlesung\\Maß und Integral}
+\subtitle{Wintersemester 2016/2017}
+\author{Vorlesung: Prof. Dr. Zoltán Sasvári\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section*{Organisatorisches}
+ \begin{itemize}
+  \item \emph{Aufgaben:} Auf der Vorlesungsseite \\
+   User: sTUDent \\
+   Passwort: sTUDent
+  \item \emph{Prüfungsvorleistung:} 50 \% der Punkte in den Pflichtaufgaben und eine vorgetragene Übungslösung in der Übung
+  \item \emph{Abgabe der Pflichtaufgaben:} Dienstag, 9:20 Uhr, Briefkasten 
+  \item \emph{Schriftliche Prüfung:} Definitionen, Sätze, Beweise \\
+   Aufgaben: ähnlich wie in den Übungen
+  \item \emph{Literatur:}
+   \begin{itemize}
+    \item G. B. Folland: Real Analysis
+    \item H. Bauer: Wahrscheinlichkeitstheorie und Grundzüge der Maßtheorie
+    \item R. L. Schilling: Maß und Integral (2015)
+   \end{itemize}
+ \end{itemize}
+
+\chapter{Maße}
+\section{Einführung}
+\begin{exmp}
+ Eine sehr alte Aufgabe der Geometrie: Man bestimme Länge, Flächeninhalt, Volumen von gewissen Gebieten, Körpern in $\real$, in der Ebene, im Raum.
+ 
+ Mit Hilfe des Riemann-Integrals kann man dieses Problem für \emph{gewisse} Mengen in $\real^2$ und $\real^3$ lösen: Mengen, die durch glatte Kurven oder Flächen berandet sind.
+ 
+ Mit diesem Zugang kann man aber kompliziertere Mengen nicht behandeln.
+\end{exmp}
+ 
+\subsection*{Axiomatischer Zugang}
+Sei $d \in \nat$ beliebig. 
+
+Anstelle von Länge, Flächeninhalt oder Volumen sprechen wir vom \emph{Maß} einer Menge.
+
+Welche Eigenschaften sollte ein Maß haben?
+
+Ein Maß $\mu$ soll \emph{jeder Menge} $E \subset \real^d$ eine Zahl $\mu(E) \in [0, \infty]$ zuordnen, so dass
+\begin{enumerate}[(i)]
+ \item Ist $E_1, E_2, \ldots$ eine endliche oder unendliche Folge von \emph{disjunkten} Mengen $E_j \subset \real^d$, so gilt:
+ \[ \mu(E_1 \cup E_2 \cup \ldots ) = \mu(E_1) + \mu(E_2) + \ldots \]
+ \item Sind $E$ und $F$ \emph{kongruent}\footnote{$F$ entsteht aus $E$ mit Hilfe von Verschiebung, Spiegelung oder Rotation}, so ist $\mu(E) = \mu(F)$.
+ \item Der $d$-dimensionale Einheitswürfel soll das Maß 1 haben:
+  \[ \mu([0,1]^d) = 1. \]
+\end{enumerate}
+
+Wir zeigen, dass ein solches Maß nicht existiert! Wir betrachten nur den Fall $d=1$, der allgemeine Fall lässt sich analog behandeln.
+
+Wir definieren eine Äquivalenzrelation $\sim$ auf $[0,1)$ durch
+\[ x \sim y \qRq x-y \in \rat. \]
+Sei $N$ eine Teilmenge von $[0,1)$, die genau ein Element von jeder Äquivalenzklasse enthält. Sei $R := \rat \cap [0,1)$ und für jedes $r \in R$ sei 
+\[ N_r := \{ x + r: x \in N \cap [0,1-r) \} \cup \{ x + r - 1: x \in N \cap [1-r,1) \}. \]
+Um $N_r$ zu erhalten, wird $N$ um $r$ nach rechts verschoben; der Teil, der dabei $[0,1)$ verlässt, wird um 1 nach links verschoben.
+
+Wir zeigen:
+\[ [0,1) = \bigcup_{r \in R} N_r \text{ und } N_r \cap N_s = \emptyset,\, r \ne s. \]
+
+\begin{proof}
+ Sei $x \in [0,1)$ beliebig und sei $y$ das Element von $N$, das zur Äquivalenzklasse von $x$ gehört. Dann ist $x \in N_r$, wobei 
+ \[ r := \begin{cases}
+          x-y, & \text{wenn } x \ge y, \\
+          x-y+1 & \text{wenn } x < y.
+         \end{cases} \]
+ Also ist
+ \[ [0,1) = \bigcup_{r \in R} N_r. \]
+ 
+ Ist $x \in N_r \cap N_s$, so sind $x-r$ (oder $x-r+1$) und $x-s$ (oder $x-s+1$) verschiedene Elemente von $N$, die zur selben Äquivalenzklasse gehören. Das ist nicht möglich. Also ist
+ \[ N_r \cap N_s = \emptyset,\, r \ne s. \]
+\end{proof}
+
+Wir zeigen nun noch:
+\[ \mu( N ) = \mu(N_r),\, r \in R. \]
+
+\begin{proof}
+ Aus den geforderten Eigenschaften von $\mu$ folgt
+ \[ \mu(N) \overset{(i)}{=} \mu( N \cap [0,1-r) ) + \mu( N \cap [1-r, 1) ) \overset{(ii)}{=} \mu(N_r). \] 
+ 
+ Nun ist
+ \[ 1 \overset{(iii)}{=} \mu( [0,1) ) \overset{(i)}{=} \sum_{r \in R} \mu( N_r ). \]
+ Das ist nicht möglich, da
+ \[ \sum_{r \in R} \mu( N_r ) = 
+   \begin{cases}
+    \infty, & \text{falls } \mu(N) > 0, \\
+    0, & \text{falls } \mu(N) = 0.
+   \end{cases} \]
+\end{proof}
+
+Sei $I \ne \emptyset$ eine beliebige Menge und $a_i \in \real$. Was versteht man unter $\sum_{i \in I} a_i$?
+
+Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit von $\mu$ sehr einschränken würde). Das geht auch nicht!
+
+\begin{thm}[Banach-Tarski, 1924]
+ Seien $U$ und $V$ beliebige, nichtleere, beschränkte, offene Mengen in $\real^d$, $d \ge 3$.
+ 
+ Dann gibt es ein $k \in \nat$ und Teilmengen $E_1, \ldots, E_k, F_1, \ldots, F_k$, so dass
+ \begin{enumerate}[(i)]
+  \item Die $E_j$ sind disjunkt und ihre Vereinigung ist $U$.
+  \item Die $F_j$ sind disjunkt und ihre Vereinigung ist $V$.
+  \item $E_j$ ist kongruent zu $F_j$ für alle $j$.
+ \end{enumerate}
+\end{thm}
+
+Das bedeutet: Die Mengen $U$ und $V$ haben mit den obigen Forderungen das selbe Maß, egal wie man $U$ und $V$ wählt.
+\end{document}

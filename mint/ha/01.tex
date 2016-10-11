@@ -1,0 +1,62 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+
+\usepackage{../../.tex/settings}
+
+\usepackage{../../.tex/mathpkgs}
+\usepackage{../../.tex/mathcmds}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{\textbf{Maß und Integral}}
+\newcommand{\Name}{Hippold, Jonas}
+\newcommand{\Seminargruppe}{...}
+\newcommand{\Matrikelnummer}{3381170}
+\newcommand{\Semester}{WS 2016}
+\newcommand{\Uebungsblatt}{} %  <-- UPDATE ME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{../../.tex/ha_head}
+
+\Aufgabe{(1.2.1)} Für eine beliebige Teilmenge $E \subset \real^d$ sei:
+\begin{enumerate}[a)]
+ \item $\mu(E) = 1$ wenn $0 \in E$ und $\mu(E) = 0$ sonst.
+ \item $\nu(E) =$ Anzahl der Elemente von $E$.
+\end{enumerate}
+Welche Eigenschaften von (1.1.1.i-iii) besitzen $\mu$ und $\nu$?
+\begin{enumerate}[a)]
+ \item 
+  \begin{enumerate}[(i)]
+   \item Nein. Gegenbeispiel: Betrachte $E_1, E_2 \subset \real$, $E_1 := [-1, 1]$, $E_2 := [-2, 2]$.
+    \begin{align*}
+     \mu( E_1 \cup E_2 ) &\overset{?}{=} \mu(E_1) + \mu(E_2) \\
+     \mu( [-2, 2] ) &= \mu( [-1,1] ) + \mu( [-2, 2] ) \\
+     1 &= 1 + 1 = 2.
+    \end{align*}
+    Widerspruch!
+   \item Nein. Gegenbeispiel: Betrachte $E_1$ wie oben, $E_2 := \{ x + 2 : x \in E_1 \}$. Dann ist $0 \notin E_2$ und somit $\mu(E_2) = 0$, obwohl $E_1$ und $E_2$ kongruent sind.
+   \item Ja. $0 \in [0,1]^d$, also ist $\mu( [0,1]^d ) = 1$.
+  \end{enumerate}
+ \item 
+  \begin{enumerate}[(i)]
+   \item Nein. Gegenbeispiel: Betrachte $E_1, E_2 \subset \real$, $F_1 := \{1\}$, $F_2 := [0,1]$. Es ist $\nu(F_1) = 1$, $\nu(F_2) = \infty$.
+    \begin{align*}
+     \nu( F_1 \cup F_2 ) &\overset{?}{=} \nu(F_1) + \nu(F_2) \\
+     \mu( [0, 1] ) &= \nu( \{ 1 \} ) + \nu( [0,1] ) \\
+     \infty &= 1 + \infty.
+    \end{align*}
+    Widerspruch, der Ausdruck $1+\infty$ ist nicht definiert.
+   \item Ja. Für kongruente $F_1$, $F_2$ gilt:
+    \[ \exists \tau: \real^d \to \real^d \forall f_1 \in F_1 \exists! f_2(f_1) \in F_2 : \tau(f_1) = f_2. \]
+    Es existiert eine eineindeutige Zuordnung zwischen beiden Mengen. Also ist die Menge der Elemente in beiden Mengen gleich, also ist $\nu(F_1) = \nu(F_2)$.
+   \item Nein. Der Einheitswürfel enthält unendlich viele Elemente, also ist $\nu( [0,1]^d ) = \infty \ne 1$.
+  \end{enumerate}
+\end{enumerate}
+
+
+\end{document}

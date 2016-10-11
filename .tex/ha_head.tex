@@ -1,0 +1,43 @@
+\usepackage{scrpage2}
+\renewcommand{\headfont}{}
+
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%
+%% Aufgaben-COMMAND
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.3cm}
+  \textsf{\textbf{#1.}}
+  }
+}
+
+%\setlength{\parindent}{0em}
+%\topmargin -1.0cm
+%\oddsidemargin 0cm
+%\evensidemargin 0cm
+%\setlength{\textheight}{9.2in}
+%\setlength{\textwidth}{6.0in}
+
+%%%%%%%%%%%%%%
+\hypersetup{
+    pdftitle={\Fach: Hausaufgabe \Uebungsblatt{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+\title{Hausaufgabe}
+\author{\Name{}}
+
+\pagestyle{scrplain}
+\ihead{\large \Fach \\ \Semester }
+\ohead[\small \Name, Übungsgruppe \Seminargruppe{}]{\small \Name, Matrikel \Matrikelnummer{} \\ Imma 2016, Bachelor Mathematik \\ Übungsgruppe \Seminargruppe{}}
+
+\begin{document}
+\thispagestyle{scrheadings}
+
+\vspace*{0cm}
+\begin{center}
+\LARGE \textbf{Hausaufgabe \Uebungsblatt{}}
+\end{center}
+\vspace*{0.1cm}
