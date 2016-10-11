@@ -1,0 +1,171 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrartcl}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}[thm]{} % same for example numbers
+
+\numberwithin{equation}{section}
+
+%opening
+\title{Vorlesung\\Geometrie}
+\subtitle{Wintersemester 2016/2017}
+\author{Vorlesung: Prof. Dr. Ulrich Brehm\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\setcounter{secnumdepth}{0}
+\section{Einführung}
+\subsection{Begriffe der Geometrie}
+\begin{itemize}
+ \item Felix Klein: Erlanger Programm (1872)
+ \item Euklidischer Raum $\real^n$ (mit Standardskalarprodukt)
+ \item Isometriegruppe
+  \[ f(x) = Ax + t, A \in O(n), t \in \real^n. \]
+ \item Kongruenz
+  \begin{itemize} 
+   \item Alle Geraden sind einander kongruent, ebenso alle Kreise vom selben Radius.
+   \item Kongruente Objekte sind durch Invarianten verbunden.
+  \end{itemize}
+ \item In der Geometrie verwendete Begriffe: Längen, Flächeninhalte, Volumina, Winkel
+ \item Winkel sind kongruent, wenn sie die selbe Größe haben.
+ \item Kongruenzsätze
+ \item Kreis, Invariante Radius
+ \item Affine Geometrie, Gruppe: affine Gruppe des $\real^n$
+  \[ \{ f: \real^n \to \real^n | f(x) = Ax + t, A \in \GL(n), A \in \realmat{n}{n} \text{ invertierbar}, t \in \real^n. \} \]
+ \item Begriffe der affinen Geometrie:
+  \begin{itemize}
+   \item Geraden
+   \item $k$-dimensionale affine Unterräume
+   \item Ellipsen
+   \item Mittelpunkte von Strecken 
+    \[ A \left( \frac{x+y}{2} \right) + t = \frac{A(x) + t}{2} + \frac{A(y) + t}{2} \]
+   item Mittelpunkte von Ellipsen
+  \end{itemize}
+ \item \emph{Nicht} in der affinen Geometrie: 
+  \begin{itemize}
+   \item Längen, Winkel
+   \item Kreise
+   \item Winkelhalbierende
+  \end{itemize}
+ \item Euklidische Geometrie
+ \item Flächeninhalt: Äquiaffine Abbildung
+  \[ f(x) = Ax + t, A \in \GL(n), |\det A| = 1 \]
+ \item ``Axiomatischer Zugang'' $\longleftrightarrow$ ``Modelle''
+\end{itemize}
+
+\subsection{Literatur}
+Horst Knörrer: Geometrie (nur eingeschränkt hilfreich)
+
+\subsection{Themen}
+\begin{itemize}
+ \item Isometrien des $\real^n$, eventuell normale Endomorphismen
+ \item Projektive Geometrie
+ \item Inversion (Spiegelung) an Sphären und die Möbiusgruppe
+ \item Sphärische und hyperbolische (nicht-euklidische) Geometrie
+ \item Quadriken
+\end{itemize}
+
+\subsection{Bezeichnungen und Konventionen}
+\begin{itemize}
+ \item Vektoren werden ohne Pfeile geschrieben.
+ \item Skalare sind in der Regel griechische Buchstaben
+ \item Matrizen werden durch Großbuchstaben bezeichnet.
+ \item Wir betrachten oft den $\real^n$, $\complex^n$ mit 
+  \begin{itemize}
+   \item dem Standardskalarprodukt
+    \[ \langle x, y \rangle := \sum_{i=1}^n x_i \bar{y}_i, \]
+    wobei $x = (x_1, \ldots, x_n)^T, y = (y_1, \ldots, y_n)^T \in \real^n$ oder $\complex^n$, 
+   \item der euklidischen bzw. unitären Norm für $\real^n$ bzw. $\complex^n$
+    \[ \| x \| := \sqrt{ \langle x,x \rangle }. \]
+  \end{itemize}
+ \item Standardbasis des $K^n$ (Körper $K$):
+  \[ e_i = \begin{pmatrix} 0 \\ \vdots \\ 0 \\ 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix} \ldots i\text{-te Stelle} \quad (e_1, e_2, \ldots, e_n). \]
+ \item Einheitsmatrix des $\real^n$: $E_n$ bzw. $E$, wenn $n$ aus dem Kontext klar ist.
+\end{itemize}
+
+\setcounter{secnumdepth}{1}
+\section{Isometrien des \texorpdfstring{$\real^n$}{Rn}}
+Eine Isometrie eines metrischen Raumes $(X, d)$ ist eine bijektive Abbildung $f: X \to X$ mit
+\[ d( f(x), f(y) ) = d(x,y) \text{ für alle } x, y \in X. \]
+
+Wir wollen die Isometriegruppe des $(\real^n, d)$ untersuchen mit $d(x,y) := \| x - y \|$.
+
+\begin{thm}
+ Sei $V$ ein euklidischer Vektorraum und $g: V \to V$ eine Isometrie. Dann ist $f: V \to V$ mit $f(x) := g(x) - g(0)$ eine orthogonale Abbildung. Insbesondere ist $g$ eine affine Abbildung.
+\end{thm}
+
+\begin{proof}
+ Sei $f: V \to V$ definiert durch $f(x) := g(x) - g(0)$. Dann folgt $\| f(x) \| = \| g(x) - g(0) \| = \| x - 0 \| = \| x \|$, also
+ \begin{align*}
+\| f(x_1) - f(x_2) \|^2 
+    &= \| f(x_1) \|^2 + \| f(x_2) \|^2 - 2 \langle f(x_1), f(x_2) \rangle \\
+    &= \| x_1 \|^2 + \| x_2 \|^2 - 2 \langle f(x_1), f(x_2) \rangle.
+ \end{align*}
+ Es gilt auch
+ \[ \| g(x_1) - g(x_2) \|^2 = \| x_1 - x_2 \| = \| x_1 \|^2 + \| x_2 \|^2 - 2 \langle g(x_1), g(x_2) \rangle, \]
+ also bewahrt $f$ auch das Skalarprodukt.
+ 
+ $f$ ist linear:
+ \begin{align*} \| f(x_1 + x_2) - f(x_1) - f(x_2) \|^2 
+    =\, &\| f(x_1 + x_2) \|^2 
+      - 2 \langle f(x_1 + x_2), f(x_1) \rangle \\
+    & - 2 \langle f(x_1 + x_2), f(x_2) \rangle
+      - 2 \langle f(x_1 ), f(x_2) \rangle \\
+    & + \| f(x_1) \|^2 + \| f(x_2) \|^2 \\
+    =\, &\| x_1 + x_2 \|^2 
+      - 2 \langle x_1 + x_2, x_1 \rangle
+      - 2 \langle x_1 + x_2, x_2 \rangle \\
+    & - 2 \langle x_1, x_2 \rangle
+      + \| x_1 \|^2 + \| x_2 \|^2 \\
+    =\, &\| x_1 + x_2 - x_1 - x_2 \|^2 \\
+    =\, &0,
+ \end{align*}
+ also $f(x_1 + x_2) = f(x_1) + f(x_2)$. Es gilt auch
+ \begin{align*} \| f(\lambda x) - \lambda f(x) \|^2 &= \| f( \lambda x ) \|^2 
+      - 2 \lambda \langle f( \lambda x ), f( x ) \rangle 
+      + \lambda^2 \| f(x) \|^2 \\
+    &= \| \lambda x \|^2
+      - 2 \lambda \langle \lambda x, x \rangle
+      + \lambda^2 \| x \|^2 \\
+    &= 0,
+ \end{align*}
+ also $f(\lambda x) = \lambda f(x)$.
+ 
+ Damit ist $f$ eine (bijektive) Abbildung, die das Skalarprodukt bewahrt, also eine orthogonale Abbildung.
+\end{proof}
+
+\begin{mydef}[Ähnlichkeitsbegriff]
+ Seien $A, B \in \realmat{n}{n}$. $A$ heißt \emph{ähnlich} zu $B$, falls es $S \in \realmat{n}{n}$ gibt, $S$ invertierbar und $B = S^{-1} A S$. Wir schreiben $A \approx B$.
+\end{mydef}
+
+\begin{thm}
+ Sei $g: V \to V$ eine affine Abbildung mit $\dim V < \infty$ ($V$ euklidischer Vektorraum) und $f: V \to V$ mit $f(x) = g(x) - t$ mit $t := g(0)$ die zugehörige lineare Abbildung.
+ 
+ Falls 1 \emph{kein} Eigenwert von $f$ ist, dann hat $g$ hat genau einen Fixpunkt $x_0$ und lässt sich schreiben als
+ \[ g(x) = f(x-x_0) + x_0.\footnote{$f$ ist also im obigen Sinn ähnlich zu $g$.} \]
+\end{thm}
+
+\begin{proof}
+ Für einen Fixpunkt von $g$ gilt
+ \[ g(x_0) = x_0 \,\Leftrightarrow\, f(x_0) + t = x_0 \,\Leftrightarrow\, (\id - f)(x_0) = t \,\Leftrightarrow\, x_0 = (\id - f)^{-1}(t). \]
+ Beachte $(\id -f)$ ist bijektiv, da 1 kein Eigenwert von $f$ ist (und $\dim V < \infty$). Also
+ \[ f(x - x_0) + x_0 = f(x) + \underbrace{(\id-f)(x_0)}_{t} = f(x) + t = g(x). \]
+\end{proof}
+
+\end{document}
