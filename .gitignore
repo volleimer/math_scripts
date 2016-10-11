@@ -1,0 +1,6 @@
+# Ignore LaTeX aux and output files
+*.aux
+*.log
+*.pdf
+*.backup
+*.toc
