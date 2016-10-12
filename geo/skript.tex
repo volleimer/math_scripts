@@ -6,6 +6,10 @@
 
 \usepackage{../.tex/settings}
 
+\usepackage{tabularx}
+% X-Spalte wird vertikal zentriert ausgerichtet
+\def\tabularxcolumn#1{m{#1}}
+
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
@@ -168,4 +172,98 @@ Wir wollen die Isometriegruppe des $(\real^n, d)$ untersuchen mit $d(x,y) := \| 
  \[ f(x - x_0) + x_0 = f(x) + \underbrace{(\id-f)(x_0)}_{t} = f(x) + t = g(x). \]
 \end{proof}
 
+Sei $f:\real^n \to \real^n$ und $f(x) = Ax + t$ eine Isometrie, also $A \in O(n)$. Falls 1 Eigenwert von $A$ ist, dann zerlegen wir $t$ in eine Komponente $t_1 \in \ker(A-E)$ und $t_2 \in ker(A-E)^\bot$, $t = t_1 + t_2$. Das heißt, $t_1$ ist die orthogonale Projektion von $t$ auf $\ker(A-E)$ (Fixraum von $A$), $A_2 = t - t_1$.
+
+\begin{bem}
+ Falls $(b_1, \ldots, b_n)$ eine Orthonormalbasis von $ker(A-E)$ ist, dann ist also $t_1 = \sum_{i=1}^k \langle t, b_i \rangle b_i$.
+\end{bem}
+
+\begin{thm}
+ Falls $f: \real^n \to \real^n$ mit $f(x) = Ax + t$, $A \in O(n)$ ist und $t = t_1 + t_2$ mit $t_1 \in \ker(A-E)$, $t_2 \in \ker(A-E)^\bot$, dann ist $f(x) = A(x-x_0) + x_0 + t_1$ für genau ein $x_0 \in \ker(A-E)^\bot$.
+\end{thm}
+
+\begin{proof}
+ $A$ bildet $\ker(A-E)$ punktweise auf sich selbst ab. Da ferner $A \in O(n)$, bildet $A$ auch $\ker(A-E)^\bot$ auf sich selbst ab, das heißt die Abbilung $\tilde{f}: \ker(A-E)^\bot \to \ker(A-E)^\bot$ mit $\tilde{f}(x) = Ax + t_2 = f(x) - t_1$ ist eine Isometrie von $\ker(A-E)^\bot$, für die die eingeschränkte Abbildung auf diesen Unterraum nicht den Eigenwert 1 hat.
+ 
+ Nach Satz 1.2 hat also $\tilde{f}$ genau einen Fixpunkt in diesem Unterraum und damit gilt
+ \[ \tilde{f}(x) = A(x-x_0) + x_0. \]
+\end{proof}
+
+\subsection*{Klassifikation der Isometrien des $\real^2$}
+Sei $A \in O(2)$, also $\left(\begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix}, \begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix}\right)$ ist eine Orthonormalbasis des $\real^2$ und $a_{11}^2 + a_{21}^2 = 1$. Dann gibt es $\varphi \in [0,2 \pi)$ mit $a_{11} = \cos \varphi$, $a_{21} = \sin \varphi$ und es ist entweder $\begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix} = \begin{pmatrix} - \sin \varphi \\ \cos \varphi \end{pmatrix}$, falls $\det A = 1$ oder $\begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix} = \begin{pmatrix} \sin \varphi \\ - \cos \varphi \end{pmatrix}$, falls $\det A = -1$.
+
+\begin{enumerate}[1)]
+ \item Falls $\det A = 1$ beschreibt $A = \begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix}$ eine Drehung um den Winkel $\varphi$. Die Eigenwerte sind komplex:
+ \[ \det \begin{pmatrix} \cos \varphi - \lambda & - \sin \varphi \\ \sin \varphi & \cos \varphi - \lambda \end{pmatrix} = \lambda^2 - 2 \lambda \cos \varphi + 1, \]
+ also ist $\lambda_{1,2} = \cos \varphi \pm i \sin \varphi = e^{\pm i \varphi}$.
+ 
+ \emph{Spezialfälle:}
+ \begin{enumerate}[a)]
+  \item $\varphi = 0$, $A = E$. Die Abbildung $f: \real^2 \to \real^2$ mit $f(x) = x + t$ ist also für $t=0$ die \emph{Identität}, für $t \ne 0$ eine \emph{Translation} um $t$ ($t = t_1$).
+  \item $\varphi = \pi$, $A = -E$. Hier ist $f$ eine \emph{Punktspiegelung} (Drehung um $180^\circ = \pi$).
+ \end{enumerate}
+ Mit $\varphi \ne 0$ beschreibt $f$ nach Satz 1.2 also eine \emph{Drehung}.
+ \item Falls $\det A = -1$ hat $A = \begin{pmatrix} \cos \varphi & \sin \varphi \\ \sin \varphi & - \cos \varphi \end{pmatrix}$ reelle Eigenwerte:
+ \[ \det \begin{pmatrix} \cos \varphi - \lambda & \sin \varphi \\ \sin \varphi & - \cos \varphi - \lambda \end{pmatrix} = \lambda^2 - 1, \]
+ also gilt $\lambda_{1,2} = \pm 1$.
+ 
+ Die affine Abbildung $f(x) = Ax + t_1 + t_2$ mit $t_1 \in \ker(A-E)$, $t_2 \in \ker(A-E)^\bot$ beschreibt für $t_1 = 0$ eine \emph{Spiegelung} an einer Geraden und für $t_1 \ne 0$ eine \emph{Schubspiegelung} an einer Geraden.
+\end{enumerate}
+
+\begin{table}[ht]
+ \center
+ \begin{tabularx}{.95\textwidth}{|>{\center}m{3.5cm}|>{\center}m{3cm}|>{\center}m{3cm}|X|}
+  \hline
+  Zugehörige lineare Abbildung in Normalform & Isometrie des $\real^n$ & Menge der Fixpunkte & Welche Geraden werden auf sich abgebildet? \\
+  \hline
+  $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ &
+  Identität, falls $t = t_1 = 0$, &
+  $\real^2$ &
+  Alle Geraden \\
+   & Translation, falls $t = t_1 \ne 0$
+   & $\emptyset$
+   & Alle Geraden parallel zu $\real t$ \\  
+  \hline
+  $\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ &
+  Punktspiegelung an $p = \frac{t}{2}$ (Drehung in $p$ um den Winkel $\pi$) &
+  $\{p\}$ &
+  Alle Geraden durch $p$ \\
+  \hline
+  $\begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix}$ &
+  Drehung um einen Punkt $p$ um Winkel $\ne 0, \pi$ &
+  $\{p\}$ &
+  keine \\
+  \hline
+  $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ &
+  Spiegelung an einer Geraden $g$, falls $t_1 = 0$  &
+  $g$ &
+  $g$ und alle Geraden orthogonal zu $g$ \\
+   & Schubspiegelung an $g$, falls $t_1 \ne 0$
+   & $\emptyset$
+   & $g$ \\
+   \hline
+ \end{tabularx}
+ \[ x \mapsto Ax + t, t = t_1 + t_2 \text{ mit } t_1 \in \ker(A-E), t_2 \in \ker(A-E)^\bot \]
+ \caption{Klassifikation der Isometrien des $\real^n$}
+\end{table}
+
+Vorschlag zum zusätzlichen Selbststudium: Die 17 kristallographischen Gruppen der Ebene
+
+\subsection*{Isometrien des $\real^3$}
+Zunächst sei $A \in O(3)$ eine orthogonale $3 \times 3$-Matrix. Das charakteristische Polynom $\chi_A$ ist vom Grad 3, hat also mindestens eine reelle Nullstelle. Ferner haben alle reellen oder komplexen Nullstellen den Betrag 1.
+
+Falls das charakteristische Polynom über $\real$ in Linearfaktoren zerfällt, gibt es eine Orthonormalbasis des $\real^3$ aus Eigenvektoren von $A$ und die Matrix $A$ ist \emph{bezüglich dieser Basis} von der Form 
+\begin{align*}
+ \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} &\text{ (Identität) oder} \\
+ \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1 \end{pmatrix} &\text{ (Spiegelung an einer Ebene) oder} \\
+ \begin{pmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{pmatrix} &\text{ (Spiegelung an einer Geraden) oder} \\
+ \begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{pmatrix} &\text{ (Punktspiegelung)}.
+\end{align*}
+Andernfalls hat $A$ einen reellen Eigenwert $\pm 1$ und $\chi_A$ hat ferner konjugiert komplexe Nullstellen $\cos \varphi \pm i \sin \varphi$ mit $\varphi \ne 0, \pi$, $\varphi \in [0, 2\pi)$.
+
+Sei $b_1$ der Eigenvektor zum Eigenwert $\pm 1$ mit $\| b_1 \| = 1$. Ergänze zu einer Orthonormalbasis $b_1, b_2, b_3$. Dann ist die Matrix $A$ bezüglich dieser Basis eine orthogonale Matrix und von der Form 
+\[ \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos \varphi & -\sin \varphi \\ 0 & \sin \varphi & \cos \varphi \end{pmatrix}
+   \text{ oder }
+   \begin{pmatrix} -1 & 0 & 0 \\ 0 & \cos \varphi & -\sin \varphi \\ 0 & \sin \varphi & \cos \varphi \end{pmatrix}. \]
+Im ersten Fall ($\det A = 1$) ist die lineare Abbildung eine \emph{Drehung} um die Gerade $\real b_1$ um den Winkel $\varphi$. Im zweiten Fall ($\det A = -1$) ist es eine \emph{Drehspiegelung} mit der \emph{Drehspiegelachse} $\real b_1$ mit \emph{Drehspiegelebene} $\real b_2 + \real b_3$ um den Winkel $\varphi$.
 \end{document}
