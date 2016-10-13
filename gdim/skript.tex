@@ -1,0 +1,151 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrartcl}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}{Beispiel}[section] % same for example numbers
+\newtheorem{rmrk}{Bemerkung}[section] % same for example numbers
+
+\numberwithin{equation}{section}
+
+\renewcommand{\thesection}{\Roman{section}} 
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+%opening
+\title{Vorlesung\\Analysis}
+\subtitle{Wintersemester 2016/2017}
+\author{Vorlesung: Prof. Dr. Peter Hornung\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\setcounter{section}{10}
+\section{Abriss der Maßtheorie}
+Äußere Maße, Lebesque-Integral, Konvergenzsätze
+
+\subsection*{Motivation und Idee des Lebesque-Integrals}
+\subsubsection*{Erinnerung an das Riemann-Integral auf $[a,b] \subset \real$}
+Bausteine sind die Treppenfunktionen $\varphi \in \stair$ mit zugehöriger Unterteilung $a = x_0 < x_1 < \ldots < x_n = b$ und $\varphi = c_k$ auf $(x_{k_1},x_k)$:
+\[ \int_a^b \varphi := \sum_{k=1}^n c_k \cdot (x_k - x_{k-1}). \]
+
+Das Integral für beliebige (Riemann-integrierbare) $f:[a,b]\to\real$: Approximation von $f$ durch folgendermaßen gewählte Treppenfunktionen $\varphi \in \stair$:
+\begin{enumerate}
+ \item Wähle (immer feinere) Unterteilung $a = x_0 < x_1 < \ldots < x_n = b$ des \emph{Definitionsbereichs} $[a,b]$.
+ \item Wähle $c_1, \ldots, c_n$ in Abhängigkeit von $f$.
+\end{enumerate}
+
+\subsubsection*{Lebesque-Integral auf $[a,b] \subset \real$}
+Bausteine sind \emph{einfache Funktionen}.
+
+Eine Funktion $\varphi: [a,b] \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an:
+\[ \sharp \varphi([a,b]) < \infty. \]
+Unterschied zu Treppenfunktionen: $\varphi^{-1}(c_k)$ ist im Allgemeinen kein Intervall.
+
+Lebesque-Integral für einfache Funktionen $\varphi:[a,b] \to \{ c_1, \ldots, c_n \}$:
+\[ \int_a^b \varphi := \sum_{k=1}^n c_k \cdot [ \text{Länge von } \varphi^{-1}(c_k) ]. \]
+
+Lebesque-Integral für beliebige (Lebesque-integrierbare) $f:[a,b]\to\real$: Approximation von $f$ durch einfache Funktionen $\varphi$:
+\begin{enumerate}
+ \item Wähle (immer feinere) Unterteilung des \emph{Wertebereichs} von $f$.
+ \item Wähle $A_k := f^{-1}([c_{k-1},c_k])$ und setze $\varphi := c_k$ auf $A_k$.
+\end{enumerate}
+
+Diese Definition überträgt sich sofort auf $f: \real^n \to \real$ und sogar auf auf $f: X \to \real^n$ mit beliebigem merischen Raum $X$. Problem dabei ist die Frage: 
+\begin{itemize}
+ \item Wie ``lang'' ist $f^{-1}((c_{k-1},c_k))$?
+ \item Welches ``Volumen'' hat diese Menge? (zum Beispiel $f: \real^3 \to \real^3$)
+ \item Allgemein: Welches \emph{Maß} hat sie?
+\end{itemize}
+Ist ein sinnvoller ``Volumen''-Begriff für jede Menge in $\real^n$ überhaupt möglich? Nein! Siehe Banach-Tarski. Aber für eine geeignete Klasse von (sogenannten messbaren) Teilmengen schon.
+
+\subsection{Äußere Maße}
+Im Folgenden bezeichnet $2^X$ die Potenzmenge einer Menge $X$ (Bezeichnung in MINT: $\pot(X)$).
+
+Wir bezeichnen außerdem $A \subset B$ $:\Leftrightarrow$ $x \in A \Rightarrow x \in B$, insbesondere ist $A = B$ möglich.
+
+\subsubsection{Erweiterte Zahlengerade}
+Wir werden Funktionen betrachten, die Werte in $[-\infty, \infty]$ annehmen. Die Ordnung von $\real$ wird durch folgende Konvention fortgesetzt:
+\[ - \infty < a < \infty \text{ für alle } a \in \real. \]
+Desweiteren ist 
+\[ a + (\pm \infty) = \pm \infty \text{ für alle } a \in \real \]
+sowie 
+\[ a \cdot (\pm \infty) = \begin{cases}
+                           \pm \infty, &\text{falls } a \in (0, \infty] \\
+                           \mp \infty, &\text{falls } a \in [-\infty, 0) \\
+                           0, &\text{falls } a = 0.
+                          \end{cases} \]
+
+\subsubsection{Äußere Maße}
+Sei $X$ eine nichtleere Menge. Eine Funktion $\mu: 2^X \to [0,\infty]$ heißt \emph{äußeres Maß} auf $X$ $:\Leftrightarrow$
+\begin{enumerate}
+ \item $\mu(\emptyset) = 0$.
+ \item Monotonie: $A \subset B \subset X\, \Rightarrow \, \mu(A) \le \mu(B)$.
+ \item $\sigma$-Subadditivität: Für jede Folge $(A_n)_{n \in \nat} \subset 2^X$ gilt:
+  \[ \mu \left( \bigcup_{n=0}^\infty A_n \right) \le \sum_{n=0}^\infty \mu( A_n ) \]
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{$\mu$}{Mu}-messbare Mengen}
+Sei $\mu$ ein äußeres Maß auf $X$. Eine Menge $E \subset X$ heißt $\mu$-messbar [Forster Analysis III: ``Caratheodory''-messbar] $:\Leftrightarrow$
+ \[ \mu(F) = \mu( F \cap E ) + \mu( F \setminus E ) \text{ für alle } F \subset X. \]
+
+\begin{bem}
+ Wegen der Subadditivität ist das genau dann der Fall, wenn $\mu(F) \ge \mu(F \cap E) + \mu(F \setminus E)$ ist für alle $F$.
+\end{bem}
+
+Die Menge aller $\mu$-messbaren Mengen wird mit $\sigma(\mu) \subset 2^X$ bezeichnet.
+
+\subsubsection{\texorpdfstring{$\sigma$}{Sigma}-Algebra}
+Sei $X$ eine nichtleere Menge. Eine Familie $\mA \subset 2^X$ heißt \emph{$\sigma$-Algebra} $:\Leftrightarrow$
+\begin{enumerate}
+ \item $X \in \mA$.
+ \item $A \in \mA \Rightarrow X \setminus A \in \mA$.
+ \item $(A_n)_{n \in \nat} \subset \mA \Rightarrow \bigcup\limits_{n=0}^\infty A_n \in \mA$.
+\end{enumerate}
+Das Paar $(X, \mA)$ heißt \emph{Messraum}. 
+
+Analogie: Topologie $\mathcal{T}$ auf einem metrischen Raum.
+\[ \mathcal{T} = \{ \text{ offene Mengen auf } X \}. \]
+
+\subsubsection{Borel-Mengen}
+Sei $X$ ein metrischer Raum (zum Beispiel $X = \real^n$). 
+
+Erinnerung: $U \subset X$ offen $:\Leftrightarrow$
+\[ \forall x \in U \exists \tau > 0: B_\tau(x) \subset U. \]
+\begin{itemize}
+ \item \emph{Topologie} auf $X$ $:=$ Familie aller offenen Teilmengen von $X$.
+ \item $A \subset X$ \emph{abgeschlossen} $:\Leftrightarrow$ $X \setminus A$ offen.
+\end{itemize}
+
+Definitionen:
+\begin{itemize}
+ \item \emph{Borel-$\sigma$-Algebra} $\borel(X)$ $:=$ kleinste $\sigma$-Algebra, die alle offenen Teilmengen von $X$ enthält (Existenz: MINT).
+ \item Elemente von $\borel(X)$ heißen \emph{Borel-Mengen}.
+ \item Borel-Mengen auf $[-\infty,\infty]$ sind per Definition von der Form $B$, $B \cup \{ \pm \infty \}$, $B \cup \{ -\infty, \infty \}$, wobei $B \in \borel(\real)$.
+\end{itemize}
+
+\begin{bem}
+ Alle offenen und alle abgeschlossenen Teilmengen von $X$ sind Borel-messbar. Ebenso $F_\sigma$-Mengen ($=:$ Vereinigungen abzählbar vieler abgeschlossener Mengen) und $G_\delta$-Mengen ($=:$ Durchschnitt abzählbar vieler offener Mengen).
+\end{bem}
+
+\begin{proof}
+ Das folgt direkt aus der Definition der $\sigma$-Algebra.
+\end{proof}
+
+\subsubsection{Maß und Maßraum}
+\end{document}

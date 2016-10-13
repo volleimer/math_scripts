@@ -1,0 +1,142 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrartcl}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}{Beispiel}[section] % same for example numbers
+\newtheorem{rmrk}{Bemerkung}[section] % same for example numbers
+
+\numberwithin{equation}{section}
+
+%opening
+\title{Vorlesung\\Einführung in die Numerik}
+\subtitle{Wintersemester 2016/2017}
+\author{Vorlesung: Prof. Dr. Andreas Fischer\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Interpolation}
+\subsection{Aufgabenstellung}
+\textbf{Gegeben:} $n+1$ Datenpaare $(x_0, f_0), \ldots, (x_n,f_n)$ reeller Zahlen. Die Zahlen $x_0, \ldots, x_n$ heißen \emph{Stützstellen} und die Zahlen $f_0, \ldots, f_n$ \emph{Stützwerte}.
+
+Die Grundaufgabe der Interpolation besteht darin, eine Funktion $F: \real \to \real$ zu finden, die den folgenden \emph{Interpolationsbedingungen}
+\begin{equation}
+ F(x_0) = f_0,\, \ldots,\, F(x_n) = f_n \label{eq:int_bedingung}
+\end{equation}
+genügt. In Erweiterung dessen können etwa auch Bedingungen an Ableitungen von $F$ an bestimmten Stellen vorkommen.
+
+Eine solche Funktion wird \emph{Interpolierende} genannt. Es ist sehr leicht, diese Aufgabe zu lösen. Zum Beispiel ist
+\[ f(x) = \begin{cases}
+           0, &\text{falls } x \notin \{ x_0, \ldots, x_n \}, \\
+           f_0, &\text{falls } x = x_0, \\
+            &\vdots \\
+           f_n, &\text{falls } x = x_n.
+          \end{cases} \]
+immer eine Interpolierende. Zur sinnvollen Bearbeitung der Interpolationsaufgabe muss man also die Menge der als Interpolierende zugelassenen Funktionen einschränken, zum Beispiel auf Polynome, Winkel- oder Exponentialfunktionen oder Spline-Funktionen. Im Zusammenhang mit der Wahl der Funktionenmenge (eigentlich des Funktionenraums) sind folgende Fragen von Bedeutung:
+\begin{itemize}
+ \item Existenz einer Interpolierenden,
+ \item Eindeutigkeit der Interpolierenden,
+ \item Weitere Eigenschaften (zum Beispiel hinsichtlich Krümmung, Approximation einer Funktion $f$ (wenn $f = f(x_k)$ für $k=0,\ldots,n$)
+ \item Wie sollte man die Stützstellen wählen, wenn sie nicht vorgegeben sind?
+ \item Effizienz der Bestimmung einer Interpolierenden.
+\end{itemize}
+
+\begin{exmp}
+ Die Temperatur bei Erwärmung eines Kessels wurde zu diskreten Zeitpunkten tabelliert:
+ 
+ \begin{center}
+ \begin{tabular}{c|cccccc}
+  k & 0 & 1 & 2 & 3 & 4 & 5\\
+  \hline
+  $x_k$ in \si{\s} & 0 & 1 & 2 & 3 & 4 & 5\\
+  $f_k$ in \si{\celsius} & 80 & 85.8 & 86.4 & 93.6 & 98.3 & 99.1
+ \end{tabular}
+ \end{center}
+
+ Beispielsweise soll die Interpolierende im
+ \begin{enumerate}[a)]
+  \item Raum der stetigen stückweise affinen Funktionen,
+  \item Raum der Polynome höchstens 5. Grades,
+  \item Raum der Polynome höchstens 4. Grades
+ \end{enumerate}
+ ermittelt werden.
+\end{exmp}
+
+\subsection{Interpolation durch Polynome}
+Sei $\Pi_n$ der Vektorraum der Polynome vom Höchstgrad $n$ mit der üblichen Addition $(p_1+p_2)(x) := p_1(x) + p_2(x)$ und der üblichen skalaren Multiplikation $(\alpha p)(x) := \alpha \cdot p(x)$.
+
+Für jedes $p \in \Pi_n$ gibt es dann $a_0, \ldots, a_n \in \real$, so dass 
+\begin{equation} p(x) = a_n x^n + a_{n-1} x^{n-1} + \ldots + a_1 x + a_0 \text{ für alle } x \in \real. \end{equation}
+
+\subsubsection{Existenz und Eindeutigkeit}
+\begin{thm}
+ Zu $n+1$ beliebigen Datenpaaren $(x_0, f_0), \ldots, (x_n, f_n)$ mit paarweise verschiedenen Stützstellen existiert genau ein Polynom $p \in \Pi_n$, das die Interpolationsbedingungen (\ref{eq:int_bedingung}) erfüllt.
+\end{thm}
+
+Dieses Polynom heißt \emph{Interpolationspolynom} zu den Datenpaaren $(x_0, f_0), \ldots, (x_n, f_n)$.
+
+\begin{proof}
+ \begin{enumerate}[a)]
+  \item Existenznachweis durch Konstruktion.
+  
+  Sei $j \in \{ 0, \ldots, n \}$ und bezeichne $L_j: \real \to \real$ mit
+  \[ L_j(x) := \prod_{i=0,i \ne j}^n \frac{x-x_i}{x_j-x_i} = \frac{(x-x_0)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_n)}{(x_j-x_0)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_n)} \]
+  das \emph{Lagrange-Basispolynom} vom Grad $n$. Offenbar gilt $L_j \in \Pi_n$ und
+  \begin{equation} L_j(x_k) = \delta_{jk} = \begin{cases}
+                 1, &\text{falls } k = j, \\
+                 0, &\text{falls } k \ne j.
+                \end{cases} \end{equation}
+  Definiert man $p: \real \to \real$ durch
+  \begin{equation} p(x) = \sum_{j=0}^n f_j \cdot L_j(x) \text{ für alle } x \in \real, \end{equation}
+  so ist $p \in \Pi_n$. Außerdem erfüllt $p$ wegen (1.3) die Interpolationsbedingung (1.1).
+  \item Nachweis der Eindeutigkeit.
+  
+  Angenommen, es existieren zwei Interpolierende $p$ und $\tilde{p} \in \Pi_n$ und $p \ne \tilde{p}$. Dann folgt 
+  \[ p - \tilde{p} \in \Pi_n \text{ und } (p-\tilde{p})(x_k) = p(x_k) - \tilde{p}(x_k) = 0 \text{ für } k = 0, \ldots, n. \]
+  Das heißt, $p - \tilde{p}$ ist vom Höchstgrad $n$ und hat mindestens $n+1$ Nullstellen. Also muss $p-\tilde{p}$ das Nullpolynom sein. Widerspruch zur Annahme $p \ne \tilde{p}$!
+ \end{enumerate}
+\end{proof}
+
+\begin{rmrk}
+ \begin{enumerate}[a)]
+  \item Die Darstellung (1.4) heißt \emph{Lagrange-Form} des Interpolationspolynoms.
+  \item Um mit (1.4) einen ersten Funktionswert $p(x)$ zu berechnen, werden $O(n^2)$ benötigt. Bei äquidistanten Stützstellen genügen $O(n)$ Operationen.
+  
+  Ändern sich nur die Stützwerte (die Stützstellen und die Stelle $x$ bleiben gleich), dann kann man $p(x)$ in $O(n)$ ermitteln.
+  \item Man kann zeigen, dass die Lagrange-Basispolynome $L_0, \ldots, L_n$ eine Basis des Vektorraums $\Pi_n$ bilden.
+ \end{enumerate}
+\end{rmrk}
+
+\subsubsection{Newton-Form des Interpolationspolynoms}
+Ein Polynom $p \in \Pi_n$ von der Form 
+\[ p(x) = c_0 + c_1(x-x_0) + c_2(x-x_0)(x-x_1) + \ldots + c_n (x-x_0)(x-x_1) \ldots (x-x_{n-1}) \] mit geeigneten Koeffizienten $c_0, \ldots, c_n \in \real$, das die Bedingung (1.1) erfüllt, wird als Interpolationspolynom in \emph{Newton-Form} bezeichnet.
+
+Die Berechnung der Koeffizienten $c_0, \ldots, c_n$ kann rekursiv durch Ausnutzung der Interpolationsbedingungen erfolgen:
+\[ f_0 \overset{!}{=} p(x_0) = c_0, \text{ also } c_0 = f_0. \] 
+Seien $c_0, \ldots, c_{j-1}$ bereits bestimmt. Dann folgt
+\begin{align*}
+ f_j \overset{!}{=} p(x_j) = c_0\, &+ c_1 (x_j-x_0) + \ldots + c_{j-1} (x_j-x_0) \ldots (x_j-x_{j-2}) \\
+   &+ c_j (x_j-x_0)(x_j-x_1) \ldots (x_j-x_{j-1}) \\
+   &+ c_{j+1} (x_j-x_0)(x_j-x_1) \ldots \underbrace{(x_j-x_j)}_{=0}(x_j-x_{j+1} ) + \ldots . 
+\end{align*}
+Alle Terme ab $c_{j+1}$ entfallen, da sie $(x_j-x_j)=0$ enthalten. Damit lässt sich $c_j$ berechnen:
+\[ c_j = \frac{f_j - c_0 + \sum_{k=1}^{j-1}(x_j-x_0)\ldots(x_j-x_{k-1})}{(x_j-x_0) \ldots (x_j-x_{j-1})} \]
+
+\end{document}
