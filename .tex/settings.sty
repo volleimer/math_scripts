@@ -13,3 +13,14 @@
 \usepackage{siunitx}
 
 %\renewcommand{\familydefault}{\sfdefault}
+
+\newcounter{saveenumerate}
+\makeatletter
+\newcommand{\enumeratext}[2]{%
+\setcounter{saveenumerate}{\value{enum\romannumeral\the\@enumdepth}}
+\end{enumerate}
+#2
+\begin{enumerate}[#1]
+\setcounter{enum\romannumeral\the\@enumdepth}{\value{saveenumerate}}%
+}
+\makeatother

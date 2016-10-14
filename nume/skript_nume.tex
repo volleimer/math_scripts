@@ -97,7 +97,7 @@ Dieses Polynom heißt \emph{Interpolationspolynom} zu den Datenpaaren $(x_0, f_0
   \item Existenznachweis durch Konstruktion.
   
   Sei $j \in \{ 0, \ldots, n \}$ und bezeichne $L_j: \real \to \real$ mit
-  \[ L_j(x) := \prod_{i=0,i \ne j}^n \frac{x-x_i}{x_j-x_i} = \frac{(x-x_0)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_n)}{(x_j-x_0)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_n)} \]
+  \[ L_j(x) := \prod_{\substack{i=0,\\i \ne j}}^n \frac{x-x_i}{x_j-x_i} = \frac{(x-x_0)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_n)}{(x_j-x_0)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_n)} \]
   das \emph{Lagrange-Basispolynom} vom Grad $n$. Offenbar gilt $L_j \in \Pi_n$ und
   \begin{equation} L_j(x_k) = \delta_{jk} = \begin{cases}
                  1, &\text{falls } k = j, \\
