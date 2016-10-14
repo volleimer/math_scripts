@@ -9,10 +9,9 @@
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
-\numberwithin{equation}{section}
-
 \theoremstyle{plain}
 \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem*{thm*}{Satz}
 
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
@@ -35,12 +34,14 @@
 
 \tableofcontents
 
+\clearpage
+
 \setcounter{section}{10}
 \section{Abriss der Maßtheorie}
-Äußere Maße, Lebesque-Integral, Konvergenzsätze
-
 \subsection*{Motivation und Idee des Lebesque-Integrals}
+\addcontentsline{toc}{subsection}{Motivation und Idee des Lebesque-Integrals}
 \subsubsection*{Erinnerung an das Riemann-Integral auf $[a,b] \subset \real$}
+\addcontentsline{toc}{subsubsection}{Erinnerung an das Riemann-Integral auf \texorpdfstring{$[a,b] \subset \real$}{[a,b] in R}}
 Bausteine sind die Treppenfunktionen $\varphi \in \stair$ mit zugehöriger Unterteilung $a = x_0 < x_1 < \ldots < x_n = b$ und $\varphi = c_k$ auf $(x_{k_1},x_k)$:
 \[ \int_a^b \varphi := \sum_{k=1}^n c_k \cdot (x_k - x_{k-1}). \]
 
@@ -51,6 +52,7 @@ Das Integral für beliebige (Riemann-integrierbare) $f:[a,b]\to\real$: Approxima
 \end{enumerate}
 
 \subsubsection*{Lebesque-Integral auf $[a,b] \subset \real$}
+\addcontentsline{toc}{subsubsection}{Erinnerung an das Lebesque-Integral auf \texorpdfstring{$[a,b] \subset \real$}{[a,b] in R}}
 Bausteine sind \emph{einfache Funktionen}.
 
 Eine Funktion $\varphi: [a,b] \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an:
@@ -148,4 +150,115 @@ Definitionen:
 \end{proof}
 
 \subsubsection{Maß und Maßraum}
+Sei $(X,\mA)$ ein Messraum. Ein \emph{Maß} auf $\mA$ ist eine Funktion $\mu: \mA \to [0,\infty]$ mit folgenden Eigenschaften:
+\begin{enumerate}
+ \item $\mu(\emptyset)=0$.
+ \item $\sigma$-Additivität: für jede Folge $(A_n)_{n \in \nat} \subset \mA$ von \emph{paarweise disjunkten} Mengen gilt:
+ \[ \mu\left( \bigcup_{n=0}^\infty A_n \right) = \sum_{n=0}^\infty \mu(A_n). \]
+\end{enumerate}
+
+Das Tripel $(X, \mA, \mu)$ heißt dann \emph{Maßraum}.
+
+Weitere Definitionen:
+\begin{itemize}
+ \item Ein Maß $\mu$ auf einem metrischen Raum $X$ heißt \emph{Borel-Maß} $:\Leftrightarrow$ $(X, \borel(X), \mu)$ ist ein Maßraum.
+ \item $A \in \mA$ mit $\mu(A) = 0$ heißt \emph{$\mu$-Nullmenge}.
+ \item Ein Maßraum $(X, \mA, \mu)$ heißt \emph{vollständig} $:\Leftrightarrow$ Für jede Nullmenge $A \in \mA$ gilt: $F \subset A$, dann ist $F \in \mA$ (und damit auch Nullmenge).
+ \item Eine Aussage über Elemente $x \in X$ gilt \emph{fast überall} $:\Leftrightarrow$
+ $\{ x \in X :$  Aussage gilt für  $x$ nicht$\}$
+ ist eine $\mu$-Nullmenge.
+\end{itemize}
+
+\begin{bem}
+ Abzählbare Vereinigungen von Nullmengen sind wieder Nullmengen.
+\end{bem}
+
+\subsubsection{Maß und äußeres Maß}
+\begin{thm*}
+ Jedes Maß definiert ein äußeres Maß und jedes äußere Maß definiert ein Maß. Genauer:
+ \begin{enumerate}
+  \item Sei $(X,\mA,\mu)$ ein Maßraum. Definiere $\mu^\ast:2^X \to [0,\infty]$ durch
+  \[ \mu^\ast(A) := \inf \{ \mu(E) : E \subset \mA \text{ und } A \subset E \} \]
+  für jedes $A \in 2^X$.
+  
+  Dann ist $\mu^\ast$ ein äußeres Maß auf $X$ und jede Menge $E \in \mA$ ist $\mu^\ast$-messbar.
+  \item Sei $\mu$ ein äußeres Maß auf (nichtleerer) Menge $X$. Dann ist $(X, \sigma(\mu), \mu)$ ein voll\-ständiger Maßraum.
+ \end{enumerate}
+\end{thm*}
+
+Beweis und weitere Eigenschaften von Maßen siehe MINT.
+
+\subsubsection{Lebesque-Maß auf \texorpdfstring{$\real^n$}{Rn}}
+Setze $Q_r(a) := a + \left[ - \frac{r}{2}, \frac{r}{2} \right)^n$ für jedes $a \in \real^n$ und jedes $r > 0$.\footnote{Das ist ein $n$-dimensionaler Würfel mit Kantenlänge $r$ und Mittelpunkt $a$. Das ``Volumen'' ist $r^n$.}
+
+Für jedes $E \subset \real^n$ definiere
+\[ \lebesque^n (E) := \inf \left\{ \sum_{i=0}^\infty r_i^n : E \subset \bigcup_{i=0}^\infty Q_{r_i}(a_i) \right\}.\footnote{Das lässt sich als ``Volumen'' der ``kleinsten Überdeckung'' von $E$ mit Würfeln interpretieren.} \]
+
+\begin{thm*}
+ $\lebesque^n$ ist ein äußeres Maß auf $\real^n$, und jede Borel-Menge ist $\lebesque^n$-messbar.
+\end{thm*}
+
+Definitionen:
+\begin{itemize}
+ \item $\lebesque^n$ heißt (äußeres) \emph{Lebesque-Maß} auf $\real^n$.
+ \item Die Elemente von $\sigma( \lebesque^n )$ werden als \emph{Lebesque-messbare} Mengen bezeichnet\footnote{Satz besagt: Jede Borelmenge in $\real^n$ ist Lebesque-messbar}.
+ \item Das zu $\lebesque^n$ gehörige Maß auf $\sigma( \lebesque^n )$ (und auf $\borel( \real^n )$ ) bezeichnen wir ebenfalls mit $\lebesque^n$.
+\end{itemize}
+
+\begin{bem}
+\begin{itemize}
+ \item $\lebesque^n$ ist das einzige Borel-Maß mit 
+ \[ \lebesque^n( Q_r(a) ) = r^n \text{ für alle } a \in \real^n, r > 0. \]
+ \item Es gilt $\lebesque^n( \partial Q_r(a) ) = 0$\footnote{Allgemein: alle $m$-dimensionalen Mengen mit $m < n$ sind $\lebesque^n$-Nullmengen.}. Insbesondere also
+\[ \lebesque^n \left(a + \left( - \frac{r}{2}, \frac{r}{2} \right)^n \right) = \lebesque^n \left(a + \left[ - \frac{r}{2}, \frac{r}{2} \right]^n \right) = \lebesque^n \left(a + \left( - \frac{r}{2}, \frac{r}{2} \right]^n \right) = r^n. \]
+Also für $n=1$ und $b \ge a$ gilt:
+\[ \lebesque^1( (a,b) ) = \lebesque^1( [a,b) ) = \lebesque^1( (a,b] ) = \lebesque^1( [a,b] ) = b-a. \]
+\end{itemize}
+\end{bem}
+
+\subsection{Lebesque-Integral}
+\subsubsection{Charakteristische Funktionen}
+Sei $X$ eine nichtleere Menge. Für jedes $A \subset X$ definiert man die \emph{charakteristische Funktion} $\chi_A : X \to \{ 0, 1 \}$ durch 
+\[ \chi_A(x) := \begin{cases}
+              1, &\text{falls } x \in A \\
+              0, &\text{sonst.}
+             \end{cases} \]
+
+\subsubsection{Einfache Funktionen}
+Sei $X$ eine nichtleere Menge. Eine Funktion $\varphi: X \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an. Mit anderen Worten: Es existiert $m \in \nat$ und $A_1, \ldots, A_m \subset X$ und $c_1, \ldots, c_m \in \real$, so dass
+\[ \varphi = \sum_{i=1}^m c_i \chi_{A_i}. \]
+
+\subsubsection{Messbare Funktionen}
+Sei $(X, \mA)$ ein Messraum.
+\begin{itemize}
+ \item Eine Funktion $f: X \to [0, \infty]$ heißt \emph{$\mA$-messbar} $:\Leftrightarrow$ $f^{-1}(E) \in \mA$ für alle Borel-Mengen $E \subset [-\infty,\infty]$.
+ \item $f: \real^n \to [-\infty,\infty]$ heißt \emph{Borel-messbar} (bzw. Lebesque-messbar) $:\Leftrightarrow$ $f$ ist $\borel(\real^n)$-messbar (bzw. $\lebesque^n$-messbar).
+ \item $f: \real^n \to [-\infty,\infty]^n$ heißt \emph{$\mA$-messbar} $:\Leftrightarrow$ jede Komponente von $f$ ist messbar.
+\end{itemize}
+
+\begin{bem}
+ Sei $(X, \mA)$ ein Messraum und $f: X \to [-\infty,\infty]$. Äquivalente Aussagen:
+ \begin{enumerate}
+  \item $f$ ist messbar.
+  \item $\{ x \in X: f(x) > c \} \in \mA$ für alle $c \in \real$.
+ \end{enumerate}
+ Ebenso für $\le$, $\ge$, $<$ statt $>$.
+\end{bem}
+
+\begin{thm*}
+ Sei $(X, \mA)$ ein Messraum und für alle $k \in \nat$ seien $f_k, f, g: X \to [-\infty,\infty]$ messbar. Dann sind ebenfalls messbar:
+ \begin{align*}
+ f+g,\quad fg,\quad \max\{ f, g \},\quad \min\{ f, g \}, \\ \sup_{k \in \nat} f_k,\quad \inf_{k \in \nat} f_k,\quad \limsup_{k \in \nat} f_k,\quad \liminf_{k \in \nat} f_k.
+ \end{align*}
+ Ebenso $\frac{f}{g}$ sofern $g \ne 0$. Die Grenzwerte und Supremum sind hier \emph{punktweise} zu verstehen.
+\end{thm*}
+
+\begin{bem}
+ Jede stetige Funktion $f:\real^n \to \real$ ist Borel-messbar (also auch Lebesque-messbar).
+\end{bem}
+
+\begin{proof}
+ Wegen der Stetigkeit ist $f^{-1}((c,\infty))$ offen, also Borel-messbar.
+\end{proof}
+
 \end{document}
