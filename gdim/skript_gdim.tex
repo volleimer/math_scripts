@@ -103,7 +103,7 @@ Sei $X$ eine nichtleere Menge. Eine Funktion $\mu: 2^X \to [0,\infty]$ heißt \e
 \end{enumerate}
 
 \subsubsection{\texorpdfstring{$\mu$}{Mu}-messbare Mengen}
-Sei $\mu$ ein äußeres Maß auf $X$. Eine Menge $E \subset X$ heißt $\mu$-messbar [Forster Analysis III: ``Caratheodory''-messbar] $:\Leftrightarrow$
+Sei $\mu$ ein äußeres Maß auf $X$. Eine Menge $E \subset X$ heißt $\mu$-messbar\footnote{Forster Analysis III: ``Caratheodory''-messbar} $:\Leftrightarrow$
  \[ \mu(F) = \mu( F \cap E ) + \mu( F \setminus E ) \text{ für alle } F \subset X. \]
 
 \begin{bem}
@@ -248,7 +248,8 @@ Sei $(X, \mA)$ ein Messraum.
 \begin{thm*}
  Sei $(X, \mA)$ ein Messraum und für alle $k \in \nat$ seien $f_k, f, g: X \to [-\infty,\infty]$ messbar. Dann sind ebenfalls messbar:
  \begin{align*}
- f+g,\quad fg,\quad \max\{ f, g \},\quad \min\{ f, g \}, \\ \sup_{k \in \nat} f_k,\quad \inf_{k \in \nat} f_k,\quad \limsup_{k \in \nat} f_k,\quad \liminf_{k \in \nat} f_k.
+ &f+g,& &fg,& &\max\{ f, g \},& &\min\{ f, g \}, \\ 
+ &\sup_{k \in \nat} f_k, & &\inf_{k \in \nat} f_k,& &\limsup_{k \in \nat} f_k,& &\liminf_{k \in \nat} f_k.
  \end{align*}
  Ebenso $\frac{f}{g}$ sofern $g \ne 0$. Die Grenzwerte und Supremum sind hier \emph{punktweise} zu verstehen.
 \end{thm*}

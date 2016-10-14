@@ -9,11 +9,15 @@
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
+\swapnumbers
 \theoremstyle{plain}
 \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem{lem}[thm]{Lemma}
 
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{folg}[thm]{Folgerung} % definition numbers are dependent on theorem numbers
+\newtheorem{rmrk}[thm]{Bemerkung} % definition numbers are dependent on theorem numbers
 \newtheorem{exmp}[thm]{} % same for example numbers
 
 \numberwithin{equation}{section}
@@ -35,7 +39,8 @@
   \item \emph{Prüfungsvorleistung:} 50 \% der Punkte in den Pflichtaufgaben und eine vorgetragene Übungslösung in der Übung
   \item \emph{Abgabe der Pflichtaufgaben:} Dienstag, 9:20 Uhr, Briefkasten 
   \item \emph{Schriftliche Prüfung:} Definitionen, Sätze, Beweise \\
-   Aufgaben: ähnlich wie in den Übungen
+   Aufgaben: ähnlich wie in den Übungen \\
+   Einschreibung: 09.01.2017 bis eine Woche vor Prüfungstermin
   \item \emph{Literatur:}
    \begin{itemize}
     \item G. B. Folland: Real Analysis
@@ -127,4 +132,120 @@ Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit 
 \end{thm}
 
 Das bedeutet: Die Mengen $U$ und $V$ haben mit den obigen Forderungen das selbe Maß, egal wie man $U$ und $V$ wählt.
+
+Folgerung: $\real^d$ enthält Teilmengen, die so seltsam sind, dass kein \emph{geometrisch} vernünftiges Maß für \emph{alle} Teilmengen definieren kann.
+
+Wir geben die Forderung auf, dass das Maß für \emph{alle} Teilmengen definiert werden soll.
+
+\section{Aufgaben}
+ Siehe \verb+Aufgaben-1-2.pdf+.
+
+\section{\texorpdfstring{$\sigma$}{Sigma}-Algebren}
+Sei $X \ne \emptyset$ eine beliebige Menge. Das Komplement von $A \subset X$ bezüglich $X$ bezeichnet $A^C := X \setminus A$.
+
+\begin{defn}
+ Eine Familie $\mA \subset \pot(X)$ heißt eine \emph{$\sigma$-Algebra} (in $X$), wenn
+ \begin{enumerate}[(i)]
+  \item $X \in \mA$.
+  \item $A \in \mA$ $\Rightarrow$ $A^C \in \mA$.
+  \item $A_1, A_2, \ldots \in \mA$ $\Rightarrow$ $\bigcup_{i=1}^\infty A_i \in \mA$.
+ \end{enumerate}
+ $\mA$ heißt eine \emph{Algebra}, wenn (i), (ii) und (iii) mit endlich vielen $A_i$ gelten.
+\end{defn}
+
+Einfache Beispiele:
+\begin{itemize}
+ \item $\mA = \{ X, \emptyset \}$.
+ \item $\mA = \pot( X )$.
+ \item $\mA = \{ X, \emptyset, A, A^C \}$ mit $A \subset X$.
+\end{itemize}
+
+\begin{lem}
+ Ist $\mA$ eine Algebra, so gilt
+ \begin{enumerate}[(i)]
+  \item $\emptyset \in \mA$,
+  \item $A \setminus B \subset \mA$, wenn $A,B \subset \mA$,
+  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+  \enumeratext{(i)}{Ist $\mA$ eine $\sigma$-Algebra, so gilt auch}
+  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+ \end{enumerate}
+\end{lem}
+
+\begin{proof}
+ (i): $\emptyset = X^C \in \mA$.
+  
+ (iii) folgt aus (1.3.1.ii), (1.3.1.iii) und 
+ \[ \left( \bigcap_{j=1}^n A_j \right)^C = \bigcup_{j=1}^n A_j^C \in \mA. \]
+ 
+ (ii) $A \setminus B = A \cap B^C \overset{\text{(iii)}}\in \mA$.
+ 
+ (iv) wird analog zu (iii) bewiesen.
+\end{proof}
+
+\begin{thm}
+ Ist eine Algebra abgeschlossen bezüglich abzählbarer \emph{disjunkter} Vereinigungen, so ist sie eine $\sigma$-Algebra.
+\end{thm}
+
+\begin{proof}
+ Sei $\mA$ eine Algebra, $E_1, E_2, \ldots \in \mA$ und für $k = 1, 2, \ldots$ definiere
+ \[ F_k := E_k \setminus \left[ \bigcup_{j=1}^{k-1} E_j \right] = E_k \cap \left[ \bigcup_{j=1}^{k-1} E_j \right]^C \]
+ Die $F_k$ gehören zu $\mA$, da $\mA$ eine Algebra ist und $F_k$ durch endlich viele Vereinigungen entsteht. Sie sind disjunkt und
+ \[ \bigcup_{j=1}^\infty F_j = \bigcup_{j=1}^\infty E_j \qRq \bigcup_{j=1}^\infty E_j \in \mA, \]
+ weil nach Voraussetzung $\mA$ abgeschlossen bezüglich abzählbarer disjunkter Vereinigungen ist.
+\end{proof}
+
+\begin{lem}
+ Jeder Durchschnitt von $\sigma$-Algebren in $X$ ist selber eine $\sigma$-Algebra.
+\end{lem}
+
+\begin{proof}
+ Einfaches Nachprüfen der Eigenschaften.
+\end{proof}
+
+\begin{folg}
+ Zu jeder Familie $E \subset \pot(X)$ existiert eine kleinste, $E$ enthaltende $\sigma$-Algebra. Wir bezeichnen sie mit $\sigma(E)$.
+\end{folg}
+
+\begin{proof}
+ $\pot(X)$ ist eine $\sigma$-Algebra, die $E$ enthält. Man bilde den Durchschnitt mit allen E enthaltenden $\sigma$-Algebren.
+\end{proof}
+
+Man nennt $\sigma(E)$ die \emph{von $E$ erzeugte $\sigma$-Algebra} und $E$ einen \emph{Erzeuger von $\sigma(E)$}.
+
+Beispiel: $E = \{A\}$, $\sigma(E) = \{ X, \emptyset, A, A^C \}$.
+
+\begin{lem}
+ Ist $E \subset \sigma(F)$, so gilt $\sigma(E) \subset \sigma(F)$.
+\end{lem}
+
+\begin{proof}
+ $\sigma(F)$ ist eine $\sigma$-Algebra, die $E$ enthält $\Rightarrow$ sie enthält auch $\sigma(E)$.
+\end{proof}
+
+\begin{rmrk}
+ Sei $\mA_1 \subset \mA_2 \subset \ldots$ eine unendliche Folge von $\sigma$-Algebren, so dass $\mA_n \ne \mA_{n+1}$ für alle $n$. Dann ist $\bigcup_{n=1}^{\infty} \mA_n$ keine $\sigma$-Algebra!\footnote{Zum Beweis siehe \texttt{UnionsOfSigmaFields.pdf}}
+\end{rmrk}
+
+\begin{defn}
+ Sei $X$ ein metrischer Raum (oder ein topologischer Raum). Die $\sigma$-Algebra, die durch alle \emph{offenen Mengen} von $X$ erzeugt wird, heißt \emph{Borelsche $\sigma$-Algebra} und wird mit $\borel(X)$ bezeichnet. Die Elemente von $\borel(X)$ heißen \emph{Borelmengen}.
+\end{defn}
+
+Ist $\borel(\real) = \pot(\real)$? Nein! Beispiele folgen später.
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-4.pdf+
+
+\section{Maße}
+Sei $X \ne \emptyset$ eine beliebige Menge, $\mA$ eine $\sigma$-Algebra in $X$.
+
+\begin{defn}
+ Ein \emph{Maß} auf $\mA$ ist eine Abbildung $\mu: \mA \to [0,\infty]$ mit
+ \begin{enumerate}[(i)]
+  \item $\mu( \emptyset ) = 0$.
+  \item Sind die Mengen $A_1, A_2, \ldots \in \mA$ paarweise disjunkt, so gilt
+  \[ \mu\left( \bigcup_{i=1}^\infty A_i \right) = \sum_{i=1}^\infty \mu(A_i). \]
+  Diese Eigenschaft nennt man \emph{$\sigma$-Additivität}\footnote{Auch: Endliche Additivität, aber solche Maßen kommen selten vor.}.
+ \end{enumerate}
+\end{defn}
+
 \end{document}
