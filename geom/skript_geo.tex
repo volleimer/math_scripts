@@ -6,7 +6,8 @@
 
 \usepackage{../.tex/settings}
 
-\usepackage{tabularx}
+%\usepackage{tabularx}
+\usepackage{ltablex}
 % X-Spalte wird vertikal zentriert ausgerichtet
 \def\tabularxcolumn#1{m{#1}}
 
@@ -15,9 +16,11 @@
 
 \theoremstyle{plain}
 \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem{lem}[thm]{Lemma}
 
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{folg}[thm]{Folgerung} % definition numbers are dependent on theorem numbers
 \newtheorem{exmp}[thm]{} % same for example numbers
 
 \numberwithin{equation}{section}
@@ -59,7 +62,7 @@
    \item Ellipsen
    \item Mittelpunkte von Strecken 
     \[ A \left( \frac{x+y}{2} \right) + t = \frac{A(x) + t}{2} + \frac{A(y) + t}{2} \]
-   item Mittelpunkte von Ellipsen
+   \item Mittelpunkte von Ellipsen
   \end{itemize}
  \item \emph{Nicht} in der affinen Geometrie: 
   \begin{itemize}
@@ -210,11 +213,11 @@ Sei $A \in O(2)$, also $\left(\begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix}, \b
  Die affine Abbildung $f(x) = Ax + t_1 + t_2$ mit $t_1 \in \ker(A-E)$, $t_2 \in \ker(A-E)^\bot$ beschreibt für $t_1 = 0$ eine \emph{Spiegelung} an einer Geraden und für $t_1 \ne 0$ eine \emph{Schubspiegelung} an einer Geraden.
 \end{enumerate}
 
-\begin{table}[ht]
- \center
+%\begin{table}[ht]
+ {\center \small
  \begin{tabularx}{.95\textwidth}{|>{\center}m{3.5cm}|>{\center}m{3cm}|>{\center}m{3cm}|X|}
   \hline
-  Zugehörige lineare Abbildung in Normalform & Isometrie des $\real^n$ & Menge der Fixpunkte & Welche Geraden werden auf sich abgebildet? \\
+  Zugehörige lineare Abbildung in Normalform & Isometrie des $\real^2$ & Menge der Fixpunkte & Welche Geraden werden auf sich abgebildet? \\
   \hline
   $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ &
   Identität, falls $t = t_1 = 0$, &
@@ -242,10 +245,10 @@ Sei $A \in O(2)$, also $\left(\begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix}, \b
    & $\emptyset$
    & $g$ \\
    \hline
- \end{tabularx}
+ \end{tabularx} }
  \[ x \mapsto Ax + t, t = t_1 + t_2 \text{ mit } t_1 \in \ker(A-E), t_2 \in \ker(A-E)^\bot \]
- \caption{Klassifikation der Isometrien des $\real^n$}
-\end{table}
+% \caption{Klassifikation der Isometrien des $\real^2$}
+%\end{table}
 
 Vorschlag zum zusätzlichen Selbststudium: Die 17 kristallographischen Gruppen der Ebene
 
@@ -266,4 +269,145 @@ Sei $b_1$ der Eigenvektor zum Eigenwert $\pm 1$ mit $\| b_1 \| = 1$. Ergänze zu
    \text{ oder }
    \begin{pmatrix} -1 & 0 & 0 \\ 0 & \cos \varphi & -\sin \varphi \\ 0 & \sin \varphi & \cos \varphi \end{pmatrix}. \]
 Im ersten Fall ($\det A = 1$) ist die lineare Abbildung eine \emph{Drehung} um die Gerade $\real b_1$ um den Winkel $\varphi$. Im zweiten Fall ($\det A = -1$) ist es eine \emph{Drehspiegelung} mit der \emph{Drehspiegelachse} $\real b_1$ mit \emph{Drehspiegelebene} $\real b_2 + \real b_3$ um den Winkel $\varphi$.
+
+%\begin{table}[ht]
+ {\center \small
+ \begin{tabularx}{.95\textwidth}{|>{\center}m{3.6cm}|>{\center}m{3cm}|>{\center}m{3cm}|X|}
+  \hline
+  Zugehörige lineare Abbildung in Normalform 
+   & Isometrie des $\real^3$ 
+   & Menge der Fixpunkte 
+   & Welche Geraden werden auf sich abgebildet? \\
+  \hline
+  $\begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}$ 
+   & Identität, falls $t = t_1 = 0$, 
+   & $\real^3$ 
+   & Alle Geraden \\
+   & Translation, falls $t = t_1 \ne 0$
+   & $\emptyset$
+   & Alle Geraden parallel zu $\real t$ \\  
+  \hline
+  $\begin{pmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{pmatrix}$
+   & Spiegelung an einer Geraden, falls $t_1 = 0$ (Drehung um $\pi$),
+   & $g$
+   & $g$ und alle Geraden, die $g$ orthogonal schneiden. \\
+   & Gleitspiegelung an einer Geraden, falls $t_1 \ne 0$ (Schraubung um $\pi$)
+   & $\emptyset$
+   & $g$ \\
+  \hline
+  $\begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos \varphi & - \sin \varphi \\ 0 & \sin \varphi & \cos \varphi \end{pmatrix}$ 
+   & Drehung an einer Geraden, falls $t_1 = 0$ 
+   & $g$
+   & $g$ \\
+   & Schraubung, falls $t_1 \ne 0$
+   & $\emptyset$
+   & $g$ \\
+  \hline
+  $\begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{pmatrix}$
+   & Punktspiegelung am Punkt $p=\frac{t}{2}$
+   & $p$
+   & Alle Geraden durch $p$ \\
+  \hline
+  $\begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1 \end{pmatrix}$
+   & Spiegelung an einer Ebene $E$, falls $t_1 = 0$
+   & $E$
+   & Alle Geraden in $E$ und alle Geraden $\bot E$ \\
+   & Gleitspiegelung an einer Ebene, falls $t_1 \ne 0$.
+   & $\emptyset$
+   & Alle Geraden in $E$ parallel zu $\real t$ \\
+  \hline
+  {\footnotesize $\begin{pmatrix} -1 & 0 & 0 \\ 0 & \cos \varphi & - \sin \varphi \\ 0 & \sin \varphi & \cos \varphi \end{pmatrix}$}
+   & Drehspiegelung mit Drehspiegelachse $g$ und Fixpunkt $p$
+   & $p$
+   & $g$ \\
+  \hline
+ \end{tabularx} }
+ \[ x \mapsto Ax + t, A \in O(3), t = t_1 + t_2 \text{ mit } t_1 \in \ker(A-E), t_2 \in \ker(A-E)^\bot \]
+ %\caption{Klassifikation der Isometrien des $\real^3$}
+%\end{table}
+
+\begin{bem}[Orientierung bei Drehungen]
+Äquivalenz über $S \in SO(n)$, das heißt $\det S=1$ statt mit $S \in O(n)$. 
+ 
+ In $\real^2$ ist dann $\varphi$ eindeutig bestimmt:
+ \[ S \begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix} S^{-1} = \begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix}, \]
+ falls $S \in SO(2)$. Für $S \in O(2) \setminus SO(2)$ zum Beispiel
+ \[ \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}
+    \begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix}
+    \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}
+    = 
+    \begin{pmatrix} \cos (-\varphi) & - \sin (-\varphi) \\ \sin (-\varphi) & \cos (-\varphi) \end{pmatrix} \]
+ 
+ Bei Drehungen in $\real^3$ kann man (geometrisch) nicht zwischen Drehung um $\varphi$ und $-\varphi$ unterscheiden:
+ \[ \begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{pmatrix}
+    \begin{pmatrix} -1 & 0 & 0 \\ 0 & \cos \varphi & - \sin \varphi \\ 0 & \sin \varphi & \cos \varphi \end{pmatrix}
+    \begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{pmatrix}
+    =
+    \begin{pmatrix} -1 & 0 & 0 \\ 0 & \cos \varphi & \sin \varphi \\ 0 & -\sin \varphi & \cos \varphi \end{pmatrix}.
+ \]
+ Bei Drehspiegelungen ist das genauso.
+ 
+ Im Gegensatz dazu: bei Schraubungen wähle den Basisvektor $b_1 \in \ker(A-E)$ (mit $\|b_1\| = 1$), so dass $t_1 = \lambda b_1$ mit $\lambda > 0$. Dann ist $\varphi$ auch eindeutig bestimmt (in der Drehebene, vgl. $\real^2$).
+\end{bem}
+
+\subsection*{Normale Endomorphismen des $\real^n$}
+\begin{mydef}
+Sei $V$ ein unitärer oder euklidischer Raum mit Skalarprodukt $\langle \cdot, \cdot \rangle$ und $f:V \to V$ ein Endomorphismus. Falls $f^*:V \to V$ ein Endomorphismus ist, sodass für alle $x,y \in V$ gilt
+\[ \langle f(x), y \rangle = \langle x, f^*(y) \rangle, \]
+dann heißt $f^*$ der \emph{zu $f$ adjungierte} Endomorphismus (bezüglich $\langle \cdot, \cdot \rangle$). Falls er exisitiert, dann ist er eindeutig bestimmt.
+
+Falls $\dim V < \infty$, dann existiert $f^*$ immer und es gilt: Falls $A$ die Matrix von $f$ bezüglich einer Orthonormalbasis ist, dann ist $A^* = \obar{A}^T$ die Matrix von $f^*$ bezüglich derselben Basis.
+
+Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = f^* f$ gilt. Eine Matrix $A \in \compmat{n}{n}$ heißt \emph{normal}, falls $A^* A = A A^*$ gilt.
+\end{mydef}
+
+\begin{thm}[Normalform für normale Matrizen]
+ Sei $A \in \compmat{n}{n}$, dann sind die folgenden Aussagen äquivalent:
+ \begin{enumerate}[(1)]
+  \item Es gibt eine Orthonormalbasis aus Eigenvektoren von $A$.
+  \item $A$ ist normal.
+  \item $A$ ist unitär ähnlich zu einer Diagonalmatrix, das heißt es gibt eine unitäre Matrix\footnote{$S \in U(S)$: Zeilen- und Spaltenvektoren sind orthonormal bzgl. des Standardskalarprodukts, $S^{-1} = S^*$.} $S$ mit $S^{-1} A S = D$, $D$ Diagonalmatrix.
+ \end{enumerate}
+\end{thm}
+
+\begin{folg}
+ Sei $A \in \compmat{n}{n}$, dann sind äquivalent:
+ \begin{enumerate}[(1)]
+  \item $A = A^*$.
+  \item $A$ ist normal und alle Eigenwerte von $A$ sind reell.
+ \end{enumerate}
+\end{folg}
+
+\begin{folg}
+ Sei $A \in \compmat{n}{n}$, dann sind äquivalent:
+ \begin{enumerate}[(1)]
+  \item $A^* = A^{-1}$, das heißt $A \in U(n)$.
+  \item $A$ ist normal und alle Eigenwerte von $A$ haben Betrag 1.
+ \end{enumerate}
+\end{folg}
+
+\begin{lem}
+ Sei $A \in \realmat{n}{n} \subset \compmat{n}{n}$. Dann gilt für $A$ als Matrix in $\compmat{n}{n}$ aufgefasst: Falls $x \in \complex^n$ ein Eigenvektor von $A$ zum Eigenwert $c \in \complex$ ist, dann ist $\obar{x}$ ein Eigenvektor von $A$ zum Eigenwert $\obar{c}$, wobei
+ \[ \obar{\begin{pmatrix} x_1 \\ \vdots x_n \end{pmatrix}} := \begin{pmatrix} \obar{x}_1 \\ \vdots \obar{x}_n \end{pmatrix}. \]
+\end{lem}
+
+\begin{proof}
+ Für $x \ne 0$ gilt $Ax = cx $ $\Rightarrow$  $A\obar{x} = \obar{A}\obar{x} = \obar{Ax} = \obar{cx} = \obar{c} \obar{x}$.
+\end{proof}
+
+\begin{thm}[Normalform für über $\complex$ diagonalisierbare Matrizen]
+ Sei $A \in \realmat{n}{n}$ und $A$ als Element von $\compmat{n}{n}$ aufgefasst diagonalisierbar\footnote{$A$ ist zu einer Diagonalmatrix $D$ ähnlich, also ex. $S$, so dass $D=S^{-1} A S$.}. Dann gibt es eine Matrix $S \in \GL(n, \real)$ für welche $S^{-1} A S$ die Gestalt
+ \[ S^{-1} A S = \begin{pmatrix}
+     d_1 &        &     &     &        &      \\
+         & \ddots &     &     & 0      &      \\
+         &        & d_k &     &        &      \\
+         &        &     & \boxed{z_1} &        &      \\
+         & 0      &     &     & \ddots &      \\
+         &        &     &     &        & \boxed{z_m}
+    \end{pmatrix} \]
+ hat, wobei $z_\mu = \begin{pmatrix} a_\mu & b_\mu \\ -b_\mu & a_\mu \end{pmatrix}$ für $\mu = 1, \ldots, m$ ist mit $b_\mu \ne 0$, $k+2m = n$. Dabei sind $d_1, \ldots, d_k$ die reellen Eigenwerte von $A$ und $a_\mu \pm i b_\mu$ die komplexen Eigenwerte von $A$ (mit Vielfachheiten).
+ 
+ Ferner gilt: Falls $A$ normal ist, dann kann $S \in O(n)$ gewählt werden, das heißt $S^T = S^{-1}, S \in \realmat{n}{n}$).
+\end{thm}
+
 \end{document}
