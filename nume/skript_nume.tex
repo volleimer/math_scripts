@@ -9,15 +9,18 @@
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
+\usepackage{listings}
+
 \numberwithin{equation}{section}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
 
 \theoremstyle{definition}
-\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{defn}{Definition}[section] % definition numbers are dependent on theorem numbers
 \newtheorem{exmp}{Beispiel}[section] % same for example numbers
 \newtheorem{rmrk}{Bemerkung}[section] % same for example numbers
+\newtheorem{algn}{Algorithmus}[section] % definition numbers are dependent on theorem numbers
 
 \numberwithin{equation}{section}
 
@@ -139,4 +142,108 @@ Seien $c_0, \ldots, c_{j-1}$ bereits bestimmt. Dann folgt
 Alle Terme ab $c_{j+1}$ entfallen, da sie $(x_j-x_j)=0$ enthalten. Damit lässt sich $c_j$ berechnen:
 \[ c_j = \frac{f_j - c_0 + \sum_{k=1}^{j-1}(x_j-x_0)\ldots(x_j-x_{k-1})}{(x_j-x_0) \ldots (x_j-x_{j-1})} \]
 
+\begin{rmrk}
+ \begin{enumerate}[(a)]
+  \item Zum Aufwand: Berechnung von $c_0, \ldots, c_n$ (also bei $n+1$ Stütz\-stellen): $O(n^2)$ Operationen. Vorteil der Newton-Form: Kommt ein Datenpaar hinzu, also $(x_{n+1}, f_{n+1})$, dann kann man den Ansatz um einen Summanden erweitern $c_{n+1}( x-x_0 ) \cdot \ldots \cdot (x - x_{n-1})(x - x_n)$ erweiteren. Der zusätzliche Koeffizient $c_{n+1}$ kann mit $O(n)$ Operationen bestimmt werden.
+  \item Sind $c_0, \ldots, c_n$ bekannt, dann genügen $O(n)$ Operationen (genauer: $3n$) zur Berechnung von $p(x)$ an der Stelle $x$ (vgl. Algorithmus 1.1).
+  \item Die Polynome $N_0, \ldots, N_n:R \to \real$ mit $N_0(x) \equiv 1$, $N_j(x) = (x-x_0) \cdot \ldots \cdot (x - x_{j-1})$, $j = 1, \ldots, n$ heißen \emph{Newton-Basispolynome} und bilden eine Basis des Vektorraums $\Pi_n$.
+ \end{enumerate}
+\end{rmrk}
+
+Effiziente Berechnung von $p(x)$ beruht auf $(n=3)$:
+\begin{align*}
+ p(x) &= c_0 + c_1 (x-x_0) + c_2 (x-x_0)(x-x_1) + c_3 (x-x_0)(x-x_1)(x-x_2) \\
+      &= c_0 + (x-x_0) ( c_1 + (x-x_1) ( c_2 + (x-x_2) c_3 ) ).
+\end{align*}
+
+\begin{algn}[Horner-Schema für die Newton-Form des Interpolationspolynoms]
+\begin{lstlisting}
+Input: n, x, c_0, ..., c_n, x_0, ..., x_n-1
+
+p:= c_n
+FOR j = n-1, n-2, ... 0 DO
+  p := c_j + (x-x_j) p
+  
+OUTPUT: p = p(x)
+\end{lstlisting}
+\end{algn}
+
+\subsubsection{Interpolationsfehler}
+Durch $\| g \|_\infty := \max | g(x) |$ für alle $g \in C[a,b]$ ist eine Norm (die \emph{Maximums-Norm}) in $C[a,b]$ definiert.
+
+\begin{thm}
+ Sei $f \in C[a,b]$. Dann existiert zu $\eps > 0$ ein Polynom $p$ mit
+ \[ \| f-p \|_\infty \le \eps, \]
+ das heißt die Polynome (beliebigen Grades) liegen dicht in $C[a,b]$.
+\end{thm}
+
+\emph{Vermutung:} $\| p_n - f \|_\infty \to 0$ für $n \to \infty$, falls $p_n$ das Interpolationspolynom von $f$ ist. 
+
+\emph{Aber:} Gegeben: Stützstellensystem $a \le x_0^{(n)} < x_1^{(n)} < \ldots < x_{n-1}^{(n)} < x_n^{(n)} \le b$, $n = 0, 1, 2, \ldots$
+
+Bezeichne $p_k \in \Pi_n$ das zu den Datenpaaren $(x_k^{(n)}, f(x_k^{(n)}))$, $k = 0, \ldots, n$ gehörige eindeutig bestimmte Interpolationspolynom.
+
+\begin{thm}
+ Zu jedem Stützstellensystem gibt es ein $f \in C[a,b]$, so dass \emph{nicht} gilt
+ \[ \| f-p_n \|_\infty \to 0 \text{ für } n \to \infty. \]
+\end{thm}
+
+Nach einem Resultat von Erdös/Vertesi (1980) gilt sogar, dass es ein $f \in C[a,b]$ gilt, so dass $p_n(x)$ fast überall nicht gegen $f$ konvergiert.
+
+\begin{exmp}[Runge]
+ Schlechte Funktion $f$ für äquidistante Stützstellenwahl in $[-1,1]$:
+ \[ f: \real \to \real \text{ mit } f(x) = \rez{1 + 25 x^2} \]
+ \[ x_0^{(n)} = -1, x_n^{(n)} = 1, x_j^{(n)} = -1 + j h_n \text{ mit } h_n = \frac{2}{n}, j = 1, \ldots, n-1 \]
+\end{exmp}
+
+\emph{Aber}:
+
+\begin{thm}[Interpolationsfehler]
+ Sei $f \in C^{n+1}[a,b]$. und gelte $a \le x_0 < x_1 < \ldots < x_{n-1} < x_n \le b$. Mit $p_n \in \Pi_n$ werde das zu den Datenpaaren $(x_j, f(x_j))$, $j=1, \ldots, n$ gehörige Interpolationspolynom bezeichnet. Dann existiert zu jedem $x \in [a,b]$ eine Zahl $\xi(x) \in (a,b)$, so dass
+ \[ f(x) - p_n(x) = \frac{f^{(n+1)}(\xi(x))}{(n+1)!} w(x), \]
+ wobei $w : \real \to \real$ gegeben ist durch
+ \[ w(x) = (x-x_0) \cdot \ldots \cdot (x-x_n). \]
+\end{thm}
+
+\begin{proof}
+ Für $x=x_k$, $k =0, \ldots, n$ klar!
+ 
+ Sei nun $x \in [a,b]$ fest mit $x \notin \{ x_0, \ldots, x_n \}$. Weiter sei $F:[a,b] \to \real$ mit
+ \[ F(t) := f(t) - p_n(t) + K(x) \cdot w(t) \text{ für alle } t \in [a,b] \]
+ für ein noch zu bestimmendes $K = K(x)$, so dass $F(x) = 0$ gilt. Außerdem ist $F(x_j) = 0$ für $j = 0, \ldots, n$ nach Interpolationsbedingung.
+ 
+ Also hat $F$ mindestens $n+1$ Nullstellen in $[a,b]$. Da offensichtlich $F \in C^{n+1}[a,b]$ ist, erhält man nach $n+1$-facher Anwendung des Satzes von Rolle, dass $F^{(n+1)}$ mindestens eine Nullstelle $\xi(x)$ in $(a,b)$ hat.
+ \[ 0 = F^{(n+1)}(\xi(x)) \overset{!}{=} f^{(n+1)}(\xi(x)) - \underbrace{p_n^{(n+1)}(\xi(x))}_{=0} - K(x) \underbrace{w^{(n+1)}(\xi(x))}_{=(n+1)!} \]
+ \[ \Rightarrow K(x) = \frac{f^{(n+1)}(\xi(x))}{(n+1)!}. \]
+\end{proof}
+
+\begin{exmp}
+ Sei $f \in C^2[a,b]$, $\| f'' \|_\infty \le M$, $a = x_0 < x_1 = x_0 + h = b$. Dann gilt für $\lambda(x) \in [0,1]$
+ \[ | f(x) - p_1(x) | \le \rez{2} M | (x-x_0)(x-x_1) | = \rez{2} M \lambda(x) h (1-\lambda(x)) h \le \rez{8} M h^2, \]
+ für alle $x \in [a,b]$.
+\end{exmp}
+
+Weitere Fragen bei der Interpolation:
+\begin{itemize}
+ \item Forderungen an die Ableitungswerte?
+ \item Wahl der Stützstellen? Gibt es optimale Stützstellen zur Fehlerminimierung?
+\end{itemize}
+
+\subsection{Interpolation durch Polynomsplines}
+\subsubsection{Polynomsplines}
+Sei $\Delta$ eine Zerlegung des Intervalls $[a,b]$ durch Stützstellen $a := x_0 < x_1 < \ldots < x_n := b$.
+
+\begin{defn}
+ Ein \emph{Polynomspline} vom Grad $m \in \nat$ und Glattheit $l \in \nat$ zur Zerlegung $\Delta$ ist eine Funktion $s \in C^k[a,b]$ mit
+ \[ s_k := s |_{[x_k,x_{k+1}]} \in \Pi_m, k = 0, \ldots, n-1. \]
+ Dabei ist $s |_{[x_k,x_{k+1}]}$ die \emph{Einschränkung} von $s$ auf das Intervall $[x_k,x_{k+1}]$.
+ 
+ $S_m^l(\Delta)$ ist die Menge aller Polynomsplines vom Grad $m$ und Glattheit $l$ (zur Zerlegung $\Delta$). $S_m^l(\Delta)$ ist ein Vektorraum.
+\end{defn}
+
+\emph{Gegeben:} Zerlegung $\Delta$ und Stützwerte $f_0, \ldots, f_n$ mit $f_j = f(x_j)$.
+
+\emph{Gesucht:} $s \in S_3^l(\Delta)$ mit $s(x_k) = f_k$ für $k = 0, \ldots, n$.
+
+Exisitiert ein solches Spline für $l=1$ bzw. $l=2$? Eindeutigkeit?
 \end{document}
