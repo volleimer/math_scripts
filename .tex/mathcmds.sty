@@ -12,7 +12,8 @@
 \newcommand{\spur}{\mathrm{spur}\,}
 
 \newcommand{\diffop}{\mathrm{d}}
-\newcommand{\diff}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\diff}[2]{\frac{\diffop #1}{\diffop #2}}
+\newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\nat}{\mathbb{N}}
@@ -20,6 +21,7 @@
 \newcommand{\complex}{\mathbb{C}}
 \newcommand{\integer}{\mathbb{Z}}
 \newcommand{\realmat}[2]{\mathbb{R}^{#1 \times #2}}
+\newcommand{\compmat}[2]{\mathbb{C}^{#1 \times #2}}
 
 \newcommand{\stair}{\mathcal{T}[a,b]}
 \newcommand{\zerl}{\mathcal{Z}}
@@ -50,4 +52,6 @@
 
 \newcommand{\borel}{\mathscr{B}}
 
-\newcommand{\lebesque}{\mathscr{L}}
+\newcommand{\lebesgue}{\mathscr{L}}
+
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
