@@ -11,6 +11,7 @@
 
 \theoremstyle{plain}
 \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem*{lem*}{Lemma}
 \newtheorem*{thm*}{Satz}
 \newtheorem*{kor}{Korollar}
 
@@ -459,14 +460,224 @@ wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von
  Nach dem Mittelwertsatz existiert $\Theta \in [0,1]$, so dass
  \[ |F_h(x)| = \left| \pdiff{f}{t} (x, t + \Theta h) \right| \le F(x) \]
  wegen 3. für alle $x \in X$. Aufgrund der Differenzierbarkeit von $f(x, \cdot)$ konvergiert $F_h(x) \to \pdiff{f}{t}(x,t)$ für alle $x \in X$ (mit $h \to 0$). Also folgt wegen majorierter Konvergenz
- \[ \int_X \pdiff{f}{t}(x,t) \diffop \mu(x) = \lim_{h \to 0} \int_X F_h \diffop \mu = g'(t). \]
+ \[ \int_X \pdiff{f}{t}(x,t) \diffop \mu(x) = \lim_{h \to 0} \int_X F_h \diffop \mu = g'(t). \qedhere \]
 \end{proof}
 
 \subsection{Eigenschaften des Lebesgue-Maßes}
 \subsubsection{Definition (Erinnerung)}
  Äußeres Lebesgue-Maß: Für jede Menge $E \subset \real^n$ definiert man
- \[ \lebesgue^n( E ) := \inf \left\{ \sum_{k=0}^\infty r_k^n \right\}, \]
+ \[ \lebesgue^n( E ) := \inf \left\{ \sum_{k=0}^\infty r_k^n : E \subset \bigcup_{i=0}^\infty Q_{r_k}(a_k) \right\}, \]
  wobei das Infimum über alle Folgen $(r_k)_{k \in \nat} \subset (0, \infty)$ genommen wird, für die eine zugehörige Folge $(a_k)_{k \in \nat} \subset \real^n$ existiert, so dass $E \subset \bigcup_{k=0}^\infty Q_{r_k}(a_k)$. Hierbei ist $Q_{r}(a) := a + \left(-\frac{r}{2}, \frac{r}{2} \right]^n$.
 
  Lebesgue-Maß: Einschränkung des so definierten äußeren Lebesgue-Maßes auf $\sigma( \lebesgue^n )$.
+ 
+\subsubsection{``Maßraum''-Eigenschaften}
+\begin{thm*}
+ Bezeichne $\lebesgue^n: 2^{\real^n} \to [0, \infty]$ das äußere Lebesgue-Maß auf $\real^n$. Dann gilt:
+ \begin{enumerate}
+  \item $\lebesgue( \emptyset ) = 0$.
+  \item $\sigma$-Subadditivität: Sind $E_0, E_1, \ldots \subset \real^n$, dann
+   \[ \lebesgue^n \left( \bigcup_{k=0}^\infty E_k \right) \le \sum_{k=0}^\infty \lebesgue^n (E_k). \]
+   Insbesondere ist $\lebesgue^n (E \cup F) \le \lebesgue^n (E) + \lebesgue^n (F)$.
+  \item Monotonie: Wenn $E \subset F \subset \real^n$, dann ist $\lebesgue^n (E) \le \lebesgue^n (F)$.
+  \item $\sigma$-Additivität Seien $E_0, E_1, \ldots \in \sigma(\lebesgue^n)$ paarweise disjunkt. Dann ist
+   \[ \lebesgue^n \left( \bigcup_{k=0}^\infty E_K \right) = \sum_{k=0}^\infty \lebesgue^n (E_k). \]
+   Insbesondere ist $\lebesgue^n (E \cup F) = \lebesgue^n (E) + \lebesgue^n (F)$ für alle $E,F \in \sigma(\lebesgue^n)$ mit $E \cap F = \emptyset$.
+  \item Stetigkeit von unten: Seien $E_0, E_1, \ldots \in \sigma(\lebesgue^n)$, sodass $E_k \uparrow E$, das heißt $E_0 \subset E_1 \subset \ldots$ und $E := \bigcup_{k=0}^\infty E_k$, dann ist
+   \[ \lim_{k \to \infty} \lebesgue^n(E_k) =  \lebesgue^n (E). \]
+  \item Stetigkeit von oben: Seien $E_0, E_1, \ldots \in \sigma(\lebesgue^n)$, sodass $E_k \downarrow E$, das heißt $E_0 \supset E_1 \supset \ldots$ und $E := \bigcap_{k=0}^\infty E_k$ und $\lebesgue^n(E_0) < \infty$, dann ist
+   \[ \lim_{k \to \infty} \lebesgue^n(E_k) =  \lebesgue^n (E). \]
+ \end{enumerate}
+\end{thm*}
+
+Beweis siehe [MINT].
+
+\subsubsection{Metrische Eigenschaften}
+\begin{thm*}
+ Bezeichne $\lebesgue^n$ das äußere Lebesgue-Maß.
+ \begin{enumerate}
+  \item Jede Borelmenge ist $\lebesgue^n$-messbar, das heißt $\borel( \real^n ) \subset \sigma(\lebesgue^n)$. Genauer existiert für jedes $E \in \sigma(\lebesgue^n)$ eine $\lebesgue^n$-Nullmenge $N$ und eine $F_\sigma$-Menge\footnote{Eine abzählbare Vereinigung abgeschlossener Mengen. Insbesondere sind Borel-Mengen $F_\sigma$-Mengen.} $F$, so dass $E = F \cup N$.
+  \item Wenn $E \subset \real^n$ beschränkt ist, dann ist $\lebesgue^n(E) < \infty$. Insbesondere ist $\lebesgue^n (K) < \infty$ für alle $K \subset \real^n$ kompakt.
+ \end{enumerate}
+\end{thm*}
+
+\begin{proof}
+ \begin{enumerate}
+  \item Siehe [MINT] und vergleiche Übungsblatt 1.
+  \item Sei $E \subset \real^n$ beschränkt. Dann existiert $r > 0$, so dass $E \subset Q_r(0)$. Also $\lebesgue^n(E) \le \lebesgue^n( Q_r(0) ) = r^n < \infty$. Zudem wissen wir aus Analysis 2: kompakte Teilmengen des $\real^n$ sind beschränkt. \qedhere
+ \end{enumerate}
+\end{proof}
+
+Es folgt eine weitere maßtheoretische Eigenschaft:
+
+\begin{kor}
+ Das äußere Lebesgue-Maß ist $\sigma$-endlich, das heißt für jedes $E \subset \real^n$ existiert $E_0 \subset E_1 \subset \ldots$ mit $\lebesgue(E_k) < \infty$ und $E = \bigcup_{k=0}^\infty E_k$.
+\end{kor}
+
+\begin{proof}
+ Sei $E \subset \real^n$. Sei $E_k$ der Schnitt von $E$ mit einer Kugel vom Radius $k$, also
+ \[ E_k := B_k(0) \cap E. \]
+ Dann ist wegen Satz (Teil 2) $\lebesgue^n(E_k) < \infty$ und offensichtlich $E_k \uparrow E$.
+\end{proof}
+
+\subsubsection*{Weiterführendes}
+
+\textbf{Literatur:}
+\begin{itemize}
+ \item Forster: Analyis 2, Analysis 3
+ \item Hildebrandt: Analyis 1, Analyis 2
+ \item Königsberger: Analysis 1, Analysis 2
+ \item Bauer: Maß- und Integrationstheorie
+\end{itemize}
+
+\textbf{Ergänzendes Seminar: ``Geometrische Maßtheorie''}
+\begin{itemize}
+ \item Hausdorff-Maße $\mathscr{H}^k \rightsquigarrow \int f \diffop \mathscr{H}^k$
+ \item Flächen- und Ko-Flächenformeln
+ \item Rektifizierbarkeit
+ \item Teilnahme freiwillig, Vortrag halten möglich, Mail an \href{mailto:peter.hornung@tu-dresden.de}{peter.hornung@tu-dresden.de}
+ \item Evans, Gariepy bzw. Ambrosio, Fusco, Pallara
+\end{itemize}
+
+\subsubsection{Euklidische Eigenschaften}
+Formale Anmerkung: Wenn sich das Volumen einer Menge $E \subset \real^n$ elemtargeometrisch berechnen lässt, dann stimmt es mit dem Lebesgue-Maß $\lebesgue^n(E)$ überein. Mit anderen Worten: Das $n$-dimensionale Lebesgue-Maß ist die natürliche Fortsetzung des Volumenbegriffs auf die Klasse der Borel-messbaren Mengen $\borel(\real^n)$.
+
+\begin{thm*}[Verhalten unter affinen Transformationen]
+ Sei $T \in \realmat{n}{n}$ invertierbar, sei $a \in \real^n$ und definiere $\phi:\real^n \to \real^n$ durch $\phi(x) = a + Tx$. Dann gilt für jede Borel-messbare Menge $E \in \real^n$:
+ \begin{enumerate}
+  \item $\phi(E)$ ist Borel-messbar.
+  \item $\lebesgue^n( \phi(E) ) = | \det T | \lebesgue^n (E)$.
+ \end{enumerate}
+\end{thm*}
+
+\emph{Beweisidee.} 
+\begin{itemize}
+ \item Für $T = \lambda I$ ($I$ ist die Einheitsmatrix) siehe Übung $\lebesgue^n (a + \lambda E) = \lebesgue^n ( \lambda E ) = \lambda^n \lebesgue^n (E)$. 
+ \item $\rightsquigarrow$ Naheliegend, dass auch für 
+\[ T = \begin{pmatrix} 
+        \lambda_0 & 0 & \cdots & \\
+        0 & \lambda_1 & \ddots & \\
+        \vdots  & \ddots & \ddots & 0 \\
+          &  & 0 & \lambda_n
+       \end{pmatrix} \]
+ die behauptete Formel gilt.
+ \item $\lebesgue^n$ ist invariant unter Rotationen und Spiegelungen ($T \in O(n)$).
+ \item Jede Matrix $T$ ist von der Form $T = QRDR^{-1}$, wobei $D$ diagonal und $Q,R \in O(n)$.
+\end{itemize}
+
+Insbesondere für $T \in SO(n)$ $\Rightarrow$ $\det T = 1$ $\Rightarrow$ $\lebesgue^n$ ist rotationsinvariant.
+
+\subsubsection{Transformationsformel}
+Erinnerung an die Substitutionsregel für Riemann-Funktionen in Analysis 2: Sei $I \subset \real$ Intervall, $f:I \to \real$ und $\varphi:[a,b] \to \real$ stetig differenzierbar mit $\varphi([a,b]) \subset I$. Dann
+\[ \int_{\varphi(a)}^{\varphi(b)} f = \int_a^b f(\varphi(x)) \varphi'(x) \diffop x. \]
+
+Gegenstück für höhere Dimensionen:
+\begin{thm*}
+ Seien $U,V \subset \real^n$ offen und sei $\Phi: U \to V$ ein $C^1$-Diffeomorphismus\footnote{$\Phi$ ist bijektiv, $\Phi \in C^1$, $\Phi^{-1} \in C^1$}. Eine Funktion $f: V \to \real$ ist genau dann integrierbar, wenn $(f \circ \Phi) \cdot | \det \nabla \Phi |$ integrierbar ist und es gilt dann
+ \[ \int_V f \diffop \lebesgue^n = \int_U (f \circ \Phi) | \det \nabla \Phi | \diffop \lebesgue^n. \]
+\end{thm*}
+
+\begin{proof}
+ Siehe [MINT]. Hier Spezialfall $U=V=\real^n$, $f = \chi_A$ und $\Phi(x) = a + Tx$ mit $T \in \realmat{n}{n}$ invertierbar. Aus Satz 5.4 folgt
+ \begin{align*}
+    \int_{\real^n} f \diffop \lebesgue^n = \lebesgue^n(A)
+    &= \lebesgue^n ( \Phi( \Phi^{-1}( A ) )) \\
+    &= | \det \nabla \Phi | \lebesgue^n( \Phi^{-1}(A) ) \\
+    &= | \det \nabla \Phi | \int_{\real^n} \underbrace{\chi_{\Phi^{-1}(A)}}_{\chi_A \cdot \Phi} \diffop \lebesgue^n \\
+    &= \int_{\real^n} | \det\nabla \Phi | f \circ \Phi \diffop \lebesgue^n. \qedhere
+ \end{align*}
+\end{proof}
+
+\begin{bsp}
+ \begin{enumerate}
+  \item Translationen: $\phi(x) = a + x$. Dann $\nabla \phi = I$ und 
+  \[ \int_{a+U} f \diffop \lebesgue^n = \int_U f(a+x) \diffop \lebesgue^n(x). \]
+  \item $\phi(x) = \lambda x$ für $\lambda > 0$. Dann ist $\nabla \phi = \lambda I$, also $\det \nabla \phi = \lambda^n$, zum Beispiel mit $U = B_1(0)$ folgt
+  \[ \int_{B_\lambda(0)} f \diffop \lebesgue^n = \lambda^n \int_{B_1(0)} f(\lambda x) \diffop \lebesgue^n(x). \]
+  \item Polarkoordinaten eines Punktes $x=(x_1,x_2,x_3) \in \real^3$ mit $(x_1,x_2) \ne 0$:
+   \begin{itemize}
+    \item $r := |x| =$ Länge des Vektors $x$
+    \item $\Theta :=$ Winkel zwischen $x_3$-Achse und Vektor $x$
+    \item $\varphi :=$ Winkel zwischen $x_1$-Achse und Vektor $x$
+   \end{itemize}
+   Transformation von Polar- in euklidische Koordinaten:$\Phi: [0, \infty) \times [0,\pi] \times [0,2\pi] \to \real^3$, wobei
+   \[ (r,\Theta, \varphi) \mapsto ( r \sin \Theta \cos \varphi, r \sin \Theta \sin \varphi, r \cos \Theta ). \]
+   Rechnung (Übung) ergibt
+   \[ \det \nabla \Phi( r, \Theta, \varphi) = r^2 \sin \Theta. \]
+   Setze $U := (0, \infty) \times (0,\pi) \times (0,2\pi)$. Dann ist $\Phi: U \to V$ ein $C^1$-Diffeomorphismus, wobei
+   \[ V := \Phi(U) = \real^3 \setminus ( [0,\infty) \times \{ 0 \} \times \real ) \]
+   Transformationsformel $\Rightarrow$ eine Funktion $f: \real^3 \to \real$ ist genau dann $\lebesgue^3$-integrierbar, wenn $(f \circ \Phi) | \det \nabla \Phi| : U \to \real$ mit
+   \[ (r, \Theta, \varphi) \mapsto f( r \sin \Theta \cos \varphi, r \sin \Theta \sin \varphi, r \cos \Theta ) r^2 \sin \Theta \]
+   integrierbar ist. Dann gilt
+   \[ \int_{\real^3} f \diffop \lebesgue^3 = \int_0^\infty \int_0^\pi \int_0^{2 \pi} f( r \sin \Theta \cos \varphi, r \sin \Theta \sin \varphi, r \cos \Theta ) r^2 \sin \Theta \diffop \varphi \diffop \Theta \diffop r. \]
+   Hier wurde Satz \ref{sect:tonelli} verwendet.
+   
+   Anwendung dieser Formel: 
+   \[ \lebesgue^3( B_R(0) ) = \int_{\real^3} \chi_{B_R(0)} \diffop \lebesgue^3 = \int_{\real^3} \chi_{[0,R)}(|x|) \diffop \lebesgue^3 (x). \]
+   Hier verwendet: $\chi_{B_R(0)}(0) = \chi_{[0,R)}(|x|)$, denn $x \in B_R(0) \Leftrightarrow |x| \in [0,R)$. Das ist klar, denn
+   \[ B_R(0) := \{ x \in \real^n : |x| < R \}. \]
+   Also folgt
+   \[ \begin{aligned}       
+      \lebesgue^3( B_R(0) ) 
+      &= \int_0^R \int_0^\pi \int_0^{2 \pi} r^2 \sin \Theta \diffop \varphi \diffop \Theta \diffop r \\
+      &= 2 \pi \left( \int_0^R r^2 \diffop r \right) \left( \int_0^\pi \sin \Theta \diffop \Theta \right) \\
+      &= \frac{4 \pi}{3} R^3.
+      \end{aligned} \]
+ \end{enumerate}
+\end{bsp}
+
+\subsubsection{Satz von Fubini-Tonelli}\label{sect:tonelli}
+``Mehrdimensionale Integrale als iterierte eindimensionale Integrale''
+
+Wir identifizieren in diesem Abschnitt $R^{k+\ell} = R^k \times \real^\ell$ und bezeichnen Punkte in $\real^{k + \ell}$ mit $(x,y)$, wobei $x \in \real^k$, $y \in \real^\ell$.
+
+Funktionen $f: \real^{k+\ell} \to \real$ fassen wir auf als Funktionen $\real^k \times \real^\ell \to \real$, $(x,y) \mapsto f(x,y)$. Für $y \in \real^\ell$ definiere 
+\[ f( \cdot, y ) : \real^k \to \real, \quad x \mapsto f(x,y). \]
+Analog $f( x, \cdot ) := f(x,y)$.
+
+Wir legen den Maßraum $(\real^n, \borel(\real^n), \lebesgue^n)$ zugrunde\footnote{``Integrierbar'' heißt also $\lebesgue^n$-integrierbar und Borel-messbar.}.
+
+\begin{lem*}[Cavalieri]
+Sei $A \in \real^{k+\ell}$. Dann gilt
+\begin{enumerate}
+ \item Für alle $y \in \real^\ell$ ist der Schnitt $A_y := \{ x \in \real^k : (x,y) \in A \}$ eine Borelmenge in $\real^k$.
+ \item Die Funktion $\real^\ell \to [0,\infty]$, $y \mapsto \lebesgue^n(A_y)$ ist Borel-messbar.
+ \item $\lebesgue^{k+\ell} (A) = \int_{\real^\ell} \lebesgue^k (A_y) \diffop \lebesgue^\ell(y)$.
+\end{enumerate}
+\end{lem*}
+
+\begin{proof}
+ Siehe [MINT].
+\end{proof}
+
+Betrachte zum Beispiel Würfel in $\real^3$
+\begin{itemize}
+ \item $\real^3 = \real \times \real^2$: $\int_{\real^2} \lebesgue^1 (A_y) \diffop \lebesgue^2(y)$, wir betrachten eine Fläche ($\real^2$) und ermitteln in jedem Punkt die Länge der zugehörigen Linie ($\real^1$).
+ \item $\real^3 = \real^2 \times \real$: $\int_{\real^1} \lebesgue^2 (A_y) \diffop \lebesgue^1(y)$, hier gehen wir entlang einer Linie und ermitteln die zugehörige Fläche.
+\end{itemize}
+
+\begin{thm*}[Tonelli]
+ Sei $f: \real^{k+\ell} \to [0, \infty]$ Borel-messbar. Dann ist $f(\cdot,y):\real^3 \to [0,\infty]$ Borel-messbar für jedes $y \in \real^\ell$ und die Funktion
+ \[ \real^\ell \to [0,\infty], \quad y \mapsto \int_{\real^k} f(x,y) \diffop \lebesgue^k (x) \]
+ ist Borel-messbar. Es gilt
+ \[ \begin{aligned} \int_{\real^{k+\ell}} f \diffop \lebesgue^{k+\ell} 
+    &= \int_{\real^\ell} \left( \int_{\real^k} f(x,y) \diffop \lebesgue^k (x) \right) \diffop \lebesgue^\ell (y) \\
+    &= \int_{\real^k} \left( \int_{\real^\ell} f(x,y) \diffop \lebesgue^\ell (y) \right) \diffop \lebesgue^k (x).
+ \end{aligned} \]
+ Insbesondere ist eine Borel-messbare Funktion $F: \real^k \times \real^\ell \to [-\infty, \infty]$ genau dann $\lebesgue^{k+\ell}$-integrierbar, wenn
+ \[ \int_{\real^\ell} \left( \int |F(x,y)| \diffop \lebesgue^k (x) ) \right) \diffop \lebesgue^\ell (y) < \infty. \]
+ Analog gilt das auch für $x \leftrightarrow y$ und $k \leftrightarrow \ell$.
+\end{thm*}
+
+\begin{proof}
+ Aufgrund des Lemmas gilt der Satz für die Funktion $f = \chi_A$ mit Borel-Menge $A \subset \real^{k+\ell}$. Wegen Linearität also auch für einfache Funktionen $f$. Nun sei $f$ wie im Satz. Gemäß Übungsblatt 2 existieren einfache Funktionen $\varphi_n : \real^{k+\ell} \to [0, \infty)$, so dass $\varphi_n (x,y) \uparrow f(x,y)$ für alle $(x,y) \in \real^{k+\ell}$ und $\int \varphi_n \diffop \lebesgue^{k+\ell} \rightarrow \int f \diffop \lebesgue^{k+\ell}$.
+ 
+ Sei $y \in \real^\ell$ fest. Dann ist jedes $\varphi_n(\cdot, y)$ Borel-messbar in $\real^k$, weil der Satz für einfach Funktionen $\varphi_n$ gilt. Da $\varphi_n(\cdot, y) \uparrow f( \cdot, y)$ punktweise auf $\real^k$, folgt mit der monotonen Konvergenz:
+ \[ \Phi_n(y) := \int \varphi_n(x,y) \diffop \lebesgue^k (x) \uparrow \underbrace{\int f(x,y) \diffop \lebesgue^k (x)}_{:= F(y)}. \]
+ 
+ Nun sei $y$ wieder beliebig. $\Phi_n$ ist messbar wegen Satz für einfache Funktionen $\varphi_n$, daher ist $F$ auch messbar.
+ 
+ Monotone Konvergenz $\Rightarrow$ $\int \Phi_n \diffop \lebesgue^\ell \rightarrow \int F \diffop \lebesgue^\ell$. Daher überträgt sich die Integralzerlegung von $\varphi_n$ auf $f$.
+\end{proof}
+
 \end{document}
