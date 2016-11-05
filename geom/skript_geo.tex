@@ -14,21 +14,31 @@
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
+\usepackage{pdfpages}
+
 \theoremstyle{plain}
 \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
 \newtheorem{lem}[thm]{Lemma}
 
 \theoremstyle{definition}
-\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
-\newtheorem{folg}[thm]{Folgerung} % definition numbers are dependent on theorem numbers
-\newtheorem{exmp}[thm]{} % same for example numbers
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{folg}[thm]{Folgerung}
+\newtheorem{exmp}[thm]{}
 
-\numberwithin{equation}{section}
+\newtheorem*{folg*}{Folgerung}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{deno*}{Bezeichnung}
 
 %opening
 \title{Vorlesung\\Geometrie}
 \subtitle{Wintersemester 2016/2017}
 \author{Vorlesung: Prof. Dr. Ulrich Brehm\\Mitschrift: Jonas Hippold}
+
+\hypersetup{
+  pdftitle = {Geometrie},
+  pdfauthor = {Jonas Hippold},
+  hidelinks
+}
 
 \begin{document}
 
@@ -189,7 +199,7 @@ Sei $f:\real^n \to \real^n$ und $f(x) = Ax + t$ eine Isometrie, also $A \in O(n)
  $A$ bildet $\ker(A-E)$ punktweise auf sich selbst ab. Da ferner $A \in O(n)$, bildet $A$ auch $\ker(A-E)^\bot$ auf sich selbst ab, das heißt die Abbilung $\tilde{f}: \ker(A-E)^\bot \to \ker(A-E)^\bot$ mit $\tilde{f}(x) = Ax + t_2 = f(x) - t_1$ ist eine Isometrie von $\ker(A-E)^\bot$, für die die eingeschränkte Abbildung auf diesen Unterraum nicht den Eigenwert 1 hat.
  
  Nach Satz 1.2 hat also $\tilde{f}$ genau einen Fixpunkt in diesem Unterraum und damit gilt
- \[ \tilde{f}(x) = A(x-x_0) + x_0. \]
+ \[ \tilde{f}(x) = A(x-x_0) + x_0. \qedhere \]
 \end{proof}
 
 \subsection*{Klassifikation der Isometrien des $\real^2$}
@@ -388,7 +398,7 @@ Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = 
 
 \begin{lem}
  Sei $A \in \realmat{n}{n} \subset \compmat{n}{n}$. Dann gilt für $A$ als Matrix in $\compmat{n}{n}$ aufgefasst: Falls $x \in \complex^n$ ein Eigenvektor von $A$ zum Eigenwert $c \in \complex$ ist, dann ist $\obar{x}$ ein Eigenvektor von $A$ zum Eigenwert $\obar{c}$, wobei
- \[ \obar{\begin{pmatrix} x_1 \\ \vdots x_n \end{pmatrix}} := \begin{pmatrix} \obar{x}_1 \\ \vdots \obar{x}_n \end{pmatrix}. \]
+ \[ \obar{\begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix}} := \begin{pmatrix} \obar{x}_1 \\ \vdots \\ \obar{x}_n \end{pmatrix}. \]
 \end{lem}
 
 \begin{proof}
@@ -410,4 +420,287 @@ Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = 
  Ferner gilt: Falls $A$ normal ist, dann kann $S \in O(n)$ gewählt werden, das heißt $S^T = S^{-1}, S \in \realmat{n}{n}$).
 \end{thm}
 
+\begin{proof}
+ Das charakteristische Polynom $\chi_A = \det ( XE - A )$ zerfällt über $\complex$ in Linearfaktoren. Da $A \in \realmat{n}{n}$ ist $\det(XE-A)$ ein Polynom mit reellen Koeffizienten und die Nullstellen kommen reell oder in Paaren komplex konjugierter Zahlen vor.
+ 
+ Wir können also die Nullstellen (unter Berücksichtigung der Vielfachheit) sortieren als
+ \[ d_1, \ldots, d_n, a_1 + i b_1, a_1 - i b_1, \ldots, a_m + i b_m, a_m - i b_m \]
+ mit $d_\mu, a_\mu, b_\mu \in \real$, $b_\mu \ne 0$.
+ 
+ Da $A$ über $\complex$ diagonalisierbar ist, gibt es eine Basis von Eigenvektoren. Falls $u_1, \ldots, u_r$ eine Basis von (komplexem) Eigenvektoren und $A$ zu einem nicht-reellen Eigenwert $a + ib$ von $A$ ist, dann sind $\obar{u}_1, \ldots, \obar{u}_r$ (nach Lemma 1.4) eine Basis von Eigenvektoren zum Eigenwert $a - ib$. 
+ 
+ Falls $A$ normal\footnote{$A^T A = A A^T$} ist, dann gibt es nach Satz 1.1 sogar eine komplexe Orthonormalbasis\footnote{$\scalar{\obar{u}_i, \obar{u}_j} = \scalar{u_i, u_j} = \delta_{ij}$} von Eigenvektoren. Wähle in diesem Fall $u_1, \ldots, u_r$ als Orthonormalbasis von Eigenvektoren von $A$ zum Eigenwert $a+ib$. $\obar{u}_1, \ldots, \obar{u}_r$ sind dann eine Orthonormalbasis von Eigenvektoren zum Eigenwert $a-ib$. 
+ 
+ Man erhält die gewünschte Basis folgendermaßen: Für die reellen Eigenwerte wähle reelle Eigenvektoren (als Orthonormalsystem bei normaler Matrix $A$). Für ein Paar komplex konjugierter Eigenwerte $a \pm ib$ wähle als Basisvektoren
+ \[ \rez{\sqrt{2}} ( u_1 + \obar{u}_1 ), \rez{\sqrt{2}} (\obar{u}_1 - u_1), \ldots, 
+    \rez{\sqrt{2}} ( u_r + \obar{u}_r ), \rez{\sqrt{2}} (\obar{u}_r - u_r). \]
+ Das sind Vektoren aus $\real^n$ ($\sqrt{2} \cdot$ Realteil von $u_\mu$, $\sqrt{2} \cdot$ Imaginärteil von $u_\mu$). Dann gilt
+ \begin{align*}
+ A \left( \rez{\sqrt{2}} ( u_1 + \obar{u}_1 ) \right) 
+      &= \rez{\sqrt{2}} ( (a +ib) u_1 - (a-ib) \obar{u}_1 ) \\
+      &= a \left( \rez{\sqrt{2}} ( u_1 + \obar{u}_1 ) \right ) 
+       - b \left( \frac{i}{\sqrt{2}}( \obar{u}_1 - u_1 ) \right),
+ \end{align*}
+ \begin{align*}
+  A \left( \rez{\sqrt{2}} ( \obar{u}_1 - u_1 ) \right) 
+      &= \frac{i}{\sqrt{2}} ( (a -ib) \obar{u}_1 - (a+ib) u_1 ) \\
+      &= b \left( \rez{\sqrt{2}} ( u_1 + \obar{u}_1 ) \right ) 
+       + a \left( \frac{i}{\sqrt{2}}( \obar{u}_1 - u_1 ) \right).
+ \end{align*}
+ Damit erhalten wir also die reelle $2 \times 2$-Matrix $\begin{pmatrix} a & b \\ -b & a \end{pmatrix}$, entsprechend für die anderen Paare von Eigenvektoren. Damit ist die behauptete Normalform gezeigt.
+ 
+ Wir erhalten im Fall von normalen Matrizen eine reelle Orthonormalbasis, denn zu verschiedenen (komplexen) Eigenwerten sind die (komplexen) Eigenräume orthogonal (uni\-täres Standardskalarprodukt auf $\complex^n$. Die Eigenvektoren haben Betrag 1:
+ \[ \left\| \rez{\sqrt{2}} ( u_1 + \obar{u}_1 ) \right\| = \scalar{\rez{\sqrt{2}} ( u_1 + \obar{u}_1 ), \rez{\sqrt{2}} ( u_1 + \obar{u}_1 )} = 1, \]
+ da $\| u_1 \| = \| \obar{u}_1 \| = 1$ und $\scalar{\obar{u}_1, u_1} = 0$. Genauso
+ \[ \left\| \frac{i}{\sqrt{2}} ( u_1 - \obar{u}_1 ) \right\| = 1. \]
+ Nun zeigen wir die paarweise Orthogonalität:
+ \[ \scalar{\rez{\sqrt{2}} (u_1 + \obar{u}_1), \frac{i}{\sqrt{2}} (\obar{u}_1 - u_1)} = \frac{i}{\sqrt{2}} \scalar{u_1, u_1} - \frac{i}{\sqrt{2}} \scalar{\obar{u}_1, \obar{u}_1} = 0 \]
+ Bei mehrfachen komplexen Eigenwerten hatten wir eine Orthonormalbasis gewählt, also gilt zum Beispiel
+ \[ \scalar{\rez{\sqrt{2}} ( u_1 + \obar{u}_1 ), \rez{\sqrt{2}} ( u_k + \obar{u}_k )} = 0, \]
+ wegen $\scalar{u_1, u_k} = 0$ (auch für $\scalar{u_1, \obar{u}_k}, \ldots$).
+ 
+ Insgesamt haben wir also eine reelle Orthonormalbasis gefunden, bezüglich der die normale Matrix $A$ die gewünschte Normalform hat.
+\end{proof}
+
+\subsection*{Geometrische Interpretation}
+Sei $z = a \pm ib = |z| e^{\pm i \varphi} = |z| ( \cos \varphi \pm i \sin \varphi)$ ein paar komplex konjugierter Eigenwerte von $A$ mit $b \ne 0$. Die zugehöige $2 \times 2$-Matrix
+\[ \begin{pmatrix} |z| \cos \varphi & - |z| \sin \varphi \\ |z| \sin \varphi & |z| \cos \varphi \end{pmatrix}
+   = |z| \begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix} \]
+beschreibt eine \emph{Drehstreckung} mit Streckungsfaktor $|z| = \sqrt{a^2 + b^2}$ und Drehwinkel $\varphi$ (mit $\varphi \ne 0, pi$).
+
+\textbf{Folgerung aus Satz 1.8:}
+\begin{thm}
+ \begin{enumerate}[a)]
+  \item Sei $A \in O(n)$ und $k = \dim \ker(A-E)$. Dann lässt sich $A$ als Produkt von $n-k$ Spiegelungnen an Hyperebenen schreiben.
+  \item Jede Isometrie des $\real^n$ lässt sich als Produkt von höchstens $n+1$ Spiegelungen an (affinen) Hyperebenen schreiben.
+ \end{enumerate}
+\end{thm}
+
+%Aufgabe: Was ist geometrisch das Produkt von zwei Spiegelungen an windschiefen Geraden des $\real^n$?
+
+%Betrachte die zugehörigen linearen Abbildungen: Es ergibt sich eine Drehung um den doppelten Winkel des Winkels zwischen $g_1$ und $g_2$.
+
+\section{Projektive Geometrie}
+$(P,G,I)$: $P$, $G$ Mengen, $I \subseteq P \times G$.
+
+$P$: Menge der Punkte \\
+$G$: Menge der Geraden \\
+$I$: Inzidenzrelation.
+
+Schreib- und Sprechweisen:
+\begin{itemize}
+ \item Statt $(p,g) \in I$ schreibe $pIg$, ``$p$ liegt auf $g$''. 
+ \item Zwei Geraden $g_1$, $g_2$ ``schneiden sich in $p$'' heißt $pIg_1$ und $pIg_2$. 
+ \item Drei Punkte $p_1$, $p_2$, $p_3$ heißen ``kollinear'', falls es $g \in G$ gibt, so dass $p_1$, $p_2$, $p_3$ auf $g$ liegen.
+ \item Für $g_1, g_2 \in G$ ist
+  \[ g_1 \cap g_2 = \begin{cases}
+                   p, &\text{falls sich } g_1, g_2 \text{ in } p \text{ schneiden.} \\
+                   \emptyset, &\text{falls sie sich nicht schneiden.} \\
+                   g_1 = g_2, &\text{falls die Geraden zusammen fallen.}
+                  \end{cases} \]
+\end{itemize}
+
+\begin{defn*}
+ Ein \emph{projektiver Raum} $\proj = (P,G,I)$ besteht aus zwei Mengen $P$, $G$ und einer Relation $I \subseteq P \times G$, sodass gilt:
+ \begin{enumerate}[{A}1)]
+  \item Durch je zwei (verschiedene) Punkte $p_1$, $p_2$ geht genau eine Gerade. Bezeichne diese Gerade mit $p_1 p_2$.
+  \item Sind $p_1$, $p_2$, $p_3$, $p_4$ vier Punkte, sodass sich die Geraden $p_1 p_2$ und $p_3 p_4$ schneiden, dann treffen sich auch $p_1 p_3$ und $p_2 p_4$.
+  \item Auf jeder Geraden liegen mindestens drei Punkte.
+  \item Es gibt mindestens zwei Geraden.
+ \end{enumerate}
+\end{defn*}
+
+\begin{defn*}
+ Der projektive Raum $\proj = (P,G,I)$ heißt eine \emph{projektive Ebene}\footnote{Die Zeichenebene ist keine projektive Ebene! Zum Beispiel kann man in A2 $p_1$, $p_2$, $p_3$, $p_4$ so wählen, dass $p_1 p_3$ und $p_2 p_4$ parallel sind.}, falls die folgende Verschärfung von A2 gilt:
+ 
+ A2') Je zwei Geraden schneiden sich.
+\end{defn*}
+
+\begin{bem}
+ Aus A1 folgt: Falls Geraden $g_1$, $g_2$ mindestens zwei Punkte $p_1$, $p_2$ gemeinsam haben, dann folgt $g_1 = g_2$. Das heißt zwei (verschiedene) Geraden $g_1$, $g_2$ schneiden sich in höchstens einem Punkt.
+\end{bem}
+
+Erinnerung: In einem Schiefkörper $(K, +, \cdot)$ gelten alle Körperaxiome, bis auf die Kommutativität von $\cdot$. Also ist $(K, +)$ eine abelsche Gruppe (mit neutralem Element $0$) und $(K \setminus \{ 0 \}, \cdot)$ ist eine Gruppe (mit neutralem Element 1). Es gelten die Distributivgesetze:
+\begin{align*}
+ a(b+c) = ab + ac, \\
+ (a+b)c = ac + bc.
+\end{align*}
+
+Im (Links-)Vektorraum $V$ über dem Schiefkörper $K$ gelten alle Axiome außer, dass der Skalarbereich ein Schiefkörper ist, zum Beispiel $\lambda( \mu x ) = (\lambda \mu) x$, $\lambda, \mu \in K$, $x \in V$.
+
+Wenn man eine lineare Abbildung durch Matrizen beschreiben will, besser Rechtsvektorraum $A(x\lambda) = (Ax) \lambda$.
+
+\begin{bem}
+ Grundlegendes aus der linearen Algebra gilt auch für Vektorräume über Schiefkörpern (z.B. Basis, Dimension, Dimensionssatz). Determinanten sind nicht vernünf\-tig definierbar und alles was mit ihnen zusammenhängt gilt damit auch nur eingschränkt.
+\end{bem}
+
+\begin{defn*}
+ Ein \emph{echter Schiefkörper} $K$ ist ein Schiefkörper, bei dem die Multiplikation \emph{nicht} kommutativ ist.
+\end{defn*}
+
+Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
+\begin{itemize}
+ \item $P := \{ Kx | x \in V \setminus \{ 0 \} \}$ Menge der 1-dimensionalen linearen Unterräume,
+ \item $G := \{ Kx + Ky | x, y \in V $ linear unabhängig $\}$ Menge der 2-dimensionalen linearen Unterräume.
+ \item $p I G \Leftrightarrow p \subseteq g$, $p$ liegt auf $g$, wenn falls der 1-dimensionale Unterraum $p$ in $g$ enthalten ist.
+\end{itemize}
+
+\begin{defn*}
+ $\proj(V) := (P,G,I)$.
+\end{defn*}
+
+\begin{deno*}
+ $[x] := Kx$ (für $x \in V \setminus \{ 0 \}$), $[x,y] := Kx + Ky$ ist die lineare Hülle von $x,y$.
+\end{deno*}
+
+\begin{thm}
+ Falls $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ mit $\dim V \ge 3$ ist, dann ist $\proj(V)$ ein projektiver Raum. Ist $\dim V = 3$, dann ist $\proj(V)$ eine projektive Ebene.
+\end{thm}
+
+\begin{proof}
+ A1: Für $[x], [y] \in P$ mit $[x] \ne [y]$ gilt $x,y$ sind linear unabhängig und damit ist $[x,y]$ der einzige zweidimensionale Unterraum, der $[x]$ und $[y]$ enthält.
+ 
+ A2: Seien $p_1 = [x_1]$, $p_2 = [x_2]$, $p_3 = [x_3]$, $p_4 = [x_4] \in P$ vier verschiedene Punkte, sodass sich $p_1 p_2 = [x_1, x_2]$ und $p_3 p_4 = [x_3, x_4]$ treffen. Dann ist $\dim ( [x_1 x_2] \cap [x_3 x_4] ) \ge 1$ und wir erhalten mit der Dimensionsformel:
+ \begin{align*}
+  \dim( [x_1, x_2, x_3, x_4]) &= \dim( [x_1, x_2] ) + \dim( [x_3, x_4] ) - \dim( [x_1,x_2] \cap [x_3,x_4] ) \\
+  &\le 2+2-1 = 3.
+ \end{align*}
+ Nun benutzen wir nochmals die Dimensionsformel, um $\dim( [x_1,x_3] \cap [x_2,x_4] )$ abzuschätzen:
+ \begin{align*}
+  \dim( [x_1,x_3] \cap [x_2,x_4] ) &= \dim( [x_1, x_3] ) + \dim( [x_2, x_4] ) - \dim( [x_1, x_2, x_3, x_4]) \\
+  &\ge 2 + 2 - 3 = 1.
+ \end{align*}
+ Also treffen sich auch $p_1 p_3$ und $p_2 p_4$.
+ 
+ A3: Sei $[x,y] \in G$, also $\{ x,y \}$ linear unabhängig, dann sind auch $\{ x, x+y \}$ und $\{ y, x+y \}$ linear unabhängig, also $[x]$, $[y]$, $[x+y]$ drei verschiedene Punkte auf $[x,y]$.
+ 
+ A4: Da $\dim V \ge 3$ gibt es linear unabhängige Vektoren $x,y,z \in V$. Damit ist $[x,y] \ne [y,z]$ (beide in $G$).
+ 
+ A2': Falls $\dim V = 3$, $g_1, g_2 \in G$, $g_1 \ne g_2$, dann gilt 
+ \[ \dim( g_1 \cap g_2 ) = \dim g_1 + \dim g_2 - \dim( g_1 + g_2 ) = 2 + 2 - 3 = 1. \qedhere \]
+\end{proof}
+
+\begin{defn*}
+ Unter einem \emph{Dreieck} verstehen wir ein Tripel $(A_1, A_2, A_3)$ von nicht kollinearen Punkten. $A_1, A_2, A_3$ heißen die \emph{Ecken}, $A_2 A_3, A_1 A_3, A_1 A_2$ heißen die \emph{Seiten} des Dreiecks.
+\end{defn*}
+
+\begin{defn*}
+ Sei $\proj$ ein projektiver Raum. $\proj$ heißt \emph{desarguessch} (oder in $\proj$ gilt der Satz von Desargues), falls für je zwei Dreiecke $(A_1, A_2, A_3)$, $(B_1, B_2, B_3)$, bei denen die einander entsprechenden Ecken und Seiten verschieden sind, gilt: 
+ \begin{addmargin}{1cm} 
+ Wenn die drei Verbindungsgeraden durch die einander entsprechenden Ecken durch einen Punkt gehen, dann sind die drei Schnittpunkte der einander entsprechenden Seiten kollinear. 
+ \end{addmargin}
+ Also:
+ \begin{addmargin}{1cm} 
+ Falls es $Z \in P$ gibt mit $z = A_1 B_1 \cap A_2 B_2 \cap A_3 B_3$, dann sind
+ \[ P_{12} := A_1 A_2 \cap B_1 B_2, \quad P_{13} := A_1 A_3 \cap B_1 B_3, \quad P_{23} := A_2 A_3 \cap B_2 B_3 \]
+ kollinear.
+ \end{addmargin}
+
+ Falls die 10 Punkte $Z, A_1, A_2, A_3, B_1, B_2, B_3, P_{12}, P_{13}, P_{23}$ und 10 Geraden\footnote{Die sechs Seiten der Dreiecke, die drei Verbindungsgeraden und die Gerade, auf der $P_{12}, P_{13}, P_{23}$ liegen.}  paarweise verschieden sind, nennt man diese Konfiguration aus 10 Punkten und 10 Geraden die \emph{Konfiguration von Desargues}.
+\end{defn*}
+
+\begin{figure}[ht]
+ \center
+ \includegraphics[width=12cm]{img/desargues}
+\end{figure}
+
+\begin{thm}
+ Sei $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ mit $\dim V \ge 3$. Dann ist $\proj(V)$ desarguessch.
+\end{thm}
+
+\begin{proof}
+ Falls $Z$ mit einer Ecke übereinstimmt ist die Behauptung trivial. Sei also o.B.d.A. $Z \ne A_i$, $Z \ne B_i$, $A_i \ne B_i$ für $i = 1,2,3$. Seien $Z = [v]$, $A_i = [v_i]$. 
+ 
+ Wir können nun $B_i = [v + v_i]$, $i = 1,2,3$ annehmen. Begründung: Wähle $v$ fest und $\tilde{v}_i$ mit $[\tilde{v}_i] = A_i$. Dann sind $B_i = [\lambda_i v + \mu_i \tilde{v}_i]$ für gewisse $\lambda_i, \mu_i \in K$. Es gilt $\lambda_i \ne 0$ weil $B_i \ne Z$ und $\mu_i \ne 0$ weil $B_i \ne A_i$. Also gilt 
+ \[ B_i = \lambda_i^{-1} [\lambda_i v + \mu_i \tilde{v}_i] = [v + \underbrace{\lambda_i^{-1} \mu_i \tilde{v}_i}_{=: v_i}] = [v + v_i], \]
+ $A = [v_i]$ weil $[\tilde{v_i}] = [v_i]$. Damit folgt 
+ \[ P_{12} = A_1 A_2 \cap B_1 B_2 = [v_1 , v_2] \cap [v + v_1, v + v_2 ] = [v_1 - v_2], \]
+ denn die projektiven Geraden $A_1 A_2$ und $B_1 B_2$ sind nach Voraussetzung verschieden, also
+ \[ \dim( [v_1, v_2] \cap [v + v_1, v + v_2 ] ) = 2 + 2 - \dim[v_1, v_2, v] = 1 \]
+ und $v_1 - v_2 \in [v_1, v_2] \cap [v + v_1, v + v_2]$, der Punkt $v_1-v_2$ liegt sowohl in der linearen Hülle von $(v_1, v_2)$ als auch in $(v + v_1, v + v_2)$.
+
+ Entsprechend folgen $P_{23} = [v_2 - v_3]$, $P_{13} = [v_1 - v_3]$. Also liegen $P_{12}$, $P_{13}$, $P_{23}$ auf der projektiven Geraden $[v_1 - v_2, v_2 - v_3]$. Damit gilt in $\proj(V)$ der Satz von Desargues.
+\end{proof}
+
+\begin{defn*}
+ Sei $\proj$ ein projektiver Raum. In $\proj$ \emph{gilt der Satz von Pappos}\footnote{Pappos von Alexandria, ca. 300}, falls für je 7 verschiedene Punkte $Z, A_1, A_2, A_3, B_1, B_2, B_3$ gilt:
+ \begin{addmargin}{1cm} 
+ Falls $Z, A_1, A_2, A_3$ auf einer Geraden $g$ liegen und $Z, B_1, B_2, B_3$ auf einer Geraden $h \ne g$ liegen, dann sind die Punkte 
+ \[ P_{12} := A_1 B_2 \cap A_2 B_1, \quad P_{23} := A_2 B_3 \cap A_3 B_2, \quad P_{13} := A_1 B_3 \cap A_3 B_1 \]
+ kollinear.
+ \end{addmargin}
+\end{defn*}
+
+\begin{figure*}[ht]
+ \center
+ \includegraphics[width=12cm]{img/pappos}
+\end{figure*}
+
+
+\begin{thm}
+ Sei $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ und $\dim V \ge 3$. Dann gilt in $\proj(V)$ der Satz von Pappos genau dann, wenn $K$ kommutativ, also ein Körper ist.
+\end{thm}
+
+\begin{proof}
+ Seien 
+ \[ \begin{aligned}
+     Z   &:= g \cap h = [u], \\
+     A_1 &:= [v] \text{ und o.B.d.A. } A_2 = [u + v] \text{ (ersetze ggf. $v$ durch ein geeignetes $\lambda v$)}, \\
+     B_1 &:= [w] \text{ und o.B.d.A. } B_2 = [u + w].
+    \end{aligned} \]
+ $u, v, w$ sind linear unabhängig, da $g \ne h$. Dann ist $P_{12} = A_1 B_2 \cap A_2 B_1 = [u + v + w]$. 
+ 
+ ``$\Leftarrow$'' Sei $K$ ein Körper. Zu zeigen: $P_{12}, P_{13}, P_{23}$ sind kollinear.
+ 
+ Für $A_3, B_3$ gibt es $r, s \in K$ mit $A_3 = [ru+v]$, $B_3 = [su+w]$. Dann ist 
+ \[ P_{13} = A_3 B_1 \cap A_1 B_3 = [ru + v, w] \cap [v, su + w] = [rsu+sv+rw] =: [v_{13}], \]
+ denn $s(ru+v) + rw = rsu + sv + rw = sv + r(su + w)$. Dabei gilt $rs = sr$, weil $K$ kommutativ ist.
+ \[ P_{23} = A_2 B_3 \cap A_3 B_2 = [u+v, su + w] \cap [ru + v, u+w] \]
+ und es gilt
+ \[ \begin{aligned}
+    (rs-1)u + (s-1)v + (r-1)w 
+    &= (s-1) (u+v) + (r-1)(su +w) \\
+    &= (s-1)(u+w) + (s-1)(ru+v),
+    \end{aligned} \]
+ also folgt
+ \[ P_{23} = [ (rs-1)u + (s-1)v + (r-1)w ] =: [v_{23}]. \]
+ Wir sehen nun $v_{13} - v_{23} = u + v + w \in [u + v + w] = P_{12}$, also sind $P_{12}, P_{13}, P_{23}$ kollinear.
+ 
+ ``$\Rightarrow$'' Gelte der Satz von Pappos. Zu zeigen: $K$ ist ein Körper, also $rs = sr$ für $r,s \in K$.
+ 
+ Seien o.B.d.A.\footnote{Wir schließen 0 und 1 aus, da sie mit allen Elementen von $K$ kommutieren.} $r,s \in K \setminus \{ 0, 1 \}$, $A := [ru+v]$, $B_3 := [su+v]$. Dann gibt es $x,y \in V$ mit $x+y = u + v + w$.
+ 
+ Seien $P_{13} = [x]$, $P_{23} = [y]$, dann gibt es wegen des Satzes von Pappos $t_1, \ldots, t_8 \in K$, so dass
+ \begin{align*}
+    x &=   &   t_1 v + t_2 (su+w) &= t_3 w + t_4 (ru+v) \tag{1} \\
+    y &=   &   t_5 (u+v) + t_6 (su+w) &= t_7 (u+w) + t_8 (ru+v) \tag{2} \\
+  x+y &=   &   u+v+w &= t_1 v + t_2 (su+w) + t_5 (u+v) + t_6 (su+w) \tag{3}
+ \end{align*}
+ Weil $u,v,w$ linear unabhängig sind, folgt aus (3)
+ \[ \left. \begin{aligned}
+    w: \quad 1 &= t_2 + t_6 \\
+    u: \quad 1 &= (t_2+t_6) s + t_5 = s + t_5 \\
+    v: \quad 1 &= t_1 + t_5
+    \end{aligned}
+    \quad \right\} \Rightarrow 
+    \begin{aligned}
+     t_1 &= s, \\
+     t_2 &= 1 - t_6, \\
+     t_5 &= 1 - s. 
+    \end{aligned} \]
+ Zusammen mit (1) folgt
+ \[ v: \quad t_4 = t_1 = s, \qquad u: \quad t_2 s = t_4 r, \qquad w: \quad t_2 = t_3. \]
+ Mit $t_2 = 1 - t_6$ aus (3) gilt also
+ \[ (1-t_6)s = t_2 s = t_4 r = sr \qRq t_6 s = s - sr \qRq t_6 = 1 - srs^{-1}. \tag{$\circ$} \]
+ Zusammen mit (2) folgt
+ \[ u: \quad t_5 + t_6s = t_7 + t_8 r, \qquad v: \quad t_8 = t_5, \qquad w: \quad t_7 = t_6. \]
+ Nun setzen wir ($\circ$) und $t_5 = 1-s$ ein:
+ \begin{align*}
+     t_5 + t_6 s = t_6 + t_5 r \quad
+     &\Rightarrow & (1-s) + (s-sr) &= (1 - srs^{-1}) + (1-s)r \\
+     &\Rightarrow & -srs^{-1} + r &= 0 \\
+     &\Rightarrow & srs^{-1} &= r \\
+     &\Rightarrow & rs &= sr. \qedhere 
+ \end{align*}
+\end{proof}
 \end{document}
