@@ -2,6 +2,7 @@
 *.aux
 *.log
 *.pdf
+!geom/img/*.pdf
 *.backup
 *.toc
 *.out
