@@ -26,6 +26,7 @@
 \newtheorem{exmp}[thm]{}
 
 \newtheorem*{folg*}{Folgerung}
+\newtheorem*{exmp*}{Beispiel}
 \newtheorem*{defn*}{Definition}
 \newtheorem*{deno*}{Bezeichnung}
 
@@ -74,9 +75,9 @@ Schreib- und Sprechweisen:
                   \end{cases} \]
 \end{itemize}
 
-\begin{defn*}
+\begin{defn*}\label{def:proj}
  Ein \emph{projektiver Raum} $\proj = (P,G,I)$ besteht aus zwei Mengen $P$, $G$ und einer Relation $I \subseteq P \times G$, sodass gilt:
- \begin{enumerate}[{A}1)]
+ \begin{enumerate}[\hspace{.5cm}{A}1)]
   \item Durch je zwei (verschiedene) Punkte $p_1$, $p_2$ geht genau eine Gerade. Bezeichne diese Gerade mit $p_1 p_2$.
   \item Sind $p_1$, $p_2$, $p_3$, $p_4$ vier Punkte, sodass sich die Geraden $p_1 p_2$ und $p_3 p_4$ schneiden, dann treffen sich auch $p_1 p_3$ und $p_2 p_4$.
   \item Auf jeder Geraden liegen mindestens drei Punkte.
@@ -86,8 +87,9 @@ Schreib- und Sprechweisen:
 
 \begin{defn*}
  Der projektive Raum $\proj = (P,G,I)$ heißt eine \emph{projektive Ebene}\footnote{Die Zeichenebene ist keine projektive Ebene! Zum Beispiel kann man in A2 $p_1$, $p_2$, $p_3$, $p_4$ so wählen, dass $p_1 p_3$ und $p_2 p_4$ parallel sind.}, falls die folgende Verschärfung von A2 gilt:
- 
- A2') Je zwei Geraden schneiden sich.
+ \begin{enumerate}[\hspace{.5cm}{A}1)]
+  \item [A2')] Je zwei Geraden schneiden sich.
+ \end{enumerate}
 \end{defn*}
 
 \begin{bem}
@@ -132,9 +134,9 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
 \end{thm}
 
 \begin{proof}
- A1: Für $[x], [y] \in P$ mit $[x] \ne [y]$ gilt $x,y$ sind linear unabhängig und damit ist $[x,y]$ der einzige zweidimensionale Unterraum, der $[x]$ und $[y]$ enthält.
+ A1) Für $[x], [y] \in P$ mit $[x] \ne [y]$ gilt $x,y$ sind linear unabhängig und damit ist $[x,y]$ der einzige zweidimensionale Unterraum, der $[x]$ und $[y]$ enthält.
  
- A2: Seien $p_1 = [x_1]$, $p_2 = [x_2]$, $p_3 = [x_3]$, $p_4 = [x_4] \in P$ vier verschiedene Punkte, sodass sich $p_1 p_2 = [x_1, x_2]$ und $p_3 p_4 = [x_3, x_4]$ treffen. Dann ist $\dim ( [x_1 x_2] \cap [x_3 x_4] ) \ge 1$ und wir erhalten mit der Dimensionsformel:
+ A2) Seien $p_1 = [x_1]$, $p_2 = [x_2]$, $p_3 = [x_3]$, $p_4 = [x_4] \in P$ vier verschiedene Punkte, sodass sich $p_1 p_2 = [x_1, x_2]$ und $p_3 p_4 = [x_3, x_4]$ treffen. Dann ist $\dim ( [x_1 x_2] \cap [x_3 x_4] ) \ge 1$ und wir erhalten mit der Dimensionsformel:
  \begin{align*}
   \dim( [x_1, x_2, x_3, x_4]) &= \dim( [x_1, x_2] ) + \dim( [x_3, x_4] ) - \dim( [x_1,x_2] \cap [x_3,x_4] ) \\
   &\le 2+2-1 = 3.
@@ -146,11 +148,11 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
  \end{align*}
  Also treffen sich auch $p_1 p_3$ und $p_2 p_4$.
  
- A3: Sei $[x,y] \in G$, also $\{ x,y \}$ linear unabhängig, dann sind auch $\{ x, x+y \}$ und $\{ y, x+y \}$ linear unabhängig, also $[x]$, $[y]$, $[x+y]$ drei verschiedene Punkte auf $[x,y]$.
+ A3) Sei $[x,y] \in G$, also $\{ x,y \}$ linear unabhängig, dann sind auch $\{ x, x+y \}$ und $\{ y, x+y \}$ linear unabhängig, also $[x]$, $[y]$, $[x+y]$ drei verschiedene Punkte auf $[x,y]$.
  
- A4: Da $\dim V \ge 3$ gibt es linear unabhängige Vektoren $x,y,z \in V$. Damit ist $[x,y] \ne [y,z]$ (beide in $G$).
+ A4) Da $\dim V \ge 3$ gibt es linear unabhängige Vektoren $x,y,z \in V$. Damit ist $[x,y] \ne [y,z]$ (beide in $G$).
  
- A2': Falls $\dim V = 3$, $g_1, g_2 \in G$, $g_1 \ne g_2$, dann gilt 
+ A2') Falls $\dim V = 3$, $g_1, g_2 \in G$, $g_1 \ne g_2$, dann gilt 
  \[ \dim( g_1 \cap g_2 ) = \dim g_1 + \dim g_2 - \dim( g_1 + g_2 ) = 2 + 2 - 3 = 1. \qedhere \]
 \end{proof}
 
@@ -160,11 +162,11 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
 
 \begin{defn*}
  Sei $\proj$ ein projektiver Raum. $\proj$ heißt \emph{desarguessch} (oder in $\proj$ gilt der Satz von Desargues), falls für je zwei Dreiecke $(A_1, A_2, A_3)$, $(B_1, B_2, B_3)$, bei denen die einander entsprechenden Ecken und Seiten verschieden sind, gilt: 
- \begin{addmargin}{1cm} 
+ \begin{addmargin}[.5cm]{0cm}
  Wenn die drei Verbindungsgeraden durch die einander entsprechenden Ecken durch einen Punkt gehen, dann sind die drei Schnittpunkte der einander entsprechenden Seiten kollinear. 
  \end{addmargin}
  Also:
- \begin{addmargin}{1cm} 
+ \begin{addmargin}[.5cm]{0cm}
  Falls es $Z \in P$ gibt mit $z = A_1 B_1 \cap A_2 B_2 \cap A_3 B_3$, dann sind
  \[ P_{12} := A_1 A_2 \cap B_1 B_2, \quad P_{13} := A_1 A_3 \cap B_1 B_3, \quad P_{23} := A_2 A_3 \cap B_2 B_3 \]
  kollinear.
@@ -198,7 +200,7 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
 
 \begin{defn*}
  Sei $\proj$ ein projektiver Raum. In $\proj$ \emph{gilt der Satz von Pappos}\footnote{Pappos von Alexandria, ca. 300}, falls für je 7 verschiedene Punkte $Z, A_1, A_2, A_3, B_1, B_2, B_3$ gilt:
- \begin{addmargin}{1cm} 
+ \begin{addmargin}[.5cm]{0cm} 
  Falls $Z, A_1, A_2, A_3$ auf einer Geraden $g$ liegen und $Z, B_1, B_2, B_3$ auf einer Geraden $h \ne g$ liegen, dann sind die Punkte 
  \[ P_{12} := A_1 B_2 \cap A_2 B_1, \quad P_{23} := A_2 B_3 \cap A_3 B_2, \quad P_{13} := A_1 B_3 \cap A_3 B_1 \]
  kollinear.
@@ -209,7 +211,6 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
  \center
  \includegraphics[width=12cm]{img/pappos}
 \end{figure*}
-
 
 \begin{thm}
  Sei $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ und $\dim V \ge 3$. Dann gilt in $\proj(V)$ der Satz von Pappos genau dann, wenn $K$ kommutativ, also ein Körper ist.
@@ -277,4 +278,101 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
      &\Rightarrow & rs &= sr. \qedhere 
  \end{align*}
 \end{proof}
+
+\begin{bem}
+ Aus dem Beweis des Satzes folgt in $\proj(V)$ ($V$ ist ein $K$-Vektorraum mit $\dim V \ge 3$): $K$ kommutativ $\Leftrightarrow$ Es existieren paarweise verschiedene $Z, A_1, A_2, B_1, B_2 \in \proj(V)$ mit $Z = A_1 A_2 \cap B_1 B_2$. Für alle $A_3$ auf $A_1 A_2$ mit $A_3 \ne A_1, A_2$ und $B_3$ auf $B_1 B_2$ mit $B_3 \ne B_1, B_2$ gilt: $P_{ij} = A_i B_j \cap A_j B_i$, $i \ne j$ sind kollinear.
+ 
+ Das heißt im Satz von Pappos kann man $Z, A_1, A_2, B_1, B_2$ fest wählen.
+\end{bem}
+
+\begin{deno*}
+ Der Vektor $x \ne 0$ aus $K^n$ heißt \emph{homogene Koordinaten} von $[x] \in \proj(V)$. Falls $x \in K^n$ mit $x_n \ne 0$, dann ist
+ \[ \left[ \begin{pmatrix} x_1 \\ \vdots \\ x_{n-1} \\ x_n \end{pmatrix} \right] =
+    \left[ \begin{pmatrix} x_n^{-1} x_1 \\ \vdots \\ x_n^{-1} x_{n-1} \\ 1 \end{pmatrix} \right]. \]
+\end{deno*}
+
+Für $V = \real^n$ ist
+\[ [x] = \left[ \frac{x}{\|x\|} \right] = \left[ \frac{-x}{\|x\|} \right]. \]
+Der projektive Raum $\proj(\real^n)$ kann daher mit der $S^{n-1} \subseteq \real^n$ nach Identifikation von Antipodenpaaren identifiziert werden.
+ 
+$S^{n-1}$ ist die Einheitssphäre. $x \in S^{n-1}$ heißt $x \in \real^n$, $\| x \| = 1$. Wir betrachten also statt Geraden die äquivalenten (gegenüberliegenden) Punkte der Einheitssphäre $S^{n-1}_\pm$, das heißt $x \sim x' \Leftrightarrow x = x'$ oder $x = -x'$.
+
+\subsection*{Dualität für projektive Ebenen}
+\begin{thm}
+ Sei $\proj = (P,G,I)$ eine projektive Ebene. Dann ist auch $\proj^* := (G,P,I^{-1})$ mit $I^{-1} := \{ (g,p) : (p,g) \in I \}$ eine projektive Ebene.
+\end{thm}
+
+$\proj^*$ ist die zu $\proj$ \emph{duale Ebene}. Offensichtlich gilt $\proj^{**} = \proj$.
+
+\begin{proof}
+ Zu zeigen: $\proj^*$ erfüllt die Axiome der projektiven Ebene A1), A2'), A3) und A4) (siehe S. \pageref{def:proj}).
+ \begin{enumerate}[\hspace{.5cm}A2)]
+  \item[A1)] Durch je zwei (verschiedene) Punkte $p_1$, $p_2$ geht genau eine Gerade.
+  \item[A2')] Je zwei Geraden schneiden sich.
+  \item[A3)] Auf jeder Geraden liegen mindestens drei Punkte.
+  \item[A4)] Es gibt mindestens zwei Geraden.
+ \end{enumerate}
+ 
+ Die zu einer Aussage über $(P,G,I)$ duale Aussage ist die entsprechende Aussage für $(G,P,I^{-1})$\footnotemark.
+ \footnotetext{Vertausche die Rollen von Punkten und Geraden und $I$ mit $I^{-1}$. Begriffe werden analog dualisiert, zum Beispiel die Gerade $P_1 P_2$ entspricht dem Punkt $g_1 \cap g_2$. Kollineare Punkte entsprechen kopunktalen Geraden.}
+ 
+ Aus A1) und A2') folgt die Aussage:
+ \begin{enumerate}[\hspace{.5cm}A2)]
+  \item [$\widetilde{\text{A2}}$')] Je zwei Geraden schneiden sich in genau einem Punkt.
+ \end{enumerate}
+
+ Für die ersten beiden dualen Axiome folgt:
+ \begin{enumerate}[\hspace{.5cm}{A}1 {dual})]
+  \item[A1 dual)] ist offenbar dieselbe Aussage wie $\widetilde{\text{A2}}$').
+  \item[A2' dual)] ist dieselbe Aussage wie A1).
+ \end{enumerate}
+
+ Die zu A3) und A4) dualen Aussagen sind
+ \begin{enumerate}[\hspace{.5cm}{A}1 {dual})]
+  \item[A3 dual)] Durch jeden Punkt gehen mindestens drei Geraden.
+  \item[A4 dual)] Es gibt mindestens zwei Punkte.
+ \end{enumerate}
+ Aus A3) und A4) folgt offenbar A4 dual). 
+ 
+ Zu zeigen: In $\proj$ gilt A3 dual). Sei $P$ ein Punkt. Dann gibt es nach A1) eine Gerade $g$ durch $P$.  Auf dieser liegen nach A3) mindestens zwei weitere Punkte $P_1$ und $P_2$. Nach A4) gibt es mindestens eine weitere Gerade $h$ und nach A2') schneiden sich $g$ und $h$ in einem Punkt $X$. Auf $h$ gibt es nach A3) zwei Punkte $Q_1, Q_2 \ne X$. Die Geraden $PQ_1, PQ_2$ und $PP_1$ sind paarweise verschieden. Damit gibt es mindestens drei Geraden durch $P$.
+\end{proof}
+
+\textbf{Dualitätsprinzip.} Wenn eine Aussage für alle projektiven Ebenen gilt, dann gilt auch die duale Aussage für alle projektiven Ebenen\footnote{Vertausche zum Beweis einfach $\proj$ mit $\proj^*$.}.
+
+\begin{exmp*}
+ Dualisiere die Aussage ``$\proj = (P,G,I)$ ist desarguessch.'' Beweise: Wenn $\proj$ desarguessch ist, dann ist es auch $\proj^*$.
+ 
+ \begin{addmargin}[.5cm]{0cm} 
+ \textbf{Aussage von Desargues.} Für alle $A_1, A_2, A_3, B_1, B_2, B_3 \in P$ mit $A_i \ne B_i$, sodass $A_1, A_2, A_3$ nicht kollinear sind und $B_1, B_2, B_3$ nicht kollinear sind, gilt: Falls $Z$ der Schnittpunkt von $A_1 B_1$, $A_2 B_2$ und $A_3 B_3$ ist, dann sind 
+ \begin{align*}
+  P_{12} &:= A_1 A_2 \cap B_1 B_2, \\
+  P_{23} &:= A_2 A_3 \cap B_1 B_2, \\
+  P_{13} &:= A_3 A_1 \cap B_3 B_1 
+ \end{align*}
+ kollinear.
+ 
+ \textbf{Duale Aussage.} Für alle $g_1, g_2, g_3, h_1, h_2, h_3 \in G$ mit $g_i \ne h_i$, sodass $g_1, g_2, g_3$ nicht kopunktal\footnote{Das heißt, dass die drei Geraden sich nicht in \emph{einem} Punkt schneiden, sondern ein Dreieck bilden.} und $h_1, h_2, h_3$ nicht kopunktal sind, gilt: Falls $f$ eine Gerade durch $g_1 \cap h_1$, $g_2 \cap h_2$, $g_3 \cap h_3$ ist, dann sind
+ \begin{align*}
+  l_{12} &:= (g_1 \cap g_2)(h_1 \cap h_2), \\
+  l_{23} &:= (g_2 \cap g_3)(h_2 \cap h_3), \\
+  l_{31} &:= (g_3 \cap g_1)(h_3 \cap h_1 )
+ \end{align*}
+ kopunktal.
+ \end{addmargin}
+\end{exmp*}
+
+\begin{thm}
+ Eine projektive Ebene $\proj$ ist desarguessch $\Leftrightarrow$ $\proj^*$ ist desarguessch.
+\end{thm}
+
+\subsection*{Endliche projektive Ebenen}
+\begin{defn*}
+ Ein projektiver Raum $\proj = (P,G,I)$ heißt \emph{endlich}, falls $P$ endlich ist.
+\end{defn*}
+
+\begin{deno*}
+ Sei $g \in G$, dann bezeichne $(g) := \{ p \in P : (p,g) \in I \}$ die Menge der Punkte auf der Geraden $g$.
+\end{deno*}
+
+
 \end{document}
