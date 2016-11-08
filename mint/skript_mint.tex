@@ -45,6 +45,8 @@
 
 \tableofcontents
 
+\clearpage
+
 \section*{Organisatorisches}
  \begin{itemize}
   \item \emph{Aufgaben:} Auf der Vorlesungsseite
@@ -143,7 +145,7 @@ Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit 
 
 Das bedeutet: Die Mengen $U$ und $V$ haben mit den obigen Forderungen das selbe Maß, egal wie man $U$ und $V$ wählt.
 
-Folgerung: $\real^d$ enthält Teilmengen, die so seltsam sind, dass kein \emph{geometrisch} vernünftiges Maß für \emph{alle} Teilmengen definieren kann.
+Folgerung: $\real^d$ enthält Teilmengen, die so seltsam sind, dass man kein \emph{geometrisch} vernünftiges Maß für \emph{alle} Teilmengen definieren kann.
 
 Wir geben die Forderung auf, dass das Maß für \emph{alle} Teilmengen definiert werden soll.
 
@@ -333,7 +335,7 @@ Sei $X \ne \emptyset$ eine beliebige Menge, $\mA$ eine $\sigma$-Algebra in $X$.
 \end{proof}
 
 \begin{deno}
- Sei $(X, \mA, \mu)$ ein Maßraum. Wenn $E \in \mA$ und $\mu(E) = 0$, dann heißt $E$ eine \emph{Nullmenge}, oder eine \emph{$\mu$-Nullmenge}. Die Vereinigung von abzählbar vielen Nullmengen ist wieder eine Nullmenge\footnote{Das folgt aus der Subadditivität von $\mu$}.
+ Sei $(X, \mA, \mu)$ ein Maßraum. Wenn $E \in \mA$ und $\mu(E) = 0$, dann heißt $E$ eine \emph{Nullmenge}, oder eine \emph{$\mu$-Nullmenge}. Die Vereinigung von abzählbar vielen Nullmengen ist wieder eine Nullmenge\footnote{Das folgt aus der Subadditivität von $\mu$.}.
  
  Gilt eine Eigenschaft für alle $x \in X$ bis auf eine Nullmenge, so sagt man, sie gilt \emph{fast überall} oder \emph{$\mu$-fast überall}.
  
@@ -592,5 +594,82 @@ Im Falle $A= \{ 1, 2, \ldots, n \}$ schreiben wir $\bigotimes_1^n \meas_j$ oder 
  $\bigotimes_1^d \borel(\real) = \borel(\real^d)$.
 \end{folg}
 
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-10.pdf+.
+
+\section{Borel-Maße auf \texorpdfstring{$\real$}{IR}}
+Ein Maß auf der Borel-$\sigma$-Algebra $\borel(X)$, wobei $X$ ein metrischer (oder topologischer) Raum ist, heißt \emph{Borel-Maß} (auf $X$).
+
+In diesem Abschnitt werden wir Borel-Maße auf $\real$ mit Hilfe von reellen Funktionen konstruieren. Dabei werden wir zuerst das Maß von Intervallen festlegen. Intervalle der Form 
+\[ (a,b], (a, \infty), \emptyset \]
+wobei $- \infty \le a < b < \infty$ werden wir als H-Intervalle\footnote{``H'' für \emph{halboffen}.} bezeichnen. Der Durchschnitt von H-Intervallen ist ein H-Intervall und das Komplement eines H-Intervalls ist die disjunkte Vereinigung von zwei H-Intervallen, wobei eines der beiden auch leer sein kann.
+
+Wir bezeichnen mit $\mA_H$ die Familie aller endlichen, disjunkten Vereinigungen von H-Intervallen. Nach dem folgenden Lemma ist $\mA_H$ eine Algebra.
+
+\begin{lem}
+ Sei $X \ne \emptyset$ eine beliebige Menge, $\mE \in \pot(X)$ mit
+ \begin{enumerate}[(i)]
+  \item $\emptyset \in \mE$,
+  \item $E,F \in \mE \Rightarrow E \cap F \in \mE$,
+  \item $E \in \mE \Rightarrow E^C$ ist eine Vereinigung von endlich vielen disjunkten Mengen aus $\mE$
+ \end{enumerate}
+und bezeichne $\mA$ die Familie aller endlichen, disjunkten Vereinigungen von Mengen aus $\mE$. Dann ist $\mA$ eine Algebra.
+\end{lem}
+
+\begin{proof}
+ Wir betrachten nur den Spezialfall, dass $E^C$ die Vereinigung von genau zwei disjunkten Mengen ist. Der allgemeine Fall lässt sich analog behandeln.
+ 
+ Wir zeigen zuerst: $\mA$ ist abgeschlossen bezüglich endlicher Vereinigungen. Sei $A,B \in \mE$ und $B^C = C_1 \cup C_2$, wobei $C_1, C_2 \in \mE$ disjunkt sind. Dann
+ \[ A \setminus B = A \cap B^C = A \cap( C_1 \cup C_2 ) = (A \cap C_1) \cup (A \cap C_2) \in \mA, \]
+ da $(A \cap C_1), (A \cap C_2) \in \mE$ nach Voraussetzung (ii) und Definition von $\mA$ als Familie von Vereinigungen aus $\mE$. Also ist
+ \[ A \cup B = \underbrace{(A \setminus B)}_{\in \mA} \cup \underbrace{B}_{\in \mE} \in \mA \]
+ nach Definition von $\mA$. Wegen
+ \[ \bigcup_{j=1}^n A_j = \left( \bigcup_{j=1}^{n-1}( A_j \setminus A_n ) \right) \cup A_n \]
+ folgt durch Induktion über $n$, dass $\bigcup_1^n A_j \in \mA$, wenn $A_j \in \mE$, also ist $\mA$ abgeschlossen bezüglich endlicher Vereinigungen.
+ 
+ Noch zu zeigen: $\mA$ ist abgeschlossen bezüglich Komplementbildung. Sei $A = \bigcup_1^n A_j$, wobei $A_j \in \mE$ und die $A_j$ seien disjunkt. Sei weiterhin $A_j^C = B_j^1 \cup B_j^2, \quad B_j^1, B_j^2 \in \mE$ disjunkt.
+ \[ A^C = \bigcap_{j=1}^n A_j^C = \bigcap_{j=1}^n (B_j^1 \cup B_j^2) \overset{\footnotemark}{=} \bigcup \{ B_1^{k_1} \cap \cdots \cap B_n^{k_n} : k_1, \ldots, k_n = 1,2 \} \in \mA, \]
+ da $B_1^{k_1} \cap \cdots \cap B_n^{k_n} \in \mE$ und ihre Vereinigung disjunkt ist.
+ \footnotetext{``Ausmultiplizieren'', es ergibt sich die Vereinigung aller Kombinationen von $B_j^1, B_j^2$.}
+ 
+ Also ist $\mA$ eine Algebra.
+\end{proof}
+
+\begin{lem}
+ Sei $F: \real \to \real$ monoton wachsend und rechtsstetig\footnote{Das heißt: Für den rechsseitigen Grenzwert gilt $\lim_{h \downarrow 0} f(x + h) = f(x)$.}. Sind $(a_j, b_j]$, $j= 1, \ldots, n$, disjunkte H-Intervalle, so sei
+ \[ \mu \left( \bigcup_{j=1}^n (a_j, b_j] \right) := \sum_{j=1}^n [ F(b_j) - F(a_j) ] \]
+ und $\mu( \emptyset ) := 0$. Dann ist $\mu$ ein Prämaß auf $\mA_H$.
+\end{lem} 
+
+Zum Beispiel $F(x) = x$, $\mu( (0,1] ) = 1$, $\mu( (a,b] ) = b - a$; Vereinbarung $F( \pm \infty ) := \lim_{x \to \pm \infty} F(x)$. Dann ist $- \infty \le F(-\infty) \le F(\infty) \le \infty$.
+
+\begin{proof}
+ Zuerst zeigen wir, dass die obige Definition korrekt ist (die Elemente von $\mA_H$ lassen sich auf unterschiedliche Weise als disjunkte Vereinigung von H-Intervallen darstellen). Sei $(a,b] := \bigcup_1^n (a_j, b_j] \in \mA_H$, wobei die Intervalle $(a_j, b_j]$ disjunkt sind. O.B.d.A. sei $a = a_1 < b_1 = a_2 < b_2 = \ldots < b_n = b$. Dann ist
+ \[ \sum_{j=1}^n [ F( b_j ) - F(a_j) ] = F(b) - F(a), \]
+ also unabhängig von der Darstellung. 
+ 
+ Allgemeiner: Sind $\{ I_i \}_1^n$ und $\{ J_j \}_1^m$ Folgen von disjunkten H-Intervallen mit $\bigcup_1^n I_i = \bigcup_1^m J_j$, so gilt
+ \[ I_i = I_i \cap \left( \bigcup_{j=1}^m J_j \right) = \bigcup_{j=1}^m ( I_i \cap J_j ). \]
+ Daraus folgt
+ \[ \sum_{i=1}^n \mu(I_i) = \sum_{i=1}^n \sum_{j=1}^m \mu( I_i \cap J_j ) = \sum_{j=1}^m \sum_{i=1}^n \mu( I_i \cap J_j ) =  \sum_{j=1}^m \mu(J_j). \]
+ Also ist die Definition von $\mu$ korrekt.
+ 
+ Noch zu zeigen:
+ \[ \mu \left( \bigcup_{j=1}^\infty I_j \right) = \sum_{j=1}^\infty \mu(I_j) \]
+ für eine beliebige Folge $\{ I_j \}_1^\infty$ von disjunkten H-Intervallen $I_j = (a_j, b_j]$ mit $\bigcup_1^\infty I_j \in \mA_H$. 
+ 
+ Wegen der endlichen Additivität von $\mA_H$ dürfen wir annehmen, dass $\bigcup_1^\infty I_j = (a,b] =: I$. Aus der Definition von $\mu$ folgt dann
+ \[ \mu(I) = \mu \left( \bigcup_{j=1}^n I_j \right) + \mu \left( I \setminus \bigcup_{j=1}^n I_j \right)
+    \ge \mu\left( \bigcup_{j=1}^n I_j \right) = \sum_{j=1}^n \mu( I_j ), n \in \nat. \]
+ Mit $n \to \infty$ erhalten wir $\mu(I) \ge \sum_1^\infty \mu( I_j )$. 
+ 
+ Wir zeigen noch die umgekehrte Ungleichung. Sei zuerst $- \infty < a < b < \infty $ und $\eps > 0$. Da $F$ rechtsstetig ist, existieren $\delta, \delta_j > 0$ mit 
+ \[ F( a + \delta ) - F(a) < \eps, \quad F(b_j + \delta_j) - F(b_j) < \frac{\eps}{2^j}. \]
+ Die offenen Intervalle $(a_j, b_j + \delta_j)$ überdecken die kompakte Menge $[a + \delta, b]$. Wir wählen eine \emph{endliche} Überdeckung
+ 
+ 
+ \[ \mu \left( \bigcup_{j=1}^\infty I_j \right) 
+    = \mu \left( \bigcup_{k=1}^N J_k \right) = \sum_{k=1}^N \mu(J_k) \]
+\end{proof}
 
 \end{document}
