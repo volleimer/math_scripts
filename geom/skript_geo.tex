@@ -16,9 +16,13 @@
 
 \usepackage{pdfpages}
 
+\usepackage[numbers]{../.tex/fancy_thm}
+
 \theoremstyle{plain}
-\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
-\newtheorem{lem}[thm]{Lemma}
+%\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem*{thm*}{Satz}
+%\newtheorem{prp}[thm]{Proposition}
+%\newtheorem{lem}[thm]{Lemma}
 
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{Definition}
@@ -29,6 +33,7 @@
 \newtheorem*{exmp*}{Beispiel}
 \newtheorem*{defn*}{Definition}
 \newtheorem*{deno*}{Bezeichnung}
+\newtheorem*{rmrk*}{Bemerkung}
 
 %opening
 \title{Vorlesung\\Geometrie}
@@ -47,15 +52,18 @@
 
 \tableofcontents
 
+\clearpage
+
 \setcounter{secnumdepth}{0}
-\include{00_einfuehrung}
+% \input{00_einfuehrung}
+
+\clearpage
+\input{01_isometrien}
 
 \clearpage
 \setcounter{secnumdepth}{1}
-\include{01_isometrien}
-
-\clearpage
 \section{Projektive Geometrie}
+\setcounter{secnumdepth}{0}
 $(P,G,I)$: $P$, $G$ Mengen, $I \subseteq P \times G$.
 
 $P$: Menge der Punkte \\
@@ -75,6 +83,7 @@ Schreib- und Sprechweisen:
                   \end{cases} \]
 \end{itemize}
 
+\subsection{Projektiver Raum}
 \begin{defn*}\label{def:proj}
  Ein \emph{projektiver Raum} $\proj = (P,G,I)$ besteht aus zwei Mengen $P$, $G$ und einer Relation $I \subseteq P \times G$, sodass gilt:
  \begin{enumerate}[\hspace{.5cm}{A}1)]
@@ -160,6 +169,7 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
  Unter einem \emph{Dreieck} verstehen wir ein Tripel $(A_1, A_2, A_3)$ von nicht kollinearen Punkten. $A_1, A_2, A_3$ heißen die \emph{Ecken}, $A_2 A_3, A_1 A_3, A_1 A_2$ heißen die \emph{Seiten} des Dreiecks.
 \end{defn*}
 
+\subsection{Satz von Desargues}
 \begin{defn*}
  Sei $\proj$ ein projektiver Raum. $\proj$ heißt \emph{desarguessch} (oder in $\proj$ gilt der Satz von Desargues), falls für je zwei Dreiecke $(A_1, A_2, A_3)$, $(B_1, B_2, B_3)$, bei denen die einander entsprechenden Ecken und Seiten verschieden sind, gilt: 
  \begin{addmargin}[.5cm]{0cm}
@@ -198,6 +208,7 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
  Entsprechend folgen $P_{23} = [v_2 - v_3]$, $P_{13} = [v_1 - v_3]$. Also liegen $P_{12}$, $P_{13}$, $P_{23}$ auf der projektiven Geraden $[v_1 - v_2, v_2 - v_3]$. Damit gilt in $\proj(V)$ der Satz von Desargues.
 \end{proof}
 
+\subsection{Satz von Pappos}
 \begin{defn*}
  Sei $\proj$ ein projektiver Raum. In $\proj$ \emph{gilt der Satz von Pappos}\footnote{Pappos von Alexandria, ca. 300}, falls für je 7 verschiedene Punkte $Z, A_1, A_2, A_3, B_1, B_2, B_3$ gilt:
  \begin{addmargin}[.5cm]{0cm} 
@@ -206,6 +217,8 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
  kollinear.
  \end{addmargin}
 \end{defn*}
+
+\newpage
 
 \begin{figure*}[ht]
  \center
@@ -239,7 +252,7 @@ Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
     \end{aligned} \]
  also folgt
  \[ P_{23} = [ (rs-1)u + (s-1)v + (r-1)w ] =: [v_{23}]. \]
- Wir sehen nun $v_{13} - v_{23} = u + v + w \in [u + v + w] = P_{12}$, also sind $P_{12}, P_{13}, P_{23}$ kollinear.
+ Wir sehen nun $v_{13} - v_{23} = u + v + w$, also ist $P_{12} \in P_{13} P_{23}$ und damit sind die Punkte kollinear.
  
  ``$\Rightarrow$'' Gelte der Satz von Pappos. Zu zeigen: $K$ ist ein Körper, also $rs = sr$ für $r,s \in K$.
  
@@ -297,7 +310,7 @@ Der projektive Raum $\proj(\real^n)$ kann daher mit der $S^{n-1} \subseteq \real
  
 $S^{n-1}$ ist die Einheitssphäre. $x \in S^{n-1}$ heißt $x \in \real^n$, $\| x \| = 1$. Wir betrachten also statt Geraden die äquivalenten (gegenüberliegenden) Punkte der Einheitssphäre $S^{n-1}_\pm$, das heißt $x \sim x' \Leftrightarrow x = x'$ oder $x = -x'$.
 
-\subsection*{Dualität für projektive Ebenen}
+\subsection{Dualität für projektive Ebenen}
 \begin{thm}
  Sei $\proj = (P,G,I)$ eine projektive Ebene. Dann ist auch $\proj^* := (G,P,I^{-1})$ mit $I^{-1} := \{ (g,p) : (p,g) \in I \}$ eine projektive Ebene.
 \end{thm}
@@ -361,18 +374,209 @@ $\proj^*$ ist die zu $\proj$ \emph{duale Ebene}. Offensichtlich gilt $\proj^{**}
  \end{addmargin}
 \end{exmp*}
 
+\setcounter{thm}{5}
 \begin{thm}
  Eine projektive Ebene $\proj$ ist desarguessch $\Leftrightarrow$ $\proj^*$ ist desarguessch.
 \end{thm}
 
-\subsection*{Endliche projektive Ebenen}
+\subsection{Endliche projektive Räume}
+
 \begin{defn*}
  Ein projektiver Raum $\proj = (P,G,I)$ heißt \emph{endlich}, falls $P$ endlich ist.
 \end{defn*}
 
 \begin{deno*}
- Sei $g \in G$, dann bezeichne $(g) := \{ p \in P : (p,g) \in I \}$ die Menge der Punkte auf der Geraden $g$.
+ Sei $g \in G$, dann bezeichnet $(g) := \{ p \in P : (p,g) \in I \}$ die Menge der Punkte auf der Geraden $g$.
 \end{deno*}
 
+\begin{thm*}[Hessenberg]
+ Sei $\proj$ ein projektiver Raum, in dem der Satz von Pappos gilt. Dann gilt auch der Satz von Desargues.
+\end{thm*}
+
+Beweis nicht in der Vorlesung, siehe zum Beispiel
+\begin{itemize}
+ \item H. Lenz: Vorlesungen über projektive Geometrie,
+ \item R. Lingenberg: Grundlagen der Geometrie I.
+\end{itemize}
+
+Beispiel für eine nichtdesarguessche projektive Ebene (siehe auch Übung): Moulton-Ebene.
+
+\begin{lem}
+ Sei $\proj$ ein projektiver Raum, $g_1, g_2 \in G$. Dann gibt es eine bijektive Abbildung $\varphi:(g_1) \to (g_2)$.
+\end{lem}
+
+\begin{proof}
+ Sei O.B.d.A. $g_1 \ne g_2$. Wir unterscheiden zwei Fälle:
+ \begin{enumerate}
+  \item $(g_1) \cap (g_2) = \{ s \} \ne \emptyset$. Seien $P_1 \in (g_1)$, $P_2 \in (g_2)$ mit $P_1 \ne P_2 \ne S$ (diese existieren nach A3)). Nach A3) gibt es auch $P$ mit $P \ne P_1$, $P \ne P_2$ auf $P_1 P_2$. Es ist offenbar $P \notin (g_1)$ und $P \notin (g_2)$. Nach A2) schneidet eine Gerade $Px$ mit $x \in (g_1)$, $x \ne S$ die Gerade $g_2$ in einem eindeutig bestimmten Punkt $\pi(x) \ne S$. Die Gerade $PS$ schneidet $g_2$ nur in $S$. Definiere $pi:(g_1) \to (g_2)$ mit $\pi( x ) = xP \cap g_2$. $\pi$ ist offenbar bijektiv.
+  \item $(g_1) \cap (g_2) ) \emptyset$. Wähle  auf $g_1$, $g_2$ Punkte $P_1 \in (g_1)$, $P_2 \in (g_2)$. Sei $h := P_1 P_2$. Dann gibt es nach dem 1. Fall bijektive Abbildungen $\pi_1: (g_1) \to (h)$ und $\pi_2: (h) \to (g_2)$. Also ist $\pi_2 \circ \pi_1: (g_1) \to (g_2)$ bijektiv. \qedhere
+ \end{enumerate}
+\end{proof}
+
+\begin{figure*}[ht]
+ \center
+ \includegraphics[width=12cm]{img/lemma27}
+\end{figure*}
+
+In einem endlichen projektiven Raum $\proj$ liegen also auf jeder Geraden gleich viele Punkte.
+
+\begin{defn*}
+ Ein endlicher projektiver Raum $\proj$ hat die \emph{Ordnung $q$}, wenn auf jeder Geraden $q+1$ Punkte liegen.
+\end{defn*}
+
+\begin{thm*}[Wedderburn]
+ Jeder endliche Schiefkörper ist ein Körper.
+\end{thm*}
+
+\begin{thm}
+ Sei $\proj = (P,G,I)$ eine projektive Ebene der Ordnung $q$. Dann gilt $|P| = |Q| = q^2 + q +1$. Auf jeder Geraden liegen $q+1$ Punkte und durch jeden Punkt gehen $q+1$ Geraden.
+\end{thm}
+
+\begin{proof}
+ Nach Lemma 2.7 und Definition liegen auf jeder Geraden genau $q+1$ Punkte. Sei $p \in P$, $g \in G$ mit $p \notin (g)$. Jede Gerade durch $p$ schneidet $(g)$ in genau einem Punkt und durch jeden Punkt $p_1 \in (g)$ gibt es die Gerade $p p_1$. Damit haben wir eine Bijektion zwischen der Menge der Geraden durch $p$ und der Menge der Punkte auf $g$ definiert. Also gehen durch jeden Punkt $p$ genau $q++1$ Geraden. Damit gibt es genau 
+ \[ \text{(Geraden durch $p$)} \cdot \text{(Punkte $\ne p$ auf $g$ durch $p$)} + \text{Punkt $p$} = (q+1)q + 1 = q^2 + q +1 \]
+ Punkte. Dies ist auch gleich der Anzahl der Geraden, da $\proj^* = (G,P,I^{-1})$ auch eine projektive Ebene der Ordnung $q$ ist.
+\end{proof}
+
+\subsubsection*{Endliche Körper}
+\begin{defn*}
+ Sei $K$ ein Körper. Die \emph{Charakteristik} von $K$ ist definiert als
+ \[ \chr K = \begin{cases} 
+    p, &\text{falls $p \in \nat$ die kleinste Zahl mit $1 + 1 + \ldots + 1 = 0$ ist.} \\
+    0, &\text{falls es keine solche Zahl gibt.}         
+   \end{cases} \]
+Falls $\chr K \ne 0$, dann ist $\chr K$ eine Primzahl, denn anderenfalls wäre $p = nm$ mit $1 < n < p$ und $1 < m < p$, also
+\[ \underbrace{( 1 + 1 + \ldots + 1)}_n \cdot \underbrace{( 1 + 1 + \ldots + 1)}_m = 0 \]
+\end{defn*}
+
+\begin{exmp*}
+ $\integer_p$ ist für eine Primzahl $p$ ein Körper der Charakteristik $p$.  
+\end{exmp*}
+
+Falls $K$ ein endlicher Körper ist, dann ist $\chr(K) = p \ne 0$ eine Primzahl. In $K$ betrachte die Menge
+\[ P := \{ 0, 1, 1+1, \ldots, (p-1) \cdot 1 \} \subseteq K. \]
+Dies ist ein Unterkörper von $K$ und $K$ ist ein $P$-Vektorraum, $\dim K = n \ne \infty$. $K$ hat genau $p^n$ Elemente. Also ist $(K,+) \simeq \integer_p^n$.
+
+Es gilt $(K \setminus \{ 0 \}, \cdot ) \simeq \integer_{q-1}$, wobei $q = p^n = |K|$, das heißt es gibt $a \in K$ mit
+\[ K^* := K \setminus \{ 0 \} = \{ 1, a, a^2, a^3, \ldots, a^{q-2} \}. \]
+Also ist jedes Element von $K$ Nullstelle des Polynoms $x^q - x \in K[x]$. 
+
+Die Abbildung $\varphi: K \to K$ mit $\varphi(x) = x^p$ ist ein Körperautomorphismus von $K$, denn
+\begin{align*}
+ \varphi(xy) &= (xy)^p = \varphi(x) \varphi(y) \\
+ \varphi(x+y) &= (x+y)^p = \sum_{\nu = 0}^p \begin{pmatrix} p \\ \nu \end{pmatrix} x^\nu y^{p-\nu} \overset{\footnotemark}{=} x^p + y^p = \varphi(x) + \varphi(y)
+\end{align*}
+\footnotetext{Denn $\begin{pmatrix} p \\ \nu \end{pmatrix}$ ist  in $K$ für $1 \le \nu \le p-1$ durch $p$ teilbar, also $\begin{pmatrix} p \\ \nu \end{pmatrix} = 0$.}
+
+$\varphi$ ist bijektiv, denn $\varphi^n = \id$,  $x^{p^n} = x^q = x$.
+
+\begin{thm*}
+ Sei $p$ eine Primzahl und $n \in \nat$. Dann gibt es bis auf Isomorphie genau einen Körper mit $q=p^n$ Elementen. Er ist der ``kleinste'' Körper, in dem das Polynom $x^q - x \in P[x]$ in Linearfaktoren zerfällt\footnote{Der ``Zerfällungskörper'' von $x^q - x$ über $P$.}.
+ 
+ Die Unterkörper von $K$ mit $q = p^n$ sind genau die Körper der Form 
+ \[ \{ x \in K | x^{p^i} = x \} = \{ 0 \} \cup \{ a^{k p^{n-i}} : k = 0, 1, \ldots, p^i -1 \},\]
+ wobei $i \ge 1$ ein Teiler von $n$ ist. Also gibt es zu jedem $i \ge 1$ mit $i|n$ ($i$ teilt $n$) genau einen Unterkörper von $K$ mit $p^n$ Elementen und diese sind alle Unterkörper von $K$.
+\end{thm*}
+
+\subsubsection*{Konstruktion eines Körpers mit \texorpdfstring{$p^n$}{p hoch n} Elementen}
+Wähle ein irreduzibles\footnote{Irreduzibel heißt, dass es \emph{keine} Polynome $p_1, p_2$ kleineren Grades gibt, sodass $p_0 = p_1 p_2$.} Polynom $n$-ten Grades $p_0(x) \in \integer_p[x]$. Dann ist $\integer_p[x] / (p_0)$ ein Körper mit $p^n$ Elementen.
+
+Erzeugtes Ideal
+\[ \{ p_0 f | f \in \integer_p[x] \} \]
+
+\begin{defn*}
+ Sei $\proj = (P,G,I)$, $\proj' = (P',G',I')$ projektive Räume. Eine \emph{Kollineation} $\alpha: \proj \to \proj'$ ist ein Paar $\alpha = (\alpha_1, \alpha_2)$ von bijektiven Abbildungen $\alpha_1:P \to P'$, $\alpha_2: G \to G'$, sodass $(p,g) \in I \Leftrightarrow (\alpha_1(p), \alpha_2(g) ) \in I'$ für alle $p \in P$, $g \in G$. 
+ 
+ $\proj=(P,G,I)$ und $\proj' = (P', G', I')$ heißen \emph{isomorph} (geschrieben $\proj \simeq \proj'$), wenn es eine Kollineation $\alpha: \proj \to \proj'$ gibt.
+ 
+ Schreibweise: Wir schreiben $\alpha(p), \alpha(g)$ statt $\alpha_1(p), \alpha_2(g)$, falls keine Missverständnisse zu befürchten sind.
+\end{defn*}
+
+\begin{bem}
+ Die Menge der Kollineationen $\alpha: \proj \to \proj'$ ist mit $\circ$ eine Gruppe.
+\end{bem}
+
+\begin{thm*}[Koordinatisierungssatz]
+ Sei $\proj = (P,G,I)$ ein desarguesscher projektiver Raum. Dann gibt es einen Schiefkörper $K$ mit einem $K$-Vektorraum $V$ mit $\dim V \ge 3$, sodass $\proj \simeq \proj(V)$ gilt.
+\end{thm*}
+
+\subsubsection*{Desarguessche endliche projektive Ebenen}
+Sei $\proj$ eine endliche desarguessche projektive Ebene. Nach dem Koordinatisierungssatz gibt es einen $K$-Vektorraum $V$ über einem Schiefkörper $K$ mit $\proj \simeq \proj(V)$ und $\dim V \ge 3$. Da $\proj$ endlich ist, ist auch $K$ endlich. Nach dem Satz von Wedderburn ist $K$ ein Körper. Also hat $K$ nach Klassifikation der endlichen Körper $p^n$ Elemente, wobei $p$ eine Primzahl ist.
+
+Ferner gilt: Bis auf Isomorphie gibt es zu jeder Primzahl $p$ und $n \in \nat$ genau einen solchen Körper mit $q = p^n$ Elementen. Man bezeichnet ihn mit $GF(q)$ bzw. $\mathbf{F}_q$.
+
+Bis auf Isomorphie gibt es genau eine desarguessche projektive Ebene der Ordnung $q = p^n$.
+
+\subsubsection*{Nichtdesarguessche endliche projektive Ebenen}
+Für jedes $q \le 8$ gibt es \emph{keine} nichtdesarguessche projektive Ebene der Ordnung $q$. Für jedes $q = p^n$ mit $n \ge 2$, $p$ Primzahl, $q \ge 9$ gibt es (mindestens) eine nichtdesarguessche projektive Ebene der Ordnung $q$.
+
+\emph{Jede bisher bekannte} endliche projektive Ebene ist von der Ordnung $q = p^n$, $p$ Primzahl, $n \ge 1$. \emph{Jede bisher bekannte} projektive Ebene von Primzahlordnung ist desarguessch.
+
+\textbf{Folgerung aus Koordinatisierungssatz, Satz von Wedderburn und Satz von Hessenberg.}
+In einer endlichen projektiven Ebene $\proj$ sind äquivalent:
+\begin{enumerate}[(1)]
+ \item $\proj$ ist desarguessch.
+ \item In $\proj$ gilt der Satz von Pappos.
+\end{enumerate}
+
+Ein Satz zur Nicht-Existenz bestimmter projektiver Ebenen:
+\begin{thm*}[Bruck-Ryser]
+ Falls $q = 4n+1$ oder $q = 4n+2$, $n \in \nat$ \emph{und} $q$ nicht die Summe zweier Quadratzahlen ist, dann gibt es \emph{keine} projektive Ebene der Ordnung $q$.
+\end{thm*}
+
+\begin{bem}
+ Sei $q = r^2 m$, $r,m \in \nat$ und $m$ nicht durch eine Quadratzahl teilbar, dann sind äquivalent:
+ \begin{enumerate}[(1)]
+  \item $q$ ist \emph{nicht} die Summe zweier Quadratzahlen.
+  \item $m$ ist durch eine Zahl der Form $4k+3$ teilbar, $k \in \nat_0$.
+ \end{enumerate}
+\end{bem}
+
+Das Wissen um die Nichtexistenz von projektiven Ebenen anderer Ordnung als im Satz von Bruck-Ryser ist sehr begrenzt. Die einzige andere Zahl, die bisher als Ordnung einer projektiven Ebene ausgeschlossen wurde, ist $q = 10$. Dieser Beweis wurde mit massivem Computereinsatz geführt.
+
+Also sind bisher bekannt:
+\begin{center}\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c}
+ Ordnung &    & 2  & 3  & 4  & 5  & 6    & 7  & 8  & 9  & 10 \\
+ \hline
+ Bekannt &    & Ja & Ja & Ja & Ja & Nein & Ja & Ja & Ja & Nein* \\[5pt]
+ Ordnung & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 \\
+ \hline
+ Bekannt & Ja & ?  & Ja & Nein & ? & Ja & Ja & ? & Ja & ?
+\end{tabular}\end{center}
+
+\subsection{Unterräume projektiver Räume}
+\begin{defn*}
+ Sei $\proj = (P,G,I)$ ein projektiver Raum. $U \subseteq P$ heißt ein \emph{Unterraum}, falls für je zwei (verschiedene) Punkte $p_1, p_2 \in U$ gilt $(p_1 p_2) \subseteq U$.
+\end{defn*}
+
+Offensichtlich erfüllt für jeden Unterraum $U \subseteq P$ die Inzidenzstruktur $\ubar{U} = (U,G',I')$ mit $G' = \{ g \in G : (g) \subseteq U \}$ die Axiome A1), A2), A3), aber \emph{nicht unbedingt} A4).
+
+Also nach Definition sind $\emptyset$, $\{ p \}$, $(g)$ für $p \in P$, $g \in G$ Unterräume von $\proj$, aber keine projektiven Räume, da A4) nicht erfüllt ist. 
+
+Der Durchschnitt beliebiger Unterräume ist wieder ein Unterraum.
+
+\begin{defn*}
+ Sei $X \subseteq P$. Dann definiere $\angles{x} := \bigcap \{ U : x \in U, U \subset P \text{ Unterraum} \}$. $\angles{x}$ heißt der von $x$ \emph{aufgespannte Unterraum}. Er ist der kleinste Unterraum von $\proj$, der $x$ enthält.
+ 
+ $x$ heißt ein \emph{Erzeugendensystem} in $\proj$, falls $\angles{x} = P$.
+ 
+ $\proj$ heißt \emph{endlich erzeugbar}, falls es ein endliches Erzeugendensystem gibt.
+ 
+ Schreibweisen: Statt $\angles{ \{p_1, \ldots, p_n \} }$ schreibe $\angles{ p_1, \ldots, p_n }$. Statt $\angles{ x \cup \{p\} }$ schreibe $\angles{x,p}$. Statt $\angles{x \cup y}$ schreibe $\angles{x,y}$.
+ 
+ $\angles{ \emptyset } = \emptyset$, $\angles{ p } = \{ p \}$ für $p \in P$, $\angles{ p,q } = ( p,q )$, falls $p \ne q$, $p,q \in P$
+\end{defn*}
+
+\setcounter{thm}{17}
+\begin{prp}
+ Sei $U \subseteq P$ ein Unterraum, $p \in P \setminus U$, $U \ne \emptyset$. Dann gilt
+ \[ \angles{ U,p } = \bigcup \{ (pq) : q \in U \}. \]
+\end{prp}
+
+Beweis als Übung (Axiom A2) wird wesentlich verwendet).
+
+\begin{prp}[Austauschsatz]
+ Sei $U \subseteq P$ ein Unterraum, $U \ne \emptyset$ und $p \in P \setminus U$. Dann gilt: Aus $q \in \angles{U,p} \setminus U$ folgt $q \in \angles{U,q}$.
+\end{prp}
 
 \end{document}
