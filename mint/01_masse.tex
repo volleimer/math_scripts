@@ -1,0 +1,770 @@
+\chapter{Maße}
+\section{Einführung}
+\begin{prgp}
+ Eine sehr alte Aufgabe der Geometrie: Man bestimme Länge, Flächeninhalt, Volumen von gewissen Gebieten, Körpern in $\real$, in der Ebene, im Raum.
+ 
+ Mit Hilfe des Riemann-Integrals kann man dieses Problem für \emph{gewisse} Mengen in $\real^2$ und $\real^3$ lösen: Mengen, die durch glatte Kurven oder Flächen berandet sind.
+ 
+ Mit diesem Zugang kann man aber kompliziertere Mengen nicht behandeln.
+\end{prgp}
+ 
+\subsection*{Axiomatischer Zugang}
+Sei $d \in \nat$ beliebig. 
+
+Anstelle von Länge, Flächeninhalt oder Volumen sprechen wir vom \emph{Maß} einer Menge.
+
+Welche Eigenschaften sollte ein Maß haben?
+
+Ein Maß $\mu$ soll \emph{jeder Menge} $E \subset \real^d$ eine Zahl $\mu(E) \in [0, \infty]$ zuordnen, so dass
+\begin{enumerate}[(i)]
+ \item Ist $E_1, E_2, \ldots$ eine endliche oder unendliche Folge von \emph{disjunkten} Mengen $E_j \subset \real^d$, so gilt:
+ \[ \mu(E_1 \cup E_2 \cup \ldots ) = \mu(E_1) + \mu(E_2) + \ldots \]
+ \item Sind $E$ und $F$ \emph{kongruent}\footnote{$F$ entsteht aus $E$ mit Hilfe von Verschiebung, Spiegelung oder Rotation}, so ist $\mu(E) = \mu(F)$.
+ \item Der $d$-dimensionale Einheitswürfel soll das Maß 1 haben:
+  \[ \mu([0,1]^d) = 1. \]
+\end{enumerate}
+
+Wir zeigen, dass ein solches Maß nicht existiert! Wir betrachten nur den Fall $d=1$, der allgemeine Fall lässt sich analog behandeln.
+
+Wir definieren eine Äquivalenzrelation $\sim$ auf $[0,1)$ durch
+\[ x \sim y \qRq x-y \in \rat. \]
+Sei $N$ eine Teilmenge von $[0,1)$, die genau ein Element von jeder Äquivalenzklasse enthält. Sei $R := \rat \cap [0,1)$ und für jedes $r \in R$ sei 
+\[ N_r := \{ x + r: x \in N \cap [0,1-r) \} \cup \{ x + r - 1: x \in N \cap [1-r,1) \}. \]
+Um $N_r$ zu erhalten, wird $N$ um $r$ nach rechts verschoben; der Teil, der dabei $[0,1)$ verlässt, wird um 1 nach links verschoben.
+
+Wir zeigen:
+\[ [0,1) = \bigcup_{r \in R} N_r \text{ und } N_r \cap N_s = \emptyset,\, r \ne s. \]
+
+\begin{proof}
+ Sei $x \in [0,1)$ beliebig und sei $y$ das Element von $N$, das zur Äquivalenzklasse von $x$ gehört. Dann ist $x \in N_r$, wobei 
+ \[ r := \begin{cases}
+          x-y, & \text{wenn } x \ge y, \\
+          x-y+1 & \text{wenn } x < y.
+         \end{cases} \]
+ Also ist
+ \[ [0,1) = \bigcup_{r \in R} N_r. \]
+ 
+ Ist $x \in N_r \cap N_s$, so sind $x-r$ (oder $x-r+1$) und $x-s$ (oder $x-s+1$) verschiedene Elemente von $N$, die zur selben Äquivalenzklasse gehören. Das ist nicht möglich. Also ist
+ \[ N_r \cap N_s = \emptyset,\, r \ne s. \]
+
+ Wir zeigen nun noch:
+ \[ \mu( N ) = \mu(N_r),\, r \in R. \]
+
+ Aus den geforderten Eigenschaften von $\mu$ folgt
+ \[ \mu(N) \overset{\text{(i)}}{=} \mu( N \cap [0,1-r) ) + \mu( N \cap [1-r, 1) ) \overset{\text{(ii)}}{=} \mu(N_r). \] 
+ 
+ Nun ist
+ \[ 1 \overset{\text{(iii)}}{=} \mu( [0,1) ) \overset{\text{(i)}}{=} \sum_{r \in R} \mu( N_r ). \]
+ Das ist nicht möglich, da
+ \[ \sum_{r \in R} \mu( N_r ) = 
+   \begin{cases}
+    \infty, & \text{falls } \mu(N) > 0, \\
+    0, & \text{falls } \mu(N) = 0.
+   \end{cases} \qedhere \]
+\end{proof}
+
+Sei $I \ne \emptyset$ eine beliebige Menge und $a_i \in \real$. Was versteht man unter $\sum_{i \in I} a_i$?
+
+Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit von $\mu$ sehr einschränken würde). Das geht auch nicht!
+
+\newpage
+
+\begin{thm}[Banach-Tarski, 1924]
+ Seien $U$ und $V$ beliebige, nichtleere, beschränkte, offene Mengen in $\real^d$, $d \ge 3$. Dann gibt es ein $k \in \nat$ und Teilmengen $E_1, \ldots, E_k, F_1, \ldots, F_k$, so dass
+ \begin{enumerate}[(i)]
+  \item Die $E_j$ sind disjunkt und ihre Vereinigung ist $U$.
+  \item Die $F_j$ sind disjunkt und ihre Vereinigung ist $V$.
+  \item $E_j$ ist kongruent zu $F_j$ für alle $j$.
+ \end{enumerate}
+\end{thm}
+
+Das bedeutet: Die Mengen $U$ und $V$ haben mit den obigen Forderungen das selbe Maß, egal wie man $U$ und $V$ wählt.
+
+Folgerung: $\real^d$ enthält Teilmengen, die so seltsam sind, dass man kein \emph{geometrisch} vernünf\-tiges Maß für \emph{alle} Teilmengen definieren kann.
+
+Wir geben die Forderung auf, dass das Maß für \emph{alle} Teilmengen definiert werden soll.
+
+\section{Aufgaben}
+ Siehe \verb+Aufgaben-1-2.pdf+.
+
+\section{\texorpdfstring{$\sigma$}{Sigma}-Algebren}
+Sei $X \ne \emptyset$ eine beliebige Menge. Das Komplement von $A \subset X$ bezüglich $X$ bezeichnet $A^C := X \setminus A$.
+
+\begin{defn}
+ Eine Familie $\mA \subset \pot(X)$ heißt eine \emph{$\sigma$-Algebra} (in $X$), wenn
+ \begin{enumerate}[(i)]
+  \item $X \in \mA$.
+  \item $A \in \mA$ $\Rightarrow$ $A^C \in \mA$.
+  \item $A_1, A_2, \ldots \in \mA$ $\Rightarrow$ $\bigcup_{i=1}^\infty A_i \in \mA$.
+ \end{enumerate}
+ $\mA$ heißt eine \emph{Algebra}, wenn (i), (ii) und (iii) mit endlich vielen $A_i$ gelten.
+\end{defn}
+
+Einfache Beispiele:
+\begin{itemize}
+ \item $\mA = \{ X, \emptyset \}$.
+ \item $\mA = \pot( X )$.
+ \item $\mA = \{ X, \emptyset, A, A^C \}$ mit $A \subset X$.
+\end{itemize}
+
+\clearpage
+
+\begin{lem}
+ Ist $\mA$ eine Algebra, so gilt
+ \begin{enumerate}[(i)]
+  \item $\emptyset \in \mA$,
+  \item $A \setminus B \subset \mA$, wenn $A,B \subset \mA$,
+  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+  \enumeratext{(i)}{Ist $\mA$ eine $\sigma$-Algebra, so gilt auch}
+  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+ \end{enumerate}
+\end{lem}
+
+\begin{proof}
+ (i): $\emptyset = X^C \in \mA$.
+  
+ (iii) folgt aus (1.3.1.ii), (1.3.1.iii) und 
+ \[ \left( \bigcap_{j=1}^n A_j \right)^C = \bigcup_{j=1}^n A_j^C \in \mA. \]
+ 
+ (ii) $A \setminus B = A \cap B^C \overset{\text{(iii)}}\in \mA$.
+ 
+ (iv) wird analog zu (iii) bewiesen.
+\end{proof}
+
+\begin{thm}
+ Ist eine Algebra abgeschlossen bezüglich abzählbarer \emph{disjunkter} Vereinigungen, so ist sie eine $\sigma$-Algebra.
+\end{thm}
+
+\begin{proof}
+ Sei $\mA$ eine Algebra, $E_1, E_2, \ldots \in \mA$ und für $k = 1, 2, \ldots$ definiere
+ \[ F_k := E_k \setminus \left[ \bigcup_{j=1}^{k-1} E_j \right] = E_k \cap \left[ \bigcup_{j=1}^{k-1} E_j \right]^C \]
+ Die $F_k$ gehören zu $\mA$, da $\mA$ eine Algebra ist und $F_k$ durch endlich viele Vereinigungen entsteht. Sie sind disjunkt und
+ \[ \bigcup_{j=1}^\infty F_j = \bigcup_{j=1}^\infty E_j \qRq \bigcup_{j=1}^\infty E_j \in \mA, \]
+ weil nach Voraussetzung $\mA$ abgeschlossen bezüglich abzählbarer disjunkter Vereinigungen ist.
+\end{proof}
+
+\begin{lem}
+ Jeder Durchschnitt von $\sigma$-Algebren in $X$ ist selber eine $\sigma$-Algebra.
+\end{lem}
+
+\begin{proof}
+ Einfaches Nachprüfen der Eigenschaften.
+\end{proof}
+
+\begin{folg}
+ Zu jeder Familie $E \subset \pot(X)$ existiert eine kleinste, $E$ enthaltende $\sigma$-Algebra. Wir bezeichnen sie mit $\sigma(E)$.
+\end{folg}
+
+\begin{proof}
+ $\pot(X)$ ist eine $\sigma$-Algebra, die $E$ enthält. Man bilde den Durchschnitt mit allen E enthaltenden $\sigma$-Algebren.
+\end{proof}
+
+Man nennt $\sigma(E)$ die \emph{von $E$ erzeugte $\sigma$-Algebra} und $E$ einen \emph{Erzeuger von $\sigma(E)$}.
+
+Beispiel: $E = \{A\}$, $\sigma(E) = \{ X, \emptyset, A, A^C \}$.
+
+\begin{lem}
+ Ist $E \subset \sigma(F)$, so gilt $\sigma(E) \subset \sigma(F)$.
+\end{lem}
+
+\begin{proof}
+ $\sigma(F)$ ist eine $\sigma$-Algebra, die $E$ enthält $\Rightarrow$ sie enthält auch $\sigma(E)$.
+\end{proof}
+
+\begin{rmrk}
+ Sei $\mA_1 \subset \mA_2 \subset \ldots$ eine unendliche Folge von $\sigma$-Algebren, so dass $\mA_n \ne \mA_{n+1}$ für alle $n$. Dann ist $\bigcup_{n=1}^{\infty} \mA_n$ keine $\sigma$-Algebra!\footnote{Zum Beweis siehe \texttt{UnionsOfSigmaFields.pdf}}
+\end{rmrk}
+
+\begin{defn}
+ Sei $X$ ein metrischer Raum (oder ein topologischer Raum). Die $\sigma$-Algebra, die durch alle \emph{offenen Mengen} von $X$ erzeugt wird, heißt \emph{Borelsche $\sigma$-Algebra} und wird mit $\borel(X)$ bezeichnet. Die Elemente von $\borel(X)$ heißen \emph{Borelmengen}.
+\end{defn}
+
+Ist $\borel(\real) = \pot(\real)$? Nein! Beispiele folgen später.
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-4.pdf+.
+
+\section{Maße}
+Sei $X \ne \emptyset$ eine beliebige Menge, $\mA$ eine $\sigma$-Algebra in $X$.
+
+\begin{defn}
+ Ein \emph{Maß} auf $\mA$ ist eine Abbildung $\mu: \mA \to [0,\infty]$ mit
+ \begin{enumerate}[(i)]
+  \item $\mu( \emptyset ) = 0$.
+  \item Sind die Mengen $A_1, A_2, \ldots \in \mA$ paarweise disjunkt, so gilt
+  \[ \mu\left( \bigcup_{i=1}^\infty A_i \right) = \sum_{i=1}^\infty \mu(A_i). \]
+  Diese Eigenschaft nennt man \emph{$\sigma$-Additivität}\footnote{Auch möglich: Nur endliche Additivität, aber solche Maße kommen selten vor.}.
+ \end{enumerate}
+\end{defn}
+
+\begin{rmrk*}
+ Auch üblich: Maß auf $(X, \mA)$ (redundant, weil $X \in \mA$) oder einfach Maß auf $X$, wenn klar ist, welche $\sigma$-Algebra gemeint ist.
+\end{rmrk*}
+
+\begin{prgp}
+ Sei $\mu$ ein Maß auf einer $\sigma$-Algebra in $X$. Die folgenden Bezeichnungen sind üblich:
+ \begin{itemize}
+  \item $(X,\mA)$: \emph{Messraum},
+  \item $(X,\mA,\mu)$: \emph{Maßraum},
+  \item die Elemente von $\mA$ heißen \emph{messbare Mengen}.
+  \item Im Fall $\mu(X) < \infty$ heißt $\mu$ \emph{endlich}.
+  \item Wenn $X = \bigcup_{j=1}^\infty E_j$, wobei $E_j \in \mA$ und $\mu(E_j) < \infty$, dann heißt $\mu$ \emph{$\sigma$-endlich}.
+  \item Wenn $E = \bigcup_{j=1}^\infty E_j$, $E_j$ wie oben, dann heißt $E$ \emph{$\sigma$-endlich} (bezüglich $\mu$).
+ \end{itemize}
+\end{prgp}
+
+\begin{exmp}
+ \begin{enumerate}[(i)]
+  \item Das \emph{Zählmaß} 
+   \[ \mu(A) := \text{ Anzahl der Elemente von } A \in \pot(X) = \mA \]
+   und das \emph{Dirac-Maß} 
+   \[ \delta_x(A) := \mu(A \cap \{x\}) \text{ in } x \in X, A \in \pot(X) \]
+   sind Maße auf $\pot(X)$. Das Dirac-Maß ist endlich, da $\mu(x) = 1$. Das Zählmaß ist genau dann endlich, wenn $X$ endlich ist; es ist genau dann $\sigma$-endlich, wenn $X$ abzählbar ist.
+  \item Sei $X$ unendlich, $\mu(A) := 0$, wenn $A$ endlich ist, sonst sei $\mu(A) := \infty$. $\mu$ ist \emph{kein Maß}: Seien $x_1, x_2, \ldots \in X$ eine Folge in $X$, $x_i \ne x_j$ für $i \ne j$, dann ist
+  \[ \mu( \{ x_1, x_2, \ldots \} ) \ne \sum_{j=1}^\infty \mu( \{ x_j \} ) = 0. \]
+  Allerdings ist $\mu$ endlich additiv.
+ \end{enumerate}
+\end{exmp}
+
+\begin{thm}
+ Sei $(X, \mA, \mu)$ ein Maßraum und $E, F, E_j \in \mA$, $j \in \nat$. 
+ \begin{enumerate}[(i)]
+  \item \emph{Monotonie.} Wenn $E \subset F$, dann ist $\mu(E) \le \mu(F)$.
+  \item \emph{Subadditivität.} $\mu \left( \bigcup_{j=1}^\infty E_j \right) \le \sum_{j=1}^\infty \mu(E_j)$.
+  \item \emph{Stetigkeit von unten.} Wenn $E_1 \subset E_2 \subset \ldots$, dann
+   \[ \mu \left( \bigcup_{j=1}^\infty E_j \right) = \lim_{j \to \infty} \mu( E_j ).  \]
+  \item \emph{Stetigkeit von oben.} Wenn $E_1 \supset E_2 \supset \ldots$ und $\mu(E_n) < \infty$ für ein $n \in \nat$, dann
+   \[ \mu \left( \bigcap_{j=1}^\infty E_j \right) = \lim_{j \to \infty} \mu( E_j ).  \]
+ \end{enumerate}
+\end{thm}
+
+\begin{proof}
+ \begin{enumerate}[(i)]
+  \item $F \setminus E \in \mA$; $E \cap (F \setminus E) = \emptyset$, also
+   \[ \mu(F) = \mu(E) + \underbrace{\mu(F \setminus E)}_{\ge 0} \ge \mu(E). \]
+  \item Sei $F_1 = E_1$ und (wie im Beweis von Satz 1.3.3)
+   \[ F_k := E_k \setminus \left( \bigcup_{j=1}^\infty E_j \right), \quad k > 1. \]
+   $F_k \in \mA$, $F_k \cap F_j = \emptyset$ für $k \ne j$, $F_k \subset E_k$
+   \[ \bigcup_{j=1}^\infty F_j = \bigcup_{j=1}^\infty E_j. \]
+   Damit folgt unter Verwendung der $\sigma$-Additivität:
+   \[ \mu \left( \bigcup_{j=1}^\infty E_j \right) = \mu \left( \bigcup_{j=1}^\infty F_j \right) \overset{\sigma}{=} \sum_{j=1}^\infty \mu( F_j ) \overset{\text{(i)}}{\le} \sum_{j=1}^\infty \mu( E_j ). \]
+  \item Sei $E_0 := \emptyset$. Wegen $E_{j-1} \subset E_j$ gilt für $j \in \nat$
+   \[ \mu( E_j \setminus E_{j-1} ) = \mu(E_j) - \mu(E_{j-1}) \]
+   und
+   \[ \bigcup_{j=1}^\infty E_j = \bigcup_{j=1}^\infty(E_j \setminus E_{j-1}), \]
+   wobei die Mengen auf der rechten Seite disjunkt sind.
+   \begin{align*}
+    \mu \left( \bigcup_{j=1}^\infty E_j \right) 
+      &\overset{\sigma}{=} \sum_{j=1}^\infty \mu( E_j \setminus E_{j-1}) \\
+      &= \lim_{n \to \infty} \sum_{j=1}^n ( \mu( E_j ) - \mu( E_{j-1} ) ) \\
+      &= \lim_{n \to \infty} \mu( E_n ).
+   \end{align*}
+  \item Sei $F_j := E_n \setminus E_j$, $j > n$. Dann $F_{n+1} \subset F_{n+2} \subset \ldots$ und $\mu( E_n )  = \mu( F_j ) + \mu( E_j )$ für $j > n$ sowie
+  \[ E_n = \left( \bigcap_{j=n+1}^\infty E_j \right) \cup \left( \bigcup_{j=n+1}^\infty F_j \right). \]
+  Damit folgt
+  \begin{align*}
+   \mu(E_n) 
+    &\overset{\text{(iii)}}{=} \mu \left( \bigcap_{j=n+1}^\infty E_j \right) + \lim_{j \to \infty} \mu (F_j) \\
+    & = \mu \left( \bigcap_{j=n+1}^\infty E_j \right) + \lim_{j \to \infty} ( \mu( E_n ) - \mu(E_j) ).
+  \end{align*}
+  Durch Subtraktion von $\mu(E_n)$ folgt die Behauptung. Dabei nutzen wir die Voraussetzung $\mu(E_n) < \infty$! \qedhere
+ \end{enumerate}
+\end{proof}
+
+\begin{deno}
+ Sei $(X, \mA, \mu)$ ein Maßraum. Wenn $E \in \mA$ und $\mu(E) = 0$, dann heißt $E$ eine \emph{Nullmenge}, oder eine \emph{$\mu$-Nullmenge}. Die Vereinigung von abzählbar vielen Nullmengen ist wieder eine Nullmenge\footnote{Das folgt aus der Subadditivität von $\mu$.}.
+ 
+ Gilt eine Eigenschaft für alle $x \in X$ bis auf eine Nullmenge, so sagt man, sie gilt \emph{fast überall} oder \emph{$\mu$-fast überall}.
+ 
+ Ist $E$ eine Nullmenge $F \subset E$, so ist auch $F$ eine Nullmenge, vorausgesetzt $F$ ist messbar. Das ist im Allgemeinen nicht so\footnote{Einfaches Beispiel: $\mA = \{ \emptyset, X \}$, $X \ne \emptyset$, $\mu( \emptyset ) = \mu(X) = 0$; Dann ist $X$ eine Nullmenge, aber Teilmengen von $X$ gehören nicht zu $\mA$ und sind daher nicht messbar.}.
+ 
+ Enthält $\mA$ alle Teilmengen von Nullmengen, so heißt $\mA$ \emph{$\mu$-vollständig}.
+\end{deno}
+
+\begin{thm}[Vervollständigung von Maßen]
+ Sei $(X, \mA, \mu)$ ein Maßraum, $\mathcal{N} := \{ N \in \mA: \mu(N) = 0 \}$ die Menge der Nullmengen in $\mA$ und 
+ \[ \obar{\mA} := \{ E \cup F : E \in \mA, F \subset N \text{ für ein } N \in \mathcal{N} \}. \]
+ Dann ist $\obar{\mA}$ eine $\sigma$-Algebra und $\mu$ lässt sich eindeutig zu einem vollständigen Maß $\obar{\mu}$ auf $\obar{\mA}$ fortsetzen.
+\end{thm}
+
+\begin{proof}
+ $\obar{\mA}$ ist eine $\sigma$-Algebra: Es ist klar, dass $\obar{\mA}$ abgeschlossen ist bezüglich abzählbarer Vereinigungen\footnote{Betrachte die Folgen $(E_j)_{j \in \nat} \subset \mA$ und $(F_j)_{j \in \nat}, F_j \subset N_j, \mu(N_j) = 0$. Es gilt $\bigcup E_j \in \mA$, weil $\mA$ eine $\sigma$-Algebra ist. Die abzählbare Vereinigung von Nullmengen ist ebenfalls wieder eine Nullmenge, also $(\bigcup E_j) \cup (\bigcup F_j) \in \obar{\mA}$.}.
+ 
+ Noch zu zeigen: $A = E \cup F \in \obar{\mA} \Rightarrow A^C \in \obar{\mA}$ (wobei $F \subset N, \mu(N) = 0$). Wir dürfen annehmen, dass $E \cap N = \emptyset$ und damit $E \cap F = \emptyset$ (sonst ersetzen wir wir $F$ und $N$ durch $F \setminus E$ bzw. $N \setminus E$). Es gilt
+ \begin{align*}
+  E \cup F &= ( E \cup N ) \cap (N^C \cup F) \\
+  (E \cup F)^C &= \underbrace{( E \cup N )^C}_{\in \mA} \cup \underbrace{(N \setminus F)}_{\in \mathcal{N}} \in \obar{\mA}. \qedhere
+ \end{align*}
+\end{proof}
+
+\subsection*{Fortsetzung auf $\obar{\mA}$}
+ Für $E \cup F \in \obar{\mA}$ sei $\obar{\mu}(E \cup F) := \mu(E)$. Wir müssen zeigen, dass diese Definition korrekt ist. Nehmen wir an, dass 
+ \[ E_1 \cup F_1 = E_2 \cup F_2, \quad F_j \subset N_j \in \mathcal{N}. \]
+ Dann $E_1 \subset E_2 \cup N_2$ $\Rightarrow$ $\mu(E_1) \le \mu(E_2) + \mu(N_2) = \mu(E_2)$ wegen der Monotonie und Subadditivität von $\mu$. Genauso sehen, wir dass $\mu(E_2) \le \mu(E_1)$ $\Rightarrow$ $\mu(E_1) = \mu(E_2)$.
+ 
+ Es ist leicht zu sehen,  dass $\obar{\mu}$ ein vollständiges Maß ist und die Fortsetzung eindeutig ist (siehe Aufgabe 1.6.4).
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-6.pdf+.
+
+\section{Äußere Maße}
+Ziel des Abschnitts: Konstruktion von Maßen; $X \ne \emptyset$ beliebige Menge
+
+\begin{defn}
+ Ein \emph{äußeres Maß} auf $\pot(X)$ ist eine Abbildung $\mu^* : \pot(X) \to [0,\infty]$ mit den folgenden Eigenschaften:
+ \begin{enumerate}[(i)]
+  \item $\mu^*(\emptyset) = 0$,
+  \item $\mu^*( A ) \le \mu^*(B)$, wenn $A \subset B \subset X$,
+  \item $\mu^*( \bigcup_{j=1}^\infty A_j ) \le \sum_{j=1}^\infty A_j$, $A_j \in \pot(X)$.
+ \end{enumerate}
+\end{defn}
+
+\begin{lem}
+ Seien $\mE \subset \pot(X)$ und $\rho: \mE \to [0, \infty]$ so, dass $\emptyset, X \in \mE$ und $\rho(\emptyset) = 0$. Für $A \subset X$ definieren wir
+ \[ \mu^*(A) := \inf \left\{ \sum_{j=1}^\infty \rho(E_j) : E_j \in \mE, A \subset \bigcup_{j=1}^\infty E_j \right\}. \]
+ Dann ist $\mu^*$ ein äußeres Maß.
+\end{lem}
+
+\begin{exmp*}
+ $X = \real$, $\mE$: Intervalle $(a,b)$, $\rho((a,b)) := b-a$ oder $X = \real^2$, $\mE$: Rechtecke $E = (a_1, b_1) \times (a_2, b_2)$, $\rho(E) := (b_1 - a_1) \cdot (b_2 - a_2)$.
+\end{exmp*}
+
+\begin{proof}
+ Die Definition von $\mu^*$ ist sinnvoll, da $X \in \mE$. Es gilt: $\mu^*(\emptyset) = 0$ (man nehme $E_j := \emptyset$).
+ 
+ 1.7.1(ii) ist klar.
+ 
+ Subadditivität: Seien $A_1, A_2, \ldots \in \pot(X)$, $A:= \bigcup_{j=1}^\infty A_j$ und $\eps > 0$. Für $j, k \in \nat$ wählen wir $E_j^k \in \pot(X)$, so dass\footnote{Wir können solche Mengen immer finden, weil $\mu^*$ als Infimum definiert ist.}
+ \[ A_j \subset \bigcup_{k=1}^\infty E_j^k, \quad \text{und} \quad \sum_{k=1}^\infty \rho( E_j^k) \le \mu^* (A_j) + \frac{\eps}{2^j}. \]
+ Es gilt $A \subset \bigcup_{j,k} E_j^k$ und
+ \[ \sum_{j=1}^\infty \sum_{k=1}^\infty \rho( E_j^k ) \le \sum_{j=1}^\infty \mu^*(A_j) + \eps. \]
+ Folglich $\mu^*(A) \le \sum_{j=1}^\infty \mu^*(A_j) + \eps$. Da $\eps > 0$ beliebig ist, folgt die Aussage.
+\end{proof}
+
+\begin{defn}
+ Sei $\mu^*$ ein äußeres Maß auf $\pot(X)$. Eine Menge $A \subset X$ heißt \emph{$\mu^*$-messbar}, wenn
+ \[ \mu^*(S) \ge \mu^*( S \cap A ) + \mu^*( S \setminus A ) \tag{(i)} \]
+ gilt für alle $S \subset X$. Die Familie aller $\mu^*$-messbaren Mengen wird mit $\meas_{\mu^*}$ bezeichnet.
+\end{defn}
+
+\begin{rmrk*}
+ Aus (i) folgt, dass
+ \[ \mu^*(S) = \mu^* (S \cap A) + \mu^* ( S \setminus A ), \quad S \subset X \]
+ wegen der Subadditivität 1.7.1(iii).
+\end{rmrk*}
+
+\begin{thm}[Caratheodory]
+ Die Familie $\meas_{\mu^*}$ ist eine $\sigma$-Algebra und $\mu^*$ ist ein Maß auf $\meas_{\mu^*}$.
+ 
+ Ist $\mu^*(A) = 0$, so gilt $A \in \meas_{\mu^*}$.
+\end{thm}
+
+\begin{proof}
+ siehe \verb+Beweis-Satz-1-7-4.pdf+.
+\end{proof}
+
+\begin{defn}
+ Ein \emph{Prämaß} auf einer Algebra $\mA$ ist eine Abbildung $\mu: \mA \to [0, \infty]$ mit 
+ \begin{enumerate}[(i)]
+  \item $\mu(\emptyset) = 0$.
+  \item Für beliebige disjunkte Mengen $A_1, A_2, \ldots \in \mA$ mit $\bigcup_{j=1}^\infty A_j \in \mA$ gilt
+   \[ \mu \left( \bigcup_{j=1}^\infty A_j \right) = \sum_{j=1}^\infty \mu( A_j ). \]
+ \end{enumerate}
+\end{defn}
+
+\begin{rmrk*}
+ $\mu$ ist monoton, also für $A, B \in \mA, A \subset B$ gilt $\mu(A) \le \mu(B)$. Das folgt aus $B = A \cup (B \setminus A)$.
+\end{rmrk*}
+
+Nach Lemma 1.7.2 wird durch
+\[ \mu^*(A) := \inf \left\{ \bigcup_{j=0}^\infty \mu(E_j) : E_j \in \mA, A \subset \bigcup_{j=0}^\infty E_j \right \} \]
+ein äußeres Maß  auf $\pot(X)$ definiert.
+
+\begin{lem}
+ Ist $\mu$ ein Prämaß auf einer Algebra $\mA$, so gilt
+ \begin{enumerate}[(i)]
+  \item $\mA \subset \meas_{\mu^*}$,
+  \item $\mu^* |_\mA = \mu$ (das heißt $\mu^*$ ist die Fortsetzung von $\mu$).
+ \end{enumerate}
+\end{lem}
+
+\begin{proof}
+ (ii) Sei $E \in \mA$ und $E \subset \bigcup_{j=1}^\infty A_j$ wobei $A_j \in \mA$. Wir setzen für $n \in \nat$
+ \[ B_n := E \cap \left( A_n \setminus \bigcup_{j = 1}^{n-1} A_j \right). \]
+ Dann sind die $B_n$ disjunkte Elemente von $\mA$, $B_n \subset A_n$. Es gilt $\bigcup_{j=1}^\infty B_j = E$ wegen $E \subset \bigcup_{j=1}^\infty A_j$. Also folgt
+ \[ \mu(E) = \sum_{j=1}^\infty \mu(B_j) \overset{\text{Mon.}}{\le} \sum_{j=1}^\infty \mu(A_j) \qRq \mu(E) \le \mu^*(E). \]
+ Die Ungleichung $\mu^*(E) \le \mu(E)$ folgt aus $E \subset \bigcup_{j=1}^\infty A_j$, wobei $A_1 = E$ und $A_j = \emptyset$ für $j > 1$. $\mu^*(E) \le \mu(E)$ gilt jetzt, weil $\mu^*$ als Infimum definiert ist.
+ 
+ Damit folgt $\mu^*(E) = \mu(E)$.
+ 
+ (i) Seien $A \in \mA$, $S \subset X$ und $\eps > 0$. Wir wählen eine Folge $\{ B_j \}_{j=1}^\infty \subset \mA$ mit $S \subset \bigcup_{j=1}^\infty B_j$ und $\sum_{j=1}^\infty B_j \le \mu^*(S) + \eps$.
+ \begin{align*}
+  \mu^*(S) + \eps &\ge \sum_{j=1}^\infty \mu(B_j \cap A) + \sum_{j=1}^\infty \mu(B_j \cap A^C ) \\
+  \intertext{(Das folgt aus der Additivität von $\mu$, weil $B_j \cap A$ und $B_j \cap A^C$ disjunkt sind.)}
+  &\ge \mu^*( S \cap A ) + \mu^*( S \cap A^C )
+ \end{align*}
+ Weil $\eps$ beliebig war, ist
+ \[ \mu^*(S) \ge \mu^*(S \cap A) + \mu^*(S \cap A^C), \]
+ also folgt $A$ ist $\mu^*$-messbar.
+\end{proof}
+
+\begin{thm}
+ Seien $\mA \subset \pot(X)$ eine Algebra, $\mu$ ein Prämaß auf $\mA$; $\meas := \sigma(\mA)$ und $\obar{\mu} := \mu|_\meas$. Dann gilt
+ \begin{enumerate}[(i)]
+  \item $\obar{\mu}$ ist ein Maß auf $\meas$ mit $\obar{\mu}|_\mA = \mu$.
+  \item Ist $\nu$ ein Maß auf $\meas$ mit $\nu |_\mA = \mu$, so gilt $\nu(E) \le \obar{\mu}(E)$ für alle $E \in \meas$, wobei im Fall $\obar{\mu}(E) < \infty$ sogar Gleichheit gilt\footnotemark.
+  \item Ist $\mu$ $\sigma$-endlich, so ist $\obar{\mu}$ die \emph{einzige} Fortsetzung von $\mu$ zu einem Maß auf $\meas$.
+ \end{enumerate}
+\end{thm}
+\footnotetext{Das heißt für Mengen mit endlichem Maß ist die Fortsetzung eindeutig.}
+
+\begin{proof}
+ \begin{enumerate}[(i)]
+  \item Folgt aus Satz 1.7.4 (Caratheodory) und aus Lemma 1.7.6.
+  \item Sei $E \in \meas$, $E \subset \bigcup_{j=1}^\infty A_j$, wobei $A_j \in \mA$. Dann gilt
+  \[ \nu(E) \overset{\text{Subadd.}}{\le} \sum_{j=1}^\infty \nu(A_j) \overset{\text{Ann.}}{=} \sum_{j=1}^\infty \mu(A_j) \qRq \nu(E) \overset{\text{Def. von }\obar{\mu}}{\le} \obar{\mu}(E). \]
+  Für $A := \bigcup_{j=1}^\infty A_j$ gilt
+  \[ \nu(A) \overset{\text{Stet.}}{=} \lim_{n \to \infty} \nu \left( \bigcup_{j=1}^n A_j \right) = \lim_{n \to \infty} \mu \left( \bigcup_{j=1}^n A_j \right) \overset{\text{Stet.}}{=} \obar{\mu}(A), \]
+  wobei ``Stet.'' für ``Stetigkeit von unten'' steht. 
+  
+  Im Falle $\obar{\mu}(E) < \infty$ können wir die $A_j$ so wählen, dass
+  \[ \obar{\mu}(A) < \obar{\mu}(E) + \eps \qRq \obar{\mu}( A \setminus E ) < \eps \]
+  und
+  \begin{align*}
+   \obar{\mu}(E) \le \obar{\mu}(A) = \nu(A) &= \nu(E) + \nu(A \setminus E) \\
+   &\le \nu(E) + \obar{\mu}(A \setminus E) \\
+   &\le \nu(E) + \eps.
+  \end{align*}
+  Weil $\eps$ beliebig, folgt $\obar{\mu}(E) = \nu(E)$.
+  \item Sei $X = \bigcup_{j=1}^\infty A_j$, wobei $\mu(A_j) < \infty$. O.B.d.A. seien die $A_j$ disjunkt. Dann gilt für alle $E \in \meas$
+  \[ \obar{\mu}(E) = \sum_{j=1}^\infty (E \cap A_j) \overset{\text{(ii)}}{=} \sum_{j=1}^\infty \nu(E \cap A_j) = \nu(E), \]
+  das heißt $\obar{\mu} = \nu$ auf $\meas$. \qedhere
+ \end{enumerate}
+\end{proof}
+
+Zusammenfassung:
+\begin{itemize}
+ \item Maß $\mu$ auf $\sigma$-Algebra
+ \item Äußeres Maß $\mu^*$ auf $\pot(X)$ $\rightarrow$ Einschränkung auf die $\sigma$-Algebra von messbaren Mengen, dort Maß 
+ \item Prämaß auf einer Algebra $\rightarrow$ Äußeres Maß $\rightarrow$ Maß auf $\sigma$-Algebra.
+\end{itemize}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-8.pdf+.
+
+\section{Produkt von \texorpdfstring{$\sigma$}{Sigma}-Algebren}
+Bezeichnungen in diesem Abschnitt:
+\begin{itemize}
+ \item $A \ne \emptyset$ eine Indexmenge,
+ \item $\{ X_\alpha \}$, $\alpha \in A$ eine Familie von nichtleeren Mengen,
+ \item $X := \prod_{\alpha \in A} X_\alpha = \{ f:A \to \bigcup_{\alpha \in A} X_\alpha$ mit $f( \alpha ) \in X_\alpha,$ für alle $\alpha \in A \}$.
+ \item Falls $X_\alpha = Y$ für alle $\alpha$, dann ist $X = Y^A$ die Menge aller Funktionen von $A$ nach $Y$.
+ \item Die Elemente von $X$ werden mit $X = (X_\alpha) = (X_\alpha)_{\alpha \in A} \in X$ bezeichnet.
+ \item $\Pi_\alpha : X \to X_\alpha$ sind die \emph{Koordinatenabbildungen} $\Pi_\alpha(X) = X_\alpha$, zum Beispiel $A = \{ 1, 2 \}$, $X_1 = X_2 = \real$, $X = \real^2 = \real \times \real$, $\Pi_1(X) = X_1$.
+ \item $\meas_\alpha$ eine $\sigma$-Algebra auf $X_\alpha$.
+\end{itemize}
+
+\begin{exmp*}
+ $A = \{ 1,2 \}$, $X_1 = X_2 = \real$, $X_1 \times X_2 = \real^2$, $\meas_1, \meas_2 = \borel( \real )$.
+\end{exmp*}
+
+\begin{defn}
+ Die \emph{Produkt-$\sigma$-Algebra} $\bigotimes_{\alpha \in A} \meas_\alpha$ auf $X$ ist die $\sigma$-Algebra, die durch
+ \[ \{ \Pi_\alpha^{-1}( E_\alpha ) : E_\alpha \in \meas_\alpha, \alpha \in A \} \]
+ erzeugt wird.
+
+\[ \Pi_\alpha^{-1} ( E_\alpha ) = \prod_{\beta \in A} E_\beta, \]
+wobei $E_\beta = X_\alpha$, $\alpha \ne \beta$.
+ 
+Im Falle $A= \{ 1, 2, \ldots, n \}$ schreiben wir $\bigotimes_1^n \meas_j$ oder $\meas_1 \otimes \cdots \otimes \meas_n$.
+\end{defn}
+
+\begin{lem}
+ Ist $A$ abzählbar, so wird $\bigotimes_{\alpha \in A} \meas_\alpha$ durch
+ \[ \left\{ \prod_{\alpha \in A} E_\alpha : E_\alpha \in \meas_\alpha \right\} \]
+ erzeugt.
+\end{lem}
+
+\begin{proof}
+ Wenn $E_\alpha \in \meas_\alpha$, dann 
+ \[ \Pi_\alpha^{-1}(E_\alpha) = \prod_{\beta \in A} E_\beta, \]
+ wobei $E_\beta = X_\beta$, $\beta \ne \alpha$. Andererseits gilt
+ \[ \prod_{\alpha \in A} E_\alpha = \bigcap_{\alpha \in A} \Pi^{-1}_\alpha (E_\alpha). \]
+ Das ist ein abzählbarer Durchschnitt nach Voraussetzung für $A$. Die Aussage folgt deshalb aus Lemma 1.3.6. Wir können die Erzeuger der einen $\sigma$-Algebra durch die Erzeuger der anderen ausdrücken. Folglich müssen die erzeugten $\sigma$-Algebren identisch sein.
+\end{proof}
+
+\begin{lem}
+ Sei $\mE_\alpha$ Erzeuger für $\meas_\alpha$, $\alpha \in A$. Dann ist
+ \[ \mF_1 := \{ \Pi_\alpha^{-1} (E_\alpha) : E_\alpha \in \mE_\alpha, \alpha \in A \} \]
+ Erzeuger für $\bigotimes_{\alpha \in A} \meas_\alpha$. Ist $A$ abzählbar und $X_\alpha \in \mE_\alpha$, so ist auch
+ \[ \mF_2 := \left\{ \prod_{\alpha \in A} E_\alpha : E_\alpha \in \mE_\alpha \right\} \]
+ Erzeuger für $\bigotimes_{\alpha \in A} \meas_\alpha$.
+\end{lem}
+
+\begin{proof}
+ Offensichtlich gilt $\sigma(\mF_1) \subset \bigotimes_{\alpha \in A} \meas_\alpha$, da $\mE_\alpha \subset \meas_\alpha$. Andererseits ist 
+ \[ \{ E \subset X_\alpha : \Pi_\alpha^{-1} (E) \in \sigma( \mF_1 ) \} \]
+ eine $\sigma$-Algebra (Nachweis ist Übungsaufgabe), die $\mE_\alpha$ und damit auch $\meas_\alpha$ enthält. Das heißt $\Pi_\alpha^{-1}( E ) \in \sigma ( \mF_1 )$ für alle $E \in \meas_\alpha$, $\alpha \in A$, also
+ \[ \bigotimes_{\alpha \in A} \meas_\alpha \subset \sigma ( \mF_1 ). \]
+ 
+ Die zweite Aussage folgt aus der ersten genauso wie in Lemma 1.9.2.
+\end{proof}
+
+\begin{defn*}
+ Seien $X_1, \ldots, X_n$ metrische Räume und $X = \prod_1^n X_j$. Für $x = (x_1, \ldots, x_n) \in X$, $y = (y_1, \ldots, y_n) \in X$ ist $x_j, y_j \in X_j$. Also existiert eine Metrik $d_j(x_j,y_j)$, die für jede Komponente eine andere sein kann, da $X$ ein Produkt metrischer Räume ist. Wir definieren die \emph{Produktmetrik}
+ \[ d(x,y) := \max_{1 \le j \le n} d_j(x_j,y_j), \]
+ also der größte Abstand von $x$ und $y$.
+\end{defn*}
+ 
+\begin{thm}
+ Seien $X_1, \ldots, X_n$ metrische Räume und $X = \prod_1^n X_j$ der metrische Raum mit der Produktmetrik. Dann ist $\bigotimes_1^n \borel(X_j) \subset \borel(X)$. Sind die $X_j$ separabel\footnotemark, so gilt 
+ \[ \bigotimes_1^n \borel(X_j) = \borel(X). \]
+\end{thm}
+\footnotetext{Das heißt es existiert eine höchstens abzählbare Teilmenge, die in diesen Räumen dicht liegt. Zum Beispiel ist $\real^n$ für alle $n \in \nat$ separabel, da $\rat^n$ abzählbar ist und dicht in $\real^n$ liegt. Allerdings ist $\real^n$ mit der diskreten Metrik nicht separabel!}
+
+\begin{proof}
+ Nach Lemma 1.9.3 wird $\bigotimes_1^n \borel(X_j)$ erzeugt durch die Mengen $\Pi_j^{-1}( U_j )$, $1 \le j \le n$, wobei $U_j \subset X_j$ offen ist. Da diese Mengen offen sind, folgt nach Lemma 1.3.6, dass $\bigotimes_1^n \borel(X_j) \subset \borel(X)$.
+ 
+ Wir beweisen noch die zweite Aussage. Sei $D_j := \{ x_j^k \}_{k=1}^\infty$ eine dichte Teilmenge von $X_j$ und sei $\mE_j$ die (abzählbare) Familie aller Kugeln mit rationalem Radius und Mittelpunkt $x_j^k$ für ein $j$ und $k$. Dann ist jede offene Menge in $X_j$ eine abzählbare Vereinigung von Mengen aus $\mE_j$. Die Menge aller Punkte in $X$ mit Koordinaten aus $\bigcup D_j$ ist abzählbar und dicht in $X$ (Nachweis Übung). $\mE_j$ ist ein Erzeuger für $\borel(X_j)$ und nach Lemma 1.9.3 gilt $\bigotimes_1^n \borel(X_j) = \borel(X)$.
+\end{proof}
+
+\begin{folg}
+ $\bigotimes_1^d \borel(\real) = \borel(\real^d)$.
+\end{folg}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-10.pdf+.
+
+\section{Borel-Maße auf \texorpdfstring{$\real$}{IR}}
+Ein Maß auf der Borel-$\sigma$-Algebra $\borel(X)$, wobei $X$ ein metrischer (oder topologischer) Raum ist, heißt \emph{Borel-Maß} (auf $X$).
+
+In diesem Abschnitt werden wir Borel-Maße auf $\real$ mit Hilfe von reellen Funktionen konstruieren. Dabei werden wir zuerst das Maß von Intervallen festlegen. Intervalle der Form 
+\[ (a,b], (a, \infty), \emptyset \]
+wobei $- \infty \le a < b < \infty$ werden wir als H-Intervalle\footnote{``H'' für \emph{halboffen}.} bezeichnen. Der Durchschnitt von H-Intervallen ist ein H-Intervall und das Komplement eines H-Intervalls ist die disjunkte Vereinigung von zwei H-Intervallen, wobei eines der beiden auch leer sein kann.
+
+Wir bezeichnen mit $\mA_H$ die Familie aller endlichen, disjunkten Vereinigungen von H-Intervallen. Nach dem folgenden Lemma ist $\mA_H$ eine Algebra.
+
+\begin{lem}
+ Sei $X \ne \emptyset$ eine beliebige Menge, $\mE \in \pot(X)$ mit
+ \begin{enumerate}[(i)]
+  \item $\emptyset \in \mE$,
+  \item $E,F \in \mE \Rightarrow E \cap F \in \mE$,
+  \item $E \in \mE \Rightarrow E^C$ ist eine Vereinigung von endlich vielen disjunkten Mengen aus $\mE$
+ \end{enumerate}
+und bezeichne $\mA$ die Familie aller endlichen, disjunkten Vereinigungen von Mengen aus $\mE$. Dann ist $\mA$ eine Algebra.
+\end{lem}
+
+\begin{proof}
+ Wir betrachten nur den Spezialfall, dass $E^C$ die Vereinigung von genau zwei disjunkten Mengen ist. Der allgemeine Fall lässt sich analog behandeln.
+ 
+ Wir zeigen zuerst: $\mA$ ist abgeschlossen bezüglich endlicher Vereinigungen. Sei $A,B \in \mE$ und $B^C = C_1 \cup C_2$, wobei $C_1, C_2 \in \mE$ disjunkt sind. Dann
+ \[ A \setminus B = A \cap B^C = A \cap( C_1 \cup C_2 ) = (A \cap C_1) \cup (A \cap C_2) \in \mA, \]
+ da $(A \cap C_1), (A \cap C_2) \in \mE$ nach Voraussetzung (ii) und Definition von $\mA$ als Familie von Vereinigungen aus $\mE$. Also ist
+ \[ A \cup B = \underbrace{(A \setminus B)}_{\in \mA} \cup \underbrace{B}_{\in \mE} \in \mA \]
+ nach Definition von $\mA$. Wegen
+ \[ \bigcup_{j=1}^n A_j = \left( \bigcup_{j=1}^{n-1}( A_j \setminus A_n ) \right) \cup A_n \]
+ folgt durch Induktion über $n$, dass $\bigcup_1^n A_j \in \mA$, wenn $A_j \in \mE$, also ist $\mA$ abgeschlossen bezüglich endlicher Vereinigungen.
+ 
+ Noch zu zeigen: $\mA$ ist abgeschlossen bezüglich Komplementbildung. Sei $A = \bigcup_1^n A_j$, wobei $A_j \in \mE$ und die $A_j$ seien disjunkt. Sei weiterhin $A_j^C = B_j^1 \cup B_j^2, \quad B_j^1, B_j^2 \in \mE$ disjunkt.
+ \[ A^C = \bigcap_{j=1}^n A_j^C = \bigcap_{j=1}^n (B_j^1 \cup B_j^2) \overset{\footnotemark}{=} \bigcup \{ B_1^{k_1} \cap \cdots \cap B_n^{k_n} : k_1, \ldots, k_n = 1,2 \} \in \mA, \]
+ da $B_1^{k_1} \cap \cdots \cap B_n^{k_n} \in \mE$ und ihre Vereinigung disjunkt ist.
+ \footnotetext{``Ausmultiplizieren'', es ergibt sich die Vereinigung aller Kombinationen von $B_j^1, B_j^2$.}
+ 
+ Also ist $\mA$ eine Algebra.
+\end{proof}
+
+\begin{lem}
+ Sei $F: \real \to \real$ monoton wachsend und rechtsstetig\footnotemark. Sind $(a_j, b_j]$, $j= 1, \ldots, n$, disjunkte H-Intervalle, so sei
+ \[ \mu \left( \bigcup_{j=1}^n (a_j, b_j] \right) := \sum_{j=1}^n [ F(b_j) - F(a_j) ] \]
+ und $\mu( \emptyset ) := 0$. Dann ist $\mu$ ein Prämaß auf $\mA_H$.
+\end{lem} 
+\footnotetext{Das heißt: Für den rechsseitigen Grenzwert gilt $\lim_{h \downarrow 0} f(x + h) = f(x)$.}
+
+Zum Beispiel $F(x) = x$, $\mu( (0,1] ) = 1$, $\mu( (a,b] ) = b - a$; Vereinbarung $F( \pm \infty ) := \lim_{x \to \pm \infty} F(x)$. Dann ist $- \infty \le F(-\infty) \le F(\infty) \le \infty$.
+
+\begin{proof}
+ Zuerst zeigen wir, dass die obige Definition korrekt ist (die Elemente von $\mA_H$ lassen sich auf unterschiedliche Weise als disjunkte Vereinigung von H-Intervallen darstellen). Sei $(a,b] := \bigcup_1^n (a_j, b_j] \in \mA_H$, wobei die Intervalle $(a_j, b_j]$ disjunkt sind. O.B.d.A. sei $a = a_1 < b_1 = a_2 < b_2 = \ldots < b_n = b$. Dann ist
+ \[ \sum_{j=1}^n [ F( b_j ) - F(a_j) ] = F(b) - F(a), \]
+ also unabhängig von der Darstellung. 
+ 
+ Allgemeiner: Sind $\{ I_i \}_1^n$ und $\{ J_j \}_1^m$ Folgen von disjunkten H-Intervallen mit $\bigcup_1^n I_i = \bigcup_1^m J_j$, so gilt
+ \[ I_i = I_i \cap \left( \bigcup_{j=1}^m J_j \right) = \bigcup_{j=1}^m ( I_i \cap J_j ). \]
+ Daraus folgt
+ \[ \sum_{i=1}^n \mu(I_i) = \sum_{i=1}^n \sum_{j=1}^m \mu( I_i \cap J_j ) = \sum_{j=1}^m \sum_{i=1}^n \mu( I_i \cap J_j ) =  \sum_{j=1}^m \mu(J_j). \]
+ Also ist die Definition von $\mu$ korrekt.
+ 
+ Noch zu zeigen:
+ \[ \mu \left( \bigcup_{j=1}^\infty I_j \right) = \sum_{j=1}^\infty \mu(I_j) \]
+ für eine beliebige Folge $\{ I_j \}_1^\infty$ von disjunkten H-Intervallen $I_j = (a_j, b_j]$ mit $\bigcup_1^\infty I_j \in \mA_H$. 
+ 
+ Wegen der endlichen Additivität von $\mA_H$ dürfen wir annehmen, dass $\bigcup_1^\infty I_j = (a,b] =: I$. Aus der Definition von $\mu$ folgt dann
+ \[ \mu(I) = \mu \left( \bigcup_{j=1}^n I_j \right) + \mu \left( I \setminus \bigcup_{j=1}^n I_j \right)
+    \ge \mu\left( \bigcup_{j=1}^n I_j \right) = \sum_{j=1}^n \mu( I_j ), n \in \nat. \]
+ Mit $n \to \infty$ erhalten wir $\mu(I) \ge \sum_1^\infty \mu( I_j )$. 
+ 
+ Wir zeigen noch die umgekehrte Ungleichung. Sei zuerst $- \infty < a < b < \infty $ und $\eps > 0$. Da $F$ rechtsstetig ist, existieren $\delta, \delta_j > 0$ mit 
+ \begin{align*}
+    F( a + \delta ) - F(a) &< \eps, \tag{$*$} \\
+    F(b_j + \delta_j) - F(b_j) &< \frac{\eps}{2^j}. \tag{$**$}
+ \end{align*}
+ Die offenen Intervalle $(a_j, b_j + \delta_j)$ überdecken die kompakte Menge $[a + \delta, b]$. Wir wählen eine \emph{endliche} Überdeckung.
+ 
+ Wir lassen dabei Intervalle weg, die in einem größeren Intervall enthalten sind. Mit geeigneter Nummerierung dürfen wir annehmen, dass
+ \begin{enumerate}[(1)]
+  \item $(a_1, b_1 + \delta_1), \ldots, (a_N, b_N + \delta_N)$ das Intervall $[a+\delta,b]$ überdecken,
+  \item $a_1 < \ldots < a_2$,
+  \item $b_j + \delta_j \in (a_{j+1}, b_{j+1} + \delta_{j+1})$ für $j= 1, \ldots, N$.
+ \end{enumerate}
+ Dann gilt
+ \begin{align*}
+  \mu(I) &= F(b) - F(a) & &\text{Def. von $\mu$} \\
+         &\le F(b) - F(a+\delta) + \eps & &\text{Wegen } (*) \\
+         &\le F(b_N + \delta_N) - F( a_1 ) + \eps & &\text{Monotonie und (3)} \\
+         &= F(b_N + \delta_N) - F( a_N ) + \sum_{j=1}^{N-1} (F(a_{j-1}) - F(a_j)) + \eps \\
+         &\le F(b_N + \delta_N) - F( a_N ) + \sum_{j=1}^{N-1} (F(b_j + \delta_j) - F(a_j)) + \eps & &\text{Monotonie und (3)} \\
+         &=\sum_{j=1}^N (F(b_j + \delta_j) - F(a_j)) + \eps \\
+         &=\sum_{j=1}^N (\underbrace{F(b_j + \delta_j) - F(b_j)}_{< \eps/2^j} + \underbrace{F(b_j) - F(a_j)}_{=\mu(I_j)}) + \eps & &\text{Wegen } (**)\\
+         &\le \sum_{j=1}^N \mu(I_j) + 2\eps.
+ \end{align*}
+ Da $\eps$ beliebig war, folgt die Behauptung.
+
+ Im Falle $a= -\infty$ liefert dieselbe Überlegung, dass 
+ \[ F(b) - F(-M) \le \sum_{j=1}^\infty \mu(I_j) + 2 \eps \]
+ für alle $M < \infty$. Im Falle $b = \infty$ erhalten wir analog
+ \[ F(M) - F(a) \le \sum_{j=1}^\infty \mu(I_j) + 2 \eps. \]
+ Die Aussage folgt nun mit $\eps \to 0$ und $M \to \infty$.
+\end{proof}
+
+\begin{thm}
+ Für jede monoton wachsende und rechtsstetige Funktion $F: \real \to \real$ existiert ein \emph{eindeutig bestimmtes} Maß $\mu_F$ auf $\borel(\real)$ mit $\mu_F( (a,b] ) = F(b) - F(a)$, $a,b \in \real$. Ist $G$ eine weitere solche Funktion, so gilt $\mu_F = \mu_G$ genau dann, wenn $F-G$ konstant ist.
+ 
+ Sei umgekehrt $\mu$ ein Maß auf $\borel(\real)$, das endlich ist auf beschränkten Borel-Mengen. Dann ist die Funktion $F$ mit $F(x) = \mu((0,x))$ für $x>0$, $F(0) = 0$ und $F(x) = - \mu((x,0))$ für $x<0$ monoton wachsend, rechtsstetig und $\mu = \mu_F$.
+\end{thm}
+
+\begin{proof}
+ Nach Lemma 1.11.2 definiert $F$ ein Prämaß auf $\mA_H$. Es ist klar, dass $F$ und $G$ genau dann das selbe Prämaß definieren, wenn $F-G$ konstant ist. Wegen 
+ \[ \real = \bigcup_{j \in \integer} (j, j+1] \]
+ sind diese Maße $\sigma$-endlich. Die ersten zwei Aussagen folgen deshalb aus Satz 1.7.7.
+ 
+ \emph{Dritte Aussage:} Die Monotonie von $F$ folgt aus der Monotonie von $\mu$, aus der Stetigkeit von oben von $\mu$ folgt die Rechsstetigkeit von $F$. Es ist klar, dass \fbox{$\mu = \mu_F$ auf $\mA_H$}. Nach der Eindeutigkeitsaussage von Satz 1.7.7 gilt \fbox{$\mu = \mu_F$ auf $\borel(\real)$}.
+\end{proof}
+
+\begin{rmrk}
+ Wir hätten auch Intervalle der Form $[a,b)$ verwenden können, dann wäre $\tilde{F}$ linksstetig. 
+ 
+ Ist $\mu$ ein endliches Maß auf $\borel(\real)$, so gilt $\mu = \mu_F$ mit $F(x) = \mu((-\infty, x])$.
+ 
+ Zu jeder rechsstetigen monotonen Funktion $F$ gehört ein vollständiges Maß $\obar{\mu}_F$, dessen Definitionsbereich im Allgemeinen größer ist als $\borel(\real)$. Wir werden dieses Maß auch mit $\mu_F$ bezeichnen, es heißt das zu $F$ gehörige \emph{Lebesgue-Stieltjes-Maß}.
+\end{rmrk}
+
+\textbf{Das ``wichtigste'' Maß auf $\real$:} Das Lebesgue-Maß. Das ist das vollständige Maß, das zu $F(x) = x$ gehört. Es wird mit $\lambda$ bezeichnet. Für $a,b \in \real$, $a \le b$ ist
+\[ \begin{aligned}
+    \lambda( [a,b) ) &= b - a, \\ 
+    \lambda( (a,b) ) &= \lambda( [a,b] ) = b-a,
+   \end{aligned} \]
+da $\lambda(\{x\}) = 0$ für alle $x \in \real$, $\{ x \} \subset (x - \rez{n}, x + \rez{n}]$, also $\mu( \{ x \} ) \le \frac{2}{n} \xrightarrow{n \to \infty} 0$. Das gilt auch für $\mu_F$, wenn $F$ in 0 stetig ist.
+
+Die Elemente von $\meas_\lambda$ heißen \emph{Lebesgue-messbar}. Die Einschränkung von $\lambda$ auf $\borel(\real)$ wird auch Lebesgue-Maß genannt.
+
+Im Weiteren in diesem Abschnitt:
+\begin{itemize}
+ \item $F: \real \to \real$: Eine monoton wachsende, rechtsstetige Funktion,
+ \item $\mu$: Das zugehörige Lebesgue-Stieltjes-Maß,
+ \item $\meas$: Die zugehörige $\sigma$-Algebra.
+\end{itemize}
+
+Für $E \in \meas$ gilt (Definition von $\mu^*$):
+\[ \begin{aligned} \mu^*(E) 
+    :&= \inf \left\{ \sum_{j=1}^\infty [ F(b_j) - F(a_j) ] : E \subset \bigcup_{j=1}^\infty (a_j,b_j] \right\} \\
+     &= \inf \left\{ \sum_{j=1}^\infty \mu((a_j,b_j]) : E \subset \bigcup_{j=1}^\infty (a_j,b_j] \right\}
+   \end{aligned} \]
+H-Intervalle können hier durch offene Intervalle ersetzt werden.
+
+\begin{lem}
+ Für $E \in \meas$ gilt:
+ \[ \mu^*(E) = \inf \left\{ \sum_{j=1}^\infty \mu((a_j,b_j)) : E \subset \bigcup_{j=1}^\infty (a_j,b_j) \right\}. \]
+\end{lem}
+
+\begin{proof}
+ Bezeichne $\nu(E)$ die rechte Seite und sei $E \subset \bigcup_1^\infty (a_j,b_j)$. Wir schreiben $\ell_j := b_j - a_j$ und $I_{jk} := (b_j -\ell_j 2^{1-k}, b_j - \ell_j 2^{-k}]$, $k \in \nat$. Dann ist $(a_j,b_j) = \bigcup_1^\infty I_{jk}$ und damit 
+ \[ E \subset \bigcup_{j,k} I_{jk} \quad \text{und} \quad \sum_{j=1}^\infty \mu( (a_j, b_j) ) = \sum_{j,k=1}^\infty \mu(I_{jk}) \ge \mu(E), \]
+ also $\nu(E) \ge \mu(E)$.
+ 
+ Wir zeigen nun noch, dass $\nu(E) \le \mu(E)$. Für beliebiges $\eps > 0$ existiert $\{ (a_j, b_j] \}_1^\infty$ mit $E \subset \bigcup_1^\infty (a_j,b_j]$ und nach Definition von $\mu(E)$ gilt
+ \[ \sum_{j=1}^\infty \mu((a_j,b_j]) \le \mu(E) + \eps. \]
+ Für jedes $j$ existiert $\delta_j > 0$ mit
+ \[ F( b_j + \delta_j ) - F(b_j) < \frac{\eps}{2^j} \]
+ wegen der Rechsstetigkeit und Monotonie von $F$. Dann ist $E \subset \bigcup_1^\infty (a_j, b_j + \delta_j )$ und
+ \[ \begin{aligned}
+     \sum_{j=1}^\infty \mu((a_j,b_j+\delta_j)) 
+     &\le \sum_{j=1}^\infty \mu((a_j,b_j+\delta_j]) \\
+     &=   \sum_{j=1}^\infty ( F(b_j + \delta_j) - F(a_j) ) \\
+     &=   \sum_{j=1}^\infty ( \underbrace{F(b_j + \delta_j) - F(b_j)}_{< \eps/2^j} + F(b_j) - F(a_j) ) \\
+     &\le \eps + \mu(E) + \eps.
+    \end{aligned} \]
+ Da $\eps$ beliebig, folgt die Behauptung.
+\end{proof}
+
+\begin{thm}
+ Für $E \in \meas$ gilt
+ \[ \begin{aligned}
+    \mu(E) &= \inf \left\{ \mu(U) : E \subset U, U\, \text{offen} \right\} \\
+           &= \sup \left\{ \mu(K) : K \subset E, K\, \text{kompakt} \right\} 
+    \end{aligned} \]
+\end{thm}
+
+\begin{proof}
+ \textbf{Erste Gleichung.} Ist $U$ offen und $U \supset E$, so gilt $\mu(U) \ge \mu(E)$. Andererseits ist $U$ die Vereinigung abzählbar vieler Intervalle $(a_j,b_j)$ mit $\mu(U) \le \sum_{j=1}^\infty \mu((a_j, b_j))$. Die erste Gleichung folgt deshalb aus Lemma 1.11.5.
+ 
+ \textbf{Zweite Gleichung.} Sei $E$ zuerst beschränkt. Für beliebige $\eps > 0$ existiert nach der ersten Gleichung eine offene Menge $U \supset \obar{E} \setminus E$, die den Abschluss\footnotemark von $E$ enthält und
+ \[ \mu(U) \le \mu( \obar{E} \setminus E ) + \eps. \]
+ Nach Voraussetzung ist $E \in \meas$. $\obar{E}$ ist eine Borel-Menge, also ist $\obar{E} \setminus E \in \meas$. Die Menge $K := \obar{E} \setminus U \subset E$ ist kompakt und
+ \[ \begin{aligned}
+     \mu(K) 
+     &= \mu(E) - \mu(E \cap U) \\
+     &= \mu(E) - ( \mu(U) - \mu(U \setminus E) ) \\
+     &\ge \mu(E) - \mu(U) - \mu(\obar{E} \setminus E) \\
+     &\ge \mu(E) - \eps.
+    \end{aligned} \]
+ Damit ist die Gleichung für beschränkte $E$ gezeigt. Sei nun $E$ unbeschränkt und sei $E_j := E \cap (j,j+1)$, $j \in \integer$. Die $E_j$ sind disjunkt und für jedes $\eps > 0$ existiert eine kompakte Menge $K_j \subset E_j$ mit 
+ \[ \mu(K_j) \ge \mu(E_j) - \frac{\eps}{2^{|j|}}. \]
+ Die Menge $H_n := \bigcup_{-n}^n K_j \subset E$ ist kompakt und
+ \[ \mu( H_n ) \ge \mu \left( \bigcup_{j=-n}^n E_j \right) - 3 \eps. \]
+ Die Aussage folgt nun aus
+ \[ \mu(E) = \lim_{n \to \infty} \mu \left( \bigcup_{j=-n}^n E_j \right). \qedhere\]
+\end{proof}
+\footnotetext{Abschluss von $E$: Durchschnitt aller abgeschlossenen Mengen, die $E$ enthalten; $\obar{E} \setminus E = \partial E$.}
+
+Für $r,s \in \real$, $E \subset \real$ ist $rE := \{ r\cdot e : e \in E \}$ und $E+s:= \{ e+s : e \in E \}$.
+
+\begin{thm}
+ Für beliebige $r,s \in \real$ und $E \subset \real$ gilt
+ \begin{align*}
+  \lambda^* (E+s) &= \lambda^* (E), & \lambda^* (rE) &= |r| \lambda^* (E).
+ \end{align*}
+ Ist $E \subset \real$ $\lebesgue$-messbar, so sind die Mengen $E+s$ und $rE$ ebenfalls $\lebesgue$-messbar und
+ \begin{align*}
+  \lambda (E+s) &= \lambda (E), & \lambda(rE) &= |r| \lambda(E).
+ \end{align*}
+\end{thm}
+
+\begin{rmrk}
+ \item $\lambda(E) = 0$ wenn $E$ abzählbar ist. 
+ 
+ \textbf{Konstruktion einer Nullmenge mit der Mächtigkeit des Kontinuums.} Jede Zahl $x \in [0,1]$ lässt sich darstellen als
+ \[ x = \sum_{j=1}^\infty a_j \cdot \rez{3^j}, \quad \text{wobei } a_j \in \{ 0,1,2 \}. \]
+ Diese Darstellung ist nicht ganz eindeutig, weil $\cdots 0 2 2 2 \cdots = \cdots 1 0 0 0 \cdots$. Daher vereinbaren wir, dass $\cdots 1 0 0 0 \cdots$ ausgeschlossen wird.
+ 
+ Die Cantorsche Menge\footnote{\url{https://de.wikipedia.org/wiki/Cantor-Menge}} $C$ ist die Menge aller $x \in [0,1]$ mit $a_j \ne 1$ für alle $j$. Sie hat die Eigenschaften
+ \begin{enumerate}[(a)]
+  \item $C$ ist kompakt, weil $C$ beschränkt und abgeschlossen ist (Durchschnitt abgeschlossener Mengen)
+  \item Wenn $x,y \in C$ mit $x < y$, dann existiert $z \notin C$ mit $x<z<y$. Also ist $C$ \emph{total unzusammenhängend}\footnote{Ist $X$ ein metrischer Raum, dann ist $X$ \emph{zusammenhängend}, wenn $X = U \cup V$, $U \cap V = \emptyset$, $U,V$ offen folgt, dass entweder $U = \emptyset$ oder $V = \emptyset$. $X$ heißt \emph{total unzusammenhängend}, wenn es neben der leeren und den einelementigen Teilmengen keine weiteren zusammenhängenden Teilmengen gibt.} (vollständig disjunkt) und \emph{nirgends dicht}\footnote{Eine Menge $E \subset X$ heißt \emph{nirgends dicht}, wenn das Innere ihres Abschlusses leer ist, $(\obar{E})^\circ = \emptyset$.}.
+  \item $C$ hat keine isolierten Punkte.
+  \item $\lambda(C) = 0$.
+  \item $C$ hat die Mächtigkeit des Kontinuums.
+ \end{enumerate}
+ Hinweis: $C = \{ x \in [0,1] : a_j \ne 1$ für alle $j \}$. 
+\end{rmrk}
+
+\section{Aufgaben}
+siehe \verb+Aufgaben-1-12.pdf+.
