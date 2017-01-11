@@ -259,7 +259,7 @@ Hierbei ist $f_\pm := \max \{ \pm f, 0 \}$.\footnote{Beachte: $f_-$ ist nach Def
  \begin{proof}
   Sei $\int |f| \diffop \mu < \infty$. Da $0 \le f_\pm \le |f|$ folgt aus der Monotonie auf nichtnegativen Funktionen, dass $\int f_\pm \le \int |f| < \infty$.
   
-  Umgekehrt sei $f$ integrierbar, das heißt $\int f_\pm < \infty$. Da $|f| = f_+ + f_-$ folgt aus der Linearität $\int |f| < \infty$.
+  Umgekehrt sei $f$ integrierbar, das heißt $\int f_\pm < \infty$. Da $|f| = f_+ + f_-$ folgt aus der Linearität $\int |f| = \int f_+ + \int f_i < \infty$.
  \end{proof}
 \end{rmrk}
 
@@ -326,7 +326,7 @@ Beweis siehe [MINT].
  Ohne Einschränkung sei $\varphi_0 \le \varphi_1 \le \ldots$ und $\psi_0 \ge \psi_1 \ge \ldots$. Aber jede Treppenfunktionen ist Borel-messbar und Lebesgue-integrierbar und ihr Riemann- und Lebesgue-Integral stimmen überein, da $\lebesgue^1( (a,b) ) = b - a$.
 
  Wegen Satz 3.1 und ($\circ$) sind auch die punktweisen Grenzwerte $\varphi := \lim \varphi_k$ und $\psi := \lim \psi_k$ integrierbar und Borel, und
- \[ \int_{[a,b]} \varphi \diffop \lebesgue^1 = \lim \int_{[a,b]} \varphi_k \diffop \lebesgue = \lim \int_a^b \varphi_k = \int_a^b f. \]
+ \[ \int_{[a,b]} \varphi \diffop \lebesgue^1 \stackrel{\mathrm{3.1}}= \lim_{k\to\infty} \int_{[a,b]} \varphi_k \diffop \lebesgue = \lim_{k\to\infty} \sum_{i=1}^{m_k} c_i^{(k)} \mu \left(A_i^{(k)}\right)= \lim_{k\to\infty} \sum_{i=1}^{m_k} c_i^{(k)} \left(a_i^{(k)}-b_i^{(k)}\right) = \]\[ \lim_{k\to\infty} \int_a^b \varphi_k \stackrel{({\circ})}= \int_a^b f. \]
  Analog für $\psi$. Da $\psi \ge \varphi$ also
  \[ \int | \psi - \varphi | \diffop \lebesgue^1 = \int (\psi - \varphi) \diffop \lebesgue^1 = \int \psi \diffop \lebesgue^1 - \int \varphi \diffop \lebesgue^1 = 0. \]
  Also ist $\varphi = \psi$ $\lebesgue^1$-integrierbar fast überall wegen Satz 2.6, also ist $\psi = f = \varphi$ $\lebesgue^1$-integrierbar fast überall, weil ja $\varphi \le f \le \psi$.
@@ -415,10 +415,14 @@ wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von
 \begin{proof}
  Sei $t \in I$ fest und $h \ne 0$, so dass $t+h \in I$. Definiere
  \[ F_h(x) := \rez{h}( f(x, t+h) - f(x,t) ). \]
- Nach dem Mittelwertsatz existiert $\Theta \in [0,1]$, so dass
- \[ |F_h(x)| = \left| \pdiff{f}{t} (x, t + \Theta h) \right| \le F(x) \]
- wegen 3. für alle $x \in X$. Aufgrund der Differenzierbarkeit von $f(x, \cdot)$ konvergiert $F_h(x) \to \pdiff{f}{t}(x,t)$ für alle $x \in X$ (mit $h \to 0$). Also folgt wegen majorierter Konvergenz
- \[ \int_X \pdiff{f}{t}(x,t) \diffop \mu(x) = \lim_{h \to 0} \int_X F_h \diffop \mu = g'(t). \qedhere \]
+ Nach dem Mittelwertsatz existiert $\Theta \in [0,1]$, so dass:
+ \[ |F_h(x)| = \left| \pdiff{f}{t} (x, t + \Theta h) \right| \stackrel{\mathrm{3.}}\le F(x) \]
+ Für alle $x \in X$. Aufgrund der Differenzierbarkeit von $f(x, \cdot)$ konvergiert $F_h(x) \to \pdiff{f}{t}(x,t)$ für alle $x \in X$ (mit $h \to 0$). Also folgt wegen majorierter Konvergenz
+ \[ \int_X \pdiff{f}{t}(x,t) \diffop \mu(x) = \lim_{h \to 0} \int_X F_h \diffop \mu =
+ \lim_{h\to0} \int_X \frac{1}{h}(f(x,t+h)-f(x,t))\diffop\mu \]\[=
+ \lim_{h\to0} \int_X \frac{1}{h}f(x,t+h)\diffop\mu -\frac{1}{h}\int_Xf(x,t)\diffop\mu=
+ \left( \int_X f(x,t)\diffop\mu \right)'
+ = g'(t). \qedhere \]
 \end{proof}
 
 \clearpage
@@ -542,7 +546,7 @@ Gegenstück für höhere Dimensionen:
 \begin{proof}
  Siehe [MINT]. Hier Spezialfall $U=V=\real^n$, $f = \chi_A$ und $\Phi(x) = a + Tx$ mit $T \in \realmat{n}{n}$ invertierbar. Aus Satz 5.4 folgt
  \begin{align*}
-    \int_{\real^n} f \diffop \lebesgue^n = \lebesgue^n(A)
+    \int_{\real^n} f \diffop \lebesgue^n = \int_{\real^n} \chi_A \diffop \lebesgue^n = \lebesgue^n(A)
     &= \lebesgue^n ( \Phi( \Phi^{-1}( A ) )) \\
     &= | \det \nabla \Phi | \lebesgue^n( \Phi^{-1}(A) ) \\
     &= | \det \nabla \Phi | \int_{\real^n} \underbrace{\chi_{\Phi^{-1}(A)}}_{\chi_A \cdot \Phi} \diffop \lebesgue^n \\
