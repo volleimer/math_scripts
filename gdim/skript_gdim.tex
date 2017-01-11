@@ -163,13 +163,13 @@ Daher lineare Algebra für affine $\varphi$ (das heißt $\nabla\varphi \equiv A$
 
 \subsubsection{Satz}
 \begin{thm}
- Sei $U \subset \real^k$ offen, $\varphi \in C^1(U, \real^n)$ eine Immersion und $z \in U$. Dann existiert $r > 0$, sodass die Einschränkung $\varphi|_{B_r(z)} : B_r(z) \to \real^n$ ein Homöomorphismus von $B_r(z)$ auf $\varphi(B_r(z))$ ist.
+ Sei $U \subset \real^k$ offen, $\varphi \in C^1(U, \real^n)$ eine Immersion und $z \in U$. Dann existiert $r > 0$, sodass die Einschränkung $\varphi|_{B_r(z)}^{\varphi(B_r(z))}$ ein Homöomorphismus ist.
 \end{thm}
 
 \begin{proof}
- Für $k = n$ folgt das aus dem Satz über Umkehrabbildungen. Sei also $k < n$. Ohne Einschränkung sei $\pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar. Wende den Satz über Umkehrabbildungen an auf $\tilde{\varphi} = ( \varphi_1, \ldots, \varphi_k): U \to \real^k$, da ja $\nabla \varphi = \pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar ist. Also existiert $r > 0$ und eine offene Menge $V \subset \real^k$, sodass $\tilde{\varphi}: B_r(z) \to V$ bijektiv ist mit stetig differenzierbarer Umkehrabbildung $\tilde{\psi}: V \to B_r(z)$. Da $\tilde{\varphi}|_{B_r(z)}$ injektiv ist, ist auch $\varphi|_{B_r(z)}$ injektiv, also $\varphi:B_r(z) \to \varphi(B_r(z))$ bijektiv.
+ Für $k = n$ folgt das aus dem Satz über Umkehrabbildungen. Sei also $k < n$. Ohne Einschränkung sei $\pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar. Wende den Satz über Umkehrabbildungen an auf $\tilde{\varphi} = ( \varphi_1, \ldots, \varphi_k)\colon U \to \real^k$, da ja $\nabla \varphi = \pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar ist. Also existiert $r > 0$ und eine offene Menge $V \subset \real^k$, sodass $\tilde{\varphi}|_{B_r(z)}^{f(B_r(z))}$ bijektiv ist mit stetig differenzierbarer Umkehrabbildung $\tilde\varphi^{-1}$. Da $\tilde{\varphi}|_{B_r(z)}^{f(B_r(z))}$ injektiv ist, ist auch $\varphi|_{B_r(z)}$ injektiv, also $\varphi|_{B_r(z)}^{\varphi(B_r(z))}$ bijektiv.
  
- Die Umkehrabbildung $\psi : \varphi(B_r(z)) \to B_r(z)$, $(y_1, \ldots, y_k) \mapsto (\tilde{\psi}(y_1, \ldots, y_k)$ ist stetig, da $\tilde{\psi}$ stetig ist.
+ Die Umkehrabbildung $\left(\varphi|_{B_r(z)}^{\varphi(B_r(z))}\right)^{-1} \colon \varphi(B_r(z)) \to B_r(z)$, $(y_1, \ldots, y_k) \mapsto (\tilde{\varphi}^{-1}(y_1, \ldots, y_k))$ ist stetig, da $\tilde{\varphi}$ stetig ist.
 \end{proof}
 
 \subsubsection{Definition}
