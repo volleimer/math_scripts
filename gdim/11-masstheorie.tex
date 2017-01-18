@@ -17,7 +17,7 @@ Das Integral für beliebige (Riemann-integrierbare) $f:[a,b]\to\real$: Approxima
 \addcontentsline{toc}{subsubsection}{Lebesgue-Integral auf \texorpdfstring{$[a,b] \subset \real$}{[a,b] in IR}}
 Bausteine sind \emph{einfache Funktionen}.
 
-Eine Funktion $\varphi: [a,b] \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an:
+Eine Funktion $\varphi\colon[a,b] \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an:
 \[ \sharp \varphi([a,b]) < \infty. \]
 Unterschied zu Treppenfunktionen: $\varphi^{-1}(c_k)$ ist im Allgemeinen kein Intervall.
 
@@ -30,10 +30,10 @@ Lebesgue-Integral für beliebige (Lebesgue-integrierbare) $f:[a,b]\to\real$: App
  \item Wähle $A_k := f^{-1}([c_{k-1},c_k])$ und setze $\varphi := c_k$ auf $A_k$.
 \end{enumerate}
 
-Diese Definition überträgt sich sofort auf $f: \real^n \to \real$ und sogar auf auf $f: X \to \real^n$ mit beliebigem merischen Raum $X$. Problem dabei ist die Frage: 
+Diese Definition überträgt sich sofort auf $f\colon\real^n \to \real$ und sogar auf auf $f\colon X \to \real^n$ mit beliebigem merischen Raum $X$. Problem dabei ist die Frage:
 \begin{itemize}
  \item Wie ``lang'' ist $f^{-1}((c_{k-1},c_k))$?
- \item Welches ``Volumen'' hat diese Menge? (zum Beispiel $f: \real^3 \to \real^3$)
+ \item Welches ``Volumen'' hat diese Menge? (zum Beispiel $f\colon\real^3 \to \real^3$)
  \item Allgemein: Welches \emph{Maß} hat sie?
 \end{itemize}
 Ist ein sinnvoller ``Volumen''-Begriff für jede Menge in $\real^n$ überhaupt möglich? Nein! Siehe Banach-Tarski. Aber für eine geeignete Klasse von (sogenannten messbaren) Teilmengen schon.
@@ -56,7 +56,7 @@ sowie
                           \end{cases} \]
 
 \subsubsection{Äußere Maße}
-Sei $X$ eine nichtleere Menge. Eine Funktion $\mu: 2^X \to [0,\infty]$ heißt \emph{äußeres Maß} auf $X$ $:\Leftrightarrow$
+Sei $X$ eine nichtleere Menge. Eine Funktion $\mu\colon2^X \to [0,\infty]$ heißt \emph{äußeres Maß} auf $X$ $:\Leftrightarrow$
 \begin{enumerate}
  \item $\mu(\emptyset) = 0$.
  \item Monotonie: $A \subset B \subset X\, \Rightarrow \, \mu(A) \le \mu(B)$.
@@ -112,7 +112,7 @@ Definitionen:
 \end{proof}
 
 \subsubsection{Maß und Maßraum}
-Sei $(X,\mA)$ ein Messraum. Ein \emph{Maß} auf $\mA$ ist eine Funktion $\mu: \mA \to [0,\infty]$ mit folgenden Eigenschaften:
+Sei $(X,\mA)$ ein Messraum. Ein \emph{Maß} auf $\mA$ ist eine Funktion $\mu\colon\mA \to [0,\infty]$ mit folgenden Eigenschaften:
 \begin{enumerate}
  \item $\mu(\emptyset)=0$.
  \item $\sigma$-Additivität: für jede Folge $(A_n)_{n \in \nat} \subset \mA$ von \emph{paarweise disjunkten} Mengen gilt:
@@ -180,26 +180,26 @@ Also für $n=1$ und $b \ge a$ gilt:
 
 \subsection{Lebesgue-Integral}
 \subsubsection{Charakteristische Funktionen}
-Sei $X$ eine nichtleere Menge. Für jedes $A \subset X$ definiert man die \emph{charakteristische Funktion} $\chi_A : X \to \{ 0, 1 \}$ durch 
+Sei $X$ eine nichtleere Menge. Für jedes $A \subset X$ definiert man die \emph{charakteristische Funktion} $\chi_A \colon X \to \{ 0, 1 \}$ durch 
 \[ \chi_A(x) := \begin{cases}
               1, &\text{falls } x \in A \\
               0, &\text{sonst.}
              \end{cases} \]
 
 \subsubsection{Einfache Funktionen}
-Sei $X$ eine nichtleere Menge. Eine Funktion $\varphi: X \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an. Mit anderen Worten: Es existiert $m \in \nat$ und $A_1, \ldots, A_m \subset X$ und $c_1, \ldots, c_m \in \real$, so dass
+Sei $X$ eine nichtleere Menge. Eine Funktion $\varphi\colon X \to \real$ heißt \emph{einfach} $:\Leftrightarrow$ $\varphi$ nimmt nur endlich viele verschiedene Werte an. Mit anderen Worten: Es existiert $m \in \nat$ und $A_1, \ldots, A_m \subset X$ und $c_1, \ldots, c_m \in \real$, so dass
 \[ \varphi = \sum_{i=1}^m c_i \chi_{A_i}. \]
 
 \subsubsection{Messbare Funktionen}
 Sei $(X, \mA)$ ein Messraum.
 \begin{itemize}
- \item Eine Funktion $f: X \to [0, \infty]$ heißt \emph{$\mA$-messbar} $:\Leftrightarrow$ $f^{-1}(E) \in \mA$ für alle Borel-Mengen $E \subset [-\infty,\infty]$.
- \item $f: \real^n \to [-\infty,\infty]$ heißt \emph{Borel-messbar} (bzw. Lebesgue-messbar) $:\Leftrightarrow$ $f$ ist $\borel(\real^n)$-messbar (bzw. $\lebesgue^n$-messbar).
- \item $f: \real^n \to [-\infty,\infty]^n$ heißt \emph{$\mA$-messbar} $:\Leftrightarrow$ jede Komponente von $f$ ist messbar.
+ \item Eine Funktion $f\colon X \to [0, \infty]$ heißt \emph{$\mA$-messbar} $:\Leftrightarrow$ $f^{-1}(E) \in \mA$ für alle Borel-Mengen $E \subset [-\infty,\infty]$.
+ \item $f\colon\real^n \to [-\infty,\infty]$ heißt \emph{Borel-messbar} (bzw. Lebesgue-messbar) $:\Leftrightarrow$ $f$ ist $\borel(\real^n)$-messbar (bzw. $\lebesgue^n$-messbar).
+ \item $f\colon\real^n \to [-\infty,\infty]^n$ heißt \emph{$\mA$-messbar} $:\Leftrightarrow$ jede Komponente von $f$ ist messbar.
 \end{itemize}
 
 \begin{rmrk}
- Sei $(X, \mA)$ ein Messraum und $f: X \to [-\infty,\infty]$. Äquivalente Aussagen:
+ Sei $(X, \mA)$ ein Messraum und $f\colon X \to [-\infty,\infty]$. Äquivalente Aussagen:
  \begin{enumerate}
   \item $f$ ist messbar.
   \item $\{ x \in X: f(x) > c \} \in \mA$ für alle $c \in \real$.
@@ -208,7 +208,7 @@ Sei $(X, \mA)$ ein Messraum.
 \end{rmrk}
 
 \begin{thm}
- Sei $(X, \mA)$ ein Messraum und für alle $k \in \nat$ seien $f_k, f, g: X \to [-\infty,\infty]$ messbar. Dann sind ebenfalls messbar:
+ Sei $(X, \mA)$ ein Messraum und für alle $k \in \nat$ seien $f_k, f, g\colon X \to [-\infty,\infty]$ messbar. Dann sind ebenfalls messbar:
  \begin{align*}
  &f+g,& &fg,& &\max\{ f, g \},& &\min\{ f, g \}, \\ 
  &\sup_{k \in \nat} f_k, & &\inf_{k \in \nat} f_k,& &\limsup_{k \in \nat} f_k,& &\liminf_{k \in \nat} f_k.
@@ -225,7 +225,7 @@ Sei $(X, \mA)$ ein Messraum.
 \end{proof}
 
 \subsubsection{Integral für nichtnegative einfache Funktionen}
-Sei $(X,\mA,\mu)$ ein Maßraum und $\varphi: X \to [0, \infty)$ einfach; genauer: Seien $c_i \ge 0$ und $A_i \in \mA$ für $i=1,\ldots,m$ und $\varphi = \sum_{i=1}^m c_i \chi_{A_i}$. Dann definiert man folgende Zahl\footnote{{$\infty$ ist möglich, da unter Umständen $\mu(A_i) = \infty$ für ein $i$}} in $[0,\infty]$:
+Sei $(X,\mA,\mu)$ ein Maßraum und $\varphi\colon X \to [0, \infty)$ einfach; genauer: Seien $c_i \ge 0$ und $A_i \in \mA$ für $i=1,\ldots,m$ und $\varphi = \sum_{i=1}^m c_i \chi_{A_i}$. Dann definiert man folgende Zahl\footnote{{$\infty$ ist möglich, da unter Umständen $\mu(A_i) = \infty$ für ein $i$}} in $[0,\infty]$:
 \[ \int_X \varphi \diffop \mu := \sum_{i=1}^m c_i \mu( A_i ). \]
 
 \begin{rmrk}
@@ -236,8 +236,8 @@ Sei $(X,\mA,\mu)$ ein Maßraum und $\varphi: X \to [0, \infty)$ einfach; genauer
 \end{rmrk}
 
 \subsubsection{Integral für nichtnegative Funktionen}
-Sei $(X,\mA,\mu)$ ein Maßraum und $f: X \to [0, \infty]$ messbar. Man definiert
-\[ \int_X f \diffop \mu := \sup \left\{ \int_x \varphi \diffop \mu : \varphi: X \to \real \text{ messbar und einfach mit } 0 \le \varphi \le f \right\}. \]
+Sei $(X,\mA,\mu)$ ein Maßraum und $f\colon X \to [0, \infty]$ messbar. Man definiert
+\[ \int_X f \diffop \mu := \sup \left\{ \int_X \varphi \diffop \mu : \varphi\colon X \to \real \text{ messbar und einfach mit } 0 \le \varphi \le f \right\}. \]
 
 \begin{rmrk}
  Das Integral ist linear und monoton, das heißt
@@ -246,7 +246,7 @@ Sei $(X,\mA,\mu)$ ein Maßraum und $f: X \to [0, \infty]$ messbar. Man definiert
 \end{rmrk}
 
 \subsubsection{Integrierbare Funktionen}
-Sei $(X,\mA,\mu)$ ein Maßraum. Eine Funktion $f:X \to [-\infty,\infty]$ heißt \emph{$\mu$-integrierbar} $:\Leftrightarrow$ $f$ ist $\mA$-messbar und für die beiden (dann ebenfalls messbaren\footnote{Das folgt aus Satz 2.3}) Funktionen $f_\pm : X \to [0,\infty]$ gilt:
+Sei $(X,\mA,\mu)$ ein Maßraum. Eine Funktion $f:X \to [-\infty,\infty]$ heißt \emph{$\mu$-integrierbar} $:\Leftrightarrow$ $f$ ist $\mA$-messbar und für die beiden (dann ebenfalls messbaren\footnote{Das folgt aus Satz 2.3}) Funktionen $f_\pm \colon X \to [0,\infty]$ gilt:
 \[ \int f_\pm \diffop \mu < \infty. \]
 
 Man definiert dann folgende Zahl in $\real$:
@@ -267,7 +267,7 @@ Hierbei ist $f_\pm := \max \{ \pm f, 0 \}$.\footnote{Beachte: $f_-$ ist nach Def
  Sei $(X,\mA,\mu)$ ein Maßraum und seien $f,g:X \to [-\infty, \infty]$ messbar. Dann gilt
  \begin{enumerate}[(a)]
   \item $\int_X |f| \diffop \mu = 0$ $\Leftrightarrow$ $f=0$ fast überall.
-  \item $f$ ist $\mu$-integrierbar $\Rightarrow$ $f(x) \notin \{ -\infty, \infty \}$ für $\mu$-fast alle\footnotemark $x \in X$.
+  \item $f$ ist $\mu$-integrierbar $\Rightarrow$ $f(x) \notin \{ -\infty, \infty \}$ für $\mu$-fast alle\footnotemark{} $x \in X$.
   \item Wenn $\mu$-fast überall $f=g$ gilt, dann ist $f$ integrierbar genau dann, wenn $g$ integrierbar ist. Dann ist
   \[ \int_X f \diffop \mu = \int_X g \diffop \mu. \]
   \item $f,g$ integrierbar und $c \in \real$ $\Rightarrow$ $cf$, $f+g$ integrierbar.
@@ -277,7 +277,7 @@ Hierbei ist $f_\pm := \max \{ \pm f, 0 \}$.\footnote{Beachte: $f_-$ ist nach Def
 \footnotetext{$\mu(\{ x \in X: f(x) = \infty$ oder $f(x) = -\infty \} ) = 0$}
 
 \begin{rmrk}
- Keine Äquivalenz in (b), zum Beispiel $f: \real \to \real$ gegeben durch $f(x)$ für alle $x$ mit Maßraum $(\real, \borel(\real), \lebesgue^1 )$.
+ Keine Äquivalenz in (b), zum Beispiel $f\colon\real \to \real$ gegeben durch $f(x) = 1$ für alle $x$ mit Maßraum $(\real, \borel(\real), \lebesgue^1 )$.
 \end{rmrk}
 
 \subsubsection{Integration über Teilmengen}
@@ -292,13 +292,13 @@ Hierbei ist $f_\pm := \max \{ \pm f, 0 \}$.\footnote{Beachte: $f_-$ ist nach Def
 \end{exmp}
 
 \subsection{Konvergenzsätze}
- Riemann-Integral: $f_k \to f$ \emph{gleichmäßig} $\Rightarrow$ $\int f_k \to \int f$. Das ist eine sehr starke Bedingung.
+ Riemann-Integral: $f_k \to f$ \emph{gleichmäßig} $\Rightarrow$ $\int f_k \to \int f$. Dies ist eine sehr starke Vorraussetzung.
  
 \subsubsection{Monotone Konvergenz}
 \begin{thm}
- Sei $(X,\mA,\mu)$ ein Maßraum und $f_0 \le f_1 \le \ldots$ eine monoton wachsende Folge integrierbarer Funktionen, $f_k : X \to \real$. Zudem sei
+ Sei $(X,\mA,\mu)$ ein Maßraum und $f_0 \le f_1 \le \ldots$ eine monoton wachsende Folge integrierbarer Funktionen, $f_k \colon X \to \real$. Zudem sei
  \[ \sup_{k \in \nat} \int f_k \diffop \mu < \infty. \]
- Dann ist der \emph{punktweise} Grenzwert\footnotemark $f: X \to (-\infty, \infty]$ ebenfalls integrierbar und es gilt
+ Dann ist der \emph{punktweise} Grenzwert\footnotemark $f\colon X \to (-\infty, \infty]$ ebenfalls integrierbar und es gilt
  \[ \lim_{k \to \infty} \int_X f_k \diffop \mu = \int_X f \diffop \mu. \]
 \end{thm}
 \footnotetext{Das heißt $f(x) := \lim_{k \to \infty} f_k(x)$ für alle $x \in X$.}
@@ -329,10 +329,10 @@ Beweis siehe [MINT].
  \[ \int_{[a,b]} \varphi \diffop \lebesgue^1 = \lim \int_{[a,b]} \varphi_k \diffop \lebesgue = \lim \int_a^b \varphi_k = \int_a^b f. \]
  Analog für $\psi$. Da $\psi \ge \varphi$ also
  \[ \int | \psi - \varphi | \diffop \lebesgue^1 = \int (\psi - \varphi) \diffop \lebesgue^1 = \int \psi \diffop \lebesgue^1 - \int \varphi \diffop \lebesgue^1 = 0. \]
- Also ist $\varphi = \psi$ $\lebesgue^1$-integrierbar fast überall wegen Satz 2.6, also ist $\psi = f = \varphi$ $\lebesgue^1$-integrierbar fast überall, weil ja $\varphi \le f \le \psi$.
+ Also ist $\varphi = \psi$ $\lebesgue^1$-integrierbar fast überall wegen Satz 2.6, also ist $\psi = f = \varphi$ $\lebesgue^1$-integrierbar fast überall, wegen $\varphi \le f \le \psi$.
 \end{proof}
 
-Beispiel einer $\lebesgue^1$-integrierbaren, aber nicht Riemann-integrierbaren Funktion $f:[a,b] \to [0,\infty)$:
+Beispiel einer $\lebesgue^1$-integrierbaren, aber nicht Riemann-integrierbaren Funktion $f\colon[a,b] \to [0,\infty)$:
 \[ f = \chi_{\rat \cap [a,b]} = \begin{cases} 1, &\text{wenn } x \in \rat \text{ und } x \in [a,b], \\
                                  0, &\text{sonst.}
                                 \end{cases}
@@ -352,14 +352,14 @@ Aber ohne Voraussetzung $f \ge 0$ ist die Aussage im Allgemeinen falsch. Zum Bei
 
 \subsubsection{Majorierte Konvergenz}
 \begin{thm}
- Sei $(X, \mA, \mu)$ ein Maßraum und $(f_k)_{k \in \nat}$ eine Folge messbarer Funktionen $X \to \real$, die \emph{punktweise} gegen $f:X \to \real$ konvergiert. Zudem existiere eine Majorante, das heißt eine \emph{integrierbare} Funktion $F: X \to [0, \infty]$, so dass punktweise fast überall $|f_k| \le F$ für alle $k \in \nat$. Dann ist $f$ integrierbar\footnotemark und
+ Sei $(X, \mA, \mu)$ ein Maßraum und $(f_k)_{k \in \nat}$ eine Folge messbarer Funktionen $X \to \real$, die \emph{punktweise} gegen $f:X \to \real$ konvergiert. Zudem existiere eine Majorante, das heißt eine \emph{integrierbare} Funktion $F\colon X \to [0, \infty]$, so dass punktweise fast überall $|f_k| \le F$ für alle $k \in \nat$. Dann ist $f$ integrierbar\footnotemark und
  \[ \lim_{k \to \infty} \int_X f_k \diffop \mu = \int_X f \diffop \mu. \]
 \end{thm}
 \footnotetext{Auch alle $f_k$, das folgt sofort aus der Ungleichung}
 
 \begin{rmrk}
- Wegen $|f_k -f| \le 2F$ und der punktweisen Konvergenz $|f_k - f| \to 0$ folgt durch nochmalige Anwendung des Satzes der stärkere Schluss
- \[ \int_x |f_k - f| \diffop \mu \to 0. \]
+ Wegen $|f_k -f| \le 2F$ und der punktweisen Konvergenz $|f_k - f| \to 0$ folgt durch nochmalige Anwendung des Satzes der stärkere Schluss:
+ \[ \lim_{k\to\infty}\int_X |f_k - f| \diffop \mu = 0 \]
 \end{rmrk}
 
 \subsubsection*{Notwendigkeit der Majorante}
@@ -367,31 +367,31 @@ Zugleich Notwendigkeit der \emph{monotonen} Konvergenz-Annahme in Satz 3.1:
 
 Suche eine Folge $(f_k)$ mit $\int_\real f_k = 1$, aber $f_k \to 0$ punktweise. Wähle zum Beispiel $f_k = k \cdot \chi_{[-1/2k,1/2k]\setminus \{ 0 \}}$. (``Rechtecke'' zentriert um 0). Es gibt keine Majorante, da $f_{k+1} > f_k$ auf $\left[ -\rez{2(k+1)}, \rez{2k+1} \right]$. Es gilt
 \[ \int_\real f_k = k \cdot \lebesgue^1 \left( -\rez{2k}, \rez{2k} \right) = k \cdot \rez{k} = 1 \]
-und für alle $x \ne 0$ gilt $f_k(x) \to 0$. Damit gilt aber $\int_\real f = 0$!
+und für alle $x \ne 0$ gilt $f_k(x) \to 0$. Damit gilt aber $\int_\real f = 0$. Widerspruch!
 
 \subsection{Parameterabhängige Integrale}
 Situation: $f(x,t)$ und betrachte
-\[ \int_X f(x,t) \diffop \mu(x) := \int_X f( \cdot, t ) \diffop \mu \]
-wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von $t$ ab?
+\[ F(t):= \int_X f(x,t) \diffop \mu(x) := \int_X f( \cdot, t ) \diffop \mu \]
+wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $F$ von $t$ ab?
 
 \subsubsection{Stetige Abhängigkeit}
 \begin{thm}
  Sei $(X, \mA, \mu)$ ein Maßraum, $U \subset \real^n$ offen und $a \in U$. Weiter sei
- \[ f: X \times U \to \real, \quad (x,t) \mapsto f(x,t) \]
+ \[ f\colon X \times U \to \real, \quad (x,t) \mapsto f(x,t) \]
  eine Funktion mit folgenden Eigenschaften:
  \begin{enumerate}
   \item Für jedes feste $t \in U$ ist $f( \cdot, t ): x \mapsto f(x,t)$ integrierbar auf $X$.
   \item Für jedes feste $x \in X$ ist $f( x, \cdot ): t \mapsto f(x,t)$ stetig im Punkt $a$.
-  \item Es existiert eine integrierbare Majorante $F: X \to [0,\infty]$ mit $|f(x,t)| \le F(x)$ für alle $(x,t) \in X \times U$.
+  \item Es existiert eine integrierbare Majorante $F\colon X \to [0,\infty]$ mit $|f(x,t)| \le F(x)$ für alle $(x,t) \in X \times U$.
  \end{enumerate}
  Dann ist die durch
  \[ g(t) := \int_X f(x,t) \diffop \mu(x) := \int_X f( \cdot, t ) \diffop \mu \]
- definierte Funktion $g: U \to \real$ stetig in $a$, das heißt
+ definierte Funktion $g\colon U \to \real$ stetig in $a$, das heißt
  \[ \lim_{t \to a} \int_X f(x,t) \diffop \mu(x) = \int_X f(x,a) \diffop \mu(x). \]
 \end{thm}
 
 \begin{proof}
- Sei $(t_k)_{k \in \nat} \subset U$ mit $t_k \to a$ und definiere $f_k(x) := f(x, t_k)$ und $f_\infty(x) := f(x, a)$. Nach Voraussetzung ist jedes $f_k$ messbar und majoriert durch $f$:
+ Sei $(t_k)_{k \in \nat} \subset U$ mit $t_k \to a$ und definiere $f_k(x) := f(x, t_k)$ und $f_\infty(x) := f(x, a)$. Nach Voraussetzung ist jedes $f_k$ messbar und majoriert durch $F$:
  \[ |f_k(x)| = |f(x,t_k)| \le F(x) \text{ für alle } x \in X. \]
  Zudem gilt wegen 2. $f_k \to f$ punktweise auf $X$. Daher folgt die Behauptung aus der majorierten Konvergenz.
 \end{proof}
@@ -399,16 +399,16 @@ wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von
 \subsubsection{Differenzierbare Abhängigkeit}
 \begin{thm}
  Sei $(X, \mA, \mu)$ ein Maßraum und $I \subset \real$ ein nichttriviales Intervall. Weiter sei 
- \[ f: X \times I \to \real, \quad (x,t) \mapsto f(x,t) \]
+ \[ f\colon X \times I \to \real, \quad (x,t) \mapsto f(x,t) \]
  eine Funktion mit folgenden Eigenschaften:
  \begin{enumerate}
   \item Für jedes feste $t \in I$ ist $f( \cdot, t )$ integrierbar.
   \item Für jedes feste $x \in X$ ist $f( x, \cdot )$ differenzierbar auf $I$.
-  \item Es existiert eine integrierbare Majorante $F: X \to [0,\infty]$, so dass $\pdiff{f}{t}(x,t) \le F(x)$ für alle $(x,t) \in X \times I$.
+  \item Es existiert eine integrierbare Majorante $F\colon X \to [0,\infty]$, so dass $\pdiff{f}{t}(x,t) \le F(x)$ für alle $(x,t) \in X \times I$.
  \end{enumerate}
  Dann ist die durch
  \[ g(t) := \int_X f(x,t) \diffop \mu(x)  \]
- definierte Funktion $g: I \to \real$ differenzierbar auf $I$ und
+ definierte Funktion $g\colon I \to \real$ differenzierbar auf $I$ und
  \[ g'(t) = \int_X \pdiff{f}{t}(x,t) \diffop \mu(x) \text{ für alle } t \in I. \]
 \end{thm}
 
@@ -426,14 +426,14 @@ wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von
 \subsection{Eigenschaften des Lebesgue-Maßes}
 \subsubsection{Definition (Erinnerung)}
  \textbf{Äußeres Lebesgue-Maß.} Für jede Menge $E \subset \real^n$ definiert man
- \[ \lebesgue^n( E ) := \inf \left\{ \sum_{k=0}^\infty r_k^n : E \subset \bigcup_{i=0}^\infty Q_{r_k}(a_k) \right\}, \]
+ \[ \lebesgue^n( E ) := \inf \left\{ \sum_{k=0}^\infty r_k^n \middle| E \subset \bigcup_{i=0}^\infty Q_{r_k}(a_k) \right\}, \]
  wobei das Infimum über alle Folgen $(r_k)_{k \in \nat} \subset (0, \infty)$ genommen wird, für die eine zugehörige Folge $(a_k)_{k \in \nat} \subset \real^n$ existiert, so dass $E \subset \bigcup_{k=0}^\infty Q_{r_k}(a_k)$. Hierbei ist $Q_{r}(a) := a + \left(-\frac{r}{2}, \frac{r}{2} \right]^n$.
 
  Lebesgue-Maß: Einschränkung des so definierten äußeren Lebesgue-Maßes auf $\sigma( \lebesgue^n )$.
  
 \subsubsection{``Maßraum''-Eigenschaften}
 \begin{thm}
- Bezeichne $\lebesgue^n: 2^{\real^n} \to [0, \infty]$ das äußere Lebesgue-Maß auf $\real^n$. Dann gilt:
+ Bezeichne $\lebesgue^n\colon 2^{\real^n} \to [0, \infty]$ das äußere Lebesgue-Maß auf $\real^n$. Dann gilt:
  \begin{enumerate}
   \item $\lebesgue( \emptyset ) = 0$.
   \item $\sigma$-Subadditivität: Sind $E_0, E_1, \ldots \subset \real^n$, dann
@@ -471,7 +471,7 @@ Beweis siehe [MINT].
 
 Es folgt eine weitere maßtheoretische Eigenschaft:
 \begin{kor}
- Das äußere Lebesgue-Maß ist $\sigma$-endlich, das heißt für jedes $E \subset \real^n$ existiert $E_0 \subset E_1 \subset \ldots$ mit $\lebesgue(E_k) < \infty$ und $E = \bigcup_{k=0}^\infty E_k$.
+ Das äußere Lebesgue-Maß ist $\sigma$-endlich, das heißt für jedes $E \subset \real^n$ existiert $E_0 \subset E_1 \subset \ldots$ mit $\lebesgue^n(E_k) < \infty$ und $E = \bigcup_{k=0}^\infty E_k$.
 \end{kor}
 
 \begin{proof}
@@ -499,43 +499,43 @@ Es folgt eine weitere maßtheoretische Eigenschaft:
 \end{itemize}
 
 \subsubsection{Euklidische Eigenschaften}
-\textbf{Formale Anmerkung.} Wenn sich das Volumen einer Menge $E \subset \real^n$ elemtargeometrisch berechnen lässt, dann stimmt es mit dem Lebesgue-Maß $\lebesgue^n(E)$ überein. Mit anderen Worten: Das $n$-dimensionale Lebesgue-Maß ist die natürliche Fortsetzung des Volumenbegriffs auf die Klasse der Borel-messbaren Mengen $\borel(\real^n)$.
+\textbf{Formale Anmerkung:} Wenn sich das Volumen einer Menge $E \subset \real^n$ elemtargeometrisch berechnen lässt, dann stimmt es mit dem Lebesgue-Maß $\lebesgue^n(E)$ überein. Mit anderen Worten: Das $n$-dimensionale Lebesgue-Maß ist die natürliche Fortsetzung des Volumenbegriffs auf die Klasse der Borel-messbaren Mengen $\borel(\real^n)$.
 
 \begin{thm}[Verhalten unter affinen Transformationen]
  Sei $T \in \realmat{n}{n}$ invertierbar, sei $a \in \real^n$ und definiere $\Phi:\real^n \to \real^n$ durch $\Phi(x) = a + Tx$. Dann gilt für jede Borel-messbare Menge $E \in \real^n$:
  \begin{enumerate}
   \item $\Phi(E)$ ist Borel-messbar.
-  \item $\lebesgue^n( \Phi(E) ) = | \det T | \lebesgue^n (E)$.
+  \item $\lebesgue^n( \Phi(E) ) = | {\det T} | \cdot \lebesgue^n (E)$.
  \end{enumerate}
 \end{thm}
 
-\emph{Beweisidee.} 
+\emph{Beweisidee:} 
 \begin{itemize}
  \item Für $T = \lambda I$ ($I$ ist die Einheitsmatrix) siehe Übung $\lebesgue^n (a + \lambda E) = \lebesgue^n ( \lambda E ) = \lambda^n \lebesgue^n (E)$. 
  \item $\rightsquigarrow$ Naheliegend, dass auch für 
 \[ T = \begin{pmatrix} 
-        \lambda_0 & 0 & \cdots & \\
-        0 & \lambda_1 & \ddots & \\
+        \lambda_0 & 0 & \cdots & 0\\
+        0 & \lambda_1 & \ddots & \vdots\\
         \vdots  & \ddots & \ddots & 0 \\
-          &  & 0 & \lambda_n
+        0  & \cdots & 0 & \lambda_n
        \end{pmatrix} \]
  die behauptete Formel gilt.
  \item $\lebesgue^n$ ist invariant unter Rotationen und Spiegelungen ($T \in O(n)$).
  \item Jede Matrix $T$ ist von der Form $T = QRDR^{-1}$, wobei $D$ diagonal und $Q,R \in O(n)$.
 \end{itemize}
 
-Insbesondere für $T \in SO(n)$ $\Rightarrow$ $\det T = 1$ $\Rightarrow$ $\lebesgue^n$ ist rotationsinvariant.
+Insbesondere für $T \in SO(n)$ ($\Rightarrow$ $\det T = 1$) ist $\lebesgue^n$ ist rotationsinvariant.
 
 \clearpage
 
 \subsubsection{Transformationsformel}
-Erinnerung an die Substitutionsregel für Riemann-Funktionen in Analysis 2: Sei $I \subset \real$ Intervall, $f:I \to \real$ und $\varphi:[a,b] \to \real$ stetig differenzierbar mit $\varphi([a,b]) \subset I$. Dann
+Erinnerung an die Substitutionsregel für Riemann-Funktionen in Analysis 2: Sei $I \subset \real$ Intervall, $f\colon I \to \real$ und $\varphi\colon[a,b] \to \real$ stetig differenzierbar mit $\varphi([a,b]) \subset I$. Dann
 \[ \int_{\varphi(a)}^{\varphi(b)} f = \int_a^b f(\varphi(x)) \varphi'(x) \diffop x. \]
 
 Gegenstück für höhere Dimensionen:
 \begin{thm}
- Seien $U,V \subset \real^n$ offen und sei $\Phi: U \to V$ ein $C^1$-Diffeomorphismus\footnotemark. Eine Funktion $f: V \to \real$ ist genau dann integrierbar, wenn $(f \circ \Phi) \cdot | \det \nabla \Phi |$ integrierbar ist und es gilt dann
- \[ \int_V f \diffop \lebesgue^n = \int_U (f \circ \Phi) | \det \nabla \Phi | \diffop \lebesgue^n. \]
+ Seien $U,V \subset \real^n$ offen und sei $\Phi\colon U \to V$ ein $C^1$-Diffeomorphismus\footnotemark. Eine Funktion $f\colon V \to \real$ ist genau dann integrierbar, wenn $(f \circ \Phi) \cdot \lvert \det \nabla \Phi \rvert$ integrierbar ist und es gilt dann
+ \[ \int_V f \diffop \lebesgue^n = \int_U (f \circ \Phi) \lvert {\det \nabla \Phi} \rvert \diffop \lebesgue^n. \]
 \end{thm}
 \footnotetext{$\Phi$ ist bijektiv, $\Phi \in C^1$, $\Phi^{-1} \in C^1$}
 
@@ -544,9 +544,9 @@ Gegenstück für höhere Dimensionen:
  \begin{align*}
     \int_{\real^n} f \diffop \lebesgue^n = \lebesgue^n(A)
     &= \lebesgue^n ( \Phi( \Phi^{-1}( A ) )) \\
-    &= | \det \nabla \Phi | \lebesgue^n( \Phi^{-1}(A) ) \\
-    &= | \det \nabla \Phi | \int_{\real^n} \underbrace{\chi_{\Phi^{-1}(A)}}_{\chi_A \cdot \Phi} \diffop \lebesgue^n \\
-    &= \int_{\real^n} | \det\nabla \Phi | f \circ \Phi \diffop \lebesgue^n. \qedhere
+    &= \lvert \det \nabla \Phi \rvert \lebesgue^n( \Phi^{-1}(A) ) \\
+    &= \lvert \det \nabla \Phi \rvert \int_{\real^n} \underbrace{\chi_{\Phi^{-1}(A)}}_{\chi_A \circ \Phi} \diffop \lebesgue^n \\
+    &= \int_{\real^n} \lvert \det\nabla \Phi \rvert (f \circ \Phi) \diffop \lebesgue^n. \qedhere
  \end{align*}
 \end{proof}
 
@@ -559,30 +559,32 @@ Gegenstück für höhere Dimensionen:
   \item Polarkoordinaten eines Punktes $x=(x_1,x_2,x_3) \in \real^3$ mit $(x_1,x_2) \ne 0$:
    \begin{itemize}
     \item $r := |x| =$ Länge des Vektors $x$
+    \item $\varphi :=$ Winkel zwischen $x_1$-Achse und auf die $x_1$-$x_2$-Ebene  projeziert Vektor $x$
     \item $\theta :=$ Winkel zwischen $x_3$-Achse und Vektor $x$
-    \item $\varphi :=$ Winkel zwischen $x_1$-Achse und Vektor $x$
    \end{itemize}
-   Transformation von Polar- in euklidische Koordinaten:$\Phi: [0, \infty) \times [0,\pi] \times [0,2\pi] \to \real^3$, wobei
-   \[ (r,\theta, \varphi) \mapsto ( r \sin \theta \cos \varphi, r \sin \theta \sin \varphi, r \cos \theta ). \]
-   Rechnung (Übung) ergibt
-   \[ \det \nabla \Phi( r, \theta, \varphi) = r^2 \sin \theta. \]
-   Setze $U := (0, \infty) \times (0,\pi) \times (0,2\pi)$. Dann ist $\Phi: U \to V$ ein $C^1$-Diffeomorphismus, wobei
+   Transformation von Polar- in euklidische Koordinaten: $\Phi\colon[0, \infty) \times [0,\pi] \times [0,2\pi] \to \real^3$, wobei:
+   \[ (r,\theta, \varphi) \mapsto ( r \sin \theta \cos \varphi, r \sin \theta \sin \varphi, r \cos \theta )=r\left( \begin{matrix} \cos \theta \\ \sin\theta \left(\begin{matrix} cos \varphi \\ \sin \varphi \end{matrix}\right) \end{matrix} \right) \]
+   Daraus ergibt sich:
+   \[ \det \nabla \Phi( r, \theta, \varphi) = { \stackrel{\text{Übung}}\ldots} = r^2 \sin \theta. \]
+   Setze: 
+   \[ U := (0, \infty) \times (0,\pi) \times (0,2\pi) \]
+   und
    \[ V := \Phi(U) = \real^3 \setminus ( [0,\infty) \times \{ 0 \} \times \real ) \]
-   Transformationsformel $\Rightarrow$ eine Funktion $f: \real^3 \to \real$ ist genau dann $\lebesgue^3$-integrierbar, wenn $(f \circ \Phi) | \det \nabla \Phi| : U \to \real$ mit
+   Dann ist $\Phi\colon U \to V$ ein $C^1$-Diffeomorphismus, wobei
+   Transformationsformel $\Rightarrow$ eine Funktion $f\colon \real^3 \to \real$ ist genau dann $\lebesgue^3$-integrierbar, wenn $(f \circ \Phi) \lvert \det \nabla \Phi \rvert \colon U \to \real$ mit
    \[ (r, \theta, \varphi) \mapsto f( r \sin \theta \cos \varphi, r \sin \theta \sin \varphi, r \cos \theta ) r^2 \sin \theta \]
    integrierbar ist. Dann gilt
-   \[ \int_{\real^3} f \diffop \lebesgue^3 = \int_0^\infty \int_0^\pi \int_0^{2 \pi} f( r \sin \theta \cos \varphi, r \sin \theta \sin \varphi, r \cos \theta ) r^2 \sin \theta \diffop \varphi \diffop \theta \diffop r. \]
-   Hier wurde Satz \ref{sect:tonelli} verwendet.
+   \[ \int_{\real^3} f \diffop \lebesgue^3 \stackrel{\mathrm{\ref{sect:tonelli}}}= \int_0^\infty \int_0^\pi \int_0^{2 \pi} f( r \sin \theta \cos \varphi, r \sin \theta \sin \varphi, r \cos \theta ) r^2 \sin \theta \diffop \varphi \diffop \theta \diffop r. \]
    
    Anwendung dieser Formel: 
-   \[ \lebesgue^3( B_R(0) ) = \int_{\real^3} \chi_{B_R(0)} \diffop \lebesgue^3 = \int_{\real^3} \chi_{[0,R)}(|x|) \diffop \lebesgue^3 (x). \]
-   Hier verwendet: $\chi_{B_R(0)}(0) = \chi_{[0,R)}(|x|)$, denn $x \in B_R(0) \Leftrightarrow |x| \in [0,R)$. Das ist klar, denn
+   \[ 1\cdot\lebesgue^3( B_R(0) ) \stackrel{\mathrm{2.4}}= \sum_{i=1}^11\cdot\chi_{B_{R}(0)} = \int_{\real^3} \chi_{B_R(0)} \diffop \lebesgue^3 = \int_{\real^3} \chi_{[0,R)}(|\cdot|) \diffop \lebesgue^3 \]
+   Hier verwendet: $\chi_{B_R(0)}(x) = \chi_{[0,R)}(|x|)$, denn $x \in B_R(0) \Leftrightarrow |x| \in [0,R)$. Das ist klar, denn
    \[ B_R(0) := \{ x \in \real^n : |x| < R \}. \]
    Also folgt
    \[ \begin{aligned}       
       \lebesgue^3( B_R(0) ) 
-      &= \int_0^R \int_0^\pi \int_0^{2 \pi} r^2 \sin \Theta \diffop \varphi \diffop \Theta \diffop r \\
-      &= 2 \pi \left( \int_0^R r^2 \diffop r \right) \left( \int_0^\pi \sin \Theta \diffop \Theta \right) \\
+      &= \int_0^R \int_0^\pi \left[\int_0^{2 \pi} r^2 \sin \theta \diffop \varphi \right] \diffop \theta \diffop r \\
+      &= 2 \pi \left( \int_0^R r^2 \diffop r \right) \underbrace{\left(\int_0^\pi \sin \theta \diffop \theta \right)}_{=2} \\
       &= \frac{4 \pi}{3} R^3.
       \end{aligned} \]
  \end{enumerate}
@@ -593,8 +595,8 @@ Gegenstück für höhere Dimensionen:
 
 Wir identifizieren in diesem Abschnitt $\real^{k+\ell} = \real^k \times \real^\ell$ und bezeichnen Punkte in $\real^{k + \ell}$ mit $(x,y)$, wobei $x \in \real^k$, $y \in \real^\ell$.
 
-Funktionen $f: \real^{k+\ell} \to \real$ fassen wir auf als Funktionen $\real^k \times \real^\ell \to \real$, $(x,y) \mapsto f(x,y)$. Für $y \in \real^\ell$ definiere 
-\[ f( \cdot, y ) : \real^k \to \real, \quad x \mapsto f(x,y). \]
+Funktionen $f\colon\real^{k+\ell} \to \real$ fassen wir auf als Funktionen $\real^k \times \real^\ell \to \real$, $(x,y) \mapsto f(x,y)$. Für $y \in \real^\ell$ definiere 
+\[ f( \cdot, y ) \colon\real^k \to \real, \quad x \mapsto f(x,y). \]
 Analog $f( x, \cdot ) := f(x,y)$.
 
 Wir legen den Maßraum $(\real^n, \borel(\real^n), \lebesgue^n)$ zugrunde\footnote{``Integrierbar'' heißt also $\lebesgue^n$-integrierbar und Borel-messbar.}.
@@ -619,20 +621,20 @@ Betrachte zum Beispiel Würfel in $\real^3$
 \end{itemize}
 
 \begin{thm}[Tonelli]{}
- Sei $f: \real^{k+\ell} \to [0, \infty]$ Borel-messbar. Dann ist $f(\cdot,y):\real^3 \to [0,\infty]$ Borel-messbar für jedes $y \in \real^\ell$ und die Funktion
+ Sei $f\colon\real^{k+\ell} \to [0, \infty]$ Borel-messbar. Dann ist $f(\cdot,y):\real^k \to [0,\infty]$ Borel-messbar für jedes $y \in \real^\ell$ und die Funktion
  \[ \real^\ell \to [0,\infty], \quad y \mapsto \int_{\real^k} f(x,y) \diffop \lebesgue^k (x) \]
  ist Borel-messbar. Es gilt
  \[ \begin{aligned} \int_{\real^{k+\ell}} f \diffop \lebesgue^{k+\ell} 
     &= \int_{\real^\ell} \left( \int_{\real^k} f(x,y) \diffop \lebesgue^k (x) \right) \diffop \lebesgue^\ell (y) \\
     &= \int_{\real^k} \left( \int_{\real^\ell} f(x,y) \diffop \lebesgue^\ell (y) \right) \diffop \lebesgue^k (x).
  \end{aligned} \]
- Insbesondere ist eine Borel-messbare Funktion $F: \real^k \times \real^\ell \to [-\infty, \infty]$ genau dann $\lebesgue^{k+\ell}$-integrierbar, wenn
+ Insbesondere ist eine Borel-messbare Funktion $F\colon \real^k \times \real^\ell \to [-\infty, \infty]$ genau dann $\lebesgue^{k+\ell}$-integrierbar, wenn
  \[ \int_{\real^\ell} \left( \int |F(x,y)| \diffop \lebesgue^k (x) ) \right) \diffop \lebesgue^\ell (y) < \infty. \]
  Analog gilt das auch für $x \leftrightarrow y$ und $k \leftrightarrow \ell$.
 \end{thm}
 
 \begin{proof}
- Aufgrund des Lemmas gilt der Satz für die Funktion $f = \chi_A$ mit Borel-Menge $A \subset \real^{k+\ell}$. Wegen Linearität also auch für einfache Funktionen $f$. Nun sei $f$ wie im Satz. Gemäß Übungsblatt 2 existieren einfache Funktionen $\varphi_n : \real^{k+\ell} \to [0, \infty)$, so dass $\varphi_n (x,y) \uparrow f(x,y)$ für alle $(x,y) \in \real^{k+\ell}$ und $\int \varphi_n \diffop \lebesgue^{k+\ell} \rightarrow \int f \diffop \lebesgue^{k+\ell}$.
+ Aufgrund des Lemmas gilt der Satz für die Funktion $f = \chi_A$ mit Borel-Menge $A \subset \real^{k+\ell}$. Wegen Linearität also auch für einfache Funktionen $f$. Nun sei $f$ wie im Satz. Gemäß Übungsblatt 2 existieren einfache Funktionen $\varphi_n \colon \real^{k+\ell} \to [0, \infty)$, so dass $\varphi_n (x,y) \uparrow f(x,y)$ für alle $(x,y) \in \real^{k+\ell}$ und $\int \varphi_n \diffop \lebesgue^{k+\ell} \rightarrow \int f \diffop \lebesgue^{k+\ell}$.
  
  Sei $y \in \real^\ell$ fest. Dann ist jedes $\varphi_n(\cdot, y)$ Borel-messbar in $\real^k$, weil der Satz für einfach Funktionen $\varphi_n$ gilt. Da $\varphi_n(\cdot, y) \uparrow f( \cdot, y)$ punktweise auf $\real^k$, folgt mit der monotonen Konvergenz:
  \[ \Phi_n(y) := \int \varphi_n(x,y) \diffop \lebesgue^k (x) \uparrow \underbrace{\int f(x,y) \diffop \lebesgue^k (x)}_{:= F(y)}. \]
@@ -643,7 +645,7 @@ Betrachte zum Beispiel Würfel in $\real^3$
 \end{proof}
 
 \begin{kor}[Fubini]
- Sei $f:\real^{k+\ell} \to [-\infty,\infty]$ integrierbar. Dann existiert eine Nullmenge $N \subset \borel(\real^\ell)$, sodass $f(\cdot, y): \real^k \to [-\infty, \infty]$ für jedes $y \in \real^\ell \setminus N$ integrierbar ist, und auch 
+ Sei $f:\real^{k+\ell} \to [-\infty,\infty]$ integrierbar. Dann existiert eine Nullmenge $N \subset \borel(\real^\ell)$, sodass $f(\cdot, y)\colon\real^k \to [-\infty, \infty]$ für jedes $y \in \real^\ell \setminus N$ integrierbar ist, und auch 
  \[ \real^\ell \to [-\infty, \infty],\quad y \mapsto \int_{\real^k} f(x,y) \diffop \lebesgue^k (x) \]
  ($:= 0$ für $y \in N$) integrierbar über $\real^k$. (Dasselbe gilt für $x \leftrightarrow y$).
  
@@ -656,7 +658,7 @@ Betrachte zum Beispiel Würfel in $\real^3$
 \end{kor}
 
 \begin{proof}
- Wegen Tonelli sind die Funktionen $F_\pm: \real^\ell \to [0,\infty]$, $F_\pm := \int_{\real^k} f_\pm (x,y) \diffop \lebesgue^k(x)$ Borel-messbar mit 
+ Wegen Tonelli sind die Funktionen $F_\pm\colon\real^\ell \to [0,\infty]$, $F_\pm := \int_{\real^k} f_\pm (x,y) \diffop \lebesgue^k(x)$ Borel-messbar mit 
  \[ \int_{\real^\ell} F_\pm \diffop \lebesgue^\ell = \int_{\real^\ell} \left( \int_{\real^k} f_\pm (x,y) \diffop \lebesgue^k(x) \right) \diffop \lebesgue^\ell = \int_{\real^{k+\ell}} f_\pm \diffop \lebesgue^{k+\ell} < \infty. \]
  Also existiert gemäßt Satz 2.6(b) eine Nullmenge $N \subset \real^\ell$, sodass $F_+(y) < \infty$ und $F_-(y) < \infty$ für alle $y \in \real^\ell \setminus N$. Also ist die im Korollar definierte Funktion integrierbar. Die Gleichung am Schluss folgt aus Tonelli, angewandt auf $f_+$ und $f_-$.
 \end{proof}
@@ -670,5 +672,5 @@ Betrachte zum Beispiel Würfel in $\real^3$
 \end{folg}
 
 \begin{proof}
- Die Borel-Messbarkeit folgt aus $\mathrm{graph}(f) = \phi^{-1}( \{ 0 \} )$, wobei $\phi: U \times \real \to \real$ mit $\phi(x,y) = y -f(x)$ eine Borel-messbare Funktion ist. Er ist eine Nullmenge, weil für alle $x \in U$ $\mathrm{graph}(f)_x = \{ f(x) \}$ eine $\lebesgue^1$-Nullmenge ist.
+ Die Borel-Messbarkeit folgt aus $\mathrm{graph}(f) = \phi^{-1}( \{ 0 \} )$, wobei $\phi\colon U \times \real \to \real$ mit $\phi(x,y) = y -f(x)$ eine Borel-messbare Funktion ist. Er ist eine Nullmenge, weil für alle $x \in U$ $\mathrm{graph}(f)_x = \{ f(x) \}$ eine $\lebesgue^1$-Nullmenge ist.
 \end{proof}
