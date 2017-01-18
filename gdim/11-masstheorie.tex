@@ -213,7 +213,7 @@ Sei $(X, \mA)$ ein Messraum.
  &f+g,& &fg,& &\max\{ f, g \},& &\min\{ f, g \}, \\ 
  &\sup_{k \in \nat} f_k, & &\inf_{k \in \nat} f_k,& &\limsup_{k \in \nat} f_k,& &\liminf_{k \in \nat} f_k.
  \end{align*}
- Ebenso $\frac{f}{g}$ sofern $g \ne 0$ auf $X$. Die Grenzwerte und Supremum sind hier \emph{punktweise} zu verstehen.
+ Ebenso $\frac{f}{g}$ sofern $g(x) \ne 0$ für alle $x \in X$. Die Grenzwerte und Suprema sind hier \emph{punktweise} zu verstehen.
 \end{thm}
 
 \begin{rmrk}
@@ -365,7 +365,7 @@ Aber ohne Voraussetzung $f \ge 0$ ist die Aussage im Allgemeinen falsch. Zum Bei
 \subsubsection*{Notwendigkeit der Majorante}
 Zugleich Notwendigkeit der \emph{monotonen} Konvergenz-Annahme in Satz 3.1:
 
-Suche eine Folge $(f_k)$ mit $\int_\real f_k = 1$, aber $f_k \to 0$ punktweise. Wähle zum Beispiel $f_k = k \cdot \chi_{[-1/2k,1/2k]\setminus \{ 0 \}}$. (``Rechtecke'' zentriert um 0). Es gibt keine Majorante, da $f_{k+1} > f_k$ auf $\left[ -\rez{2(k+1)}, \rez{2k+1} \right]$. Es gilt
+Suche eine Folge $(f_k)$ mit $\int_\real f_k = 1$, aber $f_k \to 0$ punktweise. Wähle zum Beispiel $f_k = k \cdot \chi_{[-1/2k,1/2k]\setminus \{ 0 \}}$. (``Rechtecke'' zentriert um 0). Es gibt keine Majorante, da $f_{\lceil c \rceil} \geq c$ für alle $c\in\real$ auf $\left[ -\rez{2(k+1)}, \rez{2k+1} \right]$. Es gilt
 \[ \int_\real f_k = k \cdot \lebesgue^1 \left( -\rez{2k}, \rez{2k} \right) = k \cdot \rez{k} = 1 \]
 und für alle $x \ne 0$ gilt $f_k(x) \to 0$. Damit gilt aber $\int_\real f = 0$!
 
