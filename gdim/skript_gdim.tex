@@ -192,11 +192,12 @@ Sei $M \subset \real^n$.
 
 \begin{proof}
  Wähle $i \in \{1, \ldots, k\}$ und definiere $\gamma(t) := \varphi_1^{-1}(y) + t e_i$.
- Da $U_1$ offen ist, existiert $\eps > 0$, sodass $\gamma( [-\eps, \eps] ) \subset U_1$. Definiere $\Gamma := \varphi_2^{-1} \circ \varphi_1 \circ \gamma$. In Satz 1.6 werden wir sehen: $\varphi_2^{-1} \circ \varphi_1: U_1 \to U_2$ ist ein $C^1$-Diffeomorphismus. Also ist $\Gamma \in C^1( (-\eps,\eps), \real^k)$ und wegen der Kettenregel
- \[ \partial_1 \varphi_1 ( \varphi^{-1} (y) ) \overset{\text{Def. von } \varphi}{=} (\varphi_1 \circ \gamma) (0) \overset{\text{Def. von } \Gamma}{=} (\varphi_2 \circ \Gamma) (0) = \nabla \varphi_2( \varphi_2^{-1}(y) ) \Gamma'(0), \]
- und die rechte Seite liegt im Bild von $\nabla \varphi_2( \varphi_2^{-1}(y) )$.
+ Da $U_1$ offen ist, existiert $\eps > 0$, sodass $\gamma( [-\eps, \eps] ) \subset U_1$. Definiere $\Gamma := \varphi_2^{-1} \circ \varphi_1 \circ \gamma$. In Satz 1.6 werden wir sehen: $\varphi_2^{-1} \circ \varphi_1\colon U_1 \to U_2$ ist ein $C^1$-Diffeomorphismus. Also ist $\Gamma \in C^1( (-\eps,\eps), \real^k)$ und wegen der Kettenregel gilt:
  
- Der Beweis für $\partial_2 \varphi_1, \ldots, \partial_k \varphi_1$ verläuft analog.
+ \[ \begin{aligned}\partial_1 \varphi_1 ( \varphi_1^{-1} (y) ) &\stackrel{\text{Def. von } \varphi}{=} (\varphi_1 \circ \gamma)' (0) = (\varphi_2 \circ \varphi_2^{-1}\circ\varphi1\circ\gamma)'(0) \\ &\stackrel{\text{Def. von } \Gamma}{=} (\varphi_2 \circ \Gamma)' (0) = \nabla \varphi_2( \varphi_2^{-1}(y) ) \underbrace{\Gamma'(0)}_{\text{$\in \real$}}, \end{aligned}\]
+ und die rechte Seite liegt in $\Im \nabla \varphi_2( \varphi_2^{-1}(y)) = T_{\varphi_2^{-1}(y)}\varphi_2$.
+ 
+ Der Beweis für $\partial_2 \varphi_2(\varphi_2^{-1}(y)), \ldots, \partial_k \varphi_k(\varphi_k^{-1}(y))$ verläuft analog.
 \end{proof}
 
 \textbf{Beispiele für Untermannigfaltigkeiten.}
