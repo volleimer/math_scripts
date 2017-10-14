@@ -1,0 +1,268 @@
+\section{Zufallsvariablen, Verteilungen}
+\begin{defn}
+  Sei $(\Omega, \mA, \pP)$ ein $\pW$-Raum und $(S, \mB)$ ein messbarer Raum.
+  Eine \emph{Zufallsvariable} mit Werten in $S$ heißt jede $(\mA, \mB)$-messbare
+  Abbildung $X: \Omega \to S$.
+
+  In den Fällen $S = \real, \real^n, \complex, \complex^n$ ist $\mB$ im weiteren
+  immer die $\sigma$-Algebra der Borelmengen. Für $S = \real$ heißt $X$
+  \emph{Zufallsgröße} und für $S =\real^n$ \emph{Zufallsvektor}\footnote{%
+  Für $\complex$ bzw. $\complex^n$ entsprechend \emph{komplexe Zufallsgröße} bzw.
+  \emph{komplexer Zufallsvektor}.}.
+\end{defn}
+
+\begin{thm}
+  \begin{enumerate}[(i)]
+  \item Die Summen von Zufallsvektoren und Produkte von Zufallsgrößen sind
+    wieder Zufallsvektoren bzw. -größen.
+  \item Es seien $X$ eine Zufallsgröße und $f:\real \to \real$ eine
+    Borel-messbare Funktion. Dann ist die Abbildung $f(X)$ eine Zufallsgröße.
+  \item Sind $X_1, \ldots, X_n$ Zufallsgrößen und $f: \real^n \to \real$
+    eine Borel-messbare Funktion, so ist $f(X_1, \ldots, X_n)$ eine
+    Zufallsgröße. Weiterhin ist $Y := (X_1, \ldots, X_n)$ ein Zufallsvektor.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Das ist aus MINT bekannt.
+\end{proof}
+
+\begin{defn}
+  Es sei $X: \Omega \to S$ eine Zufallsvariable. Bezeichnungen:
+  \begin{align*}
+    [ X \in B ] &:= \{ w \in \Omega : X(w) \in B \} = X^{-1}(B), \qquad B \in \mB \\
+    \pP[ X \in B ] &:= P([X \in B]) =: \pP(X \in B)
+  \end{align*}
+  $[X \in B]$ ist das Ereignis ``$X$ liegt in $B$''. Setzt man
+  \[ \mu_X(B) := \pP[ X \in B ], \qquad B \in \mB, \tag{1} \]
+  so ist $\mu_X$ ein $\pW$-Maß auf $\mB$ \footnote{%
+    Siehe Bildmaß in MINT.}. Dieses Maß heißt die \emph{Verteilung} von $X$
+  (bezüglich $\pP$). Die Verteilung $\mu_X$ heißt \emph{stetig}, wenn für alle $s
+  \in S$ gilt $\{s\} \in \mB$ und $\mu_X(\{s\}) = 0$.
+
+  Sei nun $S = \real^n$. Die Verteilung $\mu_X$ heißt \emph{absolut
+    stetig}\footnote{%
+    Siehe MINT, Satz von Radon-Nikodym}, wenn eine Borel-messbare Funktion $p :
+  \real^n  \to [0,\infty]$ existiert, so dass
+  \[ \mu_X(A) = \int_A p \diffop \lambda, \qquad A \in \borel(\real^n). \]
+  Dabei ist $\lambda$ das Lebesgue-Maß auf $\real^n$. Man nennt $p$ die
+  \emph{Dichte}, \emph{Dichtefunktion} von $X$ oder $\mu_X$.
+\end{defn}
+
+\begin{rmrk*}
+  Eine Borel-messbare Funktion $p : \real^n \to [0,\infty]$ ist genau dann die
+  Dichte einer Verteilung, wenn sie $\lambda$-integrierbar ist und
+  $\int_{\real^n} p \diffop \lambda = 1$.
+
+  $(\Omega, \mA, \pP) := (\real^n, \borel(\real^n), p \diffop \lambda)$. Dann
+  ist $p \diffop \lambda$ die Verteilung von $X$ und $p$ die Dichte.
+
+  Absolut stetige Verteilungen sind stetig, die Umkehrung gilt im Allgemeinen
+  nicht.
+\end{rmrk*}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item Für jedes $s \in S$ sei $\delta_s$ das durch die Einheitsmasse in $s$
+    definierte $\pW$-Maß auf $\mB$ (Einpunktverteilung, Dirac-Maß). Eine
+    Zufallsvariable besitzt eine Einpunktverteilung genau dann, wenn sie fast
+    sicher konstant ($=s$) ist.
+  \item Es sei $\{ s_n \}$ eine Folge in $S$ und $\{ p_n \}$ eine Folge
+    nichtnegativer Zahlen mit $\sum_1^\infty p_k = 1$. Dann ist
+    \[ \mu := \sum_{k=1}^\infty p_n \cdot \delta_{s_n} \]
+    ein $\pW$-Maß. Jede solche Verteilung bzw. jede Zufallsvariable
+    mit einer solchen Verteilung heißt \emph{diskret}.
+  \item Es seien $n = 0, 1, \ldots$ und $0 \le p \le 1$. Definiere
+    \[ B_n^p := \sum_{k=0}^n \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k} \cdot
+      \delta_k. \]
+    Betrachte $(X, \mA, B_n^p)$; $X \supset \{1, \ldots, k\}$. Zum Beispiel $X =
+    \real$, $\mA = \borel(\real)$. Dann ist
+    \[ B_n^p(\real) = \sum_{k=0}^n \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k} \cdot
+      \delta_k(\real) = (p+(1-p))^n = 1. \]
+    Also ist $B_n^p$ ein $\pW$-Maß auf $(\real, \borel(\real))$, die
+    \emph{Binomialverteilung} mit den Parametern $n$ und $p$.
+
+    Beispiel: wir betrachten eine Folge von Zufallsversuchen. In jedem der
+    Versuche tritt ein gewisses Ereignis $A$ mit der Wahrscheinlichkeit $p$
+    unabhängig von den Ausgängen der anderen Versuche ein.
+
+    $X :=$ die Anzahl des Eintretens von $A$ in $n$ Versuchen.
+    \[ \pP( X = k) = \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k} \]
+    für $k = 0, \ldots, n$.
+  \item Die polynomiale Verteilung (Verallgemeinerung von (c)). Wir betrachten
+    eine Folge von Versuchen. In jedem dieser Versuche treten gewisse
+    \emph{unvereinbare} Ereignisse $A_1, \ldots, A_r$ mit den
+    Wahrscheinlichkeiten $p_1, \ldots, p_r$; $p_1 + \cdots + p_r = 1$ unabhängig
+    von den Ausgängen der anderen Versuche ein.
+
+    $X_i :=$ die Anzahl des Eintretens von $A_i$ in $n$ Versuchen; $X_i$ ist
+    binomialverteilt. $X := (X_1, \ldots, X_r)$ ist ein Zufallsvektor.
+
+    $(x_1, \ldots, x_r) \in \real^r$ gehört zum Wertebereich von $X$
+    $\Leftrightarrow$ $0 \le x_i \le n$, $x_i \in \integer$, $x_1 + \cdots + x_r
+    = n$.
+    \[ \pP( X_1 = x_1, \ldots, X_r = x_r) = \frac{n!}{x_1! \cdots x_r!} \cdot
+      p_1^{x_1} \cdots p_r^{x_r}. \]
+    Permutation mit Wiederholung.
+
+    Eine solche Verteilung heißt \emph{Polynomialverteilung}.
+  \item \emph{Poisson-Verteilung} mit dem Parameter $a$.
+    \[ \pi_a := \sum_{k=0}^\infty e^{-a} \cdot \frac{a^k}{k!} \cdot \delta_k,
+      \quad a \ge 0 (\text{auf } \borel(\real)). \]
+    Wegen $e^a = \sum_0^\infty \frac{a^k}{k!}$ ist $\pi_a$ ein $\pW$-Maß.
+  \item Die Funktion
+    \[ g_{a,\sigma} = \rez{\sigma \cdot \sqrt{2 \pi}} \cdot
+      e^{-\frac{(x \cdot a)^2}{2 \sigma^2}}, \quad x, a \in \real, \quad \sigma >
+      0 \]
+    ist eine Dichte.
+    \begin{proof}
+      Aus MINT ist bekannt:
+      \[ \int_0^\infty e^{-x^2} \diffop x = \frac{\sqrt{\pi}}{2}. \]
+      Es gilt
+      \begin{align*}
+        \rez{\sigma \sqrt{2 \pi}} \int_{-\infty}^\infty e^{- \frac{(x-a)^2}{2 \sigma^2}} \diffop x
+        = \rez{\sqrt{\pi}} \int_{-\infty}^\infty e^{-u^2} \diffop u = \frac{2}{\sqrt{\pi}} \int_0^\infty e^{-u^2} \diffop u = 1
+      \end{align*}
+      mit der Substitution $u := \frac{x-a}{\sqrt{2} \sigma}$.
+    \end{proof}
+    das zugehörige $\pW$-Maß $\nu_{a,\sigma}$ heißt \emph{Normalverteilung} mit
+    den Parametern $a$ und $\sigma$, auch \emph{Gauß-Verteilung}.
+
+    Bezeichnung: $X \in N(a,\sigma)$.
+  \item Die Funktion
+    \[ p(x) = \rez{\pi \cdot (1+x^2)}, \quad x \in \real \]
+    ist eine Dichte.
+    \begin{proof}
+      \[ \int_{-\infty}^\infty \rez{1+x^2} \diffop x = \arctan(x)
+        |_{-\infty}^\infty = \frac{\pi}{2} -
+        \left( - \frac{\pi}{2} \right) = \pi. \qedhere\]
+    \end{proof}
+    Die zugehörige Verteilung wird \emph{Cauchy-Verteilung} genannt.
+  \item Es sei $B \subset \real^n$ eine Borel-Menge mit $\lambda(B) > 0$,
+    \[ p_B(X) := \frac{\ind_B(x)}{\lambda(B)}, \quad x \in \real^n \]
+    ist eine Dichte. \emph{Gleichverteilung} auf $B_i$.
+  \item \emph{Exponentialverteilung} mit dem Parameter $\lambda > 0$. Sie ist
+    gegeben durch die Dichte
+    \[ p(x) = \begin{cases}
+        \lambda \cdot e^{-\lambda x}, &x \ge 0, \\
+        0, &x < 0.
+      \end{cases} \]
+  \item Die \emph{Gammaverteilung} mit den Parametern $a > 0$ und $\lambda > 0$.
+    Dichte:
+    \[ p(x) = \begin{cases}
+        \frac{\lambda^a \cdot x^{a-1}}{\Gamma(a)} \cdot e^{-\lambda x},
+        & x > 0, \\
+        0, &x \le 0,
+      \end{cases} \]
+    wobei $\Gamma(a) = \int_0^\infty x^{a-1}e^{-x} \diffop x$.
+  \end{enumerate}
+\end{exmp}
+
+\begin{rmrk*}
+  \begin{enumerate}[(i)]
+  \item $0 < \Gamma(a) < \infty$.
+  \item $\Gamma(a+1) = a \cdot \Gamma(a)$.
+  \item $\Gamma(n+1) = n!$ für alle $n \in \nat_0$.
+  \item $\Gamma(1/2) = \sqrt{\pi}$.
+  \end{enumerate}
+\end{rmrk*}
+
+\begin{thm}
+  Jedes $\pW$-Maß auf $\real^n$ lässt sich zerlegen als
+  \[ \mu = p_1 \cdot \mu_d + (1-p_1) \cdot \mu_c = p_1 \cdot \mu_d + p_2 \cdot
+    \mu_{as} +  p_3 \cdot \mu_s. \]
+  Hierbei sind $p_1, p_2, p_3 \ge 0$ mit $p_1 + p_2 + p_3 = 1$. $\mu_d, \mu_c,
+  \mu_{as}, \mu_s$ sind $\pW$-Maße; $\mu_d$ ist diskret, $\mu_c$ ist stetig,
+  $\mu_{as}$ ist absolut stetig, $\mu_s$ ist stetig und singulär im folgenden
+  Sinne: Es gibt eine $\lambda$-Nullmenge $B \subset \real^n$ mit $\mu_s(B) =
+  1$.
+
+  Die Summanden der Zerlegung sind eindeutig.
+\end{thm}
+
+\begin{proof}
+  Maßtheorie.
+\end{proof}
+
+\begin{defn}
+  Sind $X_1, \ldots, X_n$ Zufallsgrößen, so ist $Y := (X_1, \ldots, X_n)$ ein
+  Zufallsvektor (Satz 1.3.2). Die Verteilung von $Y$ auf $\real^n$ wird die
+  \emph{gemeinsame Verteilung} der $X_1, \ldots, X_n$ genannt.
+\end{defn}
+
+\begin{thm}[Transformationssatz, Spezialfall]
+  Für jede Borel-messbare Funktion $g: \real^n \to \real$, die nichtnegativ oder
+  $\mu_Y$-integrierbar ist, gilt
+  \[ \int_\Omega g(Y(\omega)) \diffop \pP(\omega) = \int_{\real^n} g(X_1,
+    \ldots, X_n) \diffop \mu_Y (X_1, \ldots, X_n). \]
+\end{thm}
+
+\begin{proof}
+  MINT.
+\end{proof}
+
+Die $\pW$-Maße auf $\real$  können mit Hilfe auf $\real$ definierter Funktionen beschrieben werden.
+
+\begin{defn}
+  Es sei $\mu$ ein $\pW$-Maß auf $\real$. Die Funktion
+  \[ F(x) := \mu((-\infty, x)), \quad x \in \real \]
+  heißt die \emph{Verteilungsfunktion} von $\mu$. Ist $\mu$ die Verteilung einer
+  Zufallsgröße $X$, so nennt man $F$ auch die Verteilungsfunktion von $X$. Dann gilt:
+  \[ F(x) = \pP[X<x], \quad x \in \real \]
+  (wegen (1.3.3.1)).
+\end{defn}
+
+\begin{lem}
+  Jede Verteilungsfunktion $F$ besitzt die folgenden Eigenschaften:
+  \begin{enumerate}[(i)]
+  \item $x \le y \Rightarrow F(x) \le F(y)$;
+  \item $\lim_{x \to - \infty} F(x) = 0$, $\lim_{x \to \infty} F(x) = 1$;
+  \item $F$ ist linksseitig stetig.
+  \end{enumerate}
+  Jede reelle Funktion $F$ auf $\real$ mit den Eigenschaften (i)-(iii) ist die
+  Verteilungsfunktion einer Zufallsgröße.
+  \label{lem:1_3_9}
+\end{lem}
+
+\begin{proof}
+  Aufgabe. Hinweis: Für (ii) und (iii) benutze man (1.1.4) (iv-v).
+
+  Hinweis für die letzte Aussage: $\Omega := (0, 1)$, $\mA :=$ Borel-Mengen in $(0, 1)$,
+  $\pP :=$ Lebesgue-Maß auf $(0, 1)$.
+\end{proof}
+
+\begin{lem}
+  Ist $F$ die Verteilungsfunktion der Zufallsgröße $X$, so gilt:
+  \begin{enumerate}[(i)]
+  \item $\pP (a \le X < b) = F(b) - F(a)$;
+  \item $\pP (X = a) = F (a + 0) - F (a);$\footnotemark
+  \item $\pP (a < X < b) = F(b) - F(a + 0)$;
+  \item $\pP (a \le X \le b) = F (b + 0) - F(a)$;
+  \item $\pP (a < X \le b) = F (b + 0) - F (a + 0)$, $(a, b \in R, a < b)$.
+  \item Besitzt $X$ eine Dichte $p$, so gilt:
+    \[ F(x) = \int_{-\infty}^x p(t) \diffop t, \quad x \in \real. \]
+  \end{enumerate}
+\end{lem}
+\footnotetext{Aus (ii) folgt: $X$ besitzt eine stetige Verteilung genau dann,
+  wenn $F$ stetig ist.}
+
+\begin{proof}
+  Aufgabe.
+\end{proof}
+
+\begin{thm}
+ Die Zufallsgröße $X$ besitze eine Dichte $p$ und sei $F$ die
+ Verteilungsfunktion von $X$. Dann ist $F$ $\lambda$-fast überall
+ differenzierbar und
+ \[ F' = p, \quad \lambda\text{-fast überall.} \]
+\end{thm}
+
+\begin{proof}
+  Spezialfall, $p$ stetig: Aufgabe.
+  
+  Der allgemeine Fall ist aus der Maßtheorie bekannt, siehe MINT.
+\end{proof}
+
+%%% Local Variables:
+%%% TeX-master: "master"
+%%% End:

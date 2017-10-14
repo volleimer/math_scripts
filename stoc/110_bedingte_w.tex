@@ -1,0 +1,81 @@
+\section{Bedingte Wahrscheinlichkeit}
+\begin{defn}
+  Hat bei $N$ Versuchen das Ereignis $B$ genau $n$-mal stattgefunden und ist bei
+  diesen $n$ Versuchen $k$-mal (zusammen mit $B$) auch das Ereignis $A$
+  eingetreten, so wird der Quotient
+  \[ h_{A|B} = \frac{k}{n} \]
+  die \emph{bedingte relative Häufigkeit} des Ereignisses $A$ \emph{unter der
+    Bedingung $B$} genannt.
+
+  Es gilt
+  \[ h_{A|B} = \frac{k}{n} = \frac{\frac{k}{N}}{\frac{n}{N}} = \frac{h_{A \cap
+        B}}{h_B}, \]
+  wenn $h_B \ne 0$.
+\end{defn}
+
+\begin{defn}
+  Es sei $B \in \mA$ ein Ereignis mit $\pP(B) > 0$. Für $A \in \mA$ nennt man
+  die Zahl
+  \[ \pP( A | B ) := \frac{\pP(A \cap B)}{\pP(B)} \]
+  die \emph{bedingte Wahrscheinlichkeit} von $A$ \emph{unter der Bedingung $B$}.
+
+  Wenn $A$ und $B$ unabhängig sind, gilt $P(A|B) = P(A)$ $\Leftrightarrow$
+  \[ \pP( A \cap B ) = \pP(A) \cdot \pP(B). \]
+
+  Ist $\pP(A) > 0$, so gilt
+  \[ \pP(B|A) = \frac{\pP(A|B) \cdot \pP(B)}{\pP(A)}. \]
+\end{defn}
+
+\begin{thm}
+  Es seien $B_1, B_2, \ldots$ unvereinbare Ereignisse mit $\pP(B) > 0$ und
+  $\bigcup_n B_n = \Omega$. Dann gilt
+  \begin{enumerate}[(i)]
+  \item $\pP(A) = \sum_n \pP(A \cap B_n)$ \hfill
+    {\footnotesize (da $A = \bigcup_n (A \cap B_n)$)}
+  \item $\pP(A) = \sum_n \pP( A | B_n ) \cdot \pP(B)$ \hfill
+    {\footnotesize (folgt aus (i))}
+  \item Bayes'sche Formel
+    \[ \pP(B_k | A) = \frac{\pP(A|B_k \cdot \pP(B_k)}{\sum_n \pP(A | B_n) \cdot
+        \pP(B_n)}, \]
+    $\pP(A) > 0$, $k= 1, 2, \ldots$
+  \end{enumerate}
+\end{thm}
+
+\begin{defn}
+  Es sei $X$ eine Zufallsgröße und $B$ ein Ereignis mit positiver
+  Wahrscheinlichkeit. Unter der \emph{bedingten Verteilungsfunktion} bezüglich
+  der Bedingung $B$ verstehen wir die Funktion
+  \[ F( t | B ) := \pP( X < t | B ), \quad t \in \real. \]
+  Ist $B = \Omega$, so erhält man die gewöhnliche Verteilungsfunktion.
+\end{defn}
+
+\begin{exmp}
+  Beste Wahl. Betrachte eine Autobahn mit $n$ Tankstellen, die Benzinpreise sind vorher
+  unbekannt.
+
+  Ziel: An der billigsten Tankstelle zu tanken.
+
+  Strategie: An $s-1$ ($s=2,3, \ldots$) Tankstellen vorbeifahren, den
+  niedrigsten Preis notieren. Wenn danach eine billigere Tankstelle kommt,
+  tanken.
+  \[ p(s) := \pP[ \text{Billigste Tankstelle gewählt}] \to \max. \]
+  Es gilt
+  \begin{align*}
+    p(s) &= \sum_{k=s}^n \pP[ \text{Die $k$-te ist die billigste und wird
+           gewählt.} ] \\
+         &= \sum_{k=s}^n \pP[ \text{$k$-te ist die billigste.} ] \cdot
+           \pP[ \text{$k$-te wird gewählt} | \text{$k$-te ist die billigste.}] \\
+    &= \rez{n} \sum_{k=s}^n \frac{s-1}{k-1} \to \max \text{ bezüglich $s$}
+  \end{align*}
+  Nun erhalten wir
+  \begin{align*}
+    p(s) &= \frac{s-1}{n} \cdot \sum_{k=s-1}^{n-1} \rez{k} \\
+         &= \frac{s-1}{n} \cdot \left[ \sum_{k=1}^{n-1} \rez{k} - \sum_{k=1}^{s-2} \rez{k} \right] \\
+         &= \frac{s-1}{n} \cdot [ \ln(n-1) - \ln(s-2)] \\
+         &\approx \frac{s}{n} \cdot \ln \frac{n}{s},
+  \end{align*}
+  wenn $n, s$ groß sind. Ableiten nach $s$ liefert ein Maximum, wenn $s =
+  \frac{n}{e}$, dann ist
+  \[ p(s) \approx \rez{e} \approx 0,367. \]
+  Das heißt, man muss an etwa 36 \% der Tankstellen vorbei fahren.
+\end{exmp}

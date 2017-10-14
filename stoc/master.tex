@@ -1,0 +1,129 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\usepackage[numbers,with_chapter]{../.tex/fancy_thm}
+
+\swapnumbers
+\theoremstyle{plain}
+%\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+%\newtheorem{lem}[thm]{Lemma}    
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} 
+\newtheorem{folg}[thm]{Folgerung} 
+\newtheorem{rmrk}[thm]{Bemerkung} 
+\newtheorem{deno}[thm]{Bezeichnungen}
+\newtheorem{exmp}[thm]{Beispiel}
+\newtheorem{aufg}[thm]{Aufgabe} 
+\newtheorem{prgp}[thm]{} % Numbered paragraph
+
+\newtheorem*{rmrk*}{Bemerkung}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{deno*}{Bezeichnungen}
+
+\numberwithin{equation}{section}
+
+\hypersetup{
+  pdftitle={Stochastik},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+%opening
+\title{Vorlesung\\Stochastik}
+\subtitle{Sommersemester 2017}
+\author{Vorlesung: Prof. Dr. Zoltán Sasvári\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+\input{000_org}
+
+\chapter{Grundbegriffe}
+
+\input{101_w_raum}
+
+\clearpage
+
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-1-2.pdf+
+\input{102_aufg}
+
+\clearpage
+
+\input{103_z_var}
+
+\clearpage
+
+%\section{Aufgaben}
+%Siehe \verb+Aufgaben-1-4.pdf+.
+\input{104_aufg}
+
+\clearpage
+
+\input{105_unabh}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-6-Teil-1.pdf+ und \verb+Aufgaben-1-6-Teil-2.pdf+.
+
+\input{107_num}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-8.pdf+.
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-1-9.pdf+.
+
+\input{110_bedingte_w}
+
+\chapter{Gesetze}
+\input{201_gesetze}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-2-2-Teil-1.pdf+ und \verb+Aufgaben-2-2-Teil-2.pdf+.
+
+\input{203_ungleichungen}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-2-4.pdf+
+
+\input{205_konvergenz}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-2-6.pdf+
+
+\input{207_grosse_zahlen}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-2-8.pdf+
+
+\input{209_gliwenko}
+
+\input{210_bed_erwartung}
+
+\section{Aufgaben}
+Siehe \verb+Aufgaben-2-11.pdf+.
+
+\input{212_martingale}
+
+\input{213_char_funktion}
+
+\addtocounter{section}{2}
+
+\input{216_grenzwertsatz}
+
+\end{document}

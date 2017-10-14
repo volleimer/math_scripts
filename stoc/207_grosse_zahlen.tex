@@ -1,0 +1,119 @@
+\section{Das starke und das schwache Gesetz der großen Zahlen}
+\begin{defn}
+  Eine Folge $\{ X_n \}$ integrierbarer Zufallsgrößen heißt dem \emph{starken
+    Gesetz der großen Zahlen} genügend, wenn
+  \[ \lim_{n \to \infty} \rez{n} \cdot \sum_{i=1}^n [X_i - \pE(X_i)] = 0\]
+  fast sicher.
+
+  Sie heißt dem \emph{schwachen Gesetz der großen Zahlen} genügend, wenn
+  \[ \lim_{n \to \infty} \rez{n} \cdot \sum_{i=1}^n [X_i - \pE(X_i)] = 0\]
+  in Wahrscheinlichkeit.
+\end{defn}
+
+\begin{lem}[Kronecker]
+  Sei $\{a_n\}$ eine Folge reeller Zahlen und $\{t_n\}$ eine monoton wachsende,
+  gegen $\infty$ strebende Folge positiver Zahlen derart, dass die Reihe
+  $\sum_{k=1}^\infty \frac{a_k}{t_k}$ konvergiert. Dann gilt
+  \[ \lim_{n \to \infty} \rez{n} \sum_{k=1}^n a_k = 0. \]
+\end{lem}
+
+Beweis im Netz.
+
+\begin{exmp*}
+  $a_k = \rez{k}$, $t_k = k$.
+  \[ \sum_{k=1}^\infty \frac{a_k}{t_k} =\sum_{k=1}^\infty \rez{k^2} =
+    \frac{\pi^2}{6}. \]
+  (Bewiesen von Euler);
+  \[ \lim_{n \to \infty} \rez{n} \sum_{k=1}^n \rez{k} = 0 \]
+\end{exmp*}
+
+\begin{thm}[Kolmogorow]
+  Es sei $X_1, X_2, \ldots \in \intf^2(\pP)$ eine Folge unabhängiger
+  Zufallsgrößen. Gilt dann
+  \[ \sum_1^\infty \frac{D^2(X_n)}{n^2} < \infty, \tag{1} \]
+  so genügt die Folge $\{X_n\}$ dem starken Gesetz der großen Zahlen.
+\end{thm}
+
+\begin{proof}
+  Betrachte $Y_n := \rez{n} \sum_{i=1}^n (X_i - \pE(X_i))$. Dann gilt
+  \begin{align*}
+    \pP \left[ \sup_{m \le i \le n} |Y_i| \ge \eps \right]
+    &\overset{\text{2.3.1}}{\le} \rez{\eps^2}
+      \left[ \rez{m^2} \sum_{j=1}^m D^2(X_j) + \sum_{j=m+1}^n \frac{D^2(X_j)}{j^2} \right] \\
+    \intertext{Grenzwertbildung $n \to \infty$} \\
+    \pP \left[ \sup_{m \le i} |Y_i| \ge \eps \right]
+    &\le \rez{\eps^2}
+      \left[ \rez{m^2} \sum_{j=1}^m D^2(X_j) + \sum_{j=m+1}^\infty \frac{D^2(X_j)}{j^2} \right].
+  \end{align*}
+  Wir bilden auch noch den Grenzwrt $m \to \infty$ und erhalten
+  \[ \lim_{m \to \infty} \pP \left[ \sup_{i \ge m} |Y_i| \ge \eps \right]
+    \overset{\text{2.7.2 und Vorr.}}{=} 0 \]
+  für alle $\eps > 0$. Also folgt mit 2.5.6, dass $Y_n \to 0$ fast sicher.
+\end{proof}
+
+\begin{exmp}
+  Wir betrachten eine Folge von Versuchen. In jedem dieser Versuche tritt ein
+  gewisses Ereignis $A$ mit Wahrscheinlichkeit $p$ unabhängig von den Ausgängen
+  der anderen Versuche ein.
+  \[ X_k := \begin{cases} 1,
+      & \text{wenn $A$ im $k$-ten Versuch eingetreten  ist,}
+      \\ 0, & \text{sonst.}
+    \end{cases} \]
+  Dann ist $\{ X_k \}$ eine Folge von unabhängigen Zufallsgrößen. $\pP[X_k =
+  1] = p$, $\pP[X_k = 0] = p - 1$, $\pE X_k = p$, $D^2(X_k) = p(1-p)$.
+
+  $S_n := X_1 + \ldots + X_n$ ist die Anzahl des Eintretens von $A$ in den
+  ersten $n$ Versuchen. $S_n$ ist binomialverteilt, $\pE(S_n) = n \cdot p$, $D^2
+  (S_n) = n \cdot p(1-p)$.
+
+  $\frac{S_n}{n}$ ist die relative Häufigkeit von $A$ in $n$ Versuchen. Aus 2.7.
+  folgt:
+\end{exmp}
+
+\begin{thm}[Borel]
+  Es gilt
+  \[ \lim_{n \to \infty} \frac{S_n}{n} = p \]
+  fast sicher.
+\end{thm}
+
+\begin{rmrk*}
+  Tschebischew:
+  \[ \pP \left[ \left| \frac{S_n}{n} - p \right| \ge \eps \right] \le
+    \frac{pq}{n \eps^2}. \]
+  Zum Beispiel $p = q = \rez{2}$, $\eps = \rez{20}$:
+  \[ \pP \left[ \left| \frac{S_n}{n} - \rez{2} \right| \ge \rez{20} \right] \le
+    100 \tag{1} \]
+  wenn $n \ge 10000$.
+
+  Renyi:
+  \[ \pP \left[ \left| \frac{S_n}{n} - p \right| \ge \eps \right] \le 2 \cdot
+    \exp \left( - \frac{n \eps^2}{2 pq \left(1 + \frac{\eps}{2pq} \right)^2} \right).
+    \tag{2} \]
+
+  Aus (2) folgt: (1) gilt, wenn $n \ge 1283$.
+\end{rmrk*}
+
+\begin{thm}[Etemadi]
+  Jede Folge paarweise unabhängiger, integrierbarer und identisch verteilter
+  Zufallsgrößen genügt dem starken Gesetz der großen Zahlen.
+\end{thm}
+
+\clearpage
+
+\begin{thm}[Khinchin]
+  Gilt für eine Folge paarweise unkorrelierte Zufallsgrößen $X_n \in
+  \intf^2(\pP)$
+  \[ \lim_{n \to \infty} \rez{n^2} \sum_{i=1}^n D^2(X_i) = 0, \]
+  so genügt die Folge dem schwachen Gesetz der großen Zahlen.
+\end{thm}
+
+\begin{proof}
+  Betrachte
+  \[ S_n := \sum_{k=1}^n (X_k - \pE(X_k)), \quad D^2(S_n) = \sum_{k=1}^n
+    D^2(X_k). \]
+  Es gilt
+  \[ \pP \left[ \frac{S_n}{n} \ge \eps \right]
+    \overset{\text{(T)}} \le \frac{D^2 \left(  \frac{S_n}{n} \right)}{\eps^2}
+    = \rez{\eps^2 n^2}  \sum_{i = 1}^n D^2(X_i) \xrightarrow{n \to \infty} 0, \]
+  wobei (T) für die Ungleichung von Tschebischew steht.
+\end{proof}

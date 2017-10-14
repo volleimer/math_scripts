@@ -1,0 +1,281 @@
+\section{Bedingte Erwartung}
+In diesem Abschnitt: $(\Omega, \mA, \pP)$ ein $\pW$-Raum.
+
+Ist $\mB \subset \mA$ eine $\sigma$-Algebra, so bezeichnet $\pP|_\mB$ die
+Einschränkung ovn $\pP$ auf $\mB$.
+
+\begin{prgp}[Aufgabe]
+  Sei $\mB \subset \mA$ eine $\sigma$-Algebra. Eine $\mB$-messbare Zufallsgröße
+  $X$ (reell oder komplex) ist genau dann $\pP$-integrierbar, wenn sie
+  $\pP|_\mB$-integrierbar ist. Im Fall der Integrierbarkeit gilt
+  \[ \int_B X \diffop \pP = \int_B X \diffop \pP|_\mB, \quad B \in \mB. \]
+\end{prgp}
+
+\begin{thm}
+  Sei $\mB \subset \mA$ eine $\sigma$-Algebra und $X$ eine $\pP$-integrierbare
+  Zufallsgröße. Dann existiert eine $\mB$-messbare $\pP$-integrierbare
+  Zufallsgröße $Z$ mit
+  \[ \int_B X \diffop \pP = \int_B Z \diffop \pP|_\mB,  \quad B \in \mB.
+    \tag{1} \]
+  Diese Zufallsgröße ist bis auf $\pP$-fast sichere Gleichheit eindeutig
+  bestimmt.
+\end{thm}
+
+\begin{proof}
+  Wir definieren das Maß $\mu$ auf $\mB$ durch
+  \[ \mu( B) := \int_B X \diffop \pP, \quad B \in \mB. \]
+  Ist $B$ eine $\pP|_\mB$-Nullmenge, so ist sie auch eine $\pP$-Nullmenge und
+  folglich ist $\mu(B) = 0$. Also ist $\mu$ absolut stetig bezüglich $\pP|_\mB$.
+
+  Die Existenz und Eindeutigkeit von $Z$ folgt aus dem Satz von Radon-Nikodim
+  (und aus (2.10.1)).
+\end{proof}
+
+\begin{defn}
+  Die Zufallsgröße in 2.10.2 heißt \emph{bedingte Erwartung} von $X$ \emph{unter
+    der Bedingung} oder \emph{bezüglich} $\mB$ und wird mit $\pE(X|\mB)$ oder
+  $\pE_\mB(X)$ oder $\pE^\mB(X)$ bezeichnet.
+
+  Falls $\mB = \sigma( Y_1, \ldots, Y_n)$, wobei die $Y_j$ Zufallsvariablen
+  sind, schreiben wir auch $\pE(X|_{Y_1, \ldots, Y_n})$.
+
+  Ist $X = \ind_A$, $A \in \mA$, so heißt $\pE(X|\mB)$ die \emph{bedingte
+    Wahrscheinlichkeit} von $A$ unter der Bedingung oder bezüglich $\mB$ und
+  wird mit $\pP(A|\mB)$ oder $\pP_\mB(A)$ oder $\pP^\mB(A)$ bezeichnet.
+\end{defn}
+
+\begin{rmrk}
+  \begin{enumerate}[(a)]
+  \item Zwei Extremfälle für $\mB$: $\mB = \mA$ und $\mB = \{ \emptyset, \Omega
+    \}$.
+
+    Wenn $\mB = \mA$: $\pE_\mB X = X$.
+
+    Wenn $\mB = \{ \emptyset, \Omega \}$: $\pE_\mB X = \pE X$.
+  \item Extremfall für $X$: $X$ ist $\mB$-messbar, dann ist $\pE_\mB X = X$.
+  \item Extremfall in (1) mit $B = \Omega$: Die Zufallsgröße $X$ und $pE_\mB(X)$
+    haben denselben Erwartungswert, $\pE X = \pE \pE_\mB X$.
+  \item $X = Y$ fast sicher $\Rightarrow$ $\pE(X|\mB) = \pE(Y|\mB)$ fast sicher.
+  \end{enumerate}
+\end{rmrk}
+
+\begin{prgp}[Aufgabe]
+  \begin{enumerate}[(a)]
+  \item Wird $\mB$ von disjunkten Mengen $B_1, B_2, \ldots \in \mA$ mit
+    $\bigcup_n B_n = \Omega$ erzeugt, so ist jede $\mB$-messbare Zufallsgröße
+    konstant auf den Mengen $B_n$. Beschreiben Sie die $\sigma$-Algebra $\mB$.
+  \item Sei $\mB$ wie in (a), dann gilt (fast sicher):
+    \[ \pP(A|\mB) = \pE( \ind_A | \mB ) = \sum_{n : \pP(B_n) > 0} \pP(A | B_n)
+      \cdot \ind_{B_n} \]
+    und
+    \[ \pE(X|\mB) = \sum_{} \pE_{B_n} X \cdot \ind_{B_n},\]
+    wobei $X$ eine integrierbare Zufallsgröße ist und
+    \[ \pE_{B_n}(X) = \rez{\pP(B_n)} \int_{B_n} X \diffop \pP. \]
+
+    Spezialfall: $B_1 = B, B_2 = B^C$.
+    
+    Hinweis: Verwenden Sie (a).
+  \item  Für jedes Ereignis $A \in \mA$ gilt
+    \[ \int_B \pP( A | \mB ) \diffop \pP = \pP(A \cap B), \quad B \in \mB. \]
+    Hinweis:
+    \[ \int_B \ind_A \diffop \pP = \pP(A \cap B), \]
+    siehe 2.10.2.1.
+  \end{enumerate}
+\end{prgp}
+
+\begin{thm}
+  Sei $\mB \subset \mA$ eine $\sigma$-Algebra, sowie $X$ und $Y$ integrierbare
+  Zufallsgrößen auf $(\Omega, \mA, \pP)$. Die folgenden Eigenschaften bestehen
+  fast sicher:
+  \begin{enumerate}[(i)]
+  \item $\pE_\mB( aX + bY ) = a \cdot \pE_\mB(X) + b \cdot \pE_\mB(Y)$, $a,b \in
+    \real$.
+  \item Wenn $X \ge Y$, dann auch $\pE_\mB(X) \ge \pE_\mB(Y)$; speziell gilt
+    $\pE_\mB(x) \ge 0$, wenn $X \ge 0$.
+  \item Ist $X$ $\mB$-messbar, so gilt $\pE_\mB(X) = X$; speziell gilt
+    \[ \pE_\mB( a \cdot \ind_\Omega) = a \cdot \ind_\Omega \quad \text{und}
+      \quad \pE_\mB[ \pE_\mB(X) ] = \pE_\mB(X). \]
+  \item $|\pE_\mB(X)| \le \pE_\mB(|X|)$ und $\|\pE_\mB(X)\|_1 \le \|X\|_1.\footnotemark$
+  \end{enumerate}
+\end{thm}
+\footnotetext{Das heißt, die Abbildung $X \to \pE_\mB(X)$ ist ein linearer
+  Operator von $L^1(\pP)$ in $L^1(\pP)$. Dieser Operator ist nichtnegativ,
+  kontraktiv und idempotent, die $\mB$-messbaren Zufallsgrößen sind Fixpunkte.}
+
+\begin{proof}
+  (i) bis (iii) folgen sofort aus der Definition des bedingten Erwartungswertes.
+
+  Kontraktivität: Linear und nichtnegativ.
+  \[ - |X| \le X \le |X| \qRq |\pE_\mB(X)| \le \pE(|X|) \]
+  Aus der Definition von $\pE_\mB$ (D) folgt
+  \begin{align*}
+  \|X\|_1 &= \int_\Omega |X| \diffop \pP \overset{\text{(D)}}{=} \int_\Omega
+            \pE_\mB(|X|) \diffop \pP \\
+          &\ge \int_\Omega |\pE_\mB(X)| \diffop \pP|_\mB = \| \pE_\mB(X) \|_1. \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{exmp*}
+  Sei $(\Omega, \mA, \pP) := ([0,1], \borel([0,1]), \lambda)$, $X(\omega) :=
+  \omega$, $\omega \in [0,1]$.
+  \begin{itemize}
+  \item $\mB_1 := \{ \emptyset, \Omega \}$
+  \item $\mB_2 := \{ \emptyset, [0,1/2], (1/2,1], [0,1] \}$
+  \end{itemize}
+\end{exmp*}
+
+\begin{thm}
+  Seien $\mB, \mB_1, \mB_2$ Teil-$\sigma$-Algebren von $\mA$, sowie $X$, $X_n$
+  und $Y$ integrierbare Zufallsgrößen sowie $Z$ eine beschränkte Zufallsgröße
+  auf $(\Omega, \mA, \pP)$. Die folgenden Eigenschaften bestehen fast sicher:
+  \begin{enumerate}[(i)]
+  \item Ist $Z$ messbar bezüglich $\mB$, so gilt
+    \[ \pE_\mB( X \cdot Z ) = \pE_\mB(X) \cdot Z, \]
+    speziell
+    \[ \pE_\mB( X \cdot \pE_\mB(Y)) = \pE_\mB(X) \cdot \pE_\mB(Y), \]
+    falls $\pE_\mB(Y)$ beschränkt ist.
+  \item Ist $\mB_1 \subset \mB_2$, so gilt
+    \[ \pE_{\mB_1}( \pE_{\mB_2} (X) ) = \pE_{\mB_2}( \pE_{\mB_1}(X) ) =
+      \pE_{\mB_1}(X). \]
+  \item Sind $B$ und $\sigma(X)$ unabhängig, so gilt
+    \[ \pE_\mB(X) = \pE(X). \]
+  \item Gilt $X_n \to X$ und $|X_n| \le Y$ für alle $n$, dann folgt
+    \[ \pE_\mB(X_n) \to \pE_\mB(X). \]
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  (i): Es gilt für $B \in \mB$:
+  \[ \int_B \pE_\mB(X \cdot Z) \diffop \pP|_\mB = \int_B X \cdot Z \diffop \pP
+    = \int_B Z \cdot \pE_\mB(X) \diffop \pP|_\mB. \]
+  Spezialfall: $Z = \ind_A$, $A \in \mB$. Die zweite Gleichung hat die Form
+  \[ \int_{A \cap B} X \diffop \pP = \int_{A \cap B} \pE_\mB(X) \diffop
+    \pP|_\mB \]
+  und sie ist wegen $A \cap B \in \mB$ richtig.
+
+  Der allgemeine Fall folgt durch Approximation von $Z$ durch Treppenfunktionen.
+
+  (ii): Die Gleichung $\pE_{\mB_2}( \pE_{\mB_1}(X) ) = \pE_{\mB_1}(X)$ folgt aus
+  (2.10.6.iii), da $\pE_{\mB_1}(X)$ messbar ist bezüglich $\mB_2$. Für $B \in
+  \mB_1 \subset \mB_2$ gilt:
+  \[ \int_B \pE_{\mB_1}(\pE_{\mB_2}(X)) \diffop \pP =
+    \int_B \pE_{\mB_2}(X) \diffop \pP = \int_B X \diffop \pP = \int_B
+    \pE_{\mB_1}(X) \diffop \pP. \]
+  Der erste und der letzte Integrand sind $\mB_1$-messbar, ihre Integrale sind
+  für alle $B \in \mB_1$ gleich, also sind sie fast sicher gleich.
+
+  (iii): Annahme, $X$ und $\ind_B$ sind unabhängige Zufallsgrößen, dann gilt
+  \begin{align*}
+    \int_B \pE(X) \diffop \pP
+    &= \pE(X) \cdot \pP(B) = \pE(X) \cdot \pE(\ind_B) \\
+    &= \pE(X \cdot \ind_B) = \int_B X \diffop \pP = \int_B \pE_\mB(X) \diffop \pP,
+  \end{align*}
+  also sind die Integranden gleich.
+
+  (iv): Nach (2.10.6.iv) ist
+  \[ |\pE_\mB(X_n) - \pE_\mB(X)| \le \pE_\mB(|X_n - X|) \le \pE_\mB(Y_n), \]
+  wobei $Y_n := \sup_{k \ge n} |X_n - X|$.
+
+  Wir zeigen, dass die rechte Seite
+  $\xrightarrow{n \to \infty} 0$. Es gilt $0 \le Y_n \le 2Y$ und $Y_n\to 0$. Die
+  Folge $\{ Y_n \}$ und damit auch $\{\pE_\mB(Y_n)\}$ sind monoton fallend. Also
+  \[ 0 \le \int \lim_n \pE_\mB(Y_n) \diffop \pP = \lim_n \int \pE_\mB(Y_n)
+    \diffop \pP = \lim_n \int Y_n \diffop \pP = \int \lim_n Y_n \diffop \pP =
+    0. \qedhere \]
+\end{proof}
+
+\begin{thm}[Faktorisierungslemma]
+  Sei $T: \Omega \to \Omega'$ eine Abbildung in einem Messraum $\Omega', \mA')$
+  und sei $X : \Omega \to \realext$ eine Zufallsgröße. Dann ist $X$ genau
+  $\sigma(T)$-messbar, wenn es eine Zufallsgröße $Y : \Omega' \to \realext$ gibt
+  mit $X = Y(T)$.
+\end{thm}
+
+\begin{proof}
+  Siehe Bauer, 1990, S. 71.
+\end{proof}
+
+\begin{folg}
+  Für beliebige Zufallsgrößen $X, Y_1, \ldots, Y_n$ existiert eine
+  Borel-messbare Funktion $g : \real^n \to \real$, sodass
+  \[ \pE( X | Y_1, \ldots, Y_n) = g(Y_1, \ldots, Y_n) \]
+  fast sicher.
+\end{folg}
+
+\begin{thm}
+  Es seien $X$ eine integrierbare Zufallsgröße, $Y$ eine beliebige Zufallsgröße
+  und $g$ die nach (2.10.9) existierende, Borel-messbare Funktion mit
+  \[ \pE( X | Y )(\omega) = g(Y(\omega)) \quad \text{fast sicher.} \tag{1} \]
+  Dann ist $g$ bezüglich der Verteilung $\mu_Y$ von $Y$ integrierbar und genügt
+  der Gleichung
+  \[ \int_B g \diffop \mu_Y = \int_{[Y \in B]} X \diffop \pP \tag{2} \]
+  für jede Borel-Menge $B \subset \real$. Sie ist hierdurch $\mu_Y$-fast sicher
+  bestimmt.
+
+  Ist umgekehrt $g$ eine reelle, Borel-messbare, $\mu_Y$-integrierbare Funktion
+  mit (2), so gilt (1).
+\end{thm}
+
+\begin{proof}
+  Wegen (1) ist die Funktion $g(Y)$ integrierbar. Nach dem Transformationssatz
+  gilt
+  \[ \int_B g \diffop \mu_Y = \int_{[Y \in B]} g(Y) \diffop \pP, \quad B \in
+    \borel(\real). \tag{$\circ$} \]
+  Aus (1) und $[Y \in B] \in \sigma(Y)$ folgt, dass
+  \[ \int_{[Y \in B]} g(Y) \diffop \pP = \int_{[Y \in B]} X \diffop \pP \]
+  und damit (2).
+
+  Die Eindeutigkeit folgt daraus, dass die Dichtefunktion bezüglich $\mu_Y$ des
+  Maßes $\nu := g \diffop \mu_Y$ $\mu_Y$-fast sicher bestimmt.
+
+  Gilt nun (2) mit eine Funktion $g$, so folgt aus ($\circ$), dass
+  \[ \int_{[Y \in B]} X \diffop \pP = \int_{[Y \in B]} g(Y) \diffop \pP \]
+  und damit (1).
+\end{proof}
+
+\begin{prgp}[Aufgabe]
+  Für die Umkehrung im vorhergehenden Satz genügt es zu fordern, dass
+  \[ \int_{-\infty}^x g \diffop \mu_Y = \int_[Y \le X] X \diffop \pP, \quad x
+    \in \real. \]
+\end{prgp}
+
+\begin{defn}
+  Seien $X$, $Y$ und $g$ wie in (2.10.10). Für jedes $y \in \real$ heißt $g(y)$
+  die \emph{bedingte Erwartung von $X$} unter der Hypothese, dass $Y$ gleich $y$
+  ist, in Zeichen
+  \[ \pE(X | Y = y) := g(y), \quad y \in \real. \]
+\end{defn}
+
+\begin{rmrk*}
+  $\pE(X|Y)$ ist eine Zufallsgröße, $\pE(X|Y=y)$ ist eine Zahl.
+\end{rmrk*}
+
+Aus der Definition folgt:
+\[ \pE(X|Y) = \pE(X | Y = Y(\omega)) \quad (\text{fast sicher}). \]
+
+In einem für viele Anwendungen wichtigen Spezialfall kann man die Funktion $g$
+und damit $\pE(X|Y = y)$ und $\pE(X|Y)$ relativ einfach berechnen.
+
+\begin{thm}
+  Es seien $X$ und $Y$ Zufallsgrößen, deren gemeinsame Verteilung $\mu_{X,Y}$
+  eine Dichte $p$ besitzt. Ferner sei $X$ integrierbar und für alle $y \in
+  \real$ sei die Dichte von $Y$
+  \[ p_Y (y) := \int_{-\infty}^\infty p(x,y) \diffop x > 0. \]
+
+  Dann gilt für die Funktion $g(y) = \pE(X|Y=y)$
+  \[ \pE(X|Y=y) = \rez{p_Y(y)} \int_{-\infty}^\infty x \cdot p(x,y) \diffop x
+    \tag{1} \]
+  für $\mu_Y$-fast alle $y \in \real$.
+
+  Ferner gilt
+  \[ \pE(X|Y)(\omega) = \rez{p_Y(Y(\omega))} \cdot \int_{-\infty}^\infty x
+    \cdot p(x,Y(\omega)) \diffop x \tag{2}\]
+  $p$-fast sicher.
+\end{thm}
+
+\begin{rmrk*}
+  $p(x|y) = \frac{p(x,y)}{p_Y(y)}$ heißt die \emph{bedingte Dichtefunktion unter
+    der Bedingung $Y=y$}. Aus (1) folgt:
+  \[ \pE( X | Y = y ) = \int_{-\infty}^\infty x \cdot p( x | y ) \diffop x \]
+  $\mu_Y$-fast sicher.
+\end{rmrk*}

@@ -1,0 +1,377 @@
+\section{Numerische Charakteristika von Zufallsgrößen}
+\begin{defn}
+  Es sei $X$ eine $\pP$-integrierbare oder nichtnegative Zufallsgröße. Dann
+  heißt
+  \[ \pE(X) := \int_\Omega X \diffop \pP \]
+  der \emph{Erwartungswert} von $X$. Das gilt analog für integrierbare, komplexe
+  Zufallsgrößen. Es gilt:
+  \begin{enumerate}[(i)]
+  \item $\pE(aX + bY) = a \cdot \pE(X) + b \cdot \pE(Y)$ für alle $a,b \in \real$,
+  \item Ist $X = c$ fast sicher, so gilt $\pE(X) = c$,
+  \item Aus $a \le X \le b$ fast sicher folgt $a \le \pE(X) \le b$.
+  \item $| \pE(X) |  \le \pE(|X|)$,
+  \item Aus $X \ge 0$ fast sicher und $\pE(X) = 0$ folgt $X = 0$ fast sicher.
+  \end{enumerate}
+\end{defn}
+
+\begin{itemize}
+\item Mit $g(x) := x$ in (1.3.7):
+  \[ \pE( X ) = \int_\real x \diffop \mu_x (x) \tag{1} \]
+\item Ist $X$ diskret mit den Werten $x_1, \ldots$ und den zugehörigen
+  Wahrscheinlichkeiten $p_1, \ldots$, so gilt
+  \[ \pE( X ) = \sum_{j} x_j p_j. \tag{2} \]
+\item Wenn $X$ eine Dichte $p$ besitzt, dann ist
+  \[ \pE( X ) = \int_\real x \cdot p(x) \diffop x. \tag{3} \]
+\end{itemize}
+
+\begin{thm}
+  Es seien $X$ und $Y$ unabhängige, integrierbare Zufallsgrößen. Dann ist $X
+  \cdot Y$ integrierbar und es gilt
+  \[ \pE(X \cdot Y) = \pE( X ) \cdot \pE( Y ). \]
+\end{thm}
+
+\begin{proof}
+  Bezeichne $\mu_X$ bzw. $\mu_Y$ die Verteilungsfunktion von $X$ bzw. $Y$ und
+  sei $\nu$ die gemeinsame Verteilung von $X$ und $Y$ (auf $\real^2$). Dann
+  gilt mit dem Satz von Fubini (f):
+  \begin{align*}
+    \pE(X) \cdot \pE(Y)
+    & = \int_\real x \diffop \mu_X(x) \cdot \int_\real y \diffop \mu_Y(y) \\
+    & \overset{(\text{f})}{=}
+      \int_{\real^2} x \cdot y \diffop (\mu_X \times \mu_Y)(x, y) \\
+    & \overset{(1.5.2)}{=}
+      \int_{\real^2} x \cdot y \diffop \nu(x,y) \\
+    & \overset{(1.3.7)}{=} \pE( X \cdot Y ). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{rmrk}
+  \begin{enumerate}[a)]
+  \item $\pE( X \cdot Y) = \pE(X) \cdot \pE(y)$ ist möglich, auch wenn $X$ und
+    $Y$ abhängig sind. Es sei zum Beispiel $X \in L^3(P)$ symmetrisch zum
+    Punkt 0 verteilt\footnote{%
+      Das heißt $-X$ hat die selbe Verteilung wie $+X$, äquivalent $\mu_X(B) =
+      \mu_X(-B)$ für alle $B \in \borel(\real)$ oder $F_X(t) = 1 -F_X(-t).$}.
+    Wir setzen $Y := X^2$. Dann ist auch $X^3$ symmetrisch. Es gilt $\pE(X) =
+    0$, $\pE(X \cdot Y ) = \pE(X^3) = 0 = \pE(X) \cdot \pE(Y)$.
+
+    Zwei Zufallsgrößen heißen \emph{unkorreliert}, wenn
+    \[ \pE( X \cdot Y ) = \pE(X) \cdot \pE(Y) \]
+    gilt.
+  \item Satz 1.7.2 gilt auch für komplexe Zufallsgrößen (Übungsaufgabe).
+  \end{enumerate}
+\end{rmrk}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item Es sei $X$ eine binomialverteilte Zufallsgröße mit den Parametern $n$
+    und $p$.
+    \begin{align*}
+      \pE(X)
+      &= \sum_{k=0}^n k \cdot \binom{n}{k} \cdot p^k (1-p)^{n-k} \\
+      &= \sum_{k=0}^n k \cdot \frac{n!}{k! (n-k)!} \cdot p^k (1-p)^{n-k} = \, ?
+    \end{align*}
+    Einfacher: Es seien $X_1, \ldots, X_n$ unabhängige Zufallsgrößen\footnote{%
+      Binomialverteilt mit $n=1$.}
+    mit $\pP(X_j = 1) = p$, $\pP(X_j = 0) = 1-p$. Dann ist $\tilde{X} := X_1 +
+    \cdot + X_n$ binomialverteilt mit den Parametern $n$ und $p$.
+    \begin{align*}
+      \pE(X)
+      &= \pE( \tilde{X} ) = \pE( X_1 + \cdots + X_n ) = \pE(X_1) + \cdots + \pE(X_n) \\
+      &= n \cdot \pE(X_1) = n \cdot (0 \cdot (1-p) + 1 \cdot p ) = n \cdot p.
+    \end{align*}
+  \item Sei $X$ gleichmäßig verteilt im Intervall $[a,b]$.
+    \[ \pE(X) \int_{-\infty}^\infty x \cdot p_X(x) \diffop x = \int_a^b x \cdot
+      \rez{b-a} \diffop x = \left. \frac{x^2}{2(b-a)} \right|_{x=a}^b =
+      \frac{b^2 - a^2}{2(b-a)} = \frac{a+b}{2}. \]
+  \item Sei $X$ poissonverteilt mit
+    \[ \pP( X = k ) = \frac{a^k \cdot e^{-a}}{k!}, \quad a > 0, \quad k = 0, 1,
+      2, \ldots \]
+    Dann ist
+    \begin{align*}
+      \pE( X ) & = \sum_{k=0}^\infty k \cdot \frac{a^k e^{-a}}{k!}
+                 = \sum_{k=1}^\infty \frac{a^k \cdot e^{-a}}{(k-1)!} \\
+               & = e^{-a} \cdot a  \cdot \sum_{k=1}^\infty \frac{a^{k-1}}{(k-1)!}
+                 = e^{-a} \cdot a \cdot e^a = a.
+    \end{align*}
+  \item Sei $X$ normalverteilt mit der Dichte
+    \[ g_{a,\sigma}(x) = \rez{\sigma \sqrt{2 \pi}} \cdot e^{-(x-a)^2 / 2
+        \sigma^2}. \]
+    Dann ist
+    \begin{align*}
+      \pE(X)
+      & = \int_{-\infty}^\infty x \cdot \rez{\sigma \sqrt{2 \pi}}
+        \cdot e^{-(x-a)^2 / 2 \sigma^2} \diffop x \\
+      \intertext{Substitution $z = \frac{x-a}{\sigma}$, $\diffop x = \sigma \diffop z$}
+      & = \rez{\sqrt{2 \pi}} \cdot \int_{-\infty}^\infty (\sigma z + a)
+        \cdot e^{-z^2 / 2} \diffop z \\
+      & = \rez{\sqrt{2 \pi}} \cdot
+        \left[ \underbrace{%
+        \int_{-\infty}^\infty \sigma z \cdot e^{-z^2 / 2} \diffop z
+        }_{\text{ungerade}}
+        + \underbrace{%
+        a \cdot \int_{-\infty}^\infty e^{-z^2 / 2} \diffop z
+        }_{= \sqrt{2 \pi} } \right]
+        = a.
+    \end{align*}
+  \end{enumerate}
+\end{exmp}
+
+\begin{defn}
+  Als \emph{Streuung} (\emph{Varianz}, Dispersion) einer Zufallsgröße $X \in L^2
+  ( \pP )$  bezeichnet man die Größe
+  \[ \sigma^2 := \var(X) := D^2(X) := \pE( (X-\pE(X))^2 )
+    = \int_\Omega (X -\pE(X))^2 \diffop \pP. \tag{1} \]
+  Die positive Quadratwurzel $\sigma$ heißt \emph{Standardabweichung}.
+\end{defn}
+
+\begin{rmrk*}
+  Aus $X \in L^2( \pP )$ folgt $X \in L^1( \pP )$. Warum?
+  \[ |X(w) \le
+    \begin{cases}
+      |X(w)|^2, &\text{wenn } |X(w)| \ge 1, \\
+      1, &\text{sonst.}
+    \end{cases} \]
+  Wählt man $g(x) := (x - \pE(X))^2$ in Satz 1.3.7, so folgt
+  \[ D^2(X) = \int_{-\infty}^\infty (x - \pE(X))^2 \diffop \mu_X (x). \tag{2} \]
+\end{rmrk*}
+
+\begin{thm}
+  Für $X,Y \in L^2(\pP)$ gilt:
+  \begin{enumerate}[(i)]
+  \item $D^2(X) = \pE( X^2 ) - \pE( X )^2$,
+  \item $D^2(aX + b) = a^2 \cdot D^2(X)$,
+  \item $D^2(X) = 0$ $\Leftrightarrow$ $X$ ist konstant fast sicher,
+  \item $D^2(X + Y) = D^2(X) + D^2(Y) + 2 \pE \big[ (X - \pE(X)) \cdot (Y -
+    \pE(Y)) \big]$,
+  \item Sind $X$ und $Y$ unkorreliert, so gilt $D^2(X+Y) = D^2(X) + D^2(Y)$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Einfach.
+\end{proof}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item Sei $X$ binomialverteilt mit $n$ und $p$. Dann ist
+    \[ D^2(X) = \sum_{k=0}^n (k-n \cdot p)^2 \cdot \binom{n}{k} p^k
+      (1-p)^{n-k}. \]
+    Seien $X_1, \ldots, X_n$ unabhängig mit $\pP(X=1) = p$, $\pP(X=0) = 1-p$,
+    dann ist $\tilde{X} := X_1 + \cdots + X_n$ binomialverteilt mit $n$, $p$ und
+    es gilt
+    \begin{align*}
+      D^2(X)
+      & \overset{(\text{v})}{=} D^2(\tilde{X}) = D^2(X_1) + \cdots + D^2(X_n) \\
+      & \overset{(\text{i})}{=} n \cdot D^2(X_1) = n \cdot [ \pE(X_1^2) - \pE(X_1)^2 ]
+        = n \cdot (p - p^2) = n \cdot p \cdot (1-p).
+    \end{align*}
+  \item Sei $X$ gleichmäßig verteilt in $[a,b]$. Dann ist
+    \[ D^2(X) = \pE(X^2) - \pE(X)^2 = \pE(X^2) - \left(  \frac{a+b}{2}
+      \right)^2. \]
+    Wir berechnen
+    \[ \begin{aligned}
+        \pE(X^2)
+        & = \int_{-\infty}^\infty x^2 \diffop \mu_X(x) = \int_a^b x^2
+        \rez{b-a} \diffop x = \left. \frac{x^3}{3(b-a)} \right|_a^b \\
+        & = \frac{b^3 - a^3}{3(b-a)} = \frac{(b-a)(b^2 + ab + a^2)}{3(b-a)} =
+        \frac{b^2 + ab + a^2}{3}.
+      \end{aligned} \]
+    Damit folgt
+    \[ D^2(X) = \frac{b^2 + ab + a^2}{3} - \left( \frac{a+b}{2} \right)^2
+      = \frac{(b-a)^2}{12}. \]
+  \item Sei $X \sim N(a,\sigma)$. Bekannt: $\pE(X) = a$.
+    \begin{align*}
+      D^2(X)
+      &= \rez{\sigma \sqrt{2 \pi}} \int_{-\infty}^\infty (x-a)^2 \cdot e^{-(x-a)^2 / 2
+        \sigma^2} \diffop x \\
+      \intertext{Substitution: $z = \frac{x-a}{\sigma}$, $\diffop x = \sigma \diffop z$}
+      &= \frac{\sigma^2}{\sqrt{2 \pi}} \int_{-\infty}^\infty z^2 \cdot e^{-z^2 / 2} \diffop z \\
+      \intertext{Partielle Integration: $\int fg' = fg - \int f'g$, $f = z$, $f'=1$, $g' = z \cdot e^{-z^2 / 2}$, $g = - e^{-z^2 / 2}$}
+      &= \frac{\sigma^2}{\sqrt{2 \pi}}
+        \underbrace{\left[ -z \cdot e^{-z^2 / 2} \right]_{-\infty}^\infty}_{=0} +
+        \underbrace{\int_{-\infty}^\infty e^{-z^2 / 2} \diffop z}_{=\sqrt{2 \pi}} = \sigma^2.
+    \end{align*}
+  \end{enumerate}
+\end{exmp}
+
+\begin{defn}
+  Als \emph{Kovarianz} der Zufallsgrößen $X,Y \in L^2(\pP)$ bezeichnet man die
+  Größe
+  \[ \cov(X,Y) = \pE[ (X- \pE(X)) \cdot (Y - \pE(Y)) ] = \pE(XY) - \pE(X) \cdot
+    \pE(Y). \tag{1} \]
+  Aus (1) folgt: $X$, $Y$ sind unkorreliert $\Leftrightarrow$ $\cov(X,Y) = 0$.
+
+  \emph{Korrelationskoeffizient}:
+  \[ \corr( X, Y ) := \frac{\cov(X,Y)}{D(X) \cdot D(Y)}, \]
+  falls $D(X) \cdot D(Y) \ne 0$.
+
+  Es gilt: $-1 \le \corr(X,Y) \le 1$.
+  \begin{proof}
+    Ungleichung von Cauchy für Integrale:
+    \[ \left| \int f g \right|^2 \le \int |f|^2 \cdot \int |g|^2, \]
+    aus der linearen Algebra bekannt:
+    \[ |\angles{x,y}|^2 \le \angles{x,x} \cdot \angles{y,y}. \qedhere \]
+  \end{proof}
+\end{defn}
+
+\begin{rmrk*}
+  \begin{enumerate}[(a)]
+  \item $\corr (X,X) = 1$, $\corr(X,-X) = -1$.
+  \item $D^2(X_1 + \cdots X_n) = \sum_1^n D^2(X_i) + 2 \cdot \sum_{i<j}
+      \cov(X_i, X_j)$, das folgt aus (1.7.6.iv).
+  \end{enumerate}
+\end{rmrk*}
+
+\begin{thm}
+  Sei $D(X) \cdot D(Y) = 0$. Dann gilt
+  \[ |\corr(X,Y)| = 1 \qLRq \exists a,b \in \real, a \ne 0 : Y = a \cdot X + b
+    \text{ fast sicher.} \]
+\end{thm}
+
+\begin{proof}
+  Wir zeigen nur ``$\Rightarrow$'', die andere Richtung ist einfach.
+
+  O.B.d.A. sei $\corr(X,Y) = 1.$ Definiere
+  \begin{align*}
+    X' &:= \frac{X - \pE(X)}{D(X)}, & Y' &:= \frac{Y-\pE(Y)}{D(Y)}.
+  \end{align*}
+  Dann gilt
+  \begin{align*}
+    \pE(X') &= \pE(Y') = 0, & \pE(X'^2) &= \pE(Y'^2) = 1.
+  \end{align*}
+  und
+  \[ 1 = \corr(X,Y) = \pE( X' \cdot Y' ) \qRq \pE( (X' - Y')^2 ) = 
+    \pE(X'^2) - 2 \pE(X' \cdot Y') + \pE(Y'^2) = 0. \]
+  $(X'-Y')^2$ ist eine nichtnegative Zufallsgröße und ihr Erwartungswert ist 0.
+  Also ist $X' = Y'$ fast sicher. Damit folgt
+  \[ Y = \pE(Y) + D(Y) \cdot \frac{X - \pE(X)}{D(X)}. \qedhere \]
+\end{proof}
+
+\begin{defn}
+  Als \emph{Moment $k$-ter Ordnung} einer Zufallsgröße $X \in L^k(\pP)$
+  bezeichnet man
+  \[ M_k(X) := \pE(X^k) = \int_{-\infty}^\infty x^k \diffop \mu_X(x), \quad k =
+    0, 1, \ldots \]
+  \emph{Absolutes Moment:}
+  \[ A_k(X) := \pE(|X^k|) = \int_{-\infty}^\infty |X|^k \diffop \mu_X(x). \]
+\end{defn}
+
+\begin{rmrk*}
+  \begin{enumerate}[(a)]
+  \item Aus der Existenz vom $M_k$ folgt die Existenz von $M_l$ für alle $l \le
+    k$ wegen $|X|^l \le |X|^k + \ind_{[-1,1]}(x)$, $x \in \real$.
+  \item Sei $n > k \ge 1$ und nehmen wir an, dass $A_n$ existiert. Dann folgt
+    mit der Hölderschen Ungleichung (h)
+    \[ A_k = \int_{-\infty}^\infty |X|^k \cdot 1 \diffop \mu(x)
+      \overset{(\text{h})}{\le}
+      \left( \int_{-\infty}^\infty |X|^{p \cdot k} \diffop \mu(x)
+      \right)^{1/p}, \quad p > 1. \]
+    Mit $p = \frac{n}{k}$ gilt
+    \[ A_k^{1/k} \le A_n^{1/n}. \]
+  \end{enumerate}
+\end{rmrk*}
+
+\begin{exmp}
+  Momente und absolute Momente der Normalverteilung mit $a = 0$. Für ungerade
+  $k$ ist $M_k = 0$, für gerade $k$ gilt $M_k = A_k$. Wir substituieren wieder
+  $x := \frac{z-a}{\sigma}$ und nutzen die Geradheit des Integranden:
+  \begin{align*}
+    A_k
+    & = \sqrt{\frac{2}{\pi}} \sigma^k \int_0^\infty x^k \cdot e^{-x^2 / 2}
+      \diffop x \\
+  \intertext{Weitere Substitution $x^2 = 2z$, $\diff{z}{x} = x$, also $\diffop x
+    = \rez{x} \diffop z$}
+    & = \sqrt{\frac{2}{\pi}} \cdot \sigma^k \cdot 2^{(k-1)/2} \cdot
+      \underbrace{ \int_0^\infty z^{(k-1)/2} \cdot e^{-z} \diffop z}_{=\Gamma((k+1)/2)} \\
+    & = \rez{\sqrt{\pi}} (\sqrt{2} \cdot \sigma)^k \cdot \Gamma \left( \frac{k+1}{2} \right).
+  \end{align*}
+\end{exmp}
+
+\begin{rmrk*}
+  Die Normalverteilung ist die \emph{einzige} Verteilung, die diese Momente
+  besitzt. Eine Verteilung ist aber im Allgemeinen nicht eindeutig durch ihre
+  Momente bestimmt.
+\end{rmrk*}
+
+\begin{thm}
+  Sei $X$ eine Zufallsgröße mit Verteilungsfunktion $F$. Existiert $\pE(X)$, so
+  gilt:
+  \begin{align*}
+    \lim_{x \to \infty} x \cdot ( 1 - F(x) ) &= 0, & \lim_{x \to -\infty} x \cdot F(x) &= 0,
+  \end{align*}
+  \[ \pE(X) = \int_0^\infty (1-F(y)) \diffop y - \int_{-\infty}^0 F(y) \diffop
+    y. \]
+\end{thm}
+
+\begin{proof}
+  Weil $\pE(X)$ existiert, gilt
+  \[ \pE(|X|) = \int_{-\infty}^\infty |x| \diffop F(x) < \infty, \]
+  also
+  \[ 0 \le \lim_{x \to \infty} x \cdot
+    \underbrace{(1-F(x))}_{\text{Maß von } [x, \infty]}
+    \le \lim_{x \to \infty} \int_x^\infty
+    \underbrace{\underbrace{y}_{\ge x} \diffop F(y)}_{\text{endl. Maß}}
+    \overset{\text{(So)}}{=} 0,
+  \]
+  wobei (So) für die Stetigkeit von oben steht.
+
+  Der zweite Limes wird analog bewiesen.
+
+  Zur Erinnerung, partielle Integration:
+  \[ \int_0^x f(y) \diffop g(y) = f(y) \cdot g(y) \Big|_0^x - \int_0^x g(y)
+    \diffop f(y). \]
+  Damit können wir zeigen:
+  \begin{align*}
+    \int_{-x}^0 y \diffop F(y) &= x \cdot F(-x) - \int_{-x}^0 F(y) \diffop y, \\
+    \int_0^x y \diffop F(y) &= -x \cdot(1-F(x)) + \int_0^x (1-F(y)) \diffop y, \\
+                               &= -x \cdot(1-F(x)) + x - \int_0^x F(y) \diffop y.
+  \end{align*}
+  Die Behauptung folgt nun durch Addition und Grenzwertbildung $x \to \infty$.
+\end{proof}
+
+\begin{prgp}[Zufallsvektoren]
+  Sei $X = (X_1, \ldots, X_d)$ ein $d$-dimensionaler Zufallsvektor, reell oder
+  komplex, sodass $X_j \in L^1(\pP)$ für alle $j$. Dann wird der
+  \emph{Erwartungsvektor} von $X$ definiert durch
+  \[ \pE X := ( \pE X_1, \ldots, \pE X_d ). \]
+  Sei $X_j \in L^2(\pP)$ für alle $j$ und $m_j := \pE X_j$. Die Matrix $\cov(X)
+  := (c_{jk})^d$, wobei
+  \[ c_{jk} = \pE [ (X_j - m_j) \cdot \obar{(X_k - m_k)} = \pE[X_j \obar{X_k}] -
+    m_j \cdot \obar{m_k} ], \]
+  heißt die \emph{Kovarianz-Matrix} von $X$. Wenn die $X_j$ paarweise unabhängig
+  sind, dann ist $\cov(X)$ eine Diagonalmatrix. Wegen
+  \[ \sum_{j,k = 1}^d c_{jk} \cdot z_j \obar{z_k} \overset{\footnotemark}{=}
+    \pE \left[ \left| \sum_{j=1}^d z_j \cdot (X_j - m_j) \right|^2 \right] \ge
+    0,
+    \quad
+    z_j, z_k \in \complex,
+  \]
+  \footnotetext{{Es gilt $|w|^2 = w \cdot \obar{w}$ für $w \in \complex$.}}
+  ist die Kovarianz-Matrix \emph{positiv semidefinit}.
+
+  Sind die Elemente der Matrix $Y = (Y_{ik})$ integrierbare Zufallsgrößen, so
+  schreiben wir $\pE Y := (\pE Y_{ik})$.
+
+  Mit dieser Bezeichnung lässt sich die Kovarianz-Matrix schreiben als
+  \[ \cov X = \pE[ (X - \pE X) \cdot \obar{(X-\pE X)}^T]. \]
+
+  \textbf{Vereinbarung.} In Ausdrücken, die Matrizenoperationen enthalten,
+  werden Elemente von $\real^d$ und $\complex^d$ als Spaltenvektoren betrachtet.
+
+  Sei $A$ eine $d \times d$-Matrix, dann gilt
+  \[ \cov( A \cdot X ) = A \cdot \cov(X) \cdot A^*,\]
+  wobei $A^* := \obar{A^T}$.
+\end{prgp}
+
+Sei $\alpha := (\alpha_1, \ldots, \alpha_d) \in \nat_0^d$ und sei $\mu$ die
+Verteilung eines $d$-dimensionalen Zufallsvektors $X$.
+
+Ist die Funktion $X \to X^\alpha = X_1^{\alpha_1} \cdots X_d^{\alpha_d}$, $X =
+(X_1, \ldots, X_d) \in \real^d$ integrierbar bezüglich $\mu$, so heißt
+\[ M_\alpha = M_\alpha(\mu) = M_\alpha(X) = \int_{\real^d} X^\alpha \diffop
+  \mu(x) \]
+das \emph{Moment der Ordnung $\alpha$} (von $\mu$ oder $X$).
+\[ A_\alpha = A_\alpha(\mu) = A_\alpha(X) = \int_{\real^d} |X^\alpha| \diffop
+  \mu(x) \]
+heißt das \emph{absolute Moment der Ordnung $\alpha$}.

@@ -1,0 +1,86 @@
+\section{Satz von Gliwenko-Cantelli}
+\begin{defn}
+  Es seien $X_1, \ldots, X_n$ identisch verteilte, unabhängige Zufallsgrößen mit
+  Verteilungsfunktion $F$ und $\omega \in \Omega$. Wir ordnen die Zahlen
+  $X_1(\omega), \ldots, X_n(\omega)$ um:
+  \[ X_1^*(\omega) \le X_2^*(\omega) \le \ldots \le X_n^*(\omega). \]
+
+  Definiere die \emph{empirische Verteilungsfunktion}
+  \[ F_n^\omega(x) =
+    \begin{cases}
+      0, & \text{falls } x \le X_1^*(\omega), \\
+      \frac{k}{n}, & \text{falls } X_k^*(\omega) < x \le X_{k+1}^*(\omega), \\
+      1, & \text{falls } x > X_n^*(\omega). \\
+    \end{cases}
+  \]
+\end{defn}
+
+\begin{thm}[Gliwenko-Cantelli]
+  Es gilt
+  \[ \lim_{n \to \infty} \sup_{x \in \real} | F_N^\omega(x) - F(x) | = 0 \]
+  fast sicher.
+\end{thm}
+
+\begin{prgp}[Zusatzaufgabe]
+  \begin{enumerate}[(a)]
+  \item Man berechne $\pP[ F_n^\omega(x) = k/n ]$, $0 \le k \le n$ mit Hilfe von
+    $F$.
+  \item Man zeige:
+    \begin{align*}
+      \lim_{n \to \infty} F_n^\omega(x)
+      &= F(x) \quad \text{fast sicher, für alle } x \in \real, \\
+      \lim_{n \to \infty} F_n^\omega(x+0)
+      &= F(x+0) \quad \text{fast sicher, für
+        alle } x \in \real.
+    \end{align*}
+    Hinweis: $Y_n^* := \ind_{[X_n < x]}$, $Z_n^* := \ind_{[X_n \le x]}$.
+
+    Dann gilt
+    \begin{align*}
+      F_n^\omega(x) &= \rez{n} \sum^n Y_i^* \to F(x) \text{ fast sicher,} \tag{$\ast$} \\
+      F_n^\omega(x+0) &= \rez{n} \sum^n Z_i^* \to F(x+0) \text{ fast sicher.} \tag{$\ast\ast$}
+    \end{align*}
+  \item Man beweise Satz 2.9.2.
+
+    Hinweis: Es bleibt nur noch zu zeigen, dass aus ($\ast$) und ($\ast\ast$)
+    die gleichmäßige Konvergenz folgt. Dazu sei für jedes $k \in \nat$ und $1
+    \le j < k$ die kleinste Zahl $x_{jk}$ mit $\frac{j}{k} \le F( x_{jk} + 0)$
+    und es sei $x_{0k} := - \infty$, $x_{kk} := \infty$.
+
+    Dann ist
+    \[ F(x_{jk}) \le \frac{j}{k} \qRq F(x_{j+1,k}) - F(x_{jk} + 0) \le \rez{k}.
+      \tag{1} \]
+    Daher gilt für jedes $x \in (x_{jk}, x_{j+1,k})$:
+    \begin{align*}
+      F_n^\omega(x_{jk}) - F(x_{jk}+0) - \rez{k}
+      &\overset{\text{(1)}}{\le} F_n^\omega (X_{jk} + 0) - F(x_{j+1,k}) \\
+      &\le F_n^\omega(x_{jk}) - F(x) \\
+      &\le F_n^\omega(x_{j+1,k}) -F(x_{jk} + 0) \\
+      &\overset{\text{(1)}}{\le} F_n^\omega( x_{j+1,k} ) - F(x_{j+1,k}) + \rez{k}.
+    \end{align*}
+    Daraus folgt
+    \begin{align*}
+      \sup_{x \in \real} | F_n^\omega(x) - F(x) |
+      & \le \max_{1 \le j < k} | F_n^\omega(x_{jk}) - F(x_{jk}) |
+        + \max_{0 \le j < k} | F_n^\omega(x_{jk} + 0) - F(x_{jk} + 0) | + \rez{k} \\
+      &\xrightarrow{\text{(ii)}} \rez{k} \text{ fast sicher für } n \to \infty.
+    \end{align*}
+  \end{enumerate}
+\end{prgp}
+
+Ab hier ist $F$ stetig.
+\begin{thm}[Smirnow]
+  Für $y > 0$ gilt
+  \[\lim_{n \to \infty} \pP \left[ \sqrt{n}
+      \sup_{x \in \real} (F_n^\omega(x) - F(x)) < y \right]
+    = 1 - e^{-2y^2}. \]
+\end{thm}
+
+\clearpage
+
+\begin{thm}[Kolmogorow]
+  Es gilt
+  \[ \lim_{n \to \infty} \pP \left[ \sqrt{n}
+      \sup_{x \in \real} | F_n^\omega(x) - F(x) | < y \right]
+    = \sum_{k = -\infty}^\infty (-1)^k 1 - e^{-2 k^2 y^2} =: K(y). \]
+\end{thm}

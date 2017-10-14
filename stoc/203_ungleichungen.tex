@@ -1,0 +1,285 @@
+\section{Einige Ungleichungen}
+\begin{thm}[Ungleichung von Hájek-Rènyj]
+  Gegeben seien $n$ unabhängige Zufallsgrößen $X_1, \ldots, X_n \in
+  \intf^2(\pP)$ und $n$ positive Zahlen $r_1 \ge r_2  \ge \ldots \ge r_n$. Wir
+  setzen
+  \[ S_i := \sum_{k=1}^i (X_k - \pE(X_k)), \quad i = 1, \ldots, n. \]
+  Dann gilt für jedes $m = 1, \ldots, n$ und jedes $\eps > 0$:
+  \[ \pP \left[ \max_{m \le i \le n} r_i | S_i | \ge \eps \right] \le
+    \rez{\eps^2} \left( r_m^2 \cdot \sum_{j=1}^m D^2(X_j) + \sum_{j=m+1}^n r_j^2
+      D^2( X_j) \right) \tag{1} \]
+  Es gilt $\sum_{j=m+1}^n r_j^2 D^2( X_j) := 0$  für $m=n$.
+\end{thm}
+
+Zwei Spezialfälle:
+
+\begin{folg}[Ungleichung von Kolmogorov]
+  \[ \pP \left[  \max_{1 \le i \le n} |S_i| \ge \eps \right] <
+    \rez{\eps^2} \sum_{i=1}^n D^2(X_i).  \]
+\end{folg}
+
+\begin{proof}
+  $m=1$ und $r_1 = \ldots = r_n = 1$ in 2.3.1.
+\end{proof}
+
+\begin{folg}[Ungleichung von Tschebischew]
+  \[ \pP [ | X - \pE(X) | \ge \eps ] \le \frac{D^2(X)}{\eps^2}.  \]
+\end{folg}
+
+\begin{proof}
+  $m = n = 1$, $r_1 = 1$, $X = X_1$ in 2.3.1.
+\end{proof}
+
+\textbf{Knobelaufgabe.} Für festes $n \ge 2$ ist das Maximum bzw. Minimum des
+Ausdrucks
+\[ D = \pP \left( \bigcap_{j=1}^\infty A_j \right)
+  - \prod_{j=1}^\infty \pP( A_j )\]
+gesucht, wobei die $A_j$ beliebige Ereignisse sind.
+
+\begin{proof}[Beweis von 2.3.1]
+  O.B.d.A. sei $\pE(X_i) = 0$, $i = 1, \ldots, n$.  Dann ist
+  \[ S_i = X_1 + \ldots + X_i. \]
+  Seien $A := $ das Ereignis auf der linken Seite von (1) und $B_i := [ r_i
+  \cdot |S_i| \ge \eps]$, $i = m, \ldots, n$. Dann ist
+  \[ A = \bigcup_{i = m}^n B_i. \]
+  Außerdem seien
+  \begin{align*}
+    A_m &:= B_m \\
+    A_{m+1} &:= \obar{B}_m \cap B_{m+1} \\
+    A_{m+2} &:= \obar{B}_m \cap \obar{B}_{m+1} \cap B_{m+2} \\
+         &\vdots \\
+    A_n &:= \obar{B}_m \cap \ldots \cap \obar{B}_{n-1} \cap B_n.
+  \end{align*}
+  Die Ereignisse $A_m, \ldots, A_n$ sind paarweise unvereinbar. Es gilt
+  $A_i \subset B_i$ und $A = \bigcup_{i=m}^n A_i$. Also folgt
+  \[ \pP(A) = \sum_{i=m}^n \pP(A_i). \]
+
+  Sei weiterhin
+  \[ Z := \sum_{i=m}^n (r_i^2 - r_{i+1}^2) s_i^2, \]
+  wobei $r_{n+1} := 0$. Es gilt
+  \[ \pE(Z) = D^2(S_i) = D^2(X_1) + \ldots D^2(X_i), \]
+  damit folgt
+  \[ \pE(Z) = r_m^2 \cdot \sum_{j=1}^m D^2(X_j) + \sum_{j=m+1}^n r_j^2
+    D^2(X_j). \]
+  Also ist $\frac{\pE(Z)}{\eps^2}$ die rechte Seite von (1)\footnote{%
+    Es gilt
+    \[ \sum_{i=m}^n \sum_{j=1}^i \ldots = \sum_{j=1}^m \sum_{i=m}^n \ldots +
+      \sum_{j=m+1}^n \sum_{i=j}^n \ldots \]
+  }.
+
+  Wir setzen  $Y_i := \ind_{A_i}$, $i = m, \ldots, n$.
+
+  \textbf{Behauptung.}
+  \[ \pE( Y_i S_j^2 ) \ge \frac{\eps^2}{r_i^2} \cdot \pP(A_i) \tag{2} \]
+  für $m \le i \le j \le n$.
+
+  \textit{Beweis.}
+  \[ U_{ij} := S_j - S_i = \sum_{k=i+1}^j X_k, \]
+  für $m \le i \le j \le n$. Dann ist $S_j^2 = (S_i + U_{ij})^2$. Also
+  \[ \pE(Y_i S_j^2) = \pE(Y_i S_i^2) + \pE(Y_i U_{ij}) + 2 \cdot \pE(Y_i S_i
+    U_{ij}). \tag{3} \]
+
+  \begin{prgp}[Aufgabe]
+    Die Zufallsgrößen $Y_i S_i$ und $U_{ij}$ sind unabhängig. Hinweis: 2.1.14
+    benutzen.
+  \end{prgp}
+
+  Aus der Unabhängigkeit folgt
+  \[ \pE(Y_i S_i U_{ij}) = \pE(Y_i S_i) \cdot \underbrace{\pE(U_{ij})}_{=0} =
+    0. \]
+
+  In (3) eingesetzt
+  \[ \pE( Y_i S_j^2 ) \ge \pE(Y_i S_i^2) = \int_{A_i} S_i^2 \diffop \pP \ge
+    \frac{\eps^2}{r_i^2} \cdot \pP(A_i), \]
+  da $A_i \subset B_i$. Damit ist (2) bewiesen.
+
+  Aus $Z \ge 0$ und $1 \ge \ind_A = \sum_{i=m}^n Y_i$ folgt
+  \[ Z \ge \sum_{i=m}^n Y_i Z. \]
+  Wegen $r_j^2 - r_{j+1}^2 \ge 0$, (2) und (1) erhalten wir
+  \begin{align*}
+    \pE(Z) &\ge \pE \left( \sum_{i=m}^n Y_i Z \right) \\
+           &= \sum_{i=m}^n \sum_{j=i}^n (r_j^2 - r_{j+1}^2) \pE( Y_i S_j^2 ) \\
+           &\ge \sum_{i=m}^n \sum_{j=i}^n (r_j^2 - r_{j+1}^2) \pE( Y_i S_i^2 ) \\
+           &\ge \sum_{i=m}^n \sum_{j=i}^n (r_j^2 - r_{j+1}^2) \frac{\eps^2}{r_i^2} \cdot \pP(A_i) \\
+           &= \sum_{i=m}^n \frac{\eps^2}{r_i^2} \cdot \pP(A_i) \cdot
+             \underbrace{\sum_{j=i}^n (r_j^2 - r_{j+1}^2)}_{r_i^2}
+             = \eps^2 \pP(A). \qedhere
+  \end{align*}
+\end{proof}
+
+\clearpage
+
+\begin{thm}
+  Für jede stetige Funktion $f : [0,1] \to \real$ gilt:
+  \[ f(x) = \lim_{n \to \infty} \sum_{k=0}^n f \left( \frac{k}{n} \right)
+    \binom{n}{k} x^k (1-x)^{n-k}, \quad x \in [0,1], \]
+  wobei die Konvergenz gleichmäßig ist.
+\end{thm}
+
+\begin{folg}[Weierstrass]
+  Jede stetige Funktion $f : [0,1] \to \real$ lässt sich gleichmäßig durch
+  Polynome approximieren.
+\end{folg}
+
+\begin{proof}[Beweis von 2.3.5]
+  Sei $Y_n^x$ eine Zufallsgröße, sodass $n \cdot Y_n^x$ binomialverteilt ist mit
+  den Parametern $n$ und $x \in [0,1]$. Es gilt
+  \[ \pE(Y_n^x) = x, \qquad D^2(Y_n^x) = \frac{x(1-x)}{n} \]
+  und
+  \[ \pE(f(Y_n^x)) = \sum_{k=0}^n f \left( \frac{k}{n} \right) \binom{n}{k} x^k
+    (1-x)^{n-k}. \]
+  Deshalb brauchen wir nur zu zeigen, dass
+  \[ \lim_{n \to \infty} \pE( f(Y_n^x) - f(x) ) = 0 \]
+  gleichmäßig auf $[0,1]$.
+
+  Aus der Tschebischew-Ungleichung folgt
+  \[ \pP [ |Y_n^x - x| > n^{-1/4} ] \le n^{1/2} \cdot D^2(Y_n^x) =
+    \frac{x(1-x)}{\sqrt{n}} \le \rez{\sqrt{n}}. \tag{1} \]
+  Es sei $K$ eine Konstante mit $|f| \le K$ und bezeichne $A$ das Ereignis auf
+  der linken Seite von (1). Dann ist $\pP(A) \le \rez{\sqrt{n}}$ und
+  \begin{align*}
+    \pE( |f(Y_n^x) - f(x)|) 
+    &= \int_\Omega | f(Y_n^x) - f(x) | \diffop \pP(w) \\
+    &= \int_A \ldots + \int_{\Omega \setminus A} \ldots \\
+    &\ge \frac{2K}{\sqrt{n}} + \sup_{|y-z| \le n^{-1/4}} |f(y) - f(z)|
+      \to 0
+  \end{align*}
+  für $n \to \infty$, da $f$ gleichmäßig stetig\footnote{%
+    $\forall \eps \exists \delta : | f(x) - f(y) | < \eps$, wenn $|x-y| < \delta$.
+  } ist.
+\end{proof}
+
+\begin{defn}
+  Es sei $X$ eine Zufallsgröße. Eine reelle Zahl $m = m(X)$ heißt \emph{Median}
+  (Zentralwert) von $X$, wenn $\pP[X \le m] \ge \rez{2}$ und $\pP[X \ge m] \ge
+  \rez{2}$ gelten\footnote{%
+    Im Allgemeinen ist der Median nicht eindeutig, zum Beispiel $\pP[X=1] =
+    \pP[X=-1] = \rez{2}$. Jede Zahl $m \in [-1,1]$ ist Median.}.
+
+  Eine Zufallsgröße heißt \emph{symmetrisch}, wenn für alle $t \in \real$
+  \[ \pP[X < t] = \pP[x > -t]. \]
+\end{defn}
+
+\begin{rmrk*}
+  $X$ ist genau dann symmetrisch, wenn $X$ und $-X$ die selbe Verteilung
+  besitzen, das heißt $\mu_x(B) = \mu_X(-B)$ für jede beliebige Borelmenge $B
+  \in \borel(\real)$.
+
+  Es gilt $\pP[X < t] = \pP[X > -t]$ für alle $t \in \real$ $\Leftrightarrow$
+  $\mu_X(B) = \mu_X(-B)$.  Wegen des Eindeutigkeitssatzes und $\borel(\real) =
+  \sigma( \{(-\infty,a) : a  \in \real\})$ reicht es zu zeigen, dass
+  \[ \mu_X((-\infty,a)) = \mu_X((-a,\infty)). \]
+
+  Ist $X$ symmetrisch, dann ist 0 ein Median von $X$.
+  \begin{align*}
+    1 &= \pP[X \le 0] + \pP[X \ge 0] = 2 \pP[X \le 0] = 2 \pP[X \ge 0] \\
+      &\Leftrightarrow \pP[X \le 0] \ge \rez{2}, \quad \pP[X \ge 0] \ge \rez{2}
+  \end{align*}
+
+  Die Summe von unabhängigen, symmetrischen Verteilungen ist wieder symmetrisch.
+\end{rmrk*}
+
+\begin{thm}[Ungleichung von Levy]
+  Es seien $X_1, \ldots, X_n$ unabhängige Zufallsgrößen und $S_j = \sum_{i=1}^j
+  X_i$. Für jedes $\eps > 0$ gilt:
+  \begin{enumerate}[(i)]
+  \item $\pP[\max_j (S_j - m(S_j - S_n)) \ge \eps] \le 2 \pP[ S_n \ge \eps]$,
+  \item $\pP[\max_j (S_j - m(S_j - S_n)) \ge \eps] \le 2 \pP[ |S_n| \ge \eps]$,
+  \end{enumerate}
+  wobei $m(Y)$ einen beliebigen Median von $Y$ bezeichnet.
+\end{thm}
+
+\begin{proof}
+  (i): Sei $S_0 := 0$, $\eps > 0$ beliebig. Es bezeichne
+  \[ T(\omega) := \min_j \{ S_j(\omega) - m(S_j - S_n) \ge \eps \}, \]
+  falls eine solche Zahl $j$ existiert, anderenfalls $T(\omega) = n + 1$.
+
+  Dann sind zunächst $\{ T = j \}_{j=1, \ldots, n}$ disjunkt und
+  \begin{align*}
+    \{1 \le T \le n\}
+    &= \{ \max_j (S_j - m(S_j - S_n)) \ge \eps \} \\
+    &= \{ \omega \in \Omega : \exists j \in \{1, \ldots, n\} : S_J - m(S_j - S_n) \ge \eps  \}.
+  \end{align*}
+  Definiere $B_j := \{ m(S_j - S_n) \ge S_j - S_n\}$, $1 \le j \le n$. Dann gilt
+  \begin{itemize}
+  \item $\pP(B_j) \ge \rez{2}$,
+  \item $\{ T = j \} \in \sigma(X_1, \ldots, X_j)$,
+  \item $B_j \in \sigma(X_{j+1}, \ldots, X_n)$.
+  \end{itemize}
+  Nach 2.1.14(i) sind $\{T=j\}$ und $B_j$ unabhängig und
+  \[ \bigcup_{j=1}^n (B_j \cap \{T=j\}) \subseteq \{S_n \ge \eps\}. \]
+  
+  Es existiert $j \in \{1, \ldots, n\}$, so dass $S_j(\omega) - m(S_j - S_n) \ge
+  \eps$ und $S_i(\omega) - m(S_i - S_n) < \eps$ für alle $i < j$ und $m(S_j -
+  S_n) \ge S_j - S_n$, also gilt
+  \[ S_n \ge S_j - m(S_j - S_n) \ge \eps. \]
+
+  Es folgt mit der Disjunktheit der $\{T=j\}$ (d):
+  \begin{align*}
+    \pP[S_n \ge \eps]
+    &\ge \pP\left[ \bigcup_{i=1}^n B_j \cap \{T=j\} \right] \\
+    &\overset{\text{(d)}}{=}
+      \sum_{j=1}^n \pP[B_j \cap \{T=j\}] \\
+    &= \sum_{j=1}^n \pP(B_j) \cdot \pP(\{T=j\}) \\
+    &= \rez{2} \sum_{j=1}^n \pP(\{T=j\})\\
+    &= \rez{2} \pP \left[ \bigcup_{j=1}^n \{T=j\} \right] = \rez{2} \pP [1 \le T \le n].
+  \end{align*}
+
+  (ii). Eventuell Übungsaufgabe. Hinweis: Schreibt man in (i) $-X_i$ anstelle
+  von $X_j $ und benutzt man $m(-Y) = -m(Y)$, folgt (ii).
+\end{proof}
+
+\begin{folg}
+  Es seien $X_1, \ldots, X_n$ unabhängige, symmetrische Zufallsgrößen und $S_j =
+  \sum_{i=1}^j X_i$. Für jedes $\eps > 0$ gilt dann:
+  \begin{enumerate}[(i)]
+  \item $\pP[\max_j S_j \ge \eps] \le 2 \pP[S_n \ge \eps]$,
+  \item $\pP[\max_j |S_j| \ge \eps] \le 2 \pP[|S_n| \ge \eps]$.
+  \end{enumerate}
+\end{folg}
+
+\begin{proof}
+  Das folgt aus 2.3.8 und der Symmetrie der $X_j$ bzw. $S_j$.
+\end{proof}
+
+\begin{thm}[Jensensche Ungleichung]
+  Es seien $I \subseteq \real$ ein Intervall $f: I \to \real$ eine konvexe
+  Funktion und $X: \Omega \to I$ eine integrierbare Zufallsgröße\footnotemark.
+  Dann gilt 
+  \[ \pE( f(X)^- ) < \infty \quad \text{und} \quad
+    f(\pE(X)) \le \pE(f(X)) := \pE(f(X)^+) - \pE(f(X)^-).  \]
+  Ist $f$ im Punkt $\pE(X)$ streng konvex,so gilt Gleichheit genau dann, wenn
+  $X$ fast sicher konstant ist.
+\end{thm}
+\footnotetext{%
+$X$ besitzt einen Erwartungswert, wenn $\min \{\pE X^+, \pE X^ < \infty\}$,
+bzw. $X$ besitzt einen endlichen Erwartungswert, wenn $\max\{\pE X^+, \pE X^-\}
+< \infty$.}
+
+\begin{proof}
+  \begin{enumerate}[i)]
+  \item Sei $h(t) := f(\pE(X)) + a \cdot (t - \pE(X))$ eine Gerade\footnote{%
+      Tangente an der Funktion $f$}
+    durch den Punkt $(\pE X, f(\pE X))$ mit $h(t) \le f(t)$, $t \in I$.
+
+    Da $h(X)$ integrierbar ist (weil $X$ integrierbar) und wegen $f < 0$
+    $\Rightarrow$ $h < 0$ ($f(x)$) erhalten wir
+    \[ \pE( f(X)^-) \le \pE(h(X)^-) < \infty. \]
+
+    Somit ist $\pE(f(X))$ definiert und
+  \item $\pE(f(X)) \ge \pE(h(X)) = f(\pE(X))$,
+  \item $f(\pE(X)) = \pE(f(X))$ $\Leftrightarrow$ $X = \pE(X)$ fast sicher
+    (bezogen auf $\pP$).
+  \end{enumerate}
+  Angenommen $X \ne \pE(X)$, dann ist wegen der strikten Konvexität
+  \[ f(X) - h(X) > 0 \qRq \text{Widerspruch!} \]
+  Also gilt
+  \[ \pE(f(X)) = f(\pE(X)) = \pE(h(x)). \qedhere \]
+\end{proof}
+
+\begin{defn}
+  Sei $X$ eine Zufallsvariable mit Werten in $S = \{s_1, \ldots, s_n\}$ und
+  $p(s) = \pP[X=s]$. Unter der \emph{Entropie} von $X$ versteht man die Zahl
+  \[ H(X) = \pE(-\log_2(p(X))) = - \sum_{s \in S} p(s) \log_2 p(s), \]
+  wobei $0 \cdot \log_2 0 = 0$.
+\end{defn}

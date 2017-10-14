@@ -1,0 +1,285 @@
+\section{Unabhängige Zufallsvariablen}
+\begin{defn}
+  Zwei Zufallsvariablen $X_1 : \Omega \to S_1$, $X_2: \Omega \to S_2$ heißen
+  \emph{unabhängig}, wenn die Ereignisse $[X_1 \in B_1]$ und $[X_2 \in B_2]$ für
+  beliebige $B_i \in \borel_i$ ($i=1,2$) unabhängig sind, das heißt
+  \[ \pP[ X_1 \in B_1, X_2 \in B_2] = \pP[ X_1 \in B_1] \cdot \pP[X_2 \in
+    B_2]. \]
+  Allgemeiner: Eine Familie $\{X_i\}$ von Zufallsvariablen $X_i : \Omega \to
+  S_i$ heißt unabhängig, wenn für jede nichtleere endliche Teilmenge $\{i_1,
+  \ldots, i_n\}$ von $I$ und beliebige $B_{i_1} \in \borel_{i_1}, \ldots,
+  B_{i_n} \in \borel_{i_n}$ die Ereignisse $[X_{ij} \in B_{ij}]$, $j  = 1,
+  \ldots, n$ unabhängig sind.
+  \[ \pP[ X_{i_1} \in B_{i_1}, \ldots, X_{i_n} \in B_{i_n}] = \pP[ X_{i_1} \in B_{i_1}]
+    \cdots \pP[X_{i_n} \in B_{i_n}]. \]
+\end{defn}
+
+\begin{thm}
+  Es seien $X_1, \ldots, X_m$ Zufallsgrößen. Die folgenden Aussagen sind
+  äquivalent:
+  \begin{enumerate}[(i)]
+  \item $X_1, \ldots, X_m$ sind unabhängig.
+  \item Ihre gemeinsame Verteilung $\mu_Y = \mu_{(X_1, \ldots, X_n)}$ ist das
+    Produkt ihrer einzelnen Verteilungen $\mu_{X_i}$:
+    \[ \mu_Y = \mu_{X_1} \times \cdots \times \mu_{X_n}. \]
+  \item $\pP[X_1 < t_1, \ldots, X_n < t_n] = \pP[X < t_1] \cdots \pP[X_n < t_n]$
+    für beliebige $t_i \in \real$, $i = 1, \ldots, n$.
+  \end{enumerate}
+  Die Äquivalenz von (i) und (ii) gilt auch für Zufallsvariablen.
+\end{thm}
+
+\begin{proof}
+  Aus MINT ist bekannt, dass die Beziehungen
+  \begin{align*}
+    \mu_Y &= \mu_{X_1} \times \cdots \times \mu_{X_n},
+    \tag{1} \\
+    \mu_Y( B_1 \times \cdots \times B_n)
+          &= \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n),
+    \tag{2} \\
+    \intertext{für beliebige $B_j \in \borel(\real)$,}
+    \mu_Y( B_1 \times \cdots \times B_n)
+          &= \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n),
+    \tag{3} \\
+    \intertext{für beliebige $B_j$ der Form $B_j = (-\infty, t_j)$}
+  \end{align*}
+  äquivalent sind.
+  
+  Da $\pP[ (X_1, \ldots, X_n) \in B_1 \times \cdots \times B_n] = \pP[X_1 \in
+  B_1, \ldots, X_n \in B_n]$ und
+  \[ \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n) = \pP[X_1 \in B_1] \cdots \pP[X_n \in
+    B_n], \]
+  ist es leicht zu sehen, dass (2) $\sim$ (i), (1) $\sim$ (ii) und (3) $\sim$
+  (iii).
+\end{proof}
+
+\begin{thm}
+  Es seien $X_1, \ldots, X_n$ unabhängige Zufallsgrößen und $g: \real^k \to
+  \real^l$, $1 \le k \le n$ eine Borel-messbare Funktion. Dann sind die
+  Zufallsvektoren $g(X_1, \ldots, X_k)$, $X_{k+1}, \ldots, X_n$ unabhängig.
+\end{thm}
+
+\begin{proof}
+  Es seien $B \subset \real^k$, $B_{k+1} \subset \real, \ldots, B_n \subset
+  \real$ beliebige Borel-Mengen.
+  \begin{align*}
+    &\pP [ g(X_1, \ldots, X_k) \in B, X_{k+1} \in B_{k+1}, \ldots, X_n \in B_n ] \\
+    =\, &\pP [ (X_1, \ldots, X_k) \in g^{-1}(B), X_{k+1} \in B_{k+1}, \ldots, X_n \in B_n ] \\
+    =\, &\pP [ (X_1, \ldots, X_n) \in g^{-1}(B) \times B_{k+1} \times \cdots \times B_n ] \\
+    =\, &\mu_{(X_1, \ldots, X_n)} [ g^{-1}(B) \times B_{k+1} \times \cdots \times B_n ] \\
+    \overset{(1.5.2)}{=}\, &\mu_{X_1} \times \cdots \times \mu_{X_n} [ g^{-1}(B) \times B_{k+1} \times \cdots \times B_n ] \\
+    =\, &\mu_{X_1} \times \cdots \times \mu_{X_k} (g^{-1}(B)) \cdot \mu_{X_{k+1}}(B_{k+1}) \cdot \mu_{X_n}(B_n) \\
+    \overset{(1.5.2)}{=}\, &\mu_{(X_1, \ldots, X_n)} (g^{-1}(B)) \cdot \mu_{X_{k+1}}(B_{k+1}) \cdot \mu_{X_n}(B_n) \\
+    =\, &\pP [ (X_1, \ldots, X_k) \in g^{-1}(B)] \cdot \pP[X_{k+1} \in B_{k+1}] \cdots \pP[X_n \in B_n] \\
+    =\, &\pP [ g(X_1, \ldots, X_k) \in B] \cdot \pP[X_{k+1} \in B_{k+1}] \cdots \pP[X_n \in B_n]. \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{folg}
+  Sind $\{ X, Y, Z \}$ unabhängig, dann sind auch $\{ X+Y, Z\}$, $\{X \cdot Y, Z
+  \}$ unabhängig.
+\end{folg}
+
+\begin{rmrk}
+  In der Analysis werden die folgenden Resultate bewiesen: Es seien $\mu$ und
+  $\nu$ $\pW$-Maße (oder beliebige endliche Maße) auf $\real^n$. Durch
+  \[ \mu \ast \nu(B) = \int_{\real^n} \mu( B-y ) \diffop \nu(y), \quad B \in
+    \borel(\real^n,) \]
+  wobei $B-y := \{ b-y : b \in B \}$, wird ein $\pW$-Maß (endliches Maß) $\mu
+  \ast \nu$ definiert. Es wird als \emph{Faltung} von $\mu$ und $\nu$
+  bezeichnet.
+
+  \textbf{Beispiel.} Seien $\mu = \delta_x$, $\nu = \delta_y$, $x,y \in \real^n$, $\delta_x \ast
+  \delta_y = \delta_{x+y}$.
+
+  Es gilt
+  \begin{enumerate}[(i)]
+  \item $\mu \ast \nu = \nu \ast \mu$.
+  \item $\mu \ast (\nu_1 + \nu_2) = (\mu \ast \nu_1) + (\mu \ast \nu_2)$.
+  \item Wenn $\mu$ eine Dichte $p$ besitzt, dann hat auch $\mu \ast \nu$ eine
+    Dichte $h$ und
+    \[ h(x) = \int_{\real^n} p(x-y) \diffop \nu(y), \quad x \in \real^n. \]
+  \item Wenn auch $\nu$ eine Dichte $q$ besitzt, dann gilt:
+    \[ h(x) = \int_{\real^n} p(x-y) \cdot q(y) \diffop y. \]
+    Dies wird als \emph{Faltung von $p$ und $q$} bezeichnet. Ist $p$ oder $q$
+    stetig, so ist auch $h$ stetig.
+  \item Es gilt
+    \[ \int_{\real^n} f(t) \diffop (\mu \ast \nu)(t) = \int_{\real^n}
+      \int_{\real^n} f(t+s) \diffop \mu(t) \diffop \nu(s), \quad f \in
+      \intf^1(\mu \ast \nu). \]
+  \end{enumerate}
+\end{rmrk}
+
+\begin{thm}
+  Sind $X$ und $Y$ unabhängige $d$-dimensionale Zufallsgrößen, so gilt
+  \[ \mu_{X + Y} = \mu_X \ast \mu_Y. \]
+\end{thm}
+
+\begin{proof}
+  Seien $Z := (X,Y)$, $\varphi(X,Y) := x+y$, $x,y \in \real^d$. Für jede
+  Borel-Menge $B \subset \real^d$ gilt:
+  \begin{align*}
+    \mu_{X+Y}(B)
+    &= \pP[X+Y \in B] = \pP[\varphi(Z) \in B]  \\
+    &= \pP[ Z \in \varphi^{-1}(B) ] = \mu_Z( \varphi^{-1}(B) ) \\
+    &= \int_{\real^d \times \real^d} \ind_{\varphi^{-1}(B)}(x,y) \diffop \mu_Z(x,y) \\
+    &= \int_{\real^d \times \real^d} \ind_{B}(x+y) \diffop \mu_Z(x,y) \\
+    &= \int_{\real^d} \int_{\real^d} \ind_{B}(x+y) \diffop \mu_X(x) \diffop \mu_Y(y) \\
+    &= \int_{\real^d} \int_{\real^d} \ind_{B - y}(x) \diffop \mu_X(x) \diffop \mu_Y(y) \\
+    &= \int_{\real^d} \mu_X(B - y) \diffop \mu_Y(y) \\
+    &= (\mu_X \ast \mu_Y)(B). \qedhere
+  \end{align*}
+\end{proof}
+
+Alternative Definition der Faltung: Bildmaß des Produktmaßes $\mu \times \nu$
+bezüglich $\varphi$.
+
+\begin{rmrk}
+  Die Umkehrung gilt nicht.
+\end{rmrk}
+
+\begin{exmp}
+  Es seien $X$ und $Y$ unabhängige und gammaverteilte Zufallsgrößen mit den
+  Dichtefunktionen
+  \begin{align*}
+    p_X(x) &= \frac{\lambda^a \cdot x^{a-1}}{\Gamma(a)} \cdot e^{-\lambda x} &
+    p_Y(x) &= \frac{\lambda^b \cdot x^{b-1}}{\Gamma(b)} \cdot e^{-\lambda x},
+  \end{align*}
+  wobei $\lambda, a, b, x > 0$.
+
+  Gesucht ist die Dichte $p_{X+Y}$.
+  \begin{align*}
+    p_{X+Y}(x)
+    &= \int_\real p_X(x-y) p_Y(y) \diffop y \\
+    &= \frac{\lambda^{a+b}}{\Gamma(a) \cdot \Gamma(b)} \cdot e^{-\lambda x} \cdot \int_0^x (x-y)^{a-1} \cdot y^{b-1} \diffop y \\
+    \intertext{Substitution: $y = t \cdot x$, $\diffop y = x \cdot \diffop t$.}
+    &= \frac{\lambda^{a+b}}{\Gamma(a) \cdot \Gamma(b)} \cdot e^{-\lambda x} \cdot \int_0^x (1-t)^{a-1} \cdot t^{b-1} \diffop t.
+  \end{align*}
+  Also ist $p_{X+Y} = c \cdot p_{a+b,\lambda}$, wobei $c$ eine Konstante ist.
+  Für $c=1$ ist $X+Y$ die Gammaverteilung mit den Parametern $a+b$ und
+  $\lambda$.
+
+  \textbf{Folgerung.} Wir definieren die \emph{Beta-Funktion} $B$
+  \[ B(a,b) := \int_0^1 (1-t)^{a-1} \cdot t^{b-1} \diffop t = \frac{\Gamma(a)
+      \cdot \Gamma(b)}{\Gamma(a+b)}, \quad a,b > 0. \]
+\end{exmp}
+
+\begin{prgp}[Die $\chi^2$-Verteilung]
+  Seien $X_1, \ldots, X_n$ unabhängige, $N(0,1)$-verteilte Zufallsgrößen. Die
+  Verteilung der Zufallsgröße $Y_n := X_1^2 + \ldots + X_n^2$ heißt
+  \emph{$\chi_n^2$-Verteilung mit dem Freiheitsgrad $n$}. Die Verteilung von
+  $\sqrt{Y_n}$ heißt \emph{$\chi_n$-Verteilung mit dem Freiheitsgrad $n$}.
+
+  \textbf{Behauptung.} Für die Dichte $h_n$ von $Y_n$ gilt\footnote{%
+    Es ergibt sich eine Gammaverteilung mit $\lambda = \rez{2}$, $a = \frac{n}{2}$.
+  }:
+  \[ h_n(x) = \frac{x^{n/2 - 1} \cdot e^{-x/2}}{\lambda^{n/2} \cdot \Gamma( n/2
+      )}, \quad x > 0. \]
+
+  \begin{proof}
+    Induktion bezüglich $n$. Sei $n = 1$, zu zeigen:
+    \[ h_1(x) = \frac{x^{-1/2}}{\sqrt{2 \pi}} \cdot e^{-x/2}, \quad x > 0. \]
+    Dies ist einfach zu erkennen (siehe Aufgabe 1.4.4).
+
+    Induktionsschritt:
+    \begin{align*}
+      h_{n+1}
+      &= \int_\real h_n(x-y) h_1(y) \diffop y \\
+      &= \rez{2^{n/2} \cdot \Gamma( n/2 ) \cdot \sqrt{2 \pi}} \cdot
+        \int_0^x (x-y)^{n/2-1} \cdot e^{-(x-y)/2} \cdot e^{-x/2} \cdot y^{-1/2} \diffop y \\
+      \intertext{Substitution: $y = t \cdot x$, $\diffop y = x \diffop t$}
+      &= \frac{x^{(n+1)/2-1}}{\sqrt{2\pi} \cdot 2^{n/2} \cdot \Gamma(n/2)} \cdot e^{-x/2} \cdot
+        \underbrace{ \int_0^1 (1-t)^{-1/2} \cdot t^{n/2-1} \diffop t}_{=B(1/2, n/2)} \\
+      \intertext{Es gilt $B(1/2, n/2) = \frac{\Gamma(1/2) \cdot
+      \Gamma(n/2)}{\Gamma((n+1)/2)}$, wobei $\Gamma(1/2) = \sqrt{2}$}
+      &= \frac{x^{(n+1)/2-1}}{2^{(n+1)/2} \cdot \Gamma((n+1)/2)} \cdot e^{-x/2}, \quad x > 0. \qedhere
+    \end{align*}
+  \end{proof}
+\end{prgp}
+
+\begin{rmrk*}
+  \begin{enumerate}[a)]
+  \item $h_2(x) = \rez{2} \cdot e^{-x/2}$ ist die Exponentialverteilung.
+  \item Die Dichte $g_n$ von $\sqrt{Y_n}$:
+    \[ g_n(x) = \frac{x^{n-1}}{2^{n/2-1} \cdot \Gamma(n/2)} \cdot e^{-x^2/2},
+      \quad x > 0. \]
+    Beweisidee: Die Verteilungsfunktion
+    \[ F(x) = \pP( \sqrt{Y_n} < x )) = \pP(Y_n < x^2) = G(x^2) \]
+    ableiten nach $x$, ... ($G$ ist die Verteilungsfunktion $Y_n$).
+  \end{enumerate}
+\end{rmrk*}
+
+Seien $X,Y$ unabhängig mit den Dichten $p$ bzw. $q$, dann besitzt $X+Y$ die
+Dichte
+\[ (p \ast q)(x) = \int_{\real^n} p(x-y) q(y) \diffop y. \]
+Das folgt aus 1.5.6 und 1.5.5.iv.
+
+\begin{rmrk*}
+  Wenn $X$ \emph{oder} $Y$ eine Dichte besitzt, dann auch $X+Y$ (siehe
+  1.5.5.iii).
+\end{rmrk*}
+
+\begin{prgp}
+  Seien $X_1, \ldots, X_n$ Zufallsgrößen, $\mu$ ihre gemeinsame Verteilung (auf
+  $\real^n$) und $h: \real^n \to \real$ Borel-messbar, $X := (X_1, \ldots,
+  X_n)$.
+
+  Die Verteilungsfunktion der Zufallsgröße $Z := h(X_1, \ldots, X_n)$ ist
+  \[ \pP[ Z < t ] = \mu( \{ x : h(x) < t \} ) = \int_{h(x)<t} 1 \diffop \mu(x).
+    \tag{$\ast$} \]
+
+  \textbf{Spezialfall.} $Z = X \cdot Y$; $X$ und $Y$ seien unabhängig mit Dichte
+  $f$ bzw. $g$.
+
+  \textbf{Aufgabe.} $X \cdot Y$ besitzt eine Dichte $p$ mit
+  \[ p(x) = \int_{-\infty}^\infty \rez{|y|} \cdot g(y) \cdot f(x/y) \diffop y. \]
+  Hinweise: Setze ($\ast$) fort.
+
+  Analog: Dichte von $X/Y$, falls $Y \ne 0$ fast sicher:
+  \[ p(x) = \int_{-\infty}^\infty |y| \cdot g(y) \cdot f(x \cdot y) \diffop
+    y. \]
+\end{prgp}
+
+\begin{thm}
+  Für eine beliebige Familie $\{ \mu_i \}_{i \in I}$ von Verteilungen auf
+  $\real$ existiert ein $\pW$-Raum $(\Omega, \mA, \pP)$ und darauf definierte
+  Zufallsgrößen $X_i$, die unabhängig sind und die gegebenen Verteilungen
+  $\mu_i$ besitzen.
+\end{thm}
+
+\begin{proof}
+  Für endliches $I = \{1, \ldots, n\}$. Sei $\Omega := \real^n$, $\mA :=
+  \borel(\real^n)$, $\pP := \mu_1 \times \cdots \times \mu_n$, $X_i(X_1, \ldots,
+  X_n) := X_i$. Dann ist $\mu_i$ die Verteilung von $X_i$ und $X_1, \ldots, X_n$
+  sind unabhängig.
+
+  Der allgemeine Fall wird genauso bewiesen, wir haben jedoch beliebige Produkte
+  von Maßen nicht behandelt.
+\end{proof}
+
+\begin{exmp}
+  Es seien $X_1, X_2, \ldots$ unabhängige Zufallsgrößen mit $\pP[X=0] = \pP[X=1]
+  = \rez{2}$ und
+  \[ S_r = \sum_{n=1}^\infty r^n \cdot X_n, \quad 0 < r < 1 \]
+  Der Wertebereich ist damit $\left[ 0, \frac{r}{1-r} \right]$.
+
+  \begin{enumerate}[(i)]
+  \item $S_{1/2}$ ist auf dem Intervall $[0,1]$ gleichmäßig verteilt.
+  \item Für $r = 2^{-1/k}$, $k = 1, \ldots$ ist $S_r$ absolut stetig.
+  \item Für $0 < r < \rez{2}$ ist $S_r$ \emph{stetig} und \emph{singulär}.
+  \end{enumerate}
+  Lösung für (iii): Wir zeigen, dass der Wertebereich $W(S_r)$ von $S_r$ das
+  Lebesgue-Maß 0 hat. $\lambda^*$ ist das äußere Lebesgue-Maß.
+  \[ W(S_r) = W(0 + r \cdot S_r) \cup W(r + r \cdot S_r), \]
+  also
+  \[ S_r = \underbrace{r \cdot X_1}_{0 \text{ oder } r} +
+    \underbrace{r \cdot \sum_{n=1}^\infty r^n \cdot X_{n+1}}_{\text{verteilt wie }
+      S_r} \]
+  Dieser Bereich hat das Maß
+  \begin{align*}
+    \lambda^*(W(S_r))
+    &\le \lambda^*(W(0 + r \cdot S_r)) + \lambda^*(W(r + r \cdot S_r)) \\
+    &= r \cdot \lambda^*(W(S_r)) + r \cdot \lambda^*(W(S_r)) \\
+    &= \underbrace{2 r}_{<1} \cdot \lambda^*(W(S_r)).
+  \end{align*}
+  Also ist $\lambda^*(W(S_r)) = 0$.
+\end{exmp}

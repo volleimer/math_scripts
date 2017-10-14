@@ -1,0 +1,73 @@
+\section{Der Zentrale Grenzwertsatz}
+\begin{deno*}
+  $\Phi$ bezeichnet im Weiteren die Verteilungsfunktion der standartisierten
+  Normalverteilung, das heißt
+  \[ \Phi(x) = \rez{\sqrt{2 \pi}} \int_{- \infty}^x e^{-y^2/2} \diffop y, \quad
+    x \in \real. \]
+
+  Sind $X_1, \ldots, X_n \in L^2(\pP)$ i.i.d. Zufallsgrößen mit $D(X_j) =:
+  \sigma > 0$, so schreiben wir
+  \[ S_n := \rez{\sigma \sqrt{n}} \sum_{j=1}^n (X_j - \pE X_j). \]
+  Dann gilt: $\pE S_n = 0$, $D^2(S_n) = 1$.\footnote{%
+    Es gilt
+    \[ D^2 \left( \sum_{j=1}^n \frac{X_j - \pE X_j}{\sigma \sqrt{n}}  \right)
+      = \sum_{j=1}^n D^2 \left( \frac{X_j - \pE X_j}{\sigma \sqrt{n}} \right)
+      = \frac{n}{\sigma^2 n} D^2( X_j - \pE X_j) = 1. \]
+  }
+\end{deno*}
+
+\begin{lem}
+  Es sei $(r_n)$ eine Folge reeller Zahlen mit $\lim_{n \to \infty} r_n = 0$.
+  Dann gilt
+  \[ \lim_{n \to \infty} \left( 1 + \frac{r+r_n}{n} \right)^n = e^r, \quad r
+    \in \real. \]
+\end{lem}
+
+\begin{proof}
+  Aufgabe. Hinweis: Mittelwertsatz der Differentialrechnung.
+\end{proof}
+
+\begin{thm}[Zentraler Grenzwertsatz nach Moavre-Laplace]
+  Für jede unabhängige Folge $(X_n) \subseteq L^2(\pP)$ von i.i.d. Zufallsgrößen
+  mit Streuung $\sigma^2 > 0$ gilt:
+  \[ \lim_{n \to \infty} \pP( S_n < x ) = \Phi(x), \quad x \in \real. \]
+\end{thm}
+Das heißt
+\[ \rez{\sigma \sqrt{n}} \sum_{i = 1}^n (X_i - \pE X_i) \xrightarrow{n \to
+    \infty} N(0,1) \text{ in Verteilung.} \]
+
+\begin{proof}
+  Wir können annehmen, dass $\pE X_j = 0$ (Idee: $X_n \xrightarrow{\text{Vert.}}
+  X$ $\Leftrightarrow$ $f_{X_n}(t) \to f_X(t)$ für alle $t \in \real$).
+  \begin{align*}
+    f_{S_n}(t)
+    &\overset{\phantom{2.13.3}}{=} f_{\sum_{j=1}^n X_j / \sigma \sqrt{n}} (t)
+    & \text{$X, Y$ unabhängig $\Rightarrow$ $f_{X+Y} = f_X f_Y$} \\
+    &\overset{2.13.3}{=} (f_{X_j / \sigma \sqrt{n}} (t))^n
+    & \text{$f_{aX + b}(t) = e^{itb} \cdot f_X(at)$} \\
+    &\overset{2.13.4}{=} \left(f_{X_j} \left( \frac{t}{\sigma \sqrt{n}} \right) \right)^n.
+  \end{align*}
+  Nach 2.13.8 ist somit zu zeigen, dass
+  \[ \lim_{n \to \infty} \left(f_{X_j} \left( \frac{t}{\sigma \sqrt{n}} \right)
+    \right)^n = e^{t^2/2}, \quad t \in \real. \]
+  Aus $X_j \in L^2(\pP)$ und 2.13.7 (Taylor) folgt:
+  \[ f_{X_j}(t) = 1 - \sigma^2 \frac{t^2}{2} + R_2(t), \tag{1} \]
+  wobei $R_2$ eine stetige Funktion ist mit
+  \[ \lim_{t \to 0} \frac{R_2(t)}{t^2} = 0. \]
+
+  Es gilt
+  \[ \lim_{n \to \infty} n R_2 \left( \frac{t}{\sigma \sqrt{n}} \right) =
+    \frac{t^2}{\sigma^2} \lim_{n \to \infty} \frac{R_2(t / \sigma \sqrt{n})}{(t
+      / \sigma \sqrt{n})^2} = 0. \tag{2} \]
+
+  Aus (1), (2) und Lemma 2.16.1 folgt
+  \[ \lim_{n \to \infty}
+    \left(f_{X_j} \left( \frac{t}{\sigma \sqrt{n}} \right) \right)^n
+    \overset{(1)}{=} \lim_{n \to \infty}
+    \left(  1 - \rez{2} \frac{t^2}{n} + \frac{n R_2( t / \sigma \sqrt{n})}{n}
+    \right)^n
+    \overset{2.16.1}{=} e^{-t^2/2}. \qedhere
+  \]
+\end{proof}
+
+\textbf{Verallgemeinerungen:} Lindeberg, Ljapunov, Feller.

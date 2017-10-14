@@ -1,0 +1,147 @@
+\section{Martingale}
+\begin{defn}
+  Sei $I \ne \emptyset$ eine Menge (Indexmenge) versehen mit einer
+  Ordnungsrelation\footnote{%
+    Ordnungsrelationen sind reflexiv, antisymmetrisch und transitiv.}
+  ``$\le$''.
+
+  Eine Familie $(\mF_t)_{t \in I}$ von Unter-$\sigma$-Algebren von $\mA$ heißt
+  eine \emph{Filtration} (Filterung), wenn $\mF_s \subset \mF_t$ für alle $s$,
+  $t$ mit $s \le t$,
+  \[ \mF_\infty := \sigma \left( \bigcup_{t \in I} \mF_t \right). \]
+
+  \begin{rmrk*}
+    Ist $(\mF_j)_{j \in \nat_0}$ eine Filtration, sodass $F_i \ne F_j$ für alle $i
+    \ne j$, so ist $\bigcup_{j \in \nat_0} \mF_j$ \emph{keine} $\sigma$-Algebra.
+    Der Beweis dieser Tatsache ist nicht ganz einfach.
+  \end{rmrk*}
+
+  $(\Omega, \mA, (\mF_t)_{t \in I}, \pP)$ heißt \emph{gefilterter $\pW$-Raum}.
+
+  Eine Familie $(X_t)_{t \in I}$ von Zufallsvektoren heißt an die Filterung
+  \emph{angepasst} oder \emph{adaptiert}, wenn $X_t$ für alle $t$ messbar ist
+  bezüglich $\mF_t$.
+\end{defn}
+
+Im Weiteren ist hauptsächlich $I = \nat_0$ mit der üblichen Ordnung.
+
+\textbf{Interpretation.}
+Die Elemente von $I$ sind Zeitpunkte und die $\sigma$-Algebren $\mF_t$ sind
+verfügbare Information. $A \in \mF_t$ bedeutet in diesem Zusammenhang, dass zum
+Zeitpunkt $t$ die Frage ``Ist $\omega \in A$'' eindeutig mit ``ja'' oder
+``nein'' beantwortet werden kann.
+
+Filterung aufsteigend: Eine einmal erlangte Information geht nicht wieder
+verloren.
+
+\begin{exmp}
+  \begin{enumerate}[a)]
+  \item Sei $(X_t)_{t \in I}$ eine Familie von Zufallsvektoren
+    (\emph{stochastischer Prozess}), so wird
+    \[ \mF_t := \sigma( X_s : s \le t ) \]
+    als \emph{natürliche Filterung} des Prozesses bezeichnet.
+  \item Durch $\mF_t := \mA$, $t \in I$ wird die Filterung der
+    \emph{vollständigen Information} definiert.
+  \end{enumerate}
+\end{exmp}
+
+\begin{defn}
+  Sei $(\Omega, \mA, (\mF_t)_{t \in I}, \pP)$ ein gefilterter $\pW$-Raum. Eine
+  adaptierte Familie $(X_t)_{t \in I}$ von integrierbaren Zufallsvektoren heißt
+  \emph{Martingal}, wenn $\pE(X_t | \mF_t) = X_s$ für $s,t \in I$ und $s \le t$.
+
+  $\ge$: \emph{Submartingal} \\
+  $\le$: \emph{Supermartingal}
+\end{defn}
+
+\begin{rmrk}
+  Aus $\pE \pE( X_t | \mF_s ) = \pE X_t$ folgt, dass für Submartingale
+  (Supermartingale) $\pE X_s$ monoton wächst (fällt); für Martingale ist $\pE
+  X_s$ konstant.
+\end{rmrk}
+
+\begin{prgp}[Aufgabe] Mit den obigen Bezeichnungen und $I = \nat_0$ zeigen Sie:
+  $(X_t)_{t \in \nat_0}$ ist genau dann ein Martingal, wenn $\pE(X_{n+1} |
+  \mF_n) = X_n$, $n \in \nat_0$.
+
+  Hinweis: (2.10.7)(ii)
+\end{prgp}
+
+\begin{exmp}
+  \begin{enumerate}[a)]
+  \item Sei $X_n = a_n$, wobei $\{ a_n \}$ eine monoton wachsende (fallende)
+    Folge reeller Zahlen ist. Dann ist $(X_n)_{n \in \nat_0}$ ein Submartingal
+    (Supermartingal).
+  \item Sei $(X_n)_{n \in \nat}$ eine Folge unabhängiger, identisch verteilter,
+    integrierbarer Zufallsvektoren und
+    \[ S_n := X_1 + \ldots + X_n \]
+    eine natürliche Filtration. Dann sind $X_{n+1}$ und $S_1, \ldots, S_n$
+    unabhängig und:
+    \begin{align*}
+      \pE( S_{n+1} | S_1, \ldots, S_n)
+      &= \pE( S_n + X_{n+1} | S_1, \ldots, S_n ) \\
+      &= \pE( S_n | S_1, \ldots, S_n ) + \pE( X_{n+1} | S_1, \ldots, S_n ) \\
+      &= S_n + \pE( X_{n+1} )
+    \end{align*}
+    Also ist $\{S_n\}$ ein Martingal (Sub-, Supermartingal), wenn $\pE
+    X_n = 0$ ($\ge 0$, $\le 0$).
+
+    Interpretation: \\
+    $X_n$: Gewinn im $n$-ten Spiel \\
+    $S_n$: Gesamtgewinn nach $n$ Spielen \\
+    $\mF_n$: Information über die ersten $n$ Spiele \\
+    $\pE(S_m | S_n)$, $m > n$: Voraussage über künftigen Gewinn \\
+    $\pE(X_n) = 0$: Faires Spiel
+
+  \item Sei $(X_n)$ eine Folge von i.i.d. Zufallsgrößen, $X_n \ge 0$ mit
+    $\pE(X_n) = 1$. $P_n := X_1 \cdot \ldots \cdot X_n$ $\Rightarrow$ $\{P_n\}$
+    ist ein Martingal bezüglich der natürlichen Filtration.
+
+    $P_n$ ist integrierbar und
+    \begin{align*}
+      \pE( P_{n+1} | P_1, \ldots, P_n)
+      &= \pE( X_{n+1} P_n | P_1, \ldots, P_n) = P_n \cdot \pE(X_{n+1} | P_1, \ldots, P_n) \\
+      &= P_n \cdot \pE(X_{n+1}) = P_n.
+    \end{align*}
+    Allgemeiner: $\pE(X_n)$ beliebig $\Rightarrow$ Sub- oder Supermartingal.
+  \item Betrachte Population aus (2.11.8)
+    \[ \pE(X_{n+1} | X_1, \ldots, X_n ) = \mu X_n \]
+    Dann ist $(\mu^{-n} X_n)$ ein Martingal bezüglich der natürlichen
+    Filtration.
+    \[ \pE( \mu^{-(n+1)} X_{n+1} | X_1, \ldots, X_n ) = \mu^{-n} X_n. \]
+  \item $(\mF_n)$ sei eine Filtration und $X$ sei eine integrierbare
+    Zufallsgröße. Dann ist $\mM_n := \pE( X | \mF_n )$ ein Martingal, da
+    \begin{align*}
+      \pE(\mM_{n+1} | \mF_n) = \pE_{\mF_n} \pE_{\mF_{n+1}} X = \pE_{\mF_n} X = \mM_n.
+    \end{align*}
+    Adaptierbarkeit und Interpretierbarkeit folgen aus der Definition der
+    bedingten Erwartung.
+  \end{enumerate}
+\end{exmp}
+
+\begin{prgp}[Aufgabe]
+  \begin{enumerate}[a)]
+  \item Wald'sche Martingale. Sei $(Y_n)$ eine i.i.d. Folge, $S_n := Y_1 +
+    \ldots + Y_n$. Gilt für ein $t \in \real \setminus \{ 0 \}$
+    \[ \mM(t) := \pE e^{t Y_1} < \infty, \]
+    dann bildet $X_n := \rez{\mM_n(t)} e^{t S_n}$ ein Martingal.
+  \item $Y_n$ und $S_n$ wie oben; $\pP(Y_n = 1) = \pP(Y_n = -1) = \rez{2}$, dann
+    ist $X_n = S_n^2 - n$ ein Martingal.
+  \end{enumerate}
+\end{prgp}
+
+\begin{prgp}[Aufgabe]
+  \begin{enumerate}[i)]
+  \item $(X_t)$ ist ein Martingal $\Leftrightarrow$ $(X_t)$ ist ein Sub- bzw.
+    Supermartingal.
+  \item $(X_t)$ ist ein Submartingal $\Leftrightarrow$ $(-X_t)$ ist ein
+    Supermartingal.
+  \item $(X_t)$, $(Y_t)$ sind Martingale $\Rightarrow$ $(aX_t + bY_t)$ ist ein
+    Martingal.
+  \item $(X_t)$, $(Y_t)$ sind Sub- oder Supermartingale $\Rightarrow$ $(aX_t +
+    bY_t)$ ist ein Sub- oder Supermartingal.
+  \item $(X_t)$ ist (Sub-) Martingal und $f$ eine (monoton wachsende) konvexe
+    Funktion, so dass $f(X_t)$ integrierbar ist $\Rightarrow$ $f(X_t)$ ist ein
+    Sub-Martingal.
+  \end{enumerate}
+\end{prgp}

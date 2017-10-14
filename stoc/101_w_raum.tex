@@ -1,0 +1,280 @@
+\section{Wahrscheinlichkeitsräume}
+
+Aufgabe der Wahrscheinlichkeitstheorie: Das Problem des \emph{Zufalls} mit einem
+\emph{mathematischen Modell} zu erfassen.
+
+Was ist Zufall? Was sind zufällige Ereignisse?
+
+\textbf{Beispiele.}
+\begin{enumerate}[a)]
+\item Das Werfen eines Würfels. Ein Zufälliges Ereignis ist zum Beispiel das
+  Auftreten einer \emph{geraden Augenzahl}.
+\item Die Anzahl von vermittelten Telefongesprächen während einer bestimmten
+  Stunde in einer Telefonzentrale.
+\item Geburten (Junge oder Mädchen).
+\end{enumerate}
+
+Schon im 16. Jahrhundert betrachtete man Aufgaben rein
+wahrscheinlichkeitstheoretischen Charakters. Die Lösung wurde meistens mit Hilfe
+der Kombinatorik bestimmt.
+
+Ein exaktes mathematisches Modell wurde erst zwischen 1909 und 1933
+ausgearbeitet. Wichtige Beiträge lieferten zum Beispiel Borel, Wiener, Paley,
+Zygmund, Lomnicki, Steinhaus und \emph{Kolmogorov}. Etwa in dieser Zeit wurden
+auch das abstrakte Maß und Integral entwickelt.
+
+\begin{prgp}[Modell für zufällige Ereignisse und
+  Wahrscheinlichkeit]
+\begin{enumerate}[a)]
+\item \textbf{Ereignisse.}
+  
+  Ereignisalgebra (Ereignisse $A,B$ $\Rightarrow$ nicht $A$, $A$ oder $B$, $A$
+  und $B$). 
+
+  Modell: Algebra von Teilmengen einer Menge (Stone 1937).
+
+  Eine Familie $\mA$ von Teilmengen einer Menge $\Omega$ heißt \emph{Algebra} ,
+  falls
+  \begin{enumerate}[a)]
+  \item $A \in \mA$ $\Rightarrow$ $A^c \in \mA$
+  \item $A, B \in \mA$ $\Rightarrow$ $A \cup B \in \mA$
+  \end{enumerate}
+  Meist: Erweiterung zu einer $\sigma$-Algebra $\sigma(\mA)$.
+\item \textbf{Wahrscheinlichkeit.}
+
+  Tritt ein zufälliges Ereignis $A$ in $n$ Versuchen $m$-mal ein ($0 \le m \le
+  n$), so heißt
+  \[ H_n(A) := m \]
+  die \emph{absolute Häufigkeit} und
+  \[ h_n(A) := \frac{m}{n} \]
+  die \emph{relative Häufigkeit} von $A$ bezüglich dieser $n$ Versuche.
+
+  Eigenschaften:
+  \begin{enumerate}[(i)]
+  \item $0 \le h_n(A) \le 1$
+  \item $h_n($ Sicheres Ereignis $) = 1$, $h_n($ Unmögliches Ereignis $) = 0$
+  \item $h_n (A \cup B) = h_n(A) + h_n(B)$, wenn $A$ und $B$ nicht gleichzeitig
+    eintreten können.
+  \end{enumerate}
+  Die relative Häufigkeit zeigt eine \emph{Stabilität}, wenn $n$ groß ist.
+
+  Beispiel: Wurf eines Geldstücks, $A$: Auftreten von ``Kopf''
+  \begin{center}
+    \begin{tabular}{l|l|l|l}
+      & $n$ & $ H_n(A)$ & $ h_n(A)$ \\
+      \hline
+      Buffon (18. Jh.) & 4040 & 2048 & 0.5080 \\
+      Pearson (20. Jh.) & 12000 & 6019 & 0.5016 \\
+      Pearson & 24000 & 12012 & 0.5005
+    \end{tabular}
+  \end{center}
+
+  Der ``Grenzwert'' $n \to \infty$ führt zu einem endlich additiven Maß auf $\mA$.
+\end{enumerate}
+\end{prgp}
+
+\begin{defn}
+  \begin{itemize}
+  \item Es sei $\Omega \ne \emptyset$ eine Menge, $\mA$ eine $\sigma$-Algebra von
+  Teilmengen von $\Omega$ und $\pP$ ein Maß auf $\mA$ mit $\pP(\Omega) = 1$. Das
+  Tripel $(\Omega, \mA, \pP)$ heißt \emph{Wahrscheinlichkeitsraum} (kurz
+  $\pW$-Raum). Die Elemente von $\mA$ heißen \emph{Ereignisse}, die Elemente von
+  $\Omega$ heißen \emph{Ergebnisse, Stichproben, Realisierungen}\footnote{%
+    Man findet auch  die Bezeichnung \emph{Elementarereignisse}, jedoch ist $\{w\}
+    \notin \mA$ möglich, zum Beispiel für $\mA = \{ \emptyset, \Omega \}$. Also
+    müssen Elementarereignisse keine Ereignisse sein.}.
+  \item Das Maß $\pP$ heißt \emph{Wahrscheinlichkeitsmaß}.
+  \item $\emptyset$ heißt \emph{unmögliches Ereignis}, $\Omega$ das \emph{sichere Ereignis}.
+  \item $\obar{A} := \Omega \setminus A = A^c$
+  \item Ereignisse $A$ mit $\pP(A) = 1$ bzw. $\pP(A) = 0$ heißen \emph{fast
+      sicher} oder \emph{fast unmöglich}. Statt $\pP$-fast überall sagt man ``fast
+    sicher'' oder ``mit Wahrscheinlichkeit 1''.
+  \end{itemize}
+\end{defn}
+
+\textbf{Knobelaufgabe}.
+Zwei Spieler $S_1, S_2$, drei Würfel $W_1, W_2, W_3$ mit den Augenzahlen
+\begin{itemize}
+\item $W_1: 5, 7, 8, 9, 10, 18$
+\item $W_2: 2, 3, 4, 15, 16, 17$
+\item $W_3: 1, 6, 11, 12, 13, 14$
+\end{itemize}
+Spiel: Zuerst wählt $S_1$ einen Würfel, dann $S_2$. Beide würfeln; wer die
+größere Augenzahl hat, bekommt 1 EUR. Sie sind $S_1$. Welchen Würfel würden Sie
+wählen?
+\begin{align*}
+  \pP( W_1 > W_2 ) &= \frac{21}{36} > \rez{2}, & W_1 \text{ ``besser'' als } W_2, \\
+  \pP( W_2 > W_3 ) &= \frac{21}{36} > \rez{2}, & W_2 \text{ ``besser'' als } W_3, \\
+  \pP( W_3 > W_1 ) &= \frac{21}{36} > \rez{2}, & W_3 \text{ ``besser'' als } W_1.
+\end{align*}
+Die beste Taktik ist also, den zweiten Spieler zuerst wählen zu lassen.
+
+\textbf{Sprechweisen in der $\pW$-Theorie}.
+Seien $A,B \in \mA$.
+\begin{enumerate}[i)]
+\item $A \subset B$: Aus $A$ folgt $B$.
+\item $A \cap B = \emptyset$: $A$ und $B$ sind \emph{unvereinbar}.
+\item $A \setminus B$: Es tritt $A$, aber nicht $B$ ein.
+\item Seien $A_1, A_2, \ldots$ Ereignisse.
+  \begin{itemize}
+  \item $\bigcup_{n=1}^\infty A_n$: Mindestens ein $A_n$ tritt ein.
+  \item $\bigcap_{n=1}^\infty A_n$: Alle $A_n$ treten ein.
+  \item $\liminf_{n \to \infty} A_n := \bigcup_{n=1}^\infty \bigcap_{m=n}^\infty
+    A_m$: Von einem Index ab treten alle $A_n$ ein.
+  \item $\limsup_{n \to \infty} A_n := \bigcap_{n=1}^\infty \bigcup_{m=n}^\infty
+    A_m$: Unendlich viele $A_n$ treten ein.
+  \end{itemize}
+\end{enumerate}
+
+\begin{exmp}
+  \begin{enumerate}[a)]
+  \item Werfen eines Würfels mit den Augenzahlen $1, \ldots, 6$.
+    \[ \Omega := \{ 1, 2, 3, 4, 5, 6 \}, \qquad \mA := \pot(\Omega)\footnote{%
+      Das heißt, es gibt $2^6 = 64$ mögliche Ereignisse.}. \]
+    \begin{itemize}
+    \item Erscheinende Augenzahl ist $i$: $\{ i \} \in \mA$.
+    \item Erscheinende Augenzahl ist gerade: $\{ 2, 4, 6 \}$.
+    \item $\pP(A) = \frac{|A|}{6}$, $A \in \mA$.
+    \item $\pP(\{i\}) = \rez{6}$, $A \in \mA$, wenn es sich um einen
+      ``richtigen'' Würfel handelt.
+    \end{itemize}
+  \item Schießen auf eine Scheibe mit Radius 20 cm. Sie wird immer getroffen
+    \[ \Omega = \{ (x,y) \in \real^2 : x^2 + y^2 \le 20^2 \}, \qquad A = \{ B
+      \in \borel(\real^2) : subset \Omega \}. \]
+    Nehmen wir an, dass die Treffer gleichmäßig verteilt sind, dann gilt
+    \[ \pP( B ) := \frac{\lambda(B)}{\lambda(\Omega)}, \]
+    wobei $\lambda$ das Lebesgue-Maß auf $\real^2$ bezeichnet.
+
+    Es wäre auch möglich, $\mA :=$ Lebesgue-messbare Mengen $B \subset \Omega$
+    zu definieren.
+  \end{enumerate}
+\end{exmp}
+
+\begin{thm}
+  Für jedes $\pW$-Maß $\pP$ gilt:
+  \begin{enumerate}[(i)]
+  \item $\pP( (\obar{A}) ) = 1 - \pP(A)$.
+  \item $\pP( B \setminus A) = \pP(B) - \pP(A)$, wenn $A \subset B$.
+  \item $\pP(A \cup B) = \pP(A) + \pP(B) - \pP(A \cap B)$.
+  \item $A_1 \subset A_2 \subset \ldots$ $\Rightarrow$ $\pP( \bigcup_1^\infty
+    A_n) = \lim_n \pP(A_n)$.
+  \item $A_1 \supset A_2 \supset \ldots$ $\Rightarrow$ $\pP( \bigcap_1^\infty
+    A_n) = \lim_n \pP(A_n)$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Das ist bereits aus der Maßtheorie bekannt.
+\end{proof}
+
+\begin{defn}
+  Zwei Ereignisse $A,B \in \mA$ heißen \emph{unabhängig} (bezüglich $\pP$), wenn
+  \[ \pP(A \cap B) = \pP(A) \cdot \pP(B). \]
+  Allgemeiner: Eine Familie von Ereignissen in $\mA$ heißt unabhängig (bezüglich
+  $\pP$), wenn für jede endliche Teilmenge $\emptyset \ne \{i_1, \ldots, i_n\}
+  \subset I$ gilt:
+  \[ \pP \left( \bigcap_{i=1}^n A_{i_j} \right) = \prod_{j=1}^n \pP( A_{i_j} ). \]
+\end{defn}
+
+\begin{exmp}
+  \begin{enumerate}[a)]
+  \item Wir betrachten das \emph{zweimalige} Werfen eines Würfels.
+    \[ \Omega = \{ (i,j) : 1 \le i,j \le 6 \}, \qquad \mA = \pot(\Omega), \qquad
+      \pP( \{(i,j)\}) = \rez{36}. \]
+    \begin{itemize}
+    \item $A$: Beim ersten Wurf wurde eine Zahl $\le 3$ gewürfelt.
+      \[ \pP(A) = \frac{18}{36} = \rez{2}. \]
+    \item $B$: Beim zweiten Wurf wurde eine 6 gewürfelt.
+      \[ \pP(B) = \frac{6}{36} = \rez{6}. \]
+    \item $A \cap B$:
+      \[ \pP( A \cap B ) = \frac{3}{36} = \pP(A) \cdot \pP(B), \]
+      das heißt $A$ und $B$ sind unabhängig.
+    \end{itemize}
+  \item Bezeichnungen wie oben.
+    \begin{itemize}
+    \item $A_1$: Beim ersten Wurf ungerade.
+    \item $A_2$: Beim zweiten Wurf ungerade.
+    \item $A_3$: Die Summe der geworfenen Augen ist ungerade.
+    \end{itemize}
+    Dann sind je zwei dieser Ereignisse unabhängig\footnote{%
+      Zum Beispiel $\pP(A_1 \cap A_3) = \pP(A_1) \cdot \pP(A_3) = \rez{2} \cdot
+      \rez{2} = \rez{4}$ usw.}.
+    Jedoch ist die Familie der Ereignisse \emph{nicht unabhängig}, denn
+    \[ \pP( A_1 \cap A_2 \cap A_3 ) = 0, \qquad \pP(A_1) \cdot \pP(A_2) \cdot
+      \pP(A_3) > 0.\]
+    Aus der \emph{paarweisen} Unabhängigkeit kann also nicht auf Unabhängigkeit
+    \emph{der Familie} geschlossen werden.
+  \end{enumerate}
+\end{exmp}
+
+\begin{defn}
+  Es sei $(\Omega, \mA, \pP)$ ein $\pW$-Raum und $\mA_1, \mA_2 \subset
+  \mA$ Familien von Ereignissen. Dann heißen $\mA_1$ und $\mA_2$
+  \emph{unabhängig}, wenn
+  \[ \pP( A_1 \cap A_2 ) = \pP(A_1) \cdot \pP(A_2) \]
+  für alle $A_1 \in \mA_1$, $A_2 \in \mA_2$.
+\end{defn}
+
+\begin{lem}[Approximationssatz]
+  Es sei $(\Omega, \mA, \pP)$ ein $\pW$-Raum und $\mB$ die von einer Algebra
+  $\borel_0$ von Ereignissen aus $\mA$ erzeugte $\sigma$-Algebra. Dann existiert
+  für jedes $A \in \mB$ eine Folge $A_n \in \mB_0$ mit
+  \begin{enumerate}[(i)]
+  \item $\lim_{n \to \infty} \pP( A_n \Delta A ) = 0$.
+  \item $\pP(A) = \lim_{n \to \infty} \pP(A_n)$.
+  \end{enumerate}
+\end{lem}
+
+\begin{thm}
+  Von unabhängigen Ereignisalgebren $\mA_0$ und $\mB_0$ erzeugte
+  $\sigma$-Algebren $\mA$ und $\mB$ sind unabhängig.
+\end{thm}
+
+\begin{proof}
+  Aufgabe, Hinweis: Lemma 1.1.8 benutzen.
+\end{proof}
+
+\begin{proof}[Beweis von Lemma 1.1.8]
+  (i) ist äquivalent zu
+  \[ \lim_{n \to \infty} \pP( A \setminus A_n) = \lim_{n \to \infty} \pP( A_n
+    \setminus A ) = 0. \tag{1} \]
+  Bezeichne $\mB^*$ die Gesamtheit aller Ereignisse $A \in \mB$, für die eine
+  Folge $A_n \in \mB_0$ mit (i) bzw. (1) existiert.
+
+  Zu zeigen: $\mB^* = \mB$. Es gilt $\mB_0 \subset \mB^* \subset \mB$. Wir
+  zeigen, dass $\mB^*$ eine $\sigma$-Algebra ist\footnote{%
+    Daraus folgt $\mB^* = \mB$, weil $\mB$ nach Definition die kleinste
+    $\sigma$-Algebra ist, die $\mB_0$ enthält.}.
+
+  Aufgabe: Zeige, dass $\mB^*$ eine Algebra ist. Benutze dabei
+  \[ (A \cap B) \Delta (C \cap D) \subset (A \Delta C) \cup (B \Delta D). \]
+
+  Sei nun $(B_j)_j \in \nat \subset \mB^*$ beliebig. Noch zu zeigen:
+  \[ C := \bigcup_{j=1}^\infty  B_j \in \mB^*. \]
+  Definiere $C_n := \bigcup_1^n B_j \in \mB^*$, da $\mB^*$ eine Algebra ist. Es
+  existieren $A_n$ in $\mB_0$ mit
+  \begin{align*}
+    \pP( C_n \setminus A_n ) &< \rez{n}, & \pP(A_n \setminus C_n ) < \rez{n}. \tag{2}
+  \end{align*}
+  Behauptung:
+  \[ \lim_{n \to \infty} \pP( C \setminus A_n ) = \lim_{n \to \infty} \pP( A_n
+    \setminus C ) = 0, \]
+  das heißt $C \in \mB^*$. Die Behauptung folgt aus
+  \begin{align*}
+    A_n \setminus C &\subset A_n \setminus C_n \\
+    C \setminus A_n &\subset ( C\setminus C_n ) \cup (C_n \setminus A_n),
+  \end{align*}
+  denn
+  \[ \pP( C \setminus A_n ) < \pP( C \setminus C_n ) + \rez{n}. \]
+  Es gilt $\pP( C \setminus C_n ) \to 0$, wegen $\bigcap_n(C \setminus C_n) =
+  \emptyset$ und der Stetigkeit von oben.
+
+  (ii) folgt aus
+  \[ \pP(A) = \pP( A_n \cap A ) + \pP( \obar{A}_n ) \cap A ) = \pP(A_n) -
+    \underbrace{\pP( A_n \cap \obar{A} )}_{\to 0} +
+    \underbrace{\pP( \obar{A}_n \cap A )}_{\to 0}. \qedhere \]
+\end{proof}
+
+%%% Local Variables:
+%%% TeX-master: "master"
+%%% End:

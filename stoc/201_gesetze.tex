@@ -1,0 +1,428 @@
+\section{0-1-Gesetze}
+\begin{lem}
+  Für jede Zahl $p \in [0,1)$ gilt
+  \[ \ln(1-p) \le -p. \]
+\end{lem}
+
+\begin{proof}
+  Mittelwertsatz der Differentialrechnung
+  \begin{align*}
+    - \ln (1-p) &= \ln(1) - \ln(1-p) \\
+                &= \left( 1 - (1-p) \cdot \rez{\eta} \right) \\
+                &= \frac{p}{\eta}.
+  \end{align*}
+  Es gilt $1-p < \eta < 1$, $\ln(x) \le x -1$. Aus $\rez{\eta} \ge p$ folgt die
+  Behauptung.
+\end{proof}
+
+\begin{lem}
+  Für jede Folge $\{p_n\}$ reeller Zahlen mit $0 \le p_n \le 1$ gilt:
+  \[ \sum_{k=1}^\infty p_k = \infty \qRq \lim_{n \to \infty} \prod_{k=1}^n
+    (1-p_k) = 0. \tag{i} \]
+\end{lem}
+
+\begin{proof}
+  O.B.d.A. $p_n < 1$, anderenfalls ist die Behauptung trivial.
+  \[ \ln \prod_{k=1}^n (1-p_k) = \sum_{k=1}^n \ln (1-p_k)
+    \overset{\text{(2.1.1)}}{\le} - \sum_{k=1}^n p_k \]
+  Wir bilden $\exp(\cdot)$:
+  \[ \prod_{k=1}^n (1-p_k) = \exp \left( - \sum_{k=1}^n p_k \right)
+    \xrightarrow{n \to \infty} 0 \]
+  wegen der Annahme.
+\end{proof}
+
+\clearpage
+
+\begin{lem}
+  Für jede Folge $\{A_n\}$ von unabhängigen Ereignissen gilt:
+  \[ \pP \underbrace{\left[ \limsup_{n \to \infty} A_n \right]}_{=: A} = 1 -
+    \lim_{n \to \infty} \lim_{N \to \infty} \prod_{m=n}^N (1-\pP(A_m)). \]
+\end{lem}
+
+\begin{proof}
+  Betrachte 
+  \[ A = \bigcap_{n=1}^\infty \bigcup_{m=n}^\infty A_m,\quad \obar{A} =
+    \bigcup_{n=1}^\infty \bigcap_{m=n}^\infty \obar{A_m}. \]
+  Der Beweis erfolgt durch Berechnung von $\pP$ auf beiden Seiten und durch
+  Ausnutzung der Stetigkeit von $\pP$ und der Unabhängigkeit der $A_m$.
+\end{proof}
+
+\begin{thm}[Lemma von Borel-Cantelli]
+  Sei $\{A_n\}$ eine Folge von Ereignissen und $A := \limsup_n A_n$. Dann gilt
+  \begin{enumerate}[(i)]
+  \item $\sum_1^\infty \pP(A_n) < 0$ $\Rightarrow$ $\pP(A) = 0$.
+  \item Ist die Folge $\{A_n\}$ unabhängig, so gilt
+    \[ \begin{aligned}
+        \sum_{n=1}^\infty \pP(A_n) &< \infty & &\Leftrightarrow & \pP(A) &= 0, \\
+        \sum_{n=1}^\infty \pP(A_n) &= \infty & &\Leftrightarrow & \pP(A) &= 1.
+      \end{aligned} \]
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  (i): $A \subset \bigcup_{m=n}^\infty A_m$ $\Rightarrow$ $\pP(A) \le
+  \sum_{m=n}^\infty \pP(A_m)$ für jedes $n=1,2,\ldots$, woraus (i) folgt.
+  \[ \sum_1^\infty \cdot = \sum_1^{n-1} \cdot + \underbrace{\sum_n^\infty
+      \cdot}_{\to 0} \]
+  (ii): Sei $\{ A_n \}$ unabhängig und $\sum_1^\infty \pP(A_n) = \infty$. Nach
+  Lemma 2.1.3 ist
+  \[ \pP(A) = 1 - \lim_{n \to \infty} \lim_{N \to \infty} \prod_{m=n}^N (1 -
+    \pP(A_m) ). \]
+  Aus Lemma 2.1.2 folgt
+  \[ \lim_{N \to \infty} \prod_{m=n}^N (1 - \pP(A_m)) = 0 \]
+  für jedes $n$, daraus folgt $\pP(A) = 1$.
+\end{proof}
+
+\begin{folg}[0-1-Gesetz von Borel]
+  Existiert in einer Folge $\{ A_n \}$ von Ereignissen eine \emph{unabhängige}
+  Teilfolge $\{A_{n_k}\}$ mit
+  \[ \sum_{k=1}^\infty \pP(A_{n_k}) = \infty, \]
+  so ist $\pP( \limsup A_n ) = 1$.
+\end{folg}
+
+\begin{proof}
+  Satz 2.1.4 für $\{A_{n_k}\}$ und $\limsup_k A_{n_k} \subset \limsup_n A_n $.
+\end{proof}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item Eine Münze werde unendlich oft hintereinander geworfen. Man gebe die
+    Wahrscheinlichkeit dafür an, dass unendlich oft zweimal hintereinander Kopf
+    geworfen wird.
+
+    Lösung: $A_n :=$ Kopf im $n$-ten und $n+1$-ten Wurf. Es gilt $\pP(A_n) =
+    \rez{4}$ für alle $n$. Die $A_n$ sind nicht unabhängig:
+    \[ \pP( A_n \cap A_{n+1}) = \rez{8} \ne \rez{16} = \pP(A_n) \cdot
+      \pP(A_{n+1}). \]
+    Allerdings ist $\{A_{2n}\}$ unabhängig und $\sum_1^\infty \pP(A_{2n}) =
+    \infty$, also ist $\pP(\limsup A_n) = 1$.
+
+    $\Omega = \{0,1\}^\infty$; $\pP_0(\{0\}) = \pP_0(\{1\}) =\rez{2}$.
+
+    $N$ Versuche: $\{0,1\}^N$, $P_0 \times \cdots \times P_O$, oder über
+    Zufallsgrößen $X_n$, unabhängig, mit $\pP(X_n=0) = \pP(X_n=1) = \rez{2}$ und
+    Existenzsatz.
+  \item Eine Folge $\{t_n\}$ reeller Zahlen nennen wir eine \emph{Unterfolge}
+    (Oberfolge) für eine Folge von Zufallsgrößen $\{X_n\}$, wenn die Ereignisse
+    $[X_n > t_n]$ ($[X_n \le t_n]$) mit Wahrscheinlichkeit 1 unendlich oft
+    eintreten. Sind die $X_k$ unabhängig, so ist jede Folge$\{t_n\}$ entweder
+    Ober- oder Unterfolge für $\{X_n\}$. Das folgt aus Satz 2.1.4 und aus der
+    Tatsache, dass die Reihen $\sum_1^\infty \pP(X_n > t_n)$ und $\sum_1^\infty
+    \pP(X_n \le t_n) = \sum_1^\infty (1-\pP(X_n > t_n))$ nicht gleichzeitig
+    konvergieren können.
+
+    \textbf{Bemerkung.} Ist es möglich, dass eine Folge gleichzeitig Ober- und
+    Unterfolge ist? $X_n := 0$, $t_n = (-1)^n$.
+  \end{enumerate}
+\end{exmp}
+
+\begin{lem}
+  \begin{enumerate}[(i)]
+  \item Es sei $\{a_n\}$ eine Folge reeller Zahlen mit $a_1 \ge a_2 \ge \ldots
+    \ge 0$. Dann gilt:
+    \[ \sum_{n=1}^\infty a_n < \infty \qLRq \sum_{k=1}^\infty 2^k \cdot a_{2^k}
+      < \infty. \]
+  \item $\sum_1^\infty \rez{n^a} < \infty$ für $a > 1$.
+  \item $\sum_1^\infty \rez{(n \cdot \log_b n)^a} = \infty$ für $0 < a <
+    1$, $b>1$.
+  \end{enumerate}
+\end{lem}  
+
+\begin{proof}
+  Aufgabe, Hinweis für (i):
+  \[ S_n := a_1 + \ldots + a_n; \quad t_k = a_1 + 2 a_2 + \ldots + 2^k
+    a_{2^k}. \]
+  Dann gilt: $S_n \le t_k$ wenn $n < 2^k$ und $2 \cdot S_n \ge t_k$, wenn $n > 2^k$.
+\end{proof}
+
+\clearpage
+
+\begin{lem}
+  Es sei $a, p \in (0,1)$, $\log := \log_{1/p}$ und $k_n := \lfloor n \cdot \log
+  n \rfloor$. Dann ist $\{ k_n \}_2^\infty$ eine streng monoton wachsende Folge
+  von positiven ganzen Zahlen mit
+  \begin{enumerate}[(i)]
+  \item $k_n + \lfloor a \cdot \log k_n \rfloor + 1 < k_{n+1}$, wenn $n$
+    hinreichend groß ist.
+  \item $\sum_2^\infty \rez{k_n^a} = \infty$.
+  \end{enumerate}
+\end{lem}  
+
+\begin{proof}
+  (i): Aus $l \le n \cdot \log n$ folgt 
+  \[ \lfloor a \cdot \log k_n \rfloor 
+    \le a \cdot \log( n \cdot \log n ) 
+    = a \cdot (\log n + \log \log n), \]
+  also
+  \begin{align*}
+    k_n + \lfloor a \cdot \log k_n \rfloor
+    &\le n \cdot \log n + a \cdot (\log n + \log \log n) \\
+    &= (n+1) \cdot \log n - (1-a) \cdot \log n + a \cdot \log \log n \\
+    &\le k_{n+1} + 1 - (1-a) \cdot \log n + a \cdot \log \log n \\
+    &< k_{n+1} - 1
+  \end{align*}  
+  für großes $n$, wenn $\log n > \rez{1-a} \cdot ( 1 + a \cdot \log \log n)$.
+
+  (ii) folgt aus (2.1.7.iii).
+\end{proof}
+
+\begin{defn}
+  Es sei $\{ X_n \}$ eine Folge unabhängiger Zufallsgrößen mit $\pP [X_n = 1] =
+  p$, $\pP[X_n = 0] = 1-p$, $0 < p < 1$.
+
+  Für $n = 1, 2, \ldots$ definieren wir die Zufallsgröße $N_n$ durch
+  \[ N_n(w) := \begin{cases}
+    0, & \text{falls } X_n(w) = 0, \\
+    j, & \text{falls } X_n(w) := \ldots = X_{n+j-1}(w) = 1 \text{ und }
+    X_{n+j}(w) = 0.
+  \end{cases} \]
+\end{defn}
+
+\begin{prgp}[Aufgabe]
+  \begin{enumerate}[(a)]
+  \item Zu zeigen: $\pP[N_n = j] = p^j \cdot (1-p)$; $\pP[N_n \ge j] = p^j$ und
+    $\pE(N_n) = \frac{p}{1-p}$ ($N_n$ ist geometrisch verteilt).
+  \item Ist $n+j \ge m$, so sind die Ereignisse $[N_n \ge j]$ und $[N_m \ge
+    k]$ unabhängig, $k \ge 0$ beliebig.
+  \end{enumerate}
+\end{prgp}
+
+\begin{thm}
+  Mit den Bezeichnungen von 2.1.9 gilt
+  \[ \pP \left[ \limsup_{n \to \infty} \frac{N}{\log n} = 1  \right] = 1,
+    \tag{1} \]
+  wobei $\log := \log_{1/p}$.
+\end{thm}
+
+\begin{proof}
+  Für $a > 1$ gilt:
+  \[ \pP [N_n > a \cdot \log n] \le \pP( N_n \ge \lfloor a \cdot \log n
+    \rfloor) \overset{\text{(2.1.10.a)}}{=} p^{\lfloor a \cdot \log n \rfloor} \le p^{a
+      \cdot \log n - 1} = \rez{p \cdot n^a}. \]
+  Mit Borel-Cantelli für (2.1.7.iii) folgt $\pP( N > a \cdot \log n, \text{
+    unendlich oft}) = 0$, also 
+  \[ \pP \left[  \limsup_{n \to \infty} \frac{N}{\log n} \le a \right] = 1 \]
+  für alle $a > 1$. Daraus folgt
+  \[ \pP \left[ \limsup_{n \to \infty} \frac{N}{\log n} \le 1 \right] = 1.
+    \tag{2} \]
+
+  Hinweis zu dieser Folgerung: Sei $X$ eine beliebige Zufallsgröße, $\pP [X \le
+  a] = 1$ für alle $a > 1$, also ist $\pP( X \le 1 = 1)$, denn es gilt
+  \[ [ X \le 1 ] = \bigcap_{n=1]}^\infty \left[ X \le 1 + \rez{n} \right] \]
+
+  \textbf{Bemerkung.} Die Ereignisse $[N_n > a \cdot \log n]$ sind nicht
+  unabhängig.
+
+  Seien jetzt $a \in (0,1)$ und $k_n$ aus (2.1.8). Dann sind
+  \[ A_n := [ N_k \ge \lfloor a \cdot \log k_n \rfloor + 1 ], \quad n \ge n_0 \]
+  unabhängig, wenn $n_0$ hinreichend groß ist\footnote{%
+    Das folgt aus (2.1.10.b) und (2.1.8.i).}.
+  Weiterhin gilt:
+  \[ \pP(A_n) = p^{\lfloor a \cdot \log k_n \rfloor + 1} \ge p^{a \cdot \log k_n
+      + 1} = \frac{p}{k_n^a}. \]
+  Mit (2.1.8.ii) folgt
+  \[ \sum_{n=n_0}^\infty \pP(A_n) = \infty \]
+  und damit können wir mit Borel-Cantelli feststellen, dass
+  \[ \begin{aligned}
+      &\pP [ N_n \ge a \cdot \log n, \text{ unendlich oft}] \ge \\
+      &\pP N_{k_n} \ge a \cdot \log k_n, \text{ unendlich oft}] \ge \\
+      &\pP N_{k_n} \ge \lfloor a \cdot \log k_n \rfloor + 1 , \text{ unendlich
+        oft}] = 1
+    \end{aligned} \]
+  für alle $a \in (0,1)$, also
+  \[ \pP \left[ \limsup_{n \to \infty} \frac{N}{\log n} \ge 1 \right] = 1.
+    \tag{3} \]
+  Aus (2) und (3) folgt (1).
+\end{proof}
+
+\clearpage
+
+\begin{thm}
+  Es sei $\{X_n\}$ eine Folge unabhängiger Zufallsgrößen.
+  \[ \lim_{n \to \infty} X_n = 0 \text{ fast sicher} \qLRq \sum_{n=1}^\infty
+    \pP\left[ |X_n| \ge \rez{k} \right] < \infty \]
+  für $k = 1, 2, \ldots$.
+\end{thm}
+
+\begin{defn}
+  Es sei $\{ X_n \}$ eine Folge von Zufallsgrößen. Ein Ereignis $A \in \mA$
+  heißt \emph{terminales Ereignis}, wenn $A \in \sigma( X_n, X_{n+1}, \ldots)$,
+  $n=1,2,\ldots$. Hier bezeichnet $\sigma(X_n, X_{n+1}, \ldots)$ die
+  $\sigma$-Algebra, die durch die Ereignisse $[X_j \in B]$, $j \ge n$, $B \in
+  \borel(\real)$ erzeugt wird.
+
+  Analog: $\sigma(X_1, \ldots, X_n)$.
+
+  Zum Beispiel ist
+  \[ A_r = \limsup [X_k > r] = \bigcap_{n=1}^\infty \bigcup_{k=1}^\infty
+    [X_k > r], r \in \real \]
+  ein terminales Ereignis.
+\end{defn}
+
+\begin{lem}
+  Seien $X_1, X_2, \ldots$ unabhängige Zufallsgrößen.
+  \begin{enumerate}[(i)]
+  \item Ist $A \in \sigma( X_{n+1}, X_{n+2}, \ldots )$ für ein $n$, so ist $A$
+    unabhängig von der $\sigma$-Algebra $\sigma(X_1, \ldots, X_n)$.
+  \item Ist $A$ unabhängig von $\sigma( X_1, \ldots, X_n)$ für alle $n \ge 1$,
+    so ist $A$ unabhängig von $\sigma( X_1, X_2, \ldots )$.
+  \end{enumerate}
+\end{lem}
+
+\begin{proof}
+  Übungsaufgabe. Hinweis: Satz 1.1.9 benutzen.
+\end{proof}
+
+\begin{thm}[0-1-Gesetz von Kolmogorov]
+  Sind $X_1, X_2, \ldots$ unabhängig und $A$ ein terminales Ereignis, so gilt
+  $P(A) = 0$ oder $P(A) = 1$.
+\end{thm}
+
+\begin{proof}
+  Sei $A \in \sigma(X_{n+1}, \ldots)$, für alle $n \ge 0$, dann ist $A$
+  unabhängig von $\sigma(X_1, \ldots, X_n)$ für alle $n \ge 1$. Damit ist $A$
+  unabhängig von $\sigma( X_1, X_2, \ldots)$. $A$ ist aber in dieser
+  $\sigma$-Algebra enthalten. Damit ist $A$ unabhängig von $A$ und es muss
+  gelten
+  \[ \pP(A) = \pP(A \cap A) = \pP(A) \cdot \pP(A), \]
+  das ist nur der Fall für $\pP(A) = 0$ oder $\pP(A) = 1$.
+\end{proof}
+
+\begin{exmp*}
+  $X_1, X_2, \ldots$ seien unabhängig. Die Folge $\{ X_n \}$ konvergiert oder
+  divergiert fast sicher.
+  \[ \{ w : X_n(w) \text{ konvergiert} \} =
+    \bigcap_{k=1}^\infty \bigcup_{n_0=1}^\infty \bigcap_{n=n_0}^\infty
+    \bigcap_{m=n_0}^\infty
+    \left\{ w : | X_n(w) - X_m(w) | < \rez{k} \right\} \]
+  ist ein terminales Ereignis, da $| X_n(w) - X_m(w) |$ eine Cauchy-Folge ist.
+\end{exmp*}
+
+\begin{proof}[Beweis von Satz 2.1.12]
+  Wir betrachten das Ereignis
+  \[ A := \{ w : X_n(w) \to 0 \} =
+    \bigcap_{k=1}^\infty \bigcup_{n_0=1}^\infty \bigcap_{n=n_0}^\infty
+    \left\{ w : | X_n(w) | < \rez{k} \right\} \in \mA. \]
+  Wegen Borel-Cantelli (bc) gilt
+  \begin{align*}
+    \sum_{n_0 = 1}^\infty \pP\left[ |X_{n_0}| \ge \rez{k} \right] < \infty
+    &\quad \overset{\text{(bc)}}{\Leftrightarrow} \quad
+    \pP \left( \bigcap_{n_0=1}^\infty \bigcup_{n=n_0}^\infty \left[ |X_n| \ge
+        \rez{k} \right]  \right) = 0 \\
+    &\qLRq 
+    \pP \left( \bigcup_{n_0=1}^\infty \bigcap_{n=n_0}^\infty \left[ |X_n| <
+        \rez{k} \right]  \right) = 1 \\
+    &\qLRq \pP(A) = 1.
+    \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{rmrk*}
+  Die Unabhängigkeit ist wichtig, Beispiel: Sei $\Omega = [0,1]$, $\pP = $
+  Lebesgue-Maß, $X_n = \ind_{(0,a_n)}$ wobei $0 < a_n < 1$, $a_n \to 0$. Dann
+  gilt $\lim_{n \to \infty} X_n(w) = 0$ für alle $w \in \Omega$ und
+  \[ \pP \left[  X_n \ge \rez{k} \right] = a_n ( = \lambda( (0,a_n)) ) \]
+  \[ \sum_{n=1}^\infty a_n = \infty \]
+  zum Beispiel für $a_n = \rez{n}$, $< \infty$ z.B. für $a_n = \rez{n^2}$.
+\end{rmrk*}
+
+\begin{defn}
+  $\real^\infty := \real \times \real \times \cdots$.
+
+  $\borel^\infty :=$ die $\sigma$-Algebra, die durch Mengen der Form
+  \[ B = B_n \times \real \times \real \times \cdots \subset \real^\infty
+    \tag{1} \]
+  erzeugt wird, wobei $B_n \subset \real^n$ eine beliebige Borel-Menge ist.
+  Diese Mengen bilden eine Algebra.
+
+  Eine Menge $B \subset \real^\infty$ heißt \emph{permutierbar}, wenn $t = (t_1,
+  t_2, \ldots) \in B$ $\Rightarrow$ $\tau(t) := (t_{\tau(1)}, t_{\tau(2)},
+  \ldots) \in B$ für eine beliebige \emph{endliche}\footnote{%
+    Das heißt $\tau(j) = j$ bis auf endlich viele $j$.}
+  Permutation $\tau$ von $\{ 1, 2, 3, \ldots \}$.
+
+  Es sei nun $X_1, X_2, \ldots$ eine Folge von Zufallsgrößen und $Y := (X_1,
+  X_2, \ldots )$. Die Abbildung $Y: \Omega \to \real^\infty$ ist
+  $\borel^\infty$-messbar, das heißt $Y$ ist eine $\real^\infty$-wertige
+  Zufallsvariable.
+
+  Zu zeigen: $[Y \in B] \in \mA$, $B \in \borel^\infty$ der Form (1). Es gilt:
+  $[Y \in B] = [(X_1, \ldots, X_n) \in B_n] \in \mA$.
+
+  Ist die Menge $B \in \borel^\infty$ permutierbar, so heißt auch das Ereignis
+  $A := [ Y \in B]$ \emph{permutierbar}.
+
+  \textbf{Beispiel.} Das Ereignis $[X_n \to 0]$ ist permutierbar.
+\end{defn}
+
+\clearpage
+
+\begin{thm}[0-1-Gesetz von Hewitt-Savage]
+  Sind die Zufallsgrößen $X_1, X_2, \ldots$ unabhängig und \emph{identisch
+    verteilt} und ist $A$ ein permutierbares Ereignis, dann gilt entweder
+  $\pP(A) = 0$ oder $\pP(A) = 1$.
+\end{thm}
+
+\begin{prgp}[Aufgabe]
+  Mit den Bezeichnungen von 2.1.16, $X_1, X_2, \ldots$ unabhängig und identisch
+  verteilt. Bezeichne $\mu$ die Verteilung\footnote{%
+    Das heißt $\pP[Y \in B] = \mu(B), B \in \borel^\infty$}
+  von $Y$. Für $D_n, D \in \borel^\infty$ ($n=1,2,\ldots$) schreiben wir $D_n
+  \to D$, wenn
+  \[ \lim_{n \to \infty} \mu( D_n \Delta D) = 0.\]
+  Dann gilt:
+  \begin{enumerate}[(i)]
+  \item $D_n \to D$ $\Rightarrow$ $\mu(D) = \lim_{n \to \infty}\mu(D_n)$,
+  \item $D_n \to D$, $C_n \to D$ $\Rightarrow$ $D_n \cap C_n \to D$,
+  \item Ist $\tau: \real^\infty \to \real^\infty$ eine injektive Abbildung, so
+    ist $\tau(C \Delta D) = \tau(C) \Delta \tau(D)$.
+  \item Ist $\tau$ eine endliche Permutation in $\real^\infty$, so gilt
+    \[ \mu( \tau(B) ) = \mu(B) \]
+    für $B \in \borel^\infty$.
+  \end{enumerate}
+  \textbf{Hinweis.} (i) und (ii): 1.1.8 anwenden.
+
+  (iv): $\mu \circ \tau$ ist ein $\pW$-Maß, das mit $\mu$ für Mengen der Form
+  2.1.16.1 übereinstimmt $\Rightarrow$ Sie stimmen auch auf $\borel^\infty$
+  überein.
+\end{prgp}
+
+\begin{prgp}[Beweis von Satz 2.1.17]
+  Sei $A = [Y \in B]$ ein permutierbares Ereignis, wobei $B \in \borel^\infty$
+  permutierbar ist.
+
+  Für $(X_1, X_2, \ldots) \in \real^\infty$ und $n=1, 2, \ldots$ setzen wir:
+  \[ \tau_n( X_1, X_2, \ldots ) := ( X_{n+1}, \ldots, X_{2n}, X_1, \ldots X_n,
+    X_{2n+1}, \ldots ). \]
+  $\tau_n$ ist eine endliche Permutation.
+
+  Nach dem Approximationssatz existiert eine Folge $B_k \in \borel(\real^{k_n})$
+  mit
+  \[ \boxed{ D_n := B_{k_n} \times \real \times \cdots \to B } \tag{1} \]
+  
+  \textbf{Behauptung.} $\tau_{k_n} (D_n) \to \tau_{k_n} (B) = B$
+  \begin{proof}
+    \[ \mu( \tau_{k_n}( D_n ) \Delta \tau_{k_n}(B)) =
+      \overset{\text{2.1.18.iii}}{=}
+      \mu( \tau_k( D_n \Delta B)  )
+      \overset{\text{2.1.18.iv}}{=}
+      \mu( D_n \Delta B ) \to 0.
+    \]
+    mit 2.1.18.ii folgt
+    \[ D_n \cap \tau_{k_n} (D_n) = \boxed{ B_{k_n} \times B_{k_n} \times \real
+        \times \real \times \cdots \to B} \tag{2} \]
+    Damit gilt
+    \begin{align*}
+      \pP(A) = \pP( Y \in B ) = \mu(B) = \lim_{n \to \infty} \mu( D_n)
+             = \lim_{n \to \infty} \pP [ (X_1, \ldots, X_{k_n}) \in B_{k_n} ]
+    \end{align*}
+    und
+    \begin{align*}
+      \pP(A) = \pP( Y \in B )
+      &= \lim_{n \to \infty} \pP [ (X_1, \ldots, X_{2k_n}) \in B_{k_n} \times B_{k_n} ] \\
+      &= \lim_{n \to \infty} \pP [ (X_1, \ldots, X_{k_n}) \in B_{k_n} ].
+    \end{align*}
+    Also gilt $\pP(A) = \pP(A)^2$. Das ist nur möglich, wenn $\pP(A) = 0$ oder
+    $\pP(A) = 1$.
+  \end{proof}
+\end{prgp}

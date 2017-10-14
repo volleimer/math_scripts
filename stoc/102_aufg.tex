@@ -1,0 +1,161 @@
+\section{Aufgaben}
+\begin{aufg}
+  Zeigen Sie, dass die Familie $\mB^*$ aus Lemma 1.1.8 eine Algebra ist.
+\end{aufg}
+
+Wir rechnen die Eigenschaften der Algebra nach:
+\begin{enumerate}[(i)]
+\item $\Omega \in \mB^*$. Da $\mB$ eine Algebra ist, gilt $\Omega \in \mB$.
+  Betrachte die Folge $(A_n)$, $A_i = \Omega$ für alle $i$. Dann gilt
+  \[ \lim_{n \to \infty} \pP( A_n \Delta \Omega ) = \pP( \Omega \Delta \Omega)
+    = 0.\]
+\item $A \in \mB^* \Rightarrow \obar{A} \in \mB^*$. Sei $A \in \mB^*$, dann
+  existiert eine Folge $(A_n) \subset \mB_0$, sodass
+  \[ \lim_{n \to \infty} \pP( A_n \Delta A ) = 0, \qquad \lim_{n \to \infty}
+    \pP( A_n \setminus A ) =  0, \pP( A_n \setminus A ) =  0. \]
+  Daraus folgt
+  \[ \lim_{n \to \infty} \pP( \obar{A} \setminus \obar{A}_n ) =
+    \lim_{n \to \infty} \pP( \obar{A} \cap A_n ) =
+    \lim_{n \to \infty} \pP( A_n \setminus A ) = 0 \]
+  sowie
+  \[ \lim_{n \to \infty} \pP( \obar{A}_n \setminus \obar{A} ) =
+    \lim_{n \to \infty} \pP( \obar{A}_n \cap A ) =
+    \lim_{n \to \infty} \pP( A \setminus A_n ) = 0, \]
+  also gilt
+  \[ \lim_{n \to \infty} \pP( \obar{A}_n \Delta \obar{A} ) = 0. \]
+  Somit ist $\obar{A} \in \mB^*$.
+\item Sei $(A_n)_{n=1}^N \subset \mB^*$. Die zugehörigen Folgen seien
+  $(A_{n,i})$. Es gilt
+  \begin{align*}
+    \lim_{i \to \infty} \pP \left(
+      \left( \bigcup_{n=1}^N A_n \right) \Delta
+      \left( \bigcup_{n=1}^N A_{n,i} \right)
+    \right)
+    &=
+    \lim_{i \to \infty} \pP \left(
+      \left( \bigcap_{n=1}^N \obar{A}_n \right) \Delta
+      \left( \bigcap_{n=1}^N \obar{A}_{n,i} \right)
+      \right) \\
+    \intertext{mit dem Hinweis $(A \cap B) \Delta (C \cap D) \subset (A \Delta B) \cup (C \Delta D)$:}
+    &\le
+    \lim_{i \to \infty} \pP \left( \bigcup_{n=1}^N
+      \left( \obar{A}_n \Delta
+      \obar{A}_{n,i} \right)
+      \right) \\
+    \intertext{und wegen der Subadditivität von Maßen:}
+    &\le
+    \lim_{i \to \infty} \sum_{n=1}^N \pP \left(
+      \obar{A}_n \Delta
+      \obar{A}_{n,i}
+      \right) \\
+    &=
+     \sum_{n=1}^N \lim_{i \to \infty} \pP \left(
+      \obar{A}_n \Delta
+      \obar{A}_{n,i}
+      \right) = 0.
+  \end{align*}
+  Also ist $\bigcup_1^N A_n \in \mB^*$ und damit ist $\mB^*$ eine Algebra.
+\end{enumerate}
+
+\begin{aufg}
+  Beweisen Sie Satz 1.1.9.
+
+  [Hinweis: Man benutze Lemma 1.1.8.]
+\end{aufg}
+
+Zwei Ereignisse $A,B$ sind unabhängig, wenn
+\[ \pP(A \cap B) = \pP(A) \cdot \pP(B). \]
+
+Zu zeigen: Die von unabhängigen Algebren $\mA_0, \mB_0$ erzeugten
+$\sigma$-Algebren $\mA, \mB$ sind unabhängig.
+
+\begin{proof}
+  Für alle $A_0 \in \mA_0$, $B_0 \in \mB_0$ sind $A_0$ und $B_0$ unabhängig.
+
+  Seien $A \in \mA$, $B \in \mB$. Wähle zwei Folgen $(A_n) \subset \mA_0$ und
+  $(B_n) \subset \mB_0$ mit
+  \[ \lim_{n \to \infty} \pP( A_n \Delta A) = 0, \qquad \lim_{n \to \infty} \pP(
+    B_n \Delta B) = 0 \]
+  wie in Lemma 1.1.8. Dann gilt auch
+  \[ \lim_{n \to \infty} \pP( (A_n \cap B_n) \Delta (A \cap B)) = 0, \]
+  weil
+  \[ (A_n \cap B_n) \Delta (A \cap B) \subset (A_n \Delta A) \cup (B_n \Delta B). \]
+
+  Nun folgt wegen Lemma 1.1.8(ii) und $\pP(A_n \cap B_n) = \pP(A_n) \cdot \pP(B_n)$:
+  \[ \begin{aligned}
+      \lim_{n \to \infty} \pP( (A_n \cap B_n) ) &= \pP ( (A \cap B ) ) \\
+      \lim_{n \to \infty} \pP(A_n) \cdot \pP(B_n) &= \pP ( (A \cap B ) ) \\
+      \pP(A) \cdot \pP(B) &= \pP ( (A \cap B ) )
+    \end{aligned} \]
+  und damit sind $A$ und $B$ unabhängig.
+\end{proof}
+
+\begin{aufg}[Poincaré]
+  Man beweise die folgende Verallgemeinerung von Satz 1.1.4 (iii):
+  \[ \pP( A_1 \cup \cdots \cup A_n ) = \sum_{k=1}^n (-1)^{k+1} \sum_{1 \le i_1 <
+      \cdots < i_k \le n} \pP( A_{i_1} \cap A_{i_2} \cap \cdots \cap
+    A_{i_k}). \]
+  
+  [Hinweis: Induktion nach n.]
+\end{aufg}
+
+\begin{proof}
+  Induktionsanfang: Sei $n=2$, dann wissen wir aus Satz  1.1.4(iii):
+  \[ \pP ( A_1 \cup A_2 ) = \pP( A_1 ) + \pP( A_2 ) - \pP( A_1 \cap A_2 ). \]
+  Also gilt die Behauptung für $n=2$.
+
+  Angenommen, die Behauptung gilt für ein $n$. Definiere das Ereignis $B := A_1
+  \cup \cdots \cup A_n$. Dann ist
+  \[ \pP( B \cup A_{n+1} ) = \pP( B ) + \pP( A_{n+1} ) - \pP( B \cap A_{n+1}
+    ). \]
+  Wegen
+  \[ B \cap A_{n+1} = \left(\bigcup_{j=1}^n A_j\right) \cap A_{n+1} = \bigcap_{j=1}^n (A_i \cap
+    A_{n+1}) \]
+  folgt
+  \[ \pP( B \cap A_{n+1} ) = \sum_{k=1}^n (-1)^{k+1} \sum_{1 \le i_1 < \cdots <
+      i_k \le n} \pP( A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k} \cap A_{n+1}
+    ) \]
+  nach Induktionsvoraussetzung. Damit folgt nun
+  \begin{align*}
+    \pP( B \cup A_{n+1} ) =
+    &\phantom{+} \sum_{k=1}^n (-1)^{k+1} \sum_{1 \le i_1 < \cdots < i_k \le n}
+      \pP( A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) \\
+    &+ \pP( A_{n+1} ) \\
+    &- \sum_{k=1}^n (-1)^{k+1} \sum_{1 \le i_1 < \cdots < i_k \le n}
+      \pP( A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k} \cap A_{n+1} ) \\
+    \pP( B \cup A_{n+1} ) =
+    &\phantom{+} \sum_{k=1}^{n+1} (-1)^{k+1}
+      \sum_{1 \le i_1 < \cdots < i_k \le n+1} \pP( A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k})
+  \end{align*}
+  und die Behauptung gilt auch für $n+1$.
+\end{proof}
+
+\begin{aufg}
+  Wie groß ist die Wahrscheinlichkeit, dass eine Ziehung beim Spiel ``6 aus 49''
+  keine benachbarten Zahlen enthält? (Benachbart sind z.B. 2 und 3; 11 und 12).
+\end{aufg}
+
+Betrachte eine Lotterie mit den Zahlen 1 bis $n$, $\Omega_n := \{ 1, 2, \ldots,
+n \}$. Werden $k$ Zahlen gezogen und der Größe nach geordnet, so ist die Menge
+der gültigen Ereignisse
+\[ \mA_k = \{ (x_1, x_2, \ldots, x_k) : x_1 < x_2 < \cdots < x_k, x_i \in \Omega
+  \}. \]
+
+Es gilt $|\mA_k| = \binom{n}{k}$. Für eine Lotterie 6 aus 49 gibt es also
+$\binom{49}{6}$ mögliche Ereignisse.
+
+Die Funktion $f: \Omega_{44} \to \Omega_{49}$ sei definiert durch
+\[ f({x_1, \ldots, x_6}) = \{x_1, x_2 + 1, x_3 + 2, x_4 + 3, x_5 + 4, x_6 +5
+  \}. \]
+Diese Funktion ist offenbar bijektiv. Außerdem sind die Urbilder aller
+Ziehungen, die keine aufeinander folgenden Zahlen enthalten, gültige Ereignisse
+in der ``Urlotterie''. Also ist die Menge der gewünschten Ziehungen isomorph zur
+Menge der gültigen Ereignisse $\mA_{44}$. Damit können wir die
+Wahrscheinlichkeit bestimmen, dass eine Ziehung keine benachbarten Zahlen
+enthält:
+\[ \pP( \text{Keine benachbarten Zahlen} ) = \frac{\binom{44}{6}}{\binom{49}{6}}
+  = \frac{7059052}{13983816} \approx 0.5048. \] 
+
+%%% Local Variables:
+%%% TeX-master: "master"
+%%% End:

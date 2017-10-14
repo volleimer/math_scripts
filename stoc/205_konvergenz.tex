@@ -1,0 +1,395 @@
+\section{Konvergenz von Zufallsgrößen}
+\begin{defn}
+  Eine Folge $(X_n)$ von Zufallsgrößen heißt
+  \begin{enumerate}[a)]
+  \item \emph{Fast sicher konvergent} gegen die Zufallsgröße $X$, wenn
+    \[ \pP \left[ \lim_{n \to \infty} X_n = X \right] = 1. \]
+    $\left[ \lim_{n \to \infty} X_n = X \right] = \{ \omega \in \Omega : \lim_n
+    X_n(\omega) = X(\omega) \}.$
+  \item \emph{Konvergent in Wahrscheinlichkeit} gegen die Zufallsgröße $X$, wenn
+    \[ \lim_{n \to \infty} \pP \left[ |X_n-X| < \eps \right] = 0 , \quad \forall
+      \eps > 0. \]
+  \item \emph{Konvergent in Verteilung} gegen die Zufallsgröße $X$, wenn für die
+    Folge der Verteilungsfunktion $F_n$ von $X$ bzw. $F$ von $X$ gilt:
+    \[ \lim_{n \to \infty} F_n(x) = F(x) \]
+    für jeden Stetigkeitspunkt von $F$.
+  \end{enumerate}
+\end{defn}
+
+\begin{rmrk}
+  \begin{enumerate}[(a)]
+  \item $[w : \lim_n X_n(w) = X(w)]$ ist ein Ereignis, Beweis wie in (2.1.12).
+  \item Konvergiert eine Folge $\{X_n\}$ gegen $X$ fast sicher oder in
+    Wahrscheinlichkeit und gleichzeitig auch gegen $Y$, so ist $X=Y$ fast
+    sicher.
+
+    Für die fast sichere Konvergenz ist das trivial, für die Konvergenz in
+    Wahrscheinlichkeit folgt sie aus
+    \begin{align*}
+      \pP [ |X-Y| > \eps | ]
+      &\le \pP \left[ |X_n - X| \ge \frac{\eps}{2} \right]
+        + \pP \left[ |X_n - Y| \ge \frac{\eps}{2} \right].
+    \end{align*}
+    Dabei wurde benutzt, dass
+    \[ [|X-Y| > \eps ] \subseteq
+      \left[ |X_n-X| > \frac{\eps}{2} \right] \cup
+      \left[ |X_n-Y| > \frac{\eps}{2} \right].
+    \]
+    Das folgt aus der Dreiecksungleichung. Es ergibt sich
+    \[ \pP [ |X-Y| > \eps ] = 0, \quad \text{für alle } \eps > 0,  \]
+    also ist $X=Y$ fast sicher, da
+    \[ [X=Y] = \bigcap_{k=1}^\infty \left[ |X-Y| \le \rez{k} \right]. \]
+  \end{enumerate}
+  Für die Konvergenz  in Verteilung gilt das nicht, es gibt verschiedene
+  Zufallsgrößen mit der selben Verteilung.
+
+  Einfaches Beispiel: $\Omega = \{1,2\}$, $\mA = \pot(\omega)$, $\pP(\{1\}) =
+  \pP(\{2\})= \rez{2}$,
+  \begin{align*}
+    X(1) &= 1, & X(2) &= 0, \\
+    Y(1) &= 0, & Y(2) &= 1.
+  \end{align*}
+  Dann gilt $\pP[X=1] = \pP[Y=1] = \rez{2}$. Nun definiere $X_n := X$, es gilt
+  $X_n \to X$ und $X_n \to Y$ in Verteilung, aber $\pP[X=Y]=0$.
+\end{rmrk}
+
+\begin{thm}
+  $X_n \to X$ fast sicher $\Rightarrow$ $X_n \to X$ in Wahrscheinlichkeit
+  $\Rightarrow$ $X_n \to X$ in Verteilung.
+\end{thm}
+
+\begin{proof}
+  Nehmen wir an, dass $X_n \to X$ fast sicher. Es sei $\eps > 0$ beliebig,
+  \[ A:= \{ w : \lim X_n(w) = X(w) \}, \quad
+    B_n := \{ w : |X_m(w) - X_n(w) | \le \eps, m \ge n \}. \]
+  Dann gilt $\pP(A) = 1$, $B_1 \subset B_2 \subset \ldots$ und
+  \[ \bigcup_{n=1}^\infty B_n \supset A \qRq \lim \pP(B_n) \ge \pP(A) = 1
+    \qRq \lim \pP(B_n) = 1. \]
+  Definiere
+  \[ A_n := [ |X_n - X| \le \eps], \quad A_n \supset B_n, \]
+  also folgt $\pP(A_n) \to 1$ und damit $X_n \to X$ in Wahrscheinlichkeit.
+
+  Nehmen wir jetzt an, dass $X_n \to X$ in Wahrscheinlichkeit, $A_n$ wie oben.
+  Dann gilt $\pP(A_n) \to 1$.
+  \[ F_n(t) := \pP[X_n < t] = \pP([X_n < t] \cap A_n) + \pP([x_n < t] \cap
+    \obar{A}_n), \tag{1} \]
+  also
+  \[ F_n(t) \le \pP([X_n < t] \cap A_n) + \pP( \obar{A}_n)  \le
+    \pP([X< t + \eps ]) + \pP(\obar{A}_n)
+    \xrightarrow{n \to \infty} F(t + \eps). \]
+  Also gilt
+  \[ \limsup_{n \to \infty} F_n(t) \le F(t+\eps). \]
+  Andererseits ist wegen (1) und $\pP(A_n) \to 1$:
+  \[ F_n(t) \ge \pP( [X_n < t] \cap A_n) \ge \pP([X < t - \eps] \cap A_n)
+    \xrightarrow{n \to \infty} \pP[X < t - \eps] = F(t - \eps). \]
+  Also gilt
+  \[ \liminf_{n \to \infty} F_n(t) \ge F(t-\eps). \]
+  Wir erhalten
+  \[ F(t-\eps) \le \liminf F_n(t) \le \limsup F_n(t) \le F(t + \eps), \]
+  für alle $\eps > 0$. Ist $F$ stetig in $t$, so folgt (mit $\eps \to 0$):
+  \[ F(t) = \lim_{n \to \infty} F_n(t). \qedhere \]
+\end{proof}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item $\Omega := [0,1]$, $\pP = \lambda$, $\mA :=$ alle Borel-Mengen $\subset
+    [0,1]$. $X_n^i$ sei die Indikatorfunktion der Menge $\left[  \frac{i-1}{n},
+      \frac{i}{n} \right]$, $i = 1, \ldots, n$.
+
+    Dann konvergiert die Folge $X_1^1, X_2^1, X_2^2, X_3^1, X_3^2, X_3^3,
+    \ldots$ in Wahrscheinlichkeit gegen 0, aber diese Folge ist in keinem Punkt
+    konvergent.
+  \item $(\Omega, \mA, \pP)$ wie oben,
+    \[ X_1, X_3, X_5, \ldots := \ind_{[0,\rez{2}]}, \quad X_2, X_4, X_6,
+      \ldots := \ind_{[\rez{2}, 1]} \]
+    sowie
+    \[ F(x) := F_n(x) =
+      \begin{cases}
+        0, & x \le 0 \\
+        \rez{2}, & 0 < x \le 1, \\
+        1, & 1 < x.
+      \end{cases}
+    \]
+    Dann gilt $X_n \to X_1$ und $X_n \to X_2$ in Verteilung, aber $\{X_n\}$ ist
+    nicht konvergent in Wahrscheinlichkeit.
+  \end{enumerate}
+\end{exmp}
+
+\clearpage
+
+\begin{thm}
+  Für eine Folge $\{ X_n \}$ von Zufallsgrößen sind die folgenden Aussagen
+  äquivalent:
+  \begin{enumerate}[(i)]
+  \item $\{X_n\}$ konvergiert in Wahrscheinlichkeit gegen eine Zufallsgröße
+    $X$,
+  \item $\lim_{n \to \infty}  \sup_{m \ge n} \pP [ |X_m - X_n | > \eps ] = 0$
+    für alle $\eps > 0$,
+  \item Es gibt eine Zufallsgröße $X$, so dass eine beliebige Teilfolge von
+    $\{X_n\}$ eine Teilfolge besitzt, die \emph{fast sicher} gegen $X$
+    konvergiert.
+  \end{enumerate}
+\end{thm}
+
+Beweis im Netz.
+
+\begin{thm}
+  Für eine Folge $\{X_n\}$ von Zufallsgrößen sind die folgenden Aussagen
+  äquivalent:
+  \begin{enumerate}[(i)]
+  \item $\{X_n\}$  konvergiert fast sicher gegen eine Zufallsgröße $X$.
+  \item Es gilt
+    \[ \pP\left[ |X_n - X| > \rez{k}, \text{unendlich oft} \right] = 0. \]
+  \item Es gilt
+    \begin{align*}
+      \lim_{n \to \infty} \pP \left[ \sup_{m \ge n} |X_m - X| > \eps \right]
+      &= 0, \quad \eps > 0.
+    \end{align*}
+  \item Es gilt
+    \begin{align*}
+      \lim_{n \to \infty} \pP \left[ \sup_{m \ge n} |X_m - X_n| > \eps \right]
+      &= 0, \quad \eps > 0.
+    \end{align*}
+  \end{enumerate}
+\end{thm}
+
+Beweis im Netz.
+
+\begin{thm}[Levy]
+  Für eine Folge $\{X_n\}$ von \emph{unabhängigen} Zufallsgrößen konvergiert die
+  Folge $S_n = X_1 + \cdots + X_n$ genau dann fast sicher, wenn sie in
+  Wahrscheinlichkeit konvergiert.
+\end{thm}
+
+\begin{proof}
+  ``$\Rightarrow$'': Bereits bewiesen.
+
+  ``$\Leftarrow$'' Nehmen wir an, dass $S_n$ in Wahrscheinlichkeit konvergiert.
+  Sei $S_{h,n} := S_n - S_h$, $1 \le h \le n$.
+
+  Wegen Satz 2.5.5.(ii) existiert für jedes $\eps \in (0, \rez{2})$ ein $h_0$,
+  sodass
+  \[ \pP [ |S_{h,n}| \ge \eps ] < \eps, \quad n \ge h \ge h_0. \tag{1} \]
+  Es gilt\footnote{%
+    Aus $\pP[|X| \ge c] < \rez{2}$ folgt für den Median $|m(X)| < c$.}
+  $|m(S_{h,n})| < \eps$.
+
+  Für $k > h \ge h_0$ gilt
+  \begin{align*}
+    \pP \left[ \max_{h < n \le k} |S_{h,n}| \ge 2 \cdot \eps \right]
+    &\le \pP \Big[ \max_{h < n \le k} |S_{h,n} - m(\underbrace{S_{h,n} -
+      S_{h,k}}_{= S_{n,k}}) | \ge \eps \Big] \\
+    &\overset{\text{(L)}}{\le} 2 \cdot \pP[ |S_{h,k}| \ge \eps ] \overset{\text{(1)}}{=} 2 \cdot \eps,
+  \end{align*}
+  wobei (L) die Ungleichung von Levy 2.3.8.(ii) bezeichnet. Also folgt
+  \[ \pP \left[ \sup_{n > h} |S_{h,n}| \ge 2 \cdot \eps  \right] \le 2 \cdot
+    \eps, \quad h \ge h_0\]
+  und nach Satz 2.5.6 konvergiert $S_n$ fast sicher gegen eine Zufallsgröße $S$.
+\end{proof}
+
+Im restlichen Teil dieses Abschnitts ist $X_1, X_2, \ldots$ eine Folge
+unabhängiger Zufallsgrößen und $S_n = X_1 + \ldots + X_n$.
+
+\begin{thm}
+  Wenn $\sum_{n=1}^\infty D^2(X_n) < \infty$ und $\pE(X_n)=0$, $n \in \nat$,
+  dann konvergiert die Reihe $\sum_{n=1}^\infty X_n$ fast sicher.
+\end{thm}
+
+\begin{proof}
+  Für $n < m$ gilt
+  \[ \pE(S_m - S_n) = \pE( X_{n+1} + \ldots + X_m) = 0, \]
+  also
+  \begin{align*}
+    \pP[ |S_m - S_n| \ge \eps ]
+    &\overset{\text{(T)}}{\le} \rez{\eps^2} D^2(S_m - S_n) \\
+    &= \rez{\eps^2} \sum_{i=n + 1}^m D^2(X_i) \xrightarrow{m,n \to \infty} 0,
+  \end{align*}
+  wobei (T) für die Ungleichung von Tschebischew 2.3.3 steht. Der Grenzwert 0
+  folgt aus der Konvergenz der Reihe $\sum_1^\infty D^2(X_i)$.
+
+  Mit Satz 2.5.5 folgt, dass $S_n$ in Wahrscheinlichkeit konvergiert und mit
+  Satz 2.5.7 folgt die fast sichere Konvergenz.
+\end{proof}
+
+\begin{thm}[Jegorow]
+  Es seien $Y, Y_n$ Zufallsgrößen ($n \in \nat$), $A \in \mA$, $\pP(A) > 0$ und
+  für $\omega \in A$ gelte
+  \[ \lim_{n \to \infty} Y_n(\omega) = Y(\omega). \]
+  Dann existiert für jedes $\eps > 0$ eine Menge $F \in \mA$, sodass für $F
+  \subset A$
+  \[ \pP(F) > \pP(A) - \eps \]
+  und die Folge $\{Y_n\}$ konvergiert auf $F$ \emph{gleichmäßig} gegen $Y$.
+\end{thm}
+
+\begin{proof}
+  Das ist bereits aus der Maßtheorie bekannt.
+\end{proof}
+
+\begin{folg}
+  Wenn $S_n \to S$ fast sicher und $|X_n| \le c$, $n \in \nat$ für ein $c \in
+  \real$, dann existiert ein $d > 0$, sodass die Wahrscheinlichkeit von
+  \[ E := \bigcap_{n=1}^\infty \{ \omega : |S_n(\omega)| \le d \}\]
+  positiv ist.
+\end{folg}
+
+\begin{proof}
+  Es existiert $k \in \real$, so dass $\pP[|S| \le k] > 0$. Sei $A := [ |S| \le
+  k ]$.
+
+  Wegen Satz 2.5.9 existiert $F \subset A$, so dass $\pP(F) > 0$. Weil $S_n \to
+  S$ \emph{gleichmäßig} auf $F$, existiert ein $n_0$, so dass
+  \[ |S_n(\omega) - S(\omega)| \le 1, \quad n \ge n_o, \quad \omega \in F. \]
+  Also folgt
+  \[ |S_n(\omega)| \le |S(\omega)| + 1 \le k + 1, \quad n \ge n_0, \quad \omega
+    \in F.\]
+  Andererseits ist
+  \[ |S_n| = | X_1 + \ldots + X_n| \le n \cdot c < n_0 \cdot c, \quad n <
+    n_0. \]
+  Also gilt
+  \[ |S_n(\omega)| \le d := \max\{ k+1, n_0 \cdot c\} \]
+  für alle $n$, $\omega \in F$.
+\end{proof}
+
+\begin{thm}
+  Gilt $|X_n| \le c$ für ein $c \in \real$, so konvergiert die Reihe
+  $\sum_1^\infty X_n$ genau dann fast sicher, wenn
+  \begin{enumerate}[(i)]
+  \item $\sum_1^\infty \pE(X_n) < \infty$,
+  \item $\sum_1^\infty D^2(X_n) < \infty$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Nehmen wir an, dass (i) und (ii) gelten und sei
+  \[ Y_n := X_n - \pE(X_n). \]
+  Dann ist
+  \[ \pE( Y_n ) = 0, \quad D^2(Y_n) = D^2(X_n). \]
+  Nach Satz 2.5.8 konvergiert $\sum_1^\infty Y_n$ fast sicher und damit auch
+  $\sum_1^\infty X_n$ wegen (i), weil $X_n = Y_n - \pE(X_n)$.
+
+  Wir zeigen noch die andere Richtung: Nehmen wir an, dass $\sum_1^\infty X_n$
+  fast sicher konvergiert und zeigen, dass (i) und (ii) gelten.
+
+  \textbf{Spezialfall.} $\pE(X_n) = 0$ (dann ist (i) erfüllt). Sei $S_0 := 0$,
+  $E$ und $d$ wie in 2.5.10,
+  \[ E_n := \bigcap_{i=0}^n [|S_i| \le d], \quad n = 0, 1, 2, \ldots \]
+  Dann gilt $E_0 \subset E_1 \subset \ldots$ und $E = \bigcap_{n=0}^\infty E_n$.
+  Sei $F_n := E_{n-1} \setminus E_n$ und  $a_n := \int_{E_n} S_n^2 \diffop \pP$,
+  $n = 0, 1, 2, \ldots$
+  \begin{align*}
+    a_n - a_{n-1}
+    &= \left( \int_{E_{n-1}} S_n^2 \diffop \pP - \int_{F_n} S_n^2 \diffop \pP \right)
+      - \int_{E_{n-1}} S_{n-1}^2 \diffop \pP \\
+    &= \int_{E_{n-1}} X_n^2 \diffop \pP + 2 \cdot \int_{E_{n-1}} X_n S_{n-1} \diffop \pP
+      - \int_{F_n} S_n^2 \diffop \pP,
+  \end{align*}
+  da $S_n^2 = (S_{n-1} + X_n)^2 = S_{n-1}^2 + 2 \cdot X_n \cdot S_{n-1} +
+  X_n^2$.
+
+  Es gilt
+  \[ \int_{E_{n-1}} X_n^2 \diffop \pP = \pE( \ind_{E_{n-1}} \cdot X_n^2) = \pE(
+    \ind_{E_{n-1}}) \cdot \pE(X_n^2) = \pP( E_{n-1} ) \cdot D^2(X_n). \]
+  Der Erwartungswert darf getrennt werden, weil die $X_i$ unabhängig sind.
+
+  Es gilt
+  \begin{align*}
+    \int_{E_{n-1}} X_n \cdot S_{n-1} \diffop \pP
+    &= \pE( X_n \cdot ( \ind_{E_{n-1}} \cdot S_{n-1})) \\
+    &= \pE( X_n ) \cdot \pE( \ind_{E_{n-1}} \cdot S_{n-1}) = 0
+  \end{align*}
+  sowie
+  \[ \int_{F_n} S_n^2 \diffop \pP \le (d+c)^2 \pP(F_n), \]
+  da $|S_n| = |S_{n+1} + X_n| \le d+c$ auf $F_n$.
+
+  Wir erhalten
+  \[a_n - a_{n-1} \ge \pP(E) \cdot D^2(X_n) - (d+c)^2 \cdot \pP(F_n). \]
+
+  Summieren von $n=1$ bis $k$:
+  \[ a_k \ge \pP(E) \cdot \sum_{n=1}^k D^2 X_n - (d+c)^2. \]
+  Andererseits ist $a_k \le \pP(E_k) \cdot d^2 \le d^2$, also
+  \[ \underbrace{\pP(E)}_{> 0} \cdot \sum_{n=1}^k D^2 (X_n) \le d^2 + (d+c)^2. \]
+  $\pP(E) > 0$ folgt mit dem Satz von Jegorow.
+  
+  Nach Grenzwertbildung folgt (ii).
+
+  Damit ist der Spezialfall $\pE(X_n) = 0$ bewiesen.
+
+  Allgemeiner Fall: Wir betrachten den $\pW$-Raum $(\Omega \times \Omega, \pP
+  \times \pP, \mA \times \mA)$ und die Zufallsgrößen\footnote{%
+  $\varphi(\omega_1, \omega_2) := \omega_1$, $\varphi: \Omega \times\Omega \to
+  \Omega$ ist messbar bezüglich $\mA$ und $\mA \times \mA$.}
+  \[ Z_n( \omega_1, \omega_2) := X_n(\omega_1) - X_n(\omega_2), \quad \omega_1,
+    \omega_2 \in \Omega. \]
+  Es gilt
+  \[ \pE(Z_n) =
+    \int_{\Omega \times \Omega} X_n(\omega_1) \diffop (\pP \times \pP) -
+    \int_{\Omega \times \Omega} X_n(\omega_2) \diffop (\pP \times \pP). \]
+  Wir wenden den Satz von Fubini auf das erste Integral an und es folgt
+  \[ \int_\Omega
+    \underbrace{\int_\Omega X_n(\omega_1) \diffop \pP(\omega_1)}_{\pE(X_n)}
+    \diffop \pP(\omega_2) = \pE(X_n). \]
+  Für das zweite Integral verfahren wir genauso und erhalten
+  \[ \pE(Z_n) = 0. \]
+
+  \[ D^2(Z_n) = \pE(Z_n^2) = \int_{\Omega \times \Omega} [X_n(\omega_1) -
+    X_n(\omega_2)]^2 \diffop \pP \times \pP(\omega_1, \omega_2). \]
+  Wir wenden wieder Fubini an und erhalten
+  \[ D^2(Z_n) = 2 (\pE(X_n)^2 - \pE(X_n)^2)= 2 \cdot D^2(X_n). \]
+  $|Z_n| \le 2 \cdot c$.
+
+  Sei $E \subset \Omega$ das Ereignis, gegen das die Reihe $\sum X_n$
+  konvergiert, dann ist
+  \[ \pP(E) = 1 \qRq \pP \times \pP(E \times E) = \pP(E) \cdot \pP(E) = 1. \]
+  Die Reihe $\sum Z_n$ konvertiert auf $E \times E$, also konvergiert sie fast
+  sicher (bezogen auf das Produktmaß $\pP \times \pP$). Daraus folgt der
+  Spezialfall (ii).
+
+  Setzen wir wieder $Y_n := X_n - \pE(X_n)$. Dann ist $\pE(Y_n) = 0$,
+  \[ \sum_{n=1}^\infty D^2(Y_n) = \sum_{n=1}^\infty D^2(X_n) < \infty. \]
+  Mit 2.5.8 folgt, dass $\sum Y_n$ fast sicher konvergiert. Aus $\pE(X_N) = X_n
+  - Y_n$ folgt nun (i).
+\end{proof}
+
+\begin{defn}
+  Zwei Folgen $\{Y_n\}$ und $\{Z_n\}$ von Zufallsgrößen heißen
+  \emph{äquivalent}, wenn
+  \[ \sum_{n=1}^\infty \pP [Y_n \ne Z_n] < \infty \]
+
+  Wenn $\{Y_n\}$ und $\{Z_n\}$ äquivalent sind, dann gilt:
+  \[ \sum Y_n \text{ konvergiert fast sicher} \qLRq \sum Z_n \text{ konvergiert
+      fast sicher}. \]
+
+  Begründung: Aus Borel-Cantelli folgt $\pP[Y_n \ne Z_n, $ unendlich oft $] =
+  0$.
+\end{defn}
+
+\clearpage
+
+\begin{thm}[Dreireihensatz von Kolmogorow]
+  Die Reihe $\sum_1^\infty X_n$ konvergiert genau dann fast sicher, wenn
+  \begin{enumerate}[(i)]
+  \item $\sum_1^\infty \pP[|X_n| > 1] < \infty$,
+  \item $\sum_1^\infty \pE(X'_n) < \infty$
+  \item $\sum_1^\infty D^2(X'_n) < \infty$
+  \end{enumerate}
+  wobei $X'_n(\omega) = X_n(\omega)$, wenn $|X_n(\omega)| \le 1$ und
+  $X'_n(\omega) = 0$ sonst.
+\end{thm}
+
+\begin{rmrk}
+  Die Konstante 1 kann hier durch eine beliebige Zahl $c > 0$ ersetzt werden.
+\end{rmrk}
+
+\begin{proof}
+  Seien (i) bis (iii) erfüllt. Aus (ii) und (iii) folgt mit 2.5.11, dass $\sum
+  X'_n$ fast sicher konvergiert. Aus (i) folgt, dass die Folgen $\{X_n\}$ und
+  $\{X'_n\}$ äquivalent sind, also konvergiert $\sum X_n$ fast sicher.
+
+  Nehmen wir jetzt an, dass $\sum X_n$ fast sicher konvergiert. Dann gilt $X_n
+  \to 0$ fast sicher, also
+  \[ \pP[ |X_n| > 1, \text{ unendlich oft}] = 0 \]
+  und mit Borel-Cantelli folgt (i).
+
+  Daraus ergibt sich die Äquivalenz von $\{X_n\}$ und $\{X'_n\}$, also
+  konvergiert $\sum X'_n$ fast sicher und mit 2.5.11 folgen (ii) und (iii).
+\end{proof}

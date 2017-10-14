@@ -1,0 +1,135 @@
+\section{Charakteristische Funktion}
+\begin{prgp}
+  Unter der \emph{charakteristischen Funktion} einer Zufallsgröße $X$ versteht
+  man die Funktion
+  \[ f_X(t) := \pE( e^{itX}) = \pE( \cos(tX) + i \cdot \sin( tX ) ), \quad t
+    \in \real. \]
+  Ist $\mu$ die Verteilung von $X$, so gilt wegen (1.2.10)
+  \[ f(t) = \int_\real e^{ity} \diffop \mu(y) =
+    \int_\real \cos (ty) \diffop \mu(y)
+    + i \cdot \int_\real \sin(ty) \diffop \mu(y). \]
+  Man nennt $f$ auch die \emph{charakteristische Funktion} von $\mu$.
+\end{prgp}
+
+\begin{thm}
+  Jede Verteilung ist durch ihre charakteristische Funktion eindeutig bestimmt.
+\end{thm}
+
+\begin{thm}
+  Sind $X$ und $Y$ unabhängige Zufallsgrößen, so ist
+  \[ f_{X+Y} = f_X \cdot f_Y, \]
+  das heißt das Produkt von charakteristischen Funktionen ist wieder eine
+  charakteristische Funktion.
+\end{thm}
+
+\begin{proof}
+  Einfach. ($e^{itX}$ und $e^{itY}$ sind unabhängig).
+\end{proof}
+
+\begin{thm}
+  Sei $Y = aX + b$, $a,b \in \real$, dann ist
+  \[ f_Y(t) = e^{ibt} f_X(at). \]
+\end{thm}
+
+\begin{proof}
+  Es gilt
+  \begin{align*}
+    f_Y(t)
+    &= \pE(e^{itY)} = \pE( e^{it(aX+b)}) \\
+    &= \pE( e^{itaX} \cdot \pE( e^{itb} ) )
+      = e^{itb} \cdot f_X(at). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{thm}
+  Für jede charakteristische Funktion $f$ gilt:
+  \begin{enumerate}[i)]
+  \item $f(0) = 1$,
+  \item $f(-t) = \obar{f(t)}$,
+  \item $|f(t)| \le 1$,
+  \item $f$ ist gleichmäßig stetig.
+  \end{enumerate}
+\end{thm}
+
+\begin{lem}
+  Die Ungleichung
+  \[ \left| e^{iz} - 1 - iz - \ldots - \frac{(iz)^n}{n!} \right| \le
+    \begin{cases}
+      \frac{|z|^{n+1}}{(n+1)!}, &\text{wenn } \Im z \ge 0, \\
+      \frac{|z|^{n+1}}{(n+1)!} e^{|z|}, &\text{wenn } \Im z < 0
+    \end{cases} \]
+  gilt für alle $n = 0, 1, 2, \ldots$ und $z \in \complex$.
+\end{lem}
+
+\begin{thm}
+  Sei $f$ die charakteristische Funktion einer Zufallsgröße $X$ und für ein $k
+  \ge 1$ existiere das Moment $\mM_k$. Dann ist $f$ $k$-mal differenzierbar. Die
+  $k$-te Ableitung $f^{(k)}$ ist beschränkt, gleichmäßig stetig und
+  \begin{enumerate}[i)]
+  \item $f^{(k)}(t) = i^k \int_\real x^k e^{itx} \diffop \mu(x)$, \hfill ($t \in
+    \real$)
+  \item $f^{(k)}(0) = i^k \mM_k$,
+  \item es gilt
+    \begin{align*}
+      f(t)
+      &= \sum_{n=0}^k f^{(n)}(0) \frac{t^n}{n!} + \Theta(t) \frac{t^k}{k!} \\
+      &= \sum_{n=0}^k \mM_n \frac{(it)^n}{n!} + \Theta(t) \frac{t^k}{k!},
+    \end{align*}
+    wobei $\Theta : \real \to \complex$ eine stetige Funktion mit $\Theta(0) =
+    0$ und
+    \[ | \Theta(t) | \le \sup_{0 \le \eta \le 1} | f^{(k)} (\eta t) - f^{(k)}(0)
+      |, \quad t \in \real. \]
+  \end{enumerate}
+\end{thm}
+
+\begin{thm}
+  Seien $X, X_1, X_2, \ldots$ Zufallsgrößen und $f, f_1, f_2, \ldots$ die
+  zugehörigen charakteristischen Funktionen. Dann ist
+  \[ \lim_{ n \to \infty} f_n(t) = f(t), \quad t \in \real
+    \qLRq
+    \lim_{n \to \infty} X_n = X \text{ in Verteilung.} \]
+\end{thm}
+
+\subsection*{Beispiele für charakteristische Funktionen}
+\begin{enumerate}[a)]
+\item Sei $X \sim N(0,1)$, dann ist $f_X(t) = e^{-\rez{2}t^2}$, $t \in \real$.
+  \[ f_X(t) = \pE(e^{itX}) = \rez{\sqrt{2 \pi}} \int_{-\infty}^\infty e^{itx}
+    \cdot e^{x^2/2} \diffop x \]
+  Betrachte
+  \begin{align*}
+    f'_X(t) \overset{2.13.7}{=} i \pE(X e^{itX} )
+    &= \rez{\sqrt{2 \pi}} \int_{-\infty}^\infty i x e^{itx} \cdot e^{-x^2/2} \diffop x \\
+    \intertext{Partielle Integration: $u = -i \cdot e^{itx}$, $v' = -x \cdot e^{x^2/2}$}
+    &= \rez{\sqrt{2 \pi}} \left( \big[ -i e^{-tx} e^{-x^2/2} \big]_{-\infty}^\infty
+      - \int_{-\infty}^\infty e^{itx} \cdot t \cdot e^{-x^2/2} \diffop x \right) \\
+    &= -t \rez{\sqrt{2 \pi}} \int_{-\infty}^\infty e^{itx} e^{-x^2/2} \diffop x \\
+    f'_X(t) &= -t f_X(t).
+  \end{align*}
+  TdV:
+  \[ \diff{f}{t} = - t f \qRq \int \frac{\diffop f}{f} = \int -t \diffop t \qRq
+    \ln f = \frac{-t^2}{2} \qRq f_X(t) = e^{-t^2/2}. \]
+\item Sei $X \sim \operatorname{Bin}(n,p)$, $p \in (0,1)$.
+  \begin{align*}
+    f_X(t) = \pE( e^{itX} )
+    &= \sum_{k=0}^n e^{itk} \binom{n}{k} p^k (1-p)^{n-k} \\
+    &= \sum_{k=0}^n (e^{it} \cdot p)^k (1-p)^{n-k} \binom{n}{k} \\
+    &= (e^{it} \cdot p) + (1-p))^n
+  \end{align*}
+\item Sei $X \sim \operatorname{Poi}(\lambda)$, $\lambda > 0$.
+  \begin{align*}
+    f_X(t) = \pE( e^{itX} )
+    &= \sum_{k=0}^\infty e^{itk} \cdot \pP[ X = k ]
+      = \sum_{k=0}^\infty e^{itk} \frac{\lambda^k}{k!} e^{-\lambda} \\
+    &= e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}
+      = e^{-\lambda} \cdot e^{\lambda e^{it}} \\
+    &= e^{\lambda( e^{it} - 1)}.
+  \end{align*}
+  Wenn $X \sim \operatorname{Poi}(\lambda_1)$, $Y \sim
+  \operatorname{Poi}(\lambda_2)$ unabhängig:
+  \begin{align*}
+    f_{X+Y}(t) = f_X(t) \cdot f_Y(t)
+    &= e^{\lambda_1 ( e^{it} - 1)} \cdot e^{\lambda_2 ( e^{it} - 1)} \\
+    &= e^{(\lambda_1 + \lambda_2) ( e^{it} - 1)}.
+  \end{align*}
+  Also ist $X + Y \sim \operatorname{Poi}(\lambda_1 + \lambda_2)$.
+\end{enumerate}
