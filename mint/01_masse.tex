@@ -1,42 +1,54 @@
 \chapter{Maße}
 \section{Einführung}
 \begin{prgp}
- Eine sehr alte Aufgabe der Geometrie: Man bestimme Länge, Flächeninhalt, Volumen von gewissen Gebieten, Körpern in $\real$, in der Ebene, im Raum.
+ Eine sehr alte Aufgabe der Geometrie: Man bestimme Länge, Flächeninhalt,
+ Volumen von gewissen Gebieten, Körpern in $\real$, in der Ebene, im Raum.
+  
+ Mit Hilfe des Riemann-Integrals kann man dieses Problem für \emph{gewisse}
+ Mengen in $\real^2$ und $\real^3$ lösen: Mengen, die durch glatte Kurven oder
+ Flächen berandet sind.
  
- Mit Hilfe des Riemann-Integrals kann man dieses Problem für \emph{gewisse} Mengen in $\real^2$ und $\real^3$ lösen: Mengen, die durch glatte Kurven oder Flächen berandet sind.
- 
- Mit diesem Zugang kann man aber kompliziertere Mengen nicht behandeln.
+  Mit diesem Zugang kann man aber kompliziertere Mengen nicht behandeln.
 \end{prgp}
  
 \subsection*{Axiomatischer Zugang}
 Sei $d \in \nat$ beliebig. 
 
-Anstelle von Länge, Flächeninhalt oder Volumen sprechen wir vom \emph{Maß} einer Menge.
+Anstelle von Länge, Flächeninhalt oder Volumen sprechen wir vom \emph{Maß} einer
+Menge.
 
 Welche Eigenschaften sollte ein Maß haben?
 
-Ein Maß $\mu$ soll \emph{jeder Menge} $E \subset \real^d$ eine Zahl $\mu(E) \in [0, \infty]$ zuordnen, so dass
+Ein Maß $\mu$ soll \emph{jeder Menge} $E \subset \real^d$ eine Zahl $\mu(E) \in
+[0, \infty]$ zuordnen, so dass
 \begin{enumerate}[(i)]
- \item Ist $E_1, E_2, \ldots$ eine endliche oder unendliche Folge von \emph{disjunkten} Mengen $E_j \subset \real^d$, so gilt:
- \[ \mu(E_1 \cup E_2 \cup \ldots ) = \mu(E_1) + \mu(E_2) + \ldots \]
- \item Sind $E$ und $F$ \emph{kongruent}\footnote{$F$ entsteht aus $E$ mit Hilfe von Verschiebung, Spiegelung oder Rotation}, so ist $\mu(E) = \mu(F)$.
- \item Der $d$-dimensionale Einheitswürfel soll das Maß 1 haben:
+\item Ist $E_1, E_2, \ldots$ eine endliche oder unendliche Folge von
+  \emph{disjunkten} Mengen $E_j \subset \real^d$, so gilt:
+  \[ \mu(E_1 \cup E_2 \cup \ldots ) = \mu(E_1) + \mu(E_2) + \ldots \]
+\item Sind $E$ und $F$ \emph{kongruent}\footnote{%
+    $F$ entsteht aus $E$ mit Hilfe von Verschiebung, Spiegelung oder Rotation},
+  so ist $\mu(E) = \mu(F)$.
+\item Der $d$-dimensionale Einheitswürfel soll das Maß 1 haben:
   \[ \mu([0,1]^d) = 1. \]
 \end{enumerate}
 
-Wir zeigen, dass ein solches Maß nicht existiert! Wir betrachten nur den Fall $d=1$, der allgemeine Fall lässt sich analog behandeln.
+Wir zeigen, dass ein solches Maß nicht existiert! Wir betrachten nur den Fall
+$d=1$, der allgemeine Fall lässt sich analog behandeln.
 
 Wir definieren eine Äquivalenzrelation $\sim$ auf $[0,1)$ durch
 \[ x \sim y \qRq x-y \in \rat. \]
-Sei $N$ eine Teilmenge von $[0,1)$, die genau ein Element von jeder Äquivalenzklasse enthält. Sei $R := \rat \cap [0,1)$ und für jedes $r \in R$ sei 
-\[ N_r := \{ x + r: x \in N \cap [0,1-r) \} \cup \{ x + r - 1: x \in N \cap [1-r,1) \}. \]
-Um $N_r$ zu erhalten, wird $N$ um $r$ nach rechts verschoben; der Teil, der dabei $[0,1)$ verlässt, wird um 1 nach links verschoben.
+Sei $N$ eine Teilmenge von $[0,1)$, die genau ein Element von jeder
+Äquivalenzklasse enthält. Sei $R := \rat \cap [0,1)$ und für jedes $r \in R$ sei
+\[ N_r := \{ x + r: x \in N \cap [0,1-r) \} \cup \{ x + r - 1: x \in N \cap [1-r,1) \}. \] 
+Um $N_r$ zu erhalten, wird $N$ um $r$ nach rechts verschoben; der Teil, der
+dabei $[0,1)$ verlässt, wird um 1 nach links verschoben. 
 
 Wir zeigen:
 \[ [0,1) = \bigcup_{r \in R} N_r \text{ und } N_r \cap N_s = \emptyset,\, r \ne s. \]
 
 \begin{proof}
- Sei $x \in [0,1)$ beliebig und sei $y$ das Element von $N$, das zur Äquivalenzklasse von $x$ gehört. Dann ist $x \in N_r$, wobei 
+ Sei $x \in [0,1)$ beliebig und sei $y$ das Element von $N$, das zur
+ Äquivalenzklasse von $x$ gehört. Dann ist $x \in N_r$, wobei
  \[ r := \begin{cases}
           x-y, & \text{wenn } x \ge y, \\
           x-y+1 & \text{wenn } x < y.
@@ -44,7 +56,9 @@ Wir zeigen:
  Also ist
  \[ [0,1) = \bigcup_{r \in R} N_r. \]
  
- Ist $x \in N_r \cap N_s$, so sind $x-r$ (oder $x-r+1$) und $x-s$ (oder $x-s+1$) verschiedene Elemente von $N$, die zur selben Äquivalenzklasse gehören. Das ist nicht möglich. Also ist
+ Ist $x \in N_r \cap N_s$, so sind $x-r$ (oder $x-r+1$) und $x-s$ (oder $x-s+1$)
+ verschiedene Elemente von $N$, die zur selben Äquivalenzklasse gehören. Das ist
+ nicht möglich. Also ist 
  \[ N_r \cap N_s = \emptyset,\, r \ne s. \]
 
  Wir zeigen nun noch:
@@ -63,14 +77,18 @@ Wir zeigen:
    \end{cases} \qedhere \]
 \end{proof}
 
-Sei $I \ne \emptyset$ eine beliebige Menge und $a_i \in \real$. Was versteht man unter $\sum_{i \in I} a_i$?
+Sei $I \ne \emptyset$ eine beliebige Menge und $a_i \in \real$. Was versteht man
+unter $\sum_{i \in I} a_i$? 
 
-Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit von $\mu$ sehr einschränken würde). Das geht auch nicht!
+Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit von
+$\mu$ sehr einschränken würde). Das geht auch nicht! 
 
 \newpage
 
 \begin{thm}[Banach-Tarski, 1924]
- Seien $U$ und $V$ beliebige, nichtleere, beschränkte, offene Mengen in $\real^d$, $d \ge 3$. Dann gibt es ein $k \in \nat$ und Teilmengen $E_1, \ldots, E_k, F_1, \ldots, F_k$, so dass
+ Seien $U$ und $V$ beliebige, nichtleere, beschränkte, offene Mengen in
+ $\real^d$, $d \ge 3$. Dann gibt es ein $k \in \nat$ und Teilmengen $E_1,
+ \ldots, E_k, F_1, \ldots, F_k$, so dass 
  \begin{enumerate}[(i)]
   \item Die $E_j$ sind disjunkt und ihre Vereinigung ist $U$.
   \item Die $F_j$ sind disjunkt und ihre Vereinigung ist $V$.
@@ -78,26 +96,33 @@ Ein Ausweg wäre (i) nur für endliche Folgen zu fordern (was die Nützlichkeit 
  \end{enumerate}
 \end{thm}
 
-Das bedeutet: Die Mengen $U$ und $V$ haben mit den obigen Forderungen das selbe Maß, egal wie man $U$ und $V$ wählt.
+Das bedeutet: Die Mengen $U$ und $V$ haben mit den obigen Forderungen das selbe
+Maß, egal wie man $U$ und $V$ wählt. 
 
-Folgerung: $\real^d$ enthält Teilmengen, die so seltsam sind, dass man kein \emph{geometrisch} vernünf\-tiges Maß für \emph{alle} Teilmengen definieren kann.
+Folgerung: $\real^d$ enthält Teilmengen, die so seltsam sind, dass man kein
+\emph{geometrisch} vernünf\-tiges Maß für \emph{alle} Teilmengen definieren
+kann. 
 
-Wir geben die Forderung auf, dass das Maß für \emph{alle} Teilmengen definiert werden soll.
+Wir geben die Forderung auf, dass das Maß für \emph{alle} Teilmengen definiert
+werden soll. 
 
 \section{Aufgaben}
  Siehe \verb+Aufgaben-1-2.pdf+.
 
 \section{\texorpdfstring{$\sigma$}{Sigma}-Algebren}
-Sei $X \ne \emptyset$ eine beliebige Menge. Das Komplement von $A \subset X$ bezüglich $X$ bezeichnet $A^C := X \setminus A$.
+Sei $X \ne \emptyset$ eine beliebige Menge. Das Komplement von $A \subset X$
+bezüglich $X$ bezeichnet $A^C := X \setminus A$.
 
 \begin{defn}
- Eine Familie $\mA \subset \pot(X)$ heißt eine \emph{$\sigma$-Algebra} (in $X$), wenn
+ Eine Familie $\mA \subset \pot(X)$ heißt eine \emph{$\sigma$-Algebra} (in $X$),
+ wenn
  \begin{enumerate}[(i)]
   \item $X \in \mA$.
   \item $A \in \mA$ $\Rightarrow$ $A^C \in \mA$.
   \item $A_1, A_2, \ldots \in \mA$ $\Rightarrow$ $\bigcup_{i=1}^\infty A_i \in \mA$.
  \end{enumerate}
- $\mA$ heißt eine \emph{Algebra}, wenn (i), (ii) und (iii) mit endlich vielen $A_i$ gelten.
+ $\mA$ heißt eine \emph{Algebra}, wenn (i), (ii) und (iii) mit endlich vielen
+ $A_i$ gelten.
 \end{defn}
 
 Einfache Beispiele:
@@ -116,7 +141,7 @@ Einfache Beispiele:
   \item $A \setminus B \subset \mA$, wenn $A,B \subset \mA$,
   \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
   \enumeratext{(i)}{Ist $\mA$ eine $\sigma$-Algebra, so gilt auch}
-  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+  \item $\bigcap_{j=1}^\infty A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
  \end{enumerate}
 \end{lem}
 
@@ -343,7 +368,7 @@ Ziel des Abschnitts: Konstruktion von Maßen; $X \ne \emptyset$ beliebige Menge
 
 \begin{defn}
  Sei $\mu^*$ ein äußeres Maß auf $\pot(X)$. Eine Menge $A \subset X$ heißt \emph{$\mu^*$-messbar}, wenn
- \[ \mu^*(S) \ge \mu^*( S \cap A ) + \mu^*( S \setminus A ) \tag{(i)} \]
+ \[ \mu^*(S) \ge \mu^*( S \cap A ) + \mu^*( S \setminus A ) \tag{i} \]
  gilt für alle $S \subset X$. Die Familie aller $\mu^*$-messbaren Mengen wird mit $\meas_{\mu^*}$ bezeichnet.
 \end{defn}
 
@@ -555,39 +580,55 @@ und bezeichne $\mA$ die Familie aller endlichen, disjunkten Vereinigungen von Me
 \end{lem}
 
 \begin{proof}
- Wir betrachten nur den Spezialfall, dass $E^C$ die Vereinigung von genau zwei disjunkten Mengen ist. Der allgemeine Fall lässt sich analog behandeln.
+ Wir betrachten nur den Spezialfall, dass $E^C$ die Vereinigung von genau zwei
+ disjunkten Mengen ist. Der allgemeine Fall lässt sich analog behandeln.
  
- Wir zeigen zuerst: $\mA$ ist abgeschlossen bezüglich endlicher Vereinigungen. Sei $A,B \in \mE$ und $B^C = C_1 \cup C_2$, wobei $C_1, C_2 \in \mE$ disjunkt sind. Dann
+ Wir zeigen zuerst: $\mA$ ist abgeschlossen bezüglich endlicher Vereinigungen.
+ Sei $A,B \in \mE$ und $B^C = C_1 \cup C_2$, wobei $C_1, C_2 \in \mE$ disjunkt
+ sind. Dann
  \[ A \setminus B = A \cap B^C = A \cap( C_1 \cup C_2 ) = (A \cap C_1) \cup (A \cap C_2) \in \mA, \]
- da $(A \cap C_1), (A \cap C_2) \in \mE$ nach Voraussetzung (ii) und Definition von $\mA$ als Familie von Vereinigungen aus $\mE$. Also ist
+ da $(A \cap C_1), (A \cap C_2) \in \mE$ nach Voraussetzung (ii) und Definition
+ von $\mA$ als Familie von Vereinigungen aus $\mE$. Also ist
  \[ A \cup B = \underbrace{(A \setminus B)}_{\in \mA} \cup \underbrace{B}_{\in \mE} \in \mA \]
  nach Definition von $\mA$. Wegen
  \[ \bigcup_{j=1}^n A_j = \left( \bigcup_{j=1}^{n-1}( A_j \setminus A_n ) \right) \cup A_n \]
- folgt durch Induktion über $n$, dass $\bigcup_1^n A_j \in \mA$, wenn $A_j \in \mE$, also ist $\mA$ abgeschlossen bezüglich endlicher Vereinigungen.
+ folgt durch Induktion über $n$, dass $\bigcup_1^n A_j \in \mA$, wenn $A_j \in
+ \mE$, also ist $\mA$ abgeschlossen bezüglich endlicher Vereinigungen. 
  
- Noch zu zeigen: $\mA$ ist abgeschlossen bezüglich Komplementbildung. Sei $A = \bigcup_1^n A_j$, wobei $A_j \in \mE$ und die $A_j$ seien disjunkt. Sei weiterhin $A_j^C = B_j^1 \cup B_j^2, \quad B_j^1, B_j^2 \in \mE$ disjunkt.
+ Noch zu zeigen: $\mA$ ist abgeschlossen bezüglich Komplementbildung. Sei $A =
+ \bigcup_1^n A_j$, wobei $A_j \in \mE$ und die $A_j$ seien disjunkt. Sei
+ weiterhin $A_j^C = B_j^1 \cup B_j^2, \quad B_j^1, B_j^2 \in \mE$ disjunkt. 
  \[ A^C = \bigcap_{j=1}^n A_j^C = \bigcap_{j=1}^n (B_j^1 \cup B_j^2) \overset{\footnotemark}{=} \bigcup \{ B_1^{k_1} \cap \cdots \cap B_n^{k_n} : k_1, \ldots, k_n = 1,2 \} \in \mA, \]
- da $B_1^{k_1} \cap \cdots \cap B_n^{k_n} \in \mE$ und ihre Vereinigung disjunkt ist.
+ da $B_1^{k_1} \cap \cdots \cap B_n^{k_n} \in \mE$ und ihre Vereinigung disjunkt
+ ist.
  \footnotetext{``Ausmultiplizieren'', es ergibt sich die Vereinigung aller Kombinationen von $B_j^1, B_j^2$.}
  
  Also ist $\mA$ eine Algebra.
 \end{proof}
 
 \begin{lem}
- Sei $F: \real \to \real$ monoton wachsend und rechtsstetig\footnotemark. Sind $(a_j, b_j]$, $j= 1, \ldots, n$, disjunkte H-Intervalle, so sei
+ Sei $F: \real \to \real$ monoton wachsend und rechtsstetig\footnotemark. Sind
+ $(a_j, b_j]$, $j= 1, \ldots, n$, disjunkte H-Intervalle, so sei
  \[ \mu \left( \bigcup_{j=1}^n (a_j, b_j] \right) := \sum_{j=1}^n [ F(b_j) - F(a_j) ] \]
  und $\mu( \emptyset ) := 0$. Dann ist $\mu$ ein Prämaß auf $\mA_H$.
 \end{lem} 
 \footnotetext{Das heißt: Für den rechsseitigen Grenzwert gilt $\lim_{h \downarrow 0} f(x + h) = f(x)$.}
 
-Zum Beispiel $F(x) = x$, $\mu( (0,1] ) = 1$, $\mu( (a,b] ) = b - a$; Vereinbarung $F( \pm \infty ) := \lim_{x \to \pm \infty} F(x)$. Dann ist $- \infty \le F(-\infty) \le F(\infty) \le \infty$.
+Zum Beispiel $F(x) = x$, $\mu( (0,1] ) = 1$, $\mu( (a,b] ) = b - a$;
+Vereinbarung $F( \pm \infty ) := \lim_{x \to \pm \infty} F(x)$. Dann ist $-
+\infty \le F(-\infty) \le F(\infty) \le \infty$. 
 
 \begin{proof}
- Zuerst zeigen wir, dass die obige Definition korrekt ist (die Elemente von $\mA_H$ lassen sich auf unterschiedliche Weise als disjunkte Vereinigung von H-Intervallen darstellen). Sei $(a,b] := \bigcup_1^n (a_j, b_j] \in \mA_H$, wobei die Intervalle $(a_j, b_j]$ disjunkt sind. O.B.d.A. sei $a = a_1 < b_1 = a_2 < b_2 = \ldots < b_n = b$. Dann ist
+ Zuerst zeigen wir, dass die obige Definition korrekt ist (die Elemente von
+ $\mA_H$ lassen sich auf unterschiedliche Weise als disjunkte Vereinigung von
+ H-Intervallen darstellen). Sei $(a,b] := \bigcup_1^n (a_j, b_j] \in \mA_H$,
+ wobei die Intervalle $(a_j, b_j]$ disjunkt sind. O.B.d.A. sei $a = a_1 < b_1 =
+ a_2 < b_2 = \ldots < b_n = b$. Dann ist 
  \[ \sum_{j=1}^n [ F( b_j ) - F(a_j) ] = F(b) - F(a), \]
  also unabhängig von der Darstellung. 
  
- Allgemeiner: Sind $\{ I_i \}_1^n$ und $\{ J_j \}_1^m$ Folgen von disjunkten H-Intervallen mit $\bigcup_1^n I_i = \bigcup_1^m J_j$, so gilt
+ Allgemeiner: Sind $\{ I_i \}_1^n$ und $\{ J_j \}_1^m$ Folgen von disjunkten
+ H-Intervallen mit $\bigcup_1^n I_i = \bigcup_1^m J_j$, so gilt
  \[ I_i = I_i \cap \left( \bigcup_{j=1}^m J_j \right) = \bigcup_{j=1}^m ( I_i \cap J_j ). \]
  Daraus folgt
  \[ \sum_{i=1}^n \mu(I_i) = \sum_{i=1}^n \sum_{j=1}^m \mu( I_i \cap J_j ) = \sum_{j=1}^m \sum_{i=1}^n \mu( I_i \cap J_j ) =  \sum_{j=1}^m \mu(J_j). \]
@@ -595,21 +636,27 @@ Zum Beispiel $F(x) = x$, $\mu( (0,1] ) = 1$, $\mu( (a,b] ) = b - a$; Vereinbarun
  
  Noch zu zeigen:
  \[ \mu \left( \bigcup_{j=1}^\infty I_j \right) = \sum_{j=1}^\infty \mu(I_j) \]
- für eine beliebige Folge $\{ I_j \}_1^\infty$ von disjunkten H-Intervallen $I_j = (a_j, b_j]$ mit $\bigcup_1^\infty I_j \in \mA_H$. 
+ für eine beliebige Folge $\{ I_j \}_1^\infty$ von disjunkten H-Intervallen $I_j
+ = (a_j, b_j]$ mit $\bigcup_1^\infty I_j \in \mA_H$.
  
- Wegen der endlichen Additivität von $\mA_H$ dürfen wir annehmen, dass $\bigcup_1^\infty I_j = (a,b] =: I$. Aus der Definition von $\mu$ folgt dann
+ Wegen der endlichen Additivität von $\mA_H$ dürfen wir annehmen, dass
+ $\bigcup_1^\infty I_j = (a,b] =: I$. Aus der Definition von $\mu$ folgt dann
  \[ \mu(I) = \mu \left( \bigcup_{j=1}^n I_j \right) + \mu \left( I \setminus \bigcup_{j=1}^n I_j \right)
     \ge \mu\left( \bigcup_{j=1}^n I_j \right) = \sum_{j=1}^n \mu( I_j ), n \in \nat. \]
  Mit $n \to \infty$ erhalten wir $\mu(I) \ge \sum_1^\infty \mu( I_j )$. 
  
- Wir zeigen noch die umgekehrte Ungleichung. Sei zuerst $- \infty < a < b < \infty $ und $\eps > 0$. Da $F$ rechtsstetig ist, existieren $\delta, \delta_j > 0$ mit 
+ Wir zeigen noch die umgekehrte Ungleichung. Sei zuerst $- \infty < a < b <
+ \infty $ und $\eps > 0$. Da $F$ rechtsstetig ist, existieren $\delta, \delta_j
+ > 0$ mit
  \begin{align*}
     F( a + \delta ) - F(a) &< \eps, \tag{$*$} \\
     F(b_j + \delta_j) - F(b_j) &< \frac{\eps}{2^j}. \tag{$**$}
  \end{align*}
- Die offenen Intervalle $(a_j, b_j + \delta_j)$ überdecken die kompakte Menge $[a + \delta, b]$. Wir wählen eine \emph{endliche} Überdeckung.
+ Die offenen Intervalle $(a_j, b_j + \delta_j)$ überdecken die kompakte Menge
+ $[a + \delta, b]$. Wir wählen eine \emph{endliche} Überdeckung.
  
- Wir lassen dabei Intervalle weg, die in einem größeren Intervall enthalten sind. Mit geeigneter Nummerierung dürfen wir annehmen, dass
+ Wir lassen dabei Intervalle weg, die in einem größeren Intervall enthalten
+ sind. Mit geeigneter Nummerierung dürfen wir annehmen, dass
  \begin{enumerate}[(1)]
   \item $(a_1, b_1 + \delta_1), \ldots, (a_N, b_N + \delta_N)$ das Intervall $[a+\delta,b]$ überdecken,
   \item $a_1 < \ldots < a_2$,
@@ -636,35 +683,56 @@ Zum Beispiel $F(x) = x$, $\mu( (0,1] ) = 1$, $\mu( (a,b] ) = b - a$; Vereinbarun
 \end{proof}
 
 \begin{thm}
- Für jede monoton wachsende und rechtsstetige Funktion $F: \real \to \real$ existiert ein \emph{eindeutig bestimmtes} Maß $\mu_F$ auf $\borel(\real)$ mit $\mu_F( (a,b] ) = F(b) - F(a)$, $a,b \in \real$. Ist $G$ eine weitere solche Funktion, so gilt $\mu_F = \mu_G$ genau dann, wenn $F-G$ konstant ist.
+ Für jede monoton wachsende und rechtsstetige Funktion $F: \real \to \real$
+ existiert ein \emph{eindeutig bestimmtes} Maß $\mu_F$ auf $\borel(\real)$ mit
+ $\mu_F( (a,b] ) = F(b) - F(a)$, $a,b \in \real$. Ist $G$ eine weitere solche
+ Funktion, so gilt $\mu_F = \mu_G$ genau dann, wenn $F-G$ konstant ist.
  
- Sei umgekehrt $\mu$ ein Maß auf $\borel(\real)$, das endlich ist auf beschränkten Borel-Mengen. Dann ist die Funktion $F$ mit $F(x) = \mu((0,x))$ für $x>0$, $F(0) = 0$ und $F(x) = - \mu((x,0))$ für $x<0$ monoton wachsend, rechtsstetig und $\mu = \mu_F$.
+ Sei umgekehrt $\mu$ ein Maß auf $\borel(\real)$, das endlich ist auf
+ beschränkten Borel-Mengen. Dann ist die Funktion $F$ mit $F(x) = \mu((0,x))$
+ für $x>0$, $F(0) = 0$ und $F(x) = - \mu((x,0))$ für $x<0$ monoton wachsend,
+ rechtsstetig und $\mu = \mu_F$.
 \end{thm}
 
 \begin{proof}
- Nach Lemma 1.11.2 definiert $F$ ein Prämaß auf $\mA_H$. Es ist klar, dass $F$ und $G$ genau dann das selbe Prämaß definieren, wenn $F-G$ konstant ist. Wegen 
+ Nach Lemma 1.11.2 definiert $F$ ein Prämaß auf $\mA_H$. Es ist klar, dass $F$
+ und $G$ genau dann das selbe Prämaß definieren, wenn $F-G$ konstant ist. Wegen
  \[ \real = \bigcup_{j \in \integer} (j, j+1] \]
- sind diese Maße $\sigma$-endlich. Die ersten zwei Aussagen folgen deshalb aus Satz 1.7.7.
+ sind diese Maße $\sigma$-endlich. Die ersten zwei Aussagen folgen deshalb aus
+ Satz 1.7.7.
  
- \emph{Dritte Aussage:} Die Monotonie von $F$ folgt aus der Monotonie von $\mu$, aus der Stetigkeit von oben von $\mu$ folgt die Rechsstetigkeit von $F$. Es ist klar, dass \fbox{$\mu = \mu_F$ auf $\mA_H$}. Nach der Eindeutigkeitsaussage von Satz 1.7.7 gilt \fbox{$\mu = \mu_F$ auf $\borel(\real)$}.
+ \emph{Dritte Aussage:} Die Monotonie von $F$ folgt aus der Monotonie von $\mu$,
+ aus der Stetigkeit von oben von $\mu$ folgt die Rechsstetigkeit von $F$. Es ist
+ klar, dass \fbox{$\mu = \mu_F$ auf $\mA_H$}. Nach der Eindeutigkeitsaussage von
+ Satz 1.7.7 gilt \fbox{$\mu = \mu_F$ auf $\borel(\real)$}.
 \end{proof}
 
 \begin{rmrk}
- Wir hätten auch Intervalle der Form $[a,b)$ verwenden können, dann wäre $\tilde{F}$ linksstetig. 
+ Wir hätten auch Intervalle der Form $[a,b)$ verwenden können, dann wäre
+ $\tilde{F}$ linksstetig.
  
- Ist $\mu$ ein endliches Maß auf $\borel(\real)$, so gilt $\mu = \mu_F$ mit $F(x) = \mu((-\infty, x])$.
+ Ist $\mu$ ein endliches Maß auf $\borel(\real)$, so gilt $\mu = \mu_F$ mit
+ $F(x) = \mu((-\infty, x])$. 
  
- Zu jeder rechsstetigen monotonen Funktion $F$ gehört ein vollständiges Maß $\obar{\mu}_F$, dessen Definitionsbereich im Allgemeinen größer ist als $\borel(\real)$. Wir werden dieses Maß auch mit $\mu_F$ bezeichnen, es heißt das zu $F$ gehörige \emph{Lebesgue-Stieltjes-Maß}.
+ Zu jeder rechsstetigen monotonen Funktion $F$ gehört ein vollständiges Maß
+ $\obar{\mu}_F$, dessen Definitionsbereich im Allgemeinen größer ist als
+ $\borel(\real)$. Wir werden dieses Maß auch mit $\mu_F$ bezeichnen, es heißt
+ das zu $F$ gehörige \emph{Lebesgue-Stieltjes-Maß}.
 \end{rmrk}
 
-\textbf{Das ``wichtigste'' Maß auf $\real$:} Das Lebesgue-Maß. Das ist das vollständige Maß, das zu $F(x) = x$ gehört. Es wird mit $\lambda$ bezeichnet. Für $a,b \in \real$, $a \le b$ ist
+\textbf{Das ``wichtigste'' Maß auf $\real$:} Das Lebesgue-Maß. Das ist das
+vollständige Maß, das zu $F(x) = x$ gehört. Es wird mit $\lambda$ bezeichnet.
+Für $a,b \in \real$, $a \le b$ ist 
 \[ \begin{aligned}
     \lambda( [a,b) ) &= b - a, \\ 
     \lambda( (a,b) ) &= \lambda( [a,b] ) = b-a,
    \end{aligned} \]
-da $\lambda(\{x\}) = 0$ für alle $x \in \real$, $\{ x \} \subset (x - \rez{n}, x + \rez{n}]$, also $\mu( \{ x \} ) \le \frac{2}{n} \xrightarrow{n \to \infty} 0$. Das gilt auch für $\mu_F$, wenn $F$ in 0 stetig ist.
+da $\lambda(\{x\}) = 0$ für alle $x \in \real$, $\{ x \} \subset (x - \rez{n}, x
++ \rez{n}]$, also $\mu( \{ x \} ) \le \frac{2}{n} \xrightarrow{n \to \infty} 0$.
+Das gilt auch für $\mu_F$, wenn $F$ in 0 stetig ist.
 
-Die Elemente von $\meas_\lambda$ heißen \emph{Lebesgue-messbar}. Die Einschränkung von $\lambda$ auf $\borel(\real)$ wird auch Lebesgue-Maß genannt.
+Die Elemente von $\meas_\lambda$ heißen \emph{Lebesgue-messbar}. Die
+Einschränkung von $\lambda$ auf $\borel(\real)$ wird auch Lebesgue-Maß genannt.
 
 Im Weiteren in diesem Abschnitt:
 \begin{itemize}
@@ -686,15 +754,21 @@ H-Intervalle können hier durch offene Intervalle ersetzt werden.
 \end{lem}
 
 \begin{proof}
- Bezeichne $\nu(E)$ die rechte Seite und sei $E \subset \bigcup_1^\infty (a_j,b_j)$. Wir schreiben $\ell_j := b_j - a_j$ und $I_{jk} := (b_j -\ell_j 2^{1-k}, b_j - \ell_j 2^{-k}]$, $k \in \nat$. Dann ist $(a_j,b_j) = \bigcup_1^\infty I_{jk}$ und damit 
+ Bezeichne $\nu(E)$ die rechte Seite und sei $E \subset \bigcup_1^\infty
+ (a_j,b_j)$. Wir schreiben $\ell_j := b_j - a_j$ und $I_{jk} := (b_j -\ell_j
+ 2^{1-k}, b_j - \ell_j 2^{-k}]$, $k \in \nat$. Dann ist $(a_j,b_j) =
+ \bigcup_1^\infty I_{jk}$ und damit
  \[ E \subset \bigcup_{j,k} I_{jk} \quad \text{und} \quad \sum_{j=1}^\infty \mu( (a_j, b_j) ) = \sum_{j,k=1}^\infty \mu(I_{jk}) \ge \mu(E), \]
  also $\nu(E) \ge \mu(E)$.
  
- Wir zeigen nun noch, dass $\nu(E) \le \mu(E)$. Für beliebiges $\eps > 0$ existiert $\{ (a_j, b_j] \}_1^\infty$ mit $E \subset \bigcup_1^\infty (a_j,b_j]$ und nach Definition von $\mu(E)$ gilt
+ Wir zeigen nun noch, dass $\nu(E) \le \mu(E)$. Für beliebiges $\eps > 0$
+ existiert $\{ (a_j, b_j] \}_1^\infty$ mit $E \subset \bigcup_1^\infty
+ (a_j,b_j]$ und nach Definition von $\mu(E)$ gilt
  \[ \sum_{j=1}^\infty \mu((a_j,b_j]) \le \mu(E) + \eps. \]
  Für jedes $j$ existiert $\delta_j > 0$ mit
  \[ F( b_j + \delta_j ) - F(b_j) < \frac{\eps}{2^j} \]
- wegen der Rechsstetigkeit und Monotonie von $F$. Dann ist $E \subset \bigcup_1^\infty (a_j, b_j + \delta_j )$ und
+ wegen der Rechsstetigkeit und Monotonie von $F$. Dann ist $E \subset
+ \bigcup_1^\infty (a_j, b_j + \delta_j )$ und
  \[ \begin{aligned}
      \sum_{j=1}^\infty \mu((a_j,b_j+\delta_j)) 
      &\le \sum_{j=1}^\infty \mu((a_j,b_j+\delta_j]) \\
@@ -714,11 +788,18 @@ H-Intervalle können hier durch offene Intervalle ersetzt werden.
 \end{thm}
 
 \begin{proof}
- \textbf{Erste Gleichung.} Ist $U$ offen und $U \supset E$, so gilt $\mu(U) \ge \mu(E)$. Andererseits ist $U$ die Vereinigung abzählbar vieler Intervalle $(a_j,b_j)$ mit $\mu(U) \le \sum_{j=1}^\infty \mu((a_j, b_j))$. Die erste Gleichung folgt deshalb aus Lemma 1.11.5.
+ \textbf{Erste Gleichung.} Ist $U$ offen und $U \supset E$, so gilt $\mu(U) \ge
+ \mu(E)$. Andererseits ist $U$ die Vereinigung abzählbar vieler Intervalle
+ $(a_j,b_j)$ mit $\mu(U) \le \sum_{j=1}^\infty \mu((a_j, b_j))$. Die erste
+ Gleichung folgt deshalb aus Lemma 1.11.5.
  
- \textbf{Zweite Gleichung.} Sei $E$ zuerst beschränkt. Für beliebige $\eps > 0$ existiert nach der ersten Gleichung eine offene Menge $U \supset \obar{E} \setminus E$, die den Abschluss\footnotemark von $E$ enthält und
+ \textbf{Zweite Gleichung.} Sei $E$ zuerst beschränkt. Für beliebige $\eps > 0$
+ existiert nach der ersten Gleichung eine offene Menge $U \supset \obar{E}
+ \setminus E$, die den Abschluss\footnotemark von $E$ enthält und
  \[ \mu(U) \le \mu( \obar{E} \setminus E ) + \eps. \]
- Nach Voraussetzung ist $E \in \meas$. $\obar{E}$ ist eine Borel-Menge, also ist $\obar{E} \setminus E \in \meas$. Die Menge $K := \obar{E} \setminus U \subset E$ ist kompakt und
+ Nach Voraussetzung ist $E \in \meas$. $\obar{E}$ ist eine Borel-Menge, also ist
+ $\obar{E} \setminus E \in \meas$. Die Menge $K := \obar{E} \setminus U \subset
+ E$ ist kompakt und
  \[ \begin{aligned}
      \mu(K) 
      &= \mu(E) - \mu(E \cap U) \\
@@ -726,7 +807,9 @@ H-Intervalle können hier durch offene Intervalle ersetzt werden.
      &\ge \mu(E) - \mu(U) - \mu(\obar{E} \setminus E) \\
      &\ge \mu(E) - \eps.
     \end{aligned} \]
- Damit ist die Gleichung für beschränkte $E$ gezeigt. Sei nun $E$ unbeschränkt und sei $E_j := E \cap (j,j+1)$, $j \in \integer$. Die $E_j$ sind disjunkt und für jedes $\eps > 0$ existiert eine kompakte Menge $K_j \subset E_j$ mit 
+ Damit ist die Gleichung für beschränkte $E$ gezeigt. Sei nun $E$ unbeschränkt
+ und sei $E_j := E \cap (j,j+1)$, $j \in \integer$. Die $E_j$ sind disjunkt und
+ für jedes $\eps > 0$ existiert eine kompakte Menge $K_j \subset E_j$ mit
  \[ \mu(K_j) \ge \mu(E_j) - \frac{\eps}{2^{|j|}}. \]
  Die Menge $H_n := \bigcup_{-n}^n K_j \subset E$ ist kompakt und
  \[ \mu( H_n ) \ge \mu \left( \bigcup_{j=-n}^n E_j \right) - 3 \eps. \]
@@ -767,4 +850,8 @@ Für $r,s \in \real$, $E \subset \real$ ist $rE := \{ r\cdot e : e \in E \}$ und
 \end{rmrk}
 
 \section{Aufgaben}
-siehe \verb+Aufgaben-1-12.pdf+.
+siehe \verb+Aufgaben-1-12.pdf+. 
+
+%%% Local Variables:
+%%% TeX-master: "skript_mint"
+%%% End:

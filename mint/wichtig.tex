@@ -1,0 +1,424 @@
+\documentclass[
+ a4paper,
+ 10pt,
+ parskip=half
+ ]{scrartcl}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\usepackage[]{../.tex/fancy_thm}
+
+\geometry{reset}
+\geometry{bottom=1cm,left=1.5cm,right=1.5cm,top=1cm}
+%\usepackage[bottom=1.5cm,left=1.5cm,right=1.5cm,top=1.5cm]{geometry}
+
+
+\swapnumbers
+\theoremstyle{plain}
+%\newtheorem*{thm}{Satz}
+%\newtheorem*{lem}{Lemma}    
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition} 
+\newtheorem*{folg}{Folgerung} 
+\newtheorem*{rmrk}{Bemerkung} 
+\newtheorem*{deno}{Bezeichnungen}
+\newtheorem*{exmp}{Beispiel} 
+\newtheorem*{prgp}{} % Numbered paragraph
+
+\newtheorem*{rmrk*}{Bemerkung}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{defn*}{Definition}
+
+\numberwithin{equation}{section}
+
+\begin{document}
+\section*{\texorpdfstring{$\sigma$}{Sigma}-Algebren}
+\begin{defn}
+ Eine Familie $\mA \subset \pot(X)$ heißt eine \emph{$\sigma$-Algebra} (in $X$),
+ wenn
+ \begin{enumerate}[(i)]
+  \item $X \in \mA$.
+  \item $A \in \mA$ $\Rightarrow$ $A^C \in \mA$.
+  \item $A_1, A_2, \ldots \in \mA$ $\Rightarrow$ $\bigcup_{i=1}^\infty A_i \in \mA$.
+ \end{enumerate}
+ $\mA$ heißt eine \emph{Algebra}, wenn (i), (ii) und (iii) mit endlich vielen
+ $A_i$ gelten.
+\end{defn}
+
+\begin{lem}
+ Ist $\mA$ eine Algebra, so gilt
+ \begin{enumerate}[(i)]
+  \item $\emptyset \in \mA$,
+  \item $A \setminus B \subset \mA$, wenn $A,B \subset \mA$,
+  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+  \enumeratext{(i)}{Ist $\mA$ eine $\sigma$-Algebra, so gilt auch}
+  \item $\bigcap_{j=1}^n A_j \in \mA$, wenn $A_1, \ldots, A_n \in \mA$.
+ \end{enumerate}
+\end{lem}
+
+\begin{lem}
+ Ist $E \subset \sigma(F)$, so gilt $\sigma(E) \subset \sigma(F)$.
+\end{lem}
+
+\section*{Maße}
+\begin{defn}
+ Ein \emph{Maß} auf $\mA$ ist eine Abbildung $\mu: \mA \to [0,\infty]$ mit
+ \begin{enumerate}[(i)]
+  \item $\mu( \emptyset ) = 0$.
+  \item Sind die Mengen $A_1, A_2, \ldots \in \mA$ paarweise disjunkt, so gilt
+  \[ \mu\left( \bigcup_{i=1}^\infty A_i \right) = \sum_{i=1}^\infty \mu(A_i). \]
+  Diese Eigenschaft nennt man \emph{$\sigma$-Additivität}.
+ \end{enumerate}
+\end{defn}
+
+\begin{thm}
+ Sei $(X, \mA, \mu)$ ein Maßraum und $E, F, E_j \in \mA$, $j \in \nat$. 
+ \begin{enumerate}[(i)]
+  \item \emph{Monotonie.} Wenn $E \subset F$, dann ist $\mu(E) \le \mu(F)$.
+  \item \emph{Subadditivität.} $\mu \left( \bigcup_{j=1}^\infty E_j \right) \le \sum_{j=1}^\infty \mu(E_j)$.
+  \item \emph{Stetigkeit von unten.} Wenn $E_1 \subset E_2 \subset \ldots$, dann
+   \[ \mu \left( \bigcup_{j=1}^\infty E_j \right) = \lim_{j \to \infty} \mu( E_j ).  \]
+  \item \emph{Stetigkeit von oben.} Wenn $E_1 \supset E_2 \supset \ldots$ und $\mu(E_n) < \infty$ für ein $n \in \nat$, dann
+   \[ \mu \left( \bigcap_{j=1}^\infty E_j \right) = \lim_{j \to \infty} \mu( E_j ).  \]
+ \end{enumerate}
+\end{thm}
+
+\section*{Äußere Maße}
+\begin{defn}
+ Ein \emph{äußeres Maß} auf $\pot(X)$ ist eine Abbildung $\mu^* : \pot(X) \to [0,\infty]$ mit den folgenden Eigenschaften:
+ \begin{enumerate}[(i)]
+  \item $\mu^*(\emptyset) = 0$,
+  \item $\mu^*( A ) \le \mu^*(B)$, wenn $A \subset B \subset X$,
+  \item $\mu^*( \bigcup_{j=1}^\infty A_j ) \le \sum_{j=1}^\infty A_j$, $A_j \in \pot(X)$.
+ \end{enumerate}
+\end{defn}
+
+\begin{lem}
+ Seien $\mE \subset \pot(X)$ und $\rho: \mE \to [0, \infty]$ so, dass $\emptyset, X \in \mE$ und $\rho(\emptyset) = 0$. Für $A \subset X$ definieren wir
+ \[ \mu^*(A) := \inf \left\{ \sum_{j=1}^\infty \rho(E_j) : E_j \in \mE, A \subset \bigcup_{j=1}^\infty E_j \right\}. \]
+ Dann ist $\mu^*$ ein äußeres Maß.
+\end{lem}
+
+\begin{thm}[Caratheodory]
+ Die Familie $\meas_{\mu^*}$ ist eine $\sigma$-Algebra und $\mu^*$ ist ein Maß
+ auf $\meas_{\mu^*}$. Ist $\mu^*(A) = 0$, so gilt $A \in \meas_{\mu^*}$.
+\end{thm}
+
+\begin{defn}
+ Sei $\mu^*$ ein äußeres Maß auf $\pot(X)$. Eine Menge $A \subset X$ heißt \emph{$\mu^*$-messbar}, wenn
+ \[ \mu^*(S) \ge \mu^*( S \cap A ) + \mu^*( S \setminus A ) \]
+ gilt für alle $S \subset X$. Die Familie aller $\mu^*$-messbaren Mengen wird mit $\meas_{\mu^*}$ bezeichnet.
+\end{defn}
+
+\begin{defn}
+ Ein \emph{Prämaß} auf einer Algebra $\mA$ ist eine Abbildung $\mu: \mA \to [0, \infty]$ mit 
+ \begin{enumerate}[(i)]
+  \item $\mu(\emptyset) = 0$.
+  \item Für beliebige disjunkte Mengen $A_1, A_2, \ldots \in \mA$ mit $\bigcup_{j=1}^\infty A_j \in \mA$ gilt
+   \[ \mu \left( \bigcup_{j=1}^\infty A_j \right) = \sum_{j=1}^\infty \mu( A_j ). \]
+ \end{enumerate}
+\end{defn}
+
+\begin{thm}
+ Seien $\mA \subset \pot(X)$ eine Algebra, $\mu$ ein Prämaß auf $\mA$; $\meas := \sigma(\mA)$ und $\obar{\mu} := \mu|_\meas$. Dann gilt
+ \begin{enumerate}[(i)]
+  \item $\obar{\mu}$ ist ein Maß auf $\meas$ mit $\obar{\mu}|_\mA = \mu$.
+  \item Ist $\nu$ ein Maß auf $\meas$ mit $\nu |_\mA = \mu$, so gilt $\nu(E) \le \obar{\mu}(E)$ für alle $E \in \meas$, wobei im Fall $\obar{\mu}(E) < \infty$ sogar Gleichheit gilt.
+  \item Ist $\mu$ $\sigma$-endlich, so ist $\obar{\mu}$ die \emph{einzige} Fortsetzung von $\mu$ zu einem Maß auf $\meas$.
+ \end{enumerate}
+\end{thm}
+
+Zusammenfassung:
+\begin{itemize}
+\item Maß $\mu$ auf $\sigma$-Algebra
+\item Äußeres Maß $\mu^*$ auf $\pot(X)$ $\rightarrow$ Einschränkung auf die
+  $\sigma$-Algebra von messbaren Mengen, dort Maß 
+\item Prämaß auf einer Algebra $\rightarrow$ Äußeres Maß $\rightarrow$ Maß auf
+  $\sigma$-Algebra.
+\end{itemize}
+
+\clearpage
+
+\section*{Borel-Maße auf \texorpdfstring{$\real$}{IR}}
+\begin{lem}
+ Sei $X \ne \emptyset$ eine beliebige Menge, $\mE \in \pot(X)$ mit
+ \begin{enumerate}[(i)]
+  \item $\emptyset \in \mE$,
+  \item $E,F \in \mE \Rightarrow E \cap F \in \mE$,
+  \item $E \in \mE \Rightarrow E^C$ ist eine Vereinigung von endlich vielen disjunkten Mengen aus $\mE$
+ \end{enumerate}
+und bezeichne $\mA$ die Familie aller endlichen, disjunkten Vereinigungen von Mengen aus $\mE$. Dann ist $\mA$ eine Algebra.
+\end{lem}
+
+\begin{lem}
+  Sei $F: \real \to \real$ monoton wachsend und rechtsstetig. Sind $(a_j, b_j]$, $j= 1, \ldots, n$, disjunkte H-Intervalle, so sei
+ \[ \mu \left( \bigcup_{j=1}^n (a_j, b_j] \right) := \sum_{j=1}^n [ F(b_j) - F(a_j) ] \]
+ und $\mu( \emptyset ) := 0$. Dann ist $\mu$ ein Prämaß auf $\mA_H$.
+\end{lem} 
+
+\begin{thm}
+ Für jede monoton wachsende und rechtsstetige Funktion $F: \real \to \real$ existiert ein \emph{eindeutig bestimmtes} Maß $\mu_F$ auf $\borel(\real)$ mit $\mu_F( (a,b] ) = F(b) - F(a)$, $a,b \in \real$. Ist $G$ eine weitere solche Funktion, so gilt $\mu_F = \mu_G$ genau dann, wenn $F-G$ konstant ist.
+ 
+ Sei umgekehrt $\mu$ ein Maß auf $\borel(\real)$, das endlich ist auf beschränkten Borel-Mengen. Dann ist die Funktion $F$ mit $F(x) = \mu((0,x))$ für $x>0$, $F(0) = 0$ und $F(x) = - \mu((x,0))$ für $x<0$ monoton wachsend, rechtsstetig und $\mu = \mu_F$.
+\end{thm}
+
+\section*{Messbare Abbildungen}
+\begin{lem}
+ Ist $\mN \subset \pot(Y)$ eine $\sigma$-Algebra, so ist auch
+ \[ f^{-1}(\mN) := \{ f^{-1}(E) : E \in \mN \} \]
+ eine $\sigma$-Algebra.
+\end{lem}
+
+\begin{lem}
+ Ist $\{f_n\}$ eine Folge messbarer, $\realext$-wertiger Funktionen auf $(X, \mM)$, so sind die Funktionen 
+ \begin{align*}
+  g_1(x) &= \sup_j f_j(x), & g_2(x) &= \inf_j f_j(x), \\
+  g_3(x) &= \limsup_{j} f_j(x), & g_4(x) &= \liminf_j f_j(x)
+ \end{align*}
+ messbar.
+ 
+ Existiert $f(x) = \lim_j f_j(x)$ für alle $x$, so ist auch $f$ messbar.
+\end{lem}
+
+Eine \emph{einfache Funktion} (oder Treppenfunktion) $f$ auf $X$ ist eine endliche Linearkombination von Indikatorfunktionen von Mengen aus $\meas$: 
+  \[ f = \sum_{j=1}^n c_j \ind_{E_j}, \quad c_j \in \complex, \quad E_j \in
+    \meas. \]
+  
+\begin{lem}
+ Sei $\mu$ ein vollständiges Maß, $f,f_n,g: X \to \real^d$ oder $\complex^d$.
+ \begin{enumerate}[(i)]
+  \item Ist $f$ messbar und $f=g$ fast überall, so ist $g$ messbar.
+  \item Ist $f_n$, $n \in \nat$ messbar und $f_n \to f$ fast überall, so ist $f$ messbar.
+ \end{enumerate}
+\end{lem}
+
+\begin{lem}
+ Sei $\mu$ ein vollständiges Maß, $f,f_n,g: X \to \real^d$ oder $\complex^d$.
+ \begin{enumerate}[(i)]
+  \item Ist $f$ messbar und $f=g$ fast überall, so ist $g$ messbar.
+  \item Ist $f_n$, $n \in \nat$ messbar und $f_n \to f$ fast überall, so ist $f$ messbar.
+ \end{enumerate}
+\end{lem}
+
+\section*{Integration nichtnegativer Funktionen}
+Die Menge $L^+$ ist die Menge aller messbaren Funktionen $f:X \to [0, \infty]$.
+
+\begin{thm}[Monotone Konvergenz, Beppo Levi]
+ Ist $\{f_n\}$ eine Folge in $L^+$ mit $f_j \le f_{j+1}$ für alle $j$ und $f = \lim_{n \to \infty} f_n$, so gilt
+ \[ \int f = \lim_{n \to \infty} \int f_n. \]
+\end{thm}
+
+\begin{thm}
+ Für eine Funktion $f \in L^+$ gilt $\int f = 0$ genau dann, wenn $f=0$ fast überall.
+\end{thm}
+
+\begin{thm}
+ Ist $\{ f_n \}$ eine endliche oder unendliche Folge in $L^+$ und $f = \sum_n f_n$, so gilt
+ \[ \int f =  \sum_n \int f_n. \]
+\end{thm}
+
+\begin{thm}[Lemma von Fatou]
+ Sei $(f_n)_{n \in \nat}$ eine Folge in $L^+$. Dann gilt
+ \[ \int \lim_{n \to \infty} f_n \diffop \mu \le \lim_{n \to \infty} \int f_n \diffop \mu. \]
+\end{thm}
+
+\section*{Integration komplexer Funktionen}
+ Sind $\int f^+ \diffop \mu < \infty$ und $\int f^- \diffop \mu < \infty$, so
+ heißt $f$ \emph{integrierbar}, Schreibweisen: $\intf^1(X)$, $\intf^1(X,\mu)$, $\intf^1(\mu)$ oder einfach $\intf^1$. 
+
+\begin{lem}
+ Für $f \in \intf^1$ gilt
+ \[ \left| \int f \diffop \mu \right| \le \int |f| \diffop \mu. \]
+\end{lem}
+
+\clearpage
+
+\begin{thm}[Dominierte Konvergenz, Satz von Lebesgue]
+ Seien $f_n, g \in \intf^1$, $n \in \nat$, sodass $f_n \to f$ fast überall und $|f_n| \le g$ für alle $n \in \nat$. Dann gilt
+ \[ \int f \diffop \mu = \int \lim_{n \to \infty} f_n \diffop \mu = \lim_{n \to \infty} \int f \diffop \mu. \]
+\end{thm}
+
+\begin{thm}[Stetigkeit und Differenzierbarkeit von Parameterintegralen]
+ Sei $f:X \times [a,b] \to \complex$, $-\infty < a < b < \infty$, so das $f( \cdot, t ) : X \to \complex$ integrierbar ist. Wir schreiben
+ \[ F(t) := \int_X f( x, t ) \diffop \mu(x), \quad t \in [a,b]. \]
+ \begin{enumerate}[(i)]
+  \item Nehmen wir an, dass ein $g \in \intf^1(\mu)$ existiert mit $|f(x,t) \le g(x)$ für alle $x$ und $t$, und dass $\lim_{t \to t_0} f(x,t) = f(x,t_0)$ für alle $x$. Dann gilt
+  \[ \lim_{t \to t_0} F(t) = F(t_0). \]
+  Ist speziell $f(x, \cdot)$ stetig für alle $x$, so ist $F$ stetig.
+  \item Nehmen wir an, dass $\pdiff{f}{t}$ und ein $g \in \intf^1$ existieren, so dass $\left| \pdiff{f}{t} (x,t) \right| \le g(x)$ für alle $x$ und $t$. Dann ist $F$ differenzierbar und 
+  \[ F'(t) = \int \pdiff{f}{t} \diffop \mu(x), \quad t \in [a,b]. \]
+ \end{enumerate}
+\end{thm}
+
+Beispiel
+\[ \sum_{n=1}^\infty (-1)^{n+1} \cdot \rez{n} \cdot \ind_{(n,n+1)}(x) := f(x). \]
+Es gilt: $f$ ist integrierbar $\Leftrightarrow$ $|f|$ ist integrierbar, aber
+\[ \int |f| = \int_{[0,\infty)} \sum_{n=1}^\infty \rez{n} \cdot \ind_{(n,n+1)} = \sum_{n=1}^\infty \rez{n} = \infty. \]
+Also ist $f$ nicht Lebesgue-integrierbar. 
+
+Wir können aber das uneigentliche Riemann-Integral berechnen:
+\[ \int_0^{N+1} f(x) \diffop x = \int_0^{N+1} \sum_{n=1}^\infty (-1)^{n+1} \cdot \rez{n} \cdot \ind_{(n,n+1)}(x) \diffop x = \sum_{n=1}^N (-1)^{n+1} \cdot \rez{n} \xrightarrow{N \to \infty} \ln 2. \]
+Die Reihe konvergiert nach dem Leibniz-Kriterium.
+
+Die Indikatorfunktion $f$ der Menge der rationalen Zahlen in $[0,1]$ ist Lebesgue-messbar, $f=0$ fast überall und damit ist sie Lebesgue-integrierbar mit $\int f = 0$. $f$ ist keinem Punkt stetig, also auch nicht Riemann-integrierbar.
+\[ 0 = i(f) \ne I(f) = 1. \]
+
+\section*{Konvergenzarten}
+$f_n \to t$, $n \to \infty$ kann bedeuten:
+\begin{itemize}
+ \item Punktweise Konvergenz: 
+  \[ \lim_{n \to \infty} f_n(x) = f(x) \text{ für alle } x \in X, \]
+ \item Gleichmäßige Konvergenz:
+  \[ \lim_{n \to \infty} \| f_n - f \| = 0, \text{ wobei } \| g \| := \sup_{x \in X} | g(x) |. \]
+\end{itemize}
+
+Ist $(X, \mA, \mu)$ ein Maßraum, so können wir auch über \emph{Konvergenz fast überall} oder $L^1$-Konvergenz sprechen:
+\[ \lim_{n \to \infty} \| f_n - f \|_1 = 0, \text{ wobei } \| g \|_1 := \int_X |g| \diffop \mu. \]
+
+\clearpage
+
+Die folgenden Beispiele sind nützlich ($X = \real$):
+\begin{enumerate}[(i)]
+ \item $f_n = \rez{n} \cdot \ind_{(0, n]}$, $\int f_n \diffop \lambda = 1$,
+ \item $f_n = \ind_{(n,n+1)}$, $\int f_n \diffop \lambda = 1$,
+ \item $f_n = n \cdot \ind_{(0,\rez{n}]}$, $\int f_n \diffop \lambda = 1$,
+ \item $f_n = \ind_{[j/2^k,(j+1)/2^k]}$, wobei $k \in \nat$, $0 \le j \le 2^k$, $n = j + 2^k$, $\int f_n \diffop \lambda = \rez{2^k}$ (``Wandernde Hüte'')
+\end{enumerate}
+
+\begin{defn}
+ Eine Folge $\{f_n\}$ messbarer, komplexer Funktionen auf einem Maßraum $(X,\mA,\mu)$ ist eine \emph{Cauchy-Folge nach Maß}, wenn für jedes $\eps > 0$ gilt:
+ \[ \mu( \{ x : | f_n(x) - f_m(x) | \ge \eps \} ) \to 0; \quad n, m \to \infty. \]
+ Die Folge $\{ f_n \}$ \emph{konvergiert nach Maß} gegen eine messbare Funktion $f$, wenn
+ \[ \mu( \{ x : | f_n(x) - f(x) | \ge \eps \} ) \to 0; \quad n \to \infty. \]
+\end{defn}
+
+\section*{Produktmaße}
+\begin{lem}
+ \begin{enumerate}[(i)]
+  \item Wenn $E \in \mM \otimes \mN$, dann gilt $E_x \in \mN$ und $E^y \in \mM$ für alle $x \in X$, $y \in Y$.
+  \item Ist $f$ $\mM \otimes \mN$-messbar, so ist $f_x$ $\mN$-messbar für alle $x \in X$ und $f^y$ $\mM$-messbar für alle $y \in Y$.
+ \end{enumerate}
+\end{lem}
+
+\begin{thm}[Fubini-Tonelli]
+ Seien $(X,\mM,\mu)$ und $(Y,\mN,\nu)$ $\sigma$-endliche Maßräume.
+ 
+ \begin{enumerate}[(i)]
+  \item Tonelli: Ist $f \in \lebesgue^+(X \times Y)$, so sind die Funktionen $g:x \mapsto \int f_x \diffop \nu$ und $h:y \mapsto \int f^y \diffop \mu$ in $\lebesgue^+(X)$ bzw. $\lebesgue^+(Y)$ und
+  \begin{align*}
+   \int f \diffop (\mu \times \nu)
+     &= \int \left[ \int f(x,y) \diffop \nu(y) \right] \diffop \mu(x), \tag{1} \\
+     &= \int \left[ \int f(x,y) \diffop \mu(x) \right] \diffop \nu(y). \tag{2}
+  \end{align*}
+  \item Fubini: Ist $f \in \lebesgue'(\mu \times \nu)$, so gilt $f_x \in \lebesgue'(\nu)$ für fast alle $x \in X$, $f^y \in \lebesgue'(\mu)$ für fast alle $y \in Y$. Die fast überall definierten Funktionen $g:x \mapsto \int f_x \diffop \nu$ und $h:y \mapsto \int f^y \diffop \mu$ sind in $\lebesgue'(X)$ bzw. $\lebesgue'(Y)$ und es gelten die Gleichungen (1) und (2).
+ \end{enumerate}
+\end{thm}
+
+\section*{Das Lebesgue-Integral auf \texorpdfstring{$\real^n$}{IRn}}
+\begin{defn}
+ Das \emph{Lebesgue-Maß auf $\real^n$} ist die Vervollständigung des
+ Produktmaßes $\lambda \times \ldots \times \lambda$ auf $\borel(\real) \otimes
+ \ldots \otimes \borel(\real)$. 
+\end{defn}
+ 
+Die $\sigma$-Algebra der $\lambda_n$-messbaren Mengen wird mit $\lebesgue_n$
+bezeichnet, ihre Elemente heißen \emph{Lebesgue-messbare Mengen}. 
+
+
+\begin{thm}
+  Sei $\emptyset \ne \Omega \subseteq \real^n$ offen und $G: \Omega \to \real^n$
+  ein $C^1$-Diffeomorphismus.
+  \begin{enumerate}[(i)]
+    \item Ist $f$ eine Lebesgue-messbare Funktion auf $G(\Omega)$, so ist $f(G)$
+      Lebesgue-messbar. Ist $f \ge 0$ oder $f \in L^1(G(\Omega),\lambda)$, dann
+      ist
+      \[ \int_G f(x) \diffop x = \int_\Omega f(G(x)) \cdot | \det D_xG |
+        \diffop x. \]
+    \item ist $E \subseteq \Omega$ Lebesgue-messbar, dann ist $G(E)$
+      Lebesgue-messbar und es gilt
+      \[ \lambda( G(E) ) = \int_E |\det D_x G| \diffop x. \]
+  \end{enumerate}
+\end{thm}
+
+\begin{exmp}
+  \begin{enumerate}[a)]
+  \item Polarkoordinaten ($n=2$):
+    \[ x = r \cdot \cos \varphi, \quad y = r \cdot \sin \varphi. \]
+    Mit Satz 2.11.9 folgt $\diffop x \diffop y = r \diffop r \diffop
+    \varphi$.
+  \item Kugelkoordinaten ($n=3$):
+    \begin{align*}
+      x &= r \cdot \sin \varphi \cdot \cos \theta, \\
+      y &= r \cdot \sin \varphi \cdot \sin \theta, \\
+      z &= r \cdot \cos \varphi.
+    \end{align*}
+    Mit Satz 2.11.9 folgt $\diffop x \diffop y \diffop z = r \sin \varphi
+    \diffop r \diffop \varphi$.
+  \end{enumerate}
+\end{exmp}
+
+\begin{deno}
+  \[ \sphere^{n-1} = \{ x \in \real^n : \| x \| = 1 \}. \]
+  Ist $x \in \real^n \setminus \{0\}$, so schreiben wir $r := \|x\|$ und $x' :=
+  \frac{x}{\|x\|}$.
+
+  Die Abbildung
+  \[ \Phi(x) := (r,x') \]
+  ist eine stetige eindeutige Abbildung von $\real^n\setminus\{0\}$ auf
+  $(0,\infty) \times \sphere^{n-1}$. Die inverse Abbildung
+  \[ \Phi^{-1}(r, x') := r \cdot x' \]
+  ist auch stetig.
+
+  Wir bezeichnen mit $\lambda_*$ das Borel-Maß auf $(a,\infty)
+  \times \sphere^{n-1}$ definiert durch
+  \[ \lambda_* := \lambda(\Phi^{-1}(E)), \quad E \in \borel((a,\infty) \times
+    \sphere^{n-1},\]
+  das sogenannte Bildmaß.
+
+  Wir definieren $\rho = \rho_n$ auf $(0,\infty)$ durch
+  \[ \rho(A) := \int_A r^{n-1} \diffop r, \quad A \in \borel((0,\infty)). \]
+\end{deno}
+
+\begin{thm}
+  Auf $\sphere^{n-1}$ existiert ein eindeutiges Borel-Maß $\sigma = \sigma_{n-1}$
+  mit $\lambda_* = \rho \times \sigma$. Ist $f$ Borel-messbar mit $f \ge 0$ oder
+  $f \in L^1(\lambda)$, dann ist
+  \[ \int_{\real^n} f(x) \diffop x =  \int_0^\infty \int_{\sphere^{n-1}}
+    f(r,x') r^{n-1} \diffop \sigma(x') \diffop r. \tag{1} \]
+\end{thm}
+
+\begin{folg}
+  Seien $a > 0$, $f$ eine messbare Funktion und $B := \{ x : \|x\|<a\}$.
+  \begin{enumerate}[(i)]
+    \item Wenn $|f(x)| \le C \|x\|^{-\alpha}$ für ein $C > 0$, $\alpha < n$, dann
+      ist $f \in L^1(B)$.
+    \item Wenn $|f(x)| \ge C \|x\|^{-n}$ für ein $C > 0$, dann ist $f \notin
+      L^1(B)$.
+    \item Wenn $|f(x)| \le C \|x\|^{-\alpha}$ auf $B^C$ für ein $C > 0$, $\alpha
+      > n$, dann ist $f \in L^1(B^C)$.
+    \item Wenn $|f(x)| \ge C \|x\|^{-n}$ auf $B^C$ für ein $C > 0$, dann ist $f
+      \notin L^1(B^C)$.
+  \end{enumerate}
+\end{folg}  
+
+\begin{lem}
+  Für $a > 0$ gilt
+  \[ \int_{\real^n} \exp(-a\|x\|^2) \diffop x = \left(  \frac{\pi}{a}
+    \right)^{n/2}. \]
+\end{lem}
+
+\begin{lem}
+  Es gilt
+  \[ \sigma(\sphere^{n-1}) = \frac{2\pi^{n/2}}{\Gamma\left(  \frac{n}{2} \right)}. \]
+\end{lem}
+
+\begin{folg}
+  Das Lebesgue-Maß der Einheitskugel in $\real^n$ ist gleich
+  \[ \frac{2 \pi^{n/2}}{\Gamma\left(\frac{n}{2}+1\right)}.\]
+\end{folg}
+
+\end{document}

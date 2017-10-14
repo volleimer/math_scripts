@@ -69,1071 +69,188 @@
 
 \clearpage
 
-\chapter{Integrale}
-\section{Messbare Abbildungen}
-Zu jeder Abbildung $f:X \to Y$ zwischen zwei Mengen gehört eine \emph{inverse Abbildung} $f^{-1}:\pot(Y) \to \pot(X)$ definiert durch $f^{-1}(E) = \{ x \in X : f(x) \in E \}.$ Die inverse Abbildung kommutiert mit Vereinigung, Durchschnitt und Komplement:
-\begin{equation}
- \begin{aligned}
- f^{-1} \left( \bigcap_\alpha E_\alpha \right) &= \bigcap_\alpha f^{-1}(E_\alpha) \\
- f^{-1} \left( \bigcup_\alpha E_\alpha \right) &= \bigcap_\alpha f^{-1}(E_\alpha) \\
- f^{-1} ( E^C ) &= (f^{-1}(E) )^C
- \end{aligned}
- \tag{$\ast$}
-\end{equation}
-
-\begin{lem}
- Ist $\mN \subset \pot(Y)$ eine $\sigma$-Algebra, so ist auch
- \[ f^{-1}(\mN) := \{ f^{-1}(E) : E \in \mN \} \]
- eine $\sigma$-Algebra.
-\end{lem}
-
-\begin{proof}
- Das folgt aus den drei Gleichungen ($\ast$).
-\end{proof}
-
-\begin{defn}
- Sind $(X,\mM)$ und $(Y,\mN)$ Messräume, so heißt eine Abbildung $f: X \to Y$ \emph{$(\mM,\mN)$-messbar}\footnote{Das heißt $f^{-1}(\mN) \subset \mM$.} (oder einfach messbar), wenn $f^{-1}(E) \in \mM$, $E \in \mN$.
- 
- \emph{Vergleich zur Stetigkeit:} Urbilder von offenen Mengen sind offen.
-\end{defn}
-
-\begin{lem}
- Sind $(X,\mM)$, $(Y,\mN)$ und $(Z,\mO)$ Messräume und $f:X \to Y$, $g: Y \to Z$ $(\mM,\mN)$-messbare bzw. $(\mN,\mO)$-messbare Abbildungen, so ist $f \circ g = g(f)$ $(\mM,\mO)$-messbar.
-\end{lem}
-
-\begin{proof}
- Einfach.
-\end{proof}
+\input{02_integrale}
 
 \clearpage
 
-\begin{lem}
- Ist $\mE$ ein Erzeuger für die $\sigma$-Algebra $\mN$, so ist $f$ genau dann $(\mM,\mN)$-messbar, wenn $f^{-1}(\mE) \subset \mM$.
-\end{lem}
-
-\begin{proof}
- Die eine Richtung folgt aus der Definition der Messbarkeit von $f$. Nehmen wir an, dass $f^{-1}(\mE) \subset \mM$. Die Familie $\{ E \subset Y : f^{-1}(E) \in \mM \}$ ist wegen ($\ast$) eine $\sigma$-Algebra, die $\mE$ enthält, folglich enthält sie auch $\mN$.
-\end{proof}
-
-\begin{folg}
- Sind $X$ und $Y$ metrische Räume, so ist jede stetige Abbildung $f: X \to Y$ $(\borel(X),\borel(Y))$-messbar.
-\end{folg}
-
-\begin{proof}
- $f$ stetig $\Leftrightarrow$ $f^{-1}(U)$ offen für beliebige offene Menge $U \subset Y$. Die Behauptung folgt deshalb aus Lemma 2.1.4.
-\end{proof}
-
-Sei $(X,\mM)$ ein Messraum. Eine \emph{reellwertige} oder \emph{komplexwertige} Funktion $f$ auf $X$ heißt $\mM$-messbar (oder einfach messbar), wenn sie $(\mM,\borel(\real))$- oder $(\mM,\borel(\complex))$-messbar ist. Standardmäßig betrachten wir also die Borelmengen im Wertebereich.
-
-\textbf{Spezialfälle.}
-\begin{itemize}
- \item $f: \real \to \real$ heißt \emph{Lebesgue}-messbar, wenn sie $(\mM_\lambda, \borel(\real))$-messbar ist.
- \item $f: \real \to \real$ heißt \emph{Borel}-messbar, wenn sie $(\borel(\real), \borel(\real))$-messbar ist.
- \item Analog für komplexwertige Funktionen.
-\end{itemize}
-
-\textbf{Warnung.}
-Sind $f,g: \real \to \real$ Lebesgue-messbar, so braucht $g(f)$ nicht Lebesgue-messbar zu sein\footnote{Lemma 2.1.3 ist hier aufgrund der Definition der Lebesgue-Messbarkeit nicht anwendbar.}!
-
-\begin{lem}
- Sei $f$ eine rechtsstetige Funktion auf dem Messraum $(X,\mM)$. Die folgenden Aussagen sind äquivalent:
- \begin{enumerate}[(i)]
-  \item $f$ ist $\mM$-messbar (genauer $(\mM,\borel(\real))$-messbar).
-  \item $f^{-1}((a,\infty)) \in \mM$, $a \in \rat$.
-  \item $f^{-1}((a,\infty)) \in \mM$, $a \in \rat$.
-  \item $f^{-1}([a,\infty)) \in \mM$, $a \in \rat$.
-  \item $f^{-1}((-\infty,a)) \in \mM$, $a \in \rat$.
-  \item $f^{-1}((-\infty,a]) \in \mM$, $a \in \rat$.
- \end{enumerate}
-\end{lem}
-
-\begin{proof}
- Aufgabe (Folgt aus Lemma 2.1.4 und Aufgabe 1.4.4).
-\end{proof}
-
-\clearpage
-
-\begin{lem}
- Seien $(X,\mM)$ und $(Y_\alpha, \mN_\alpha)$, $\alpha \in A$, Messräume, $Y := \prod_{\alpha \in A} Y_\alpha$ und $\mN := \bigotimes_{\alpha \in A} \mN_\alpha$.
- \begin{enumerate}[(i)]
-  \item Die Koordinatenprojektionen $\Pi_\alpha: Y \to Y_\alpha$ sind $(\mN,\mN_\alpha)$-messbar.
-  \item Eine Abbildung $f: X \to Y$ ist genau dann $(\mM,\mN)$-messbar, wenn die Abbildung $f_\alpha := \Pi_\alpha(f)$ $(\mM,\mN_\alpha)$-messbar ist für alle $\alpha$.
- \end{enumerate}
-\end{lem}
-
-Zum Beispiel $Y = Y_1 \times Y_2$, $f(x) = ( f_1(x), f_2(x) )$, $\Pi_1(f(x)) = f_1(x)$.
-
-\begin{proof}
- (i) folgt aus der Definition von $\mN$ und Lemma 2.1.4.
- \[ \Pi^{-1}_\alpha ( N_\alpha ) = \prod_{\beta \in A} Z_\beta \in \mN, \quad \text{für alle } N_\alpha \in \mN_\alpha \]
- $Z_\alpha = N_\alpha$, $Z_\beta = Y_\beta$ für $\beta \ne \alpha$.
- (ii) Ist $f$ messbar, so ist auch $f_\alpha$ messbar nach Lemma 2.1.3. Ist umgekehrt $f_\alpha$ messbar für alle $\alpha$, so gilt
- \[ f^{-1}( \Pi_\alpha^{-1}( E_\alpha ) ) = f_\alpha^{-1} (E_\alpha) \in \mM, \quad \text{für alle } E_\alpha \in \mN_\alpha. \]
- Nach Lemma 2.1.4 ist $f$ messbar.
-\end{proof}
-
-\begin{folg}
- $f: X \to \complex$ ist genau dann $\mM$-messbar, wenn $\Re f$ und $\Im f$ messbar sind.
-\end{folg}
-
-\begin{proof}
- $\complex = \real \times \real$, also ist $\borel(\complex) = \borel( \real \times \real ) = \borel( \real ) \otimes \borel(\real)$ nach 1.9.5.
-\end{proof}
-
-\begin{folg}
- Seien $f_1, \ldots, f_d$ reell- oder komplexwertige Funktionen auf $X$. Die Abbildung $f := (f_1, \ldots, f_d) \in \real^d$ bzw. $\complex^d$ ist genau dann Borel-messbar, wenn $f_1, \ldots, f_d$ Borel-messbar sind.
-\end{folg}
-
-\begin{proof}
- Das folgt auch aus 1.9.5.
-\end{proof}
-
-\begin{folg}
- Sind $f,g: X \to \complex$ $\mM$-messbar, so sind auch $f+g$, $fg$ und $f/g$ (falls definiert) $\mM$-messbar.
-\end{folg}
-
-\begin{proof}
- $F := (f,g)$ ist $(\mM,\borel(\complex \times \complex))$-messbar nach 2.1.9. $\psi(x,y) := x + y$, $x,y \in \complex$ ist stetig und damit Borel-messbar. Also ist $f+g = \psi(F)$ $\mM$-messbar.
- 
- $fg$ und $f/g$ folgen analog.
-\end{proof}
-
-Es ist manchmal zweckmäßig, Funktionen zu betrachten, deren Werte aus
-\[ \realext := [-\infty,\infty] := \real \cup \{-\infty, \infty\} \]
-sind. Wir definieren die Borel-$\sigma$-Algebra in $\realext$ durch 
-\[ \borel(\realext) := \{ E \subset \realext : E \cap \real \in \borel( \real ) \} \]
-Es ist leicht zu sehen, dass die Familie der Mengen $(a, \infty]$ oder $[-\infty,a)$, $a \in \real$ (oder $\rat$), Erzeuger für $\borel(\realext)$ sind.
-
-\begin{lem}
- Ist $\{f_n\}$ eine Folge messbarer, $\realext$-wertiger Funktionen auf $(X, \mM)$, so sind die Funktionen 
- \begin{align*}
-  g_1(x) &= \sup_j f_j(x), & g_2(x) &= \inf_j f_j(x), \\
-  g_3(x) &= \limsup_{j} f_j(x), & g_4(x) &= \liminf_j f_j(x)
- \end{align*}
- messbar.
- 
- Existiert $f(x) = \lim_j f_j(x)$ für alle $x$, so ist auch $f$ messbar.
-\end{lem}
-
-\begin{proof}
- Es gilt
- \begin{align*}
-   g_1^{-1}( (a, \infty] ) &= \bigcup_{j} f_j^{-1} ((a,\infty]), & g_2^{-1}([-\infty,a)) = \bigcup_j ([-\infty,a)).
- \end{align*}
- Nach 2.1.4 sind $g_1$ und $g_2$ messbar. Hieraus folgt, dass $h_k(x) := \sup_{j > k} f_j(x)$ messbar ist, also auch $g_3 = \inf_{k \ge 0} h_k(x)$. Analog für $g_4$.
- 
- Wenn der Grenzwert $\lim_j f_j(x)$ existiert, dann ist $f = g_3 = g_4$ und damit $f$ messbar.
-\end{proof}
-
-\begin{folg}
- Sind $f,g : X \to \realext$ messbar, so auch $\max(f,g)$ und $\min(f,g)$.
-\end{folg}
-
-\begin{folg}
- Ist $\{f_i\}$ eine Folge komplexwertiger, messbarer Funktionen und existiert $\lim_i f_i(x) = f(x)$ für alle $x$, so ist $f$ messbar.
-\end{folg}
-
-\begin{proof}
- Das folgt aus 2.1.8.
-\end{proof}
-
-\begin{deno}
- \begin{itemize}
-  \item Für eine Funktion $f: X \to \realext$ definieren wir den \emph{positiven} und den \emph{negativen} Teil von $f$ durch 
-  \[ f^+ = \max( f(x), 0 ), \qquad f^- = \max( -f(x), 0 ). \]
-  \item Ist $f$ messbar, so auch $f^+$ und $f^-$ (siehe Folgerung 2.1.12). 
-  \item Ist $f:X \to \complex$, so gilt die \emph{Polarzerlegung}
-  \[ f = \sgn f \cdot |f|, \]
-  wobei $\sgn z = \frac{z}{|z|}$, $z \ne 0$ und $\sgn 0 = 0$.
-  \item Ist $f$ messbar, so auch $\sgn(f)$ und $|f|$.
-  \item Sei $X, \meas$ ein Messraum und $E \subset X$. Die Funktion $\ind_E$, die auf $E$ den Wert 1 und sonst den Wert 0 annimmt, heißt \emph{Indikatorfunktion} von $E$. Sie ist genau dann messbar, wenn $E \in \meas$.\footnote{Es gilt $\ind^{-1}( B ) \in \{ \emptyset, E, E^C, X \}$.}
-  \item Eine \emph{einfache Funktion} (oder Treppenfunktion) $f$ auf $X$ ist eine endliche Linearkombination von Indikatorfunktionen von Mengen aus $\meas$: 
-  \[ f = \sum_{j=1}^n c_j \ind_{E_j}, \quad c_j \in \complex, \quad E_j \in \meas. \]
-  \item Summe und Produkt von einfachen Funktionen sind einfach.
- \end{itemize}
-\end{deno}
-
-\begin{thm}
- Sei $(X, \meas)$ ein Messraum.
- \begin{enumerate}[(i)]
-  \item Ist $f: X \to [0, \infty]$ messbar, so existiert eine Folge $\{ \varphi_n \}$ von einfachen Funktionen mit $0 \le \varphi_1 \le \varphi_2 \le \ldots \le f$, $\varphi_n \to f$, punktweise und $\varphi_n \to f$ gleichmäßig auf jeder Menge, wo $f$ beschränkt ist.
-  \item Ist $f: X \to \complex$ messbar, so existiert eine Folge $\{ \varphi_n \}$ von einfachen Funktionen mit $0 \le |\varphi_1| \le |\varphi_2| \le \ldots \le |f|$, $\varphi_n \to f$, punktweise und $\varphi_n \to f$ gleichmäßig auf jeder Menge, wo $f$ beschränkt ist.
- \end{enumerate}
-\end{thm}
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Für $n \in \nat$, $0 \le k \le 2^{2n}-1$ seien $E_n^k := f^{-1} (( k \cdot 2^{-n} , (k+1) \cdot 2^{n-} ] )$, $F_n := f^{-1}((2^n, \infty])$, 
-  \[ \varphi := \sum_{k=0}^{2^{2n} - 1} k \cdot 2^{-n} \ind_{E_n^k} + 2^n \ind_{F_n}. \]
-  Es ist leicht zu sehen: Für alle $n \in \nat$ gilt: $0 \le f - \varphi_n \le 2^{-n}$ auf der Menge, wo $f \le 2^n$, $\varphi_n \le \varphi_{n+1}$.
-  \item Sei $f = g + i \cdot h = (g^+ - g^-) + i( h^+ - h^- )$. Nach (i) wählen wir die entsprechenden Folgen $\psi_n^+$, $\psi_n^-$, $\chi_n^+$ und $\chi_n^-$. Dann setzen wir $\varphi_n := (\psi_n^+  - \psi_n^-) + i(\chi_n^+ - \chi_n^-)$. \qedhere
- \end{enumerate}
-\end{proof}
-
-\begin{lem}
- Sei $\mu$ ein vollständiges Maß, $f,f_n,g: X \to \real^d$ oder $\complex^d$.
- \begin{enumerate}[(i)]
-  \item Ist $f$ messbar und $f=g$ fast überall, so ist $g$ messbar.
-  \item Ist $f_n$, $n \in \nat$ messbar und $f_n \to f$ fast überall, so ist $f$ messbar.
- \end{enumerate}
-\end{lem}
-
-\textbf{Anmerkung.}
-Ist $\mu$ nicht vollständig, so sind (i) und (ii) falsch!
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Es gilt
-  \[ g^{-1}(B) = \Big( [g=b] \cap f^{-1}(B) \Big) \cup \Big( [g \ne b] \cap g^{-1}(B) \Big), \]
-  die Menge $[g=b] \cap f^{-1}(B)$ ist messbar aufgrund der Voraussetzung und $[g \ne b] \cap g^{-1}(B)$ ist eine Nullmenge und damit messbar, weil $\mu$ vollständig ist.
-  \item Verläuft ähnlich. Sei $N$ eine $\mu$-Nullmenge und $N_0 \subset N$ mit $N_0 \notin \meas_\mu$. Dann ist $g := \ind_{N_0} = 0 =: f$ fast überall, aber $\ind_{N_0}$ ist nicht messbar. \qedhere
- \end{enumerate}
-\end{proof}
-
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-2-Teil-1.pdf+ und \verb+Aufgaben-2-2-Teil-2.pdf+.
-
-\section{Integration nichtnegativer Funktionen}
-In diesem Abschnitt ist $(X,\meas,\mu)$ ein Maßraum.
-
-Die Menge $L^+$ ist die Menge aller messbaren Funktionen $f:X \to [0, \infty]$.
-
+\chapter{Weitere Eigenschaften von Maßen}
+\section{Der Satz von Lebesgue-Radon-Nikod\'{y}m}
 \begin{defn}
- Sei $\varphi \in L^+$ eine einfache Funktion mit Standard-Darstellung $\varphi = \sum_1^n a_j \ind_{E_j}$. Wir definieren das \emph{Integral} von $\varphi$ bezüglich $\mu$ durch
- \[ \int \varphi \diffop \mu := \sum_{j=1}^n a_j \mu( E_j ). \]
+  Seien $\mu, \nu$ $\sigma$-endliche Maße auf $(X,\mM)$. Das Maß $\nu$ heißt
+  \emph{absolut stetig} bezüglich $\mu$ ($\nu \ll \mu$) wenn für jedes $E \in
+  \mM$ mit $\mu(E) = 0$ auch $\nu(E) = 0$ gilt.
+
+  Die Maße $\mu$ und $\nu$ heißen (zueinander) \emph{singulär} ($\nu \perp \mu$), wenn ein $E \in
+  \mM$ existiert, sodass $\mu(E) = 0$ und $\nu(X \setminus E) = 0$.
+
+  Komplementäre Begriffe:
+  \[ \nu \ll \mu, \qquad \nu \perp \mu \qRq \nu = 0. \]
 \end{defn}
 
-\begin{rmrk*}
- \begin{itemize}
-  \item $\int \varphi \diffop \mu = \infty$ ist möglich, zum Beispiel $\int \ind_\real \diffop \lambda = \infty$.
-  \item Kurze Schreibweise: $\int \varphi$, wenn keine Verwechselungsgefahr.
-  \item Angabe der Funktionsvariable: $\int \varphi(x) \diffop \mu(x)$, zum Beispiel wenn mehrere Variablen vorkommen:
-  \[ \int \varphi( x_1, x_2, x_3 ) \diffop \mu(x_2). \]
-  Auch üblich: $\int \varphi(x) \mu(\diffop x)$.
- \end{itemize}
-\end{rmrk*}
+\begin{exmp}
+  Sei $\mu$ ein Maß auf $(X,\mM)$ und $f \in L'$. Dann wird durch
+  \[ \nu(E) := \int_E f \diffop \mu, \quad E \in \mM \]
+  ein Maß $\nu$ auf $(X,\mM)$ definiert mit $\nu \ll \mu$.
 
-Ist $A \in \meas$ und $\varphi$ wie oben, so ist 
-\[ \varphi \cdot \ind_A = \sum_{j=1}^n a_j \ind_{E_j \cap A} \in L^+. \]
-Wir schreiben
-\[ \int_A \varphi \diffop \mu := \int \varphi \cdot \ind_A \diffop \mu \]
-\emph{Integral über $A$}.
+  Wir schreiben $\diffop \nu = f \diffop \mu$ ($f$ Dichte, $\nu$ Maß mit Dichte).
+\end{exmp}
 
-\begin{lem}
- Für einfache Funktionen $\varphi, \si \in L^+$ gilt:
- \begin{enumerate}[(i)]
-  \item $\int c \varphi = c \int \varphi$, $c \ge 0$,
-  \item $\int(\varphi + \psi) = \int \varphi + \int \psi$,
-  \item wenn $\varphi \le \psi$, dann $\int \varphi \le \psi$,
-  \item $A \to \int_A \varphi$ ist ein Maß auf $\meas$.
- \end{enumerate}
-\end{lem}
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Ist einfach.
-  \item Seien $\varphi = \sum_{j=1}^n a_j \ind_{E_j}$, $\psi = \sum_{j=1}^m b_j \ind_{F_j}$ die Standard-Darstellungen. Aus 
-  \[ E_j = \bigcup_{k=1}^m ( E_j \cap F_k ), \quad F_k = \bigcup_{j=1}^n ( E_j \cap F_k ), \]
-  wobei die Vereinigungen disjunkt sind, folgt wegen der Additivität von $\mu$ 
-  \[ \begin{aligned}
-      \int \varphi + \int \psi &= \sum_{j=1}^n a_j \mu( E_j ) + \sum_{k=1}^m b_k \mu( F_k ) \\
-      &= \sum_{j,k} (a_j + b_k) \mu (E_j \cap F_k ).
-     \end{aligned} \]
-  Dieselbe Überlegung zeigt, dass die Summe rechts gleich $\int(\varphi + \psi)$ ist.
-  \item Wenn $\varphi \le \psi$ und $E_j \cap F_k \ne \emptyset$, dann $a_j \le b_k$ $\Rightarrow$
-  \[ \int \varphi = \sum_{j,k} a_j \mu( E_j \cap F_k ) \le \sum_{j,k} b_k \mu (E_j \cap F_k) = \int \psi. \]
-  \item Seien $A_j \in \meas$, $j \in \nat$ disjunkt und $A := \bigcup_1^\infty A_j$.
-  \[ \begin{aligned}
-      \int_A \varphi &= \sum_j a_j \mu( A \cap E_j ) \\
-      &= \sum_{j,k} a_j \mu ( A_j \cap E_j ) \\
-      &= \sum_k \int_{A_k} \varphi
-     \end{aligned} \]
-  und damit folgt die Behauptung. \qedhere
- \end{enumerate}
-\end{proof}
-
-\begin{defn}
- Für eine beliebige Funktion $f \in L^+$ sei
- \[ \int f \diffop \mu := \sup \left\{ \int \varphi \diffop \mu : 0 \le \varphi \le f, \varphi \text{ einfach } \right\}. \]
-\end{defn}
-
-\textbf{Anmerkungen.} 
-Aus 2.3.2(iii) folgt, dass die zwei Definitionen für $\int f$ übereinstimmen, wenn $f$ einfach ist. Aus der Definition ist außerdem klar:
-\[ \int f \le \int g, \text{ wenn } f \le g, \qquad \int f = c \cdot \int f, c \ge 0. \]
-
-\begin{thm}[Monotone Konvergenz, Beppo Levi]
- Ist $\{f_n\}$ eine Folge in $L^+$ mit $f_j \le f_{j+1}$ für alle $j$ und $f = \lim_{n \to \infty} f_n$, so gilt
- \[ \int f = \lim_{n \to \infty} \int f_n.\footnotemark \]
-\end{thm}
-\footnotetext{Beide Grenzwerte existieren wegen der Monotonie, $\infty$ ist möglich.}
-
-\begin{proof}
- Für alle $n$ gilt $\int f_n \le \int f$ $\Rightarrow$ $\lim \int f_n \le \int f$. Es bleibt noch zu zeigen, dass $\lim \int f_n \ge \int f$. 
- 
- Sei $\alpha \in (0,1)$ beliebig, sei $\varphi$ eine einfache Funktion mit $0 \le \varphi \le f$ und $E_n := \{ x : f_n(x) \ge \alpha \cdot f(x) \}$. Dann gilt $E_n \subset E_{n+1}$, weil $f_n \le f_{n+1}$, $\bigcup E_n = X$ und
- \[ \int f_n \ge \int_{E_n} f_n \ge \alpha \int_{E_n} \varphi. \]
- Nach 2.3.2(iv) und der Stetigkeit von unten ist
- \[ \lim \int_{E_n} \varphi = \int \varphi \qRq \lim \int f_n \ge \alpha \int \varphi \]
- für alle $\alpha \in (0,1)$, also auch für $\alpha = 1$. 
- 
- Wir bilden das Supremum über alle einfachen Funktionen $0 \le \varphi \le f$ und erhalten:
- \[ \lim \int f_n \ge \int f. \qedhere \]
-\end{proof}
-
-\begin{thm}
- Ist $\{ f_n \}$ eine endliche oder unendliche Folge in $L^+$ und $f = \sum_n f_n$, so gilt
- \[ \int f =  \sum_n \int f_n. \]
+\begin{thm}[Lebesgue-Radon-Nikod\'{y}m]
+  Seien $\mu, \nu$ endliche Maße auf $(X,\mM)$. Dann existieren eindeutig
+  bestimmte (endliche) Maße $\nu_{as}, \nu_s$ mit
+  \[ \nu = \nu_{as} + \nu_s, \quad \nu_{as} \ll \mu, \quad \nu_s \perp \mu. \]
+  Weiterhin existiert eine $\mu$-fast überall \emph{eindeutig} bestimmte
+  Funktion $f^* \in L^+$, sodass
+  \[ \diffop \nu_{as} = f^* \diffop \mu. \]
 \end{thm}
 
-\begin{proof}
- Wir betrachten zunächst zwei Funktionen $f_1$ und $f_2$. Nach Satz 2.1.15 existieren monoton wachsende  Folgen $\{ \varphi_j \}$ und $\{ \psi_j \}$ von einfachen Funktionen, die gegen $f_1$ bzw. $f_2$ konvergieren. Dann konvergiert die \emph{monoton wachsende Folge} $\{ \varphi_j + \psi_j \}$ gegen $f_1 + f_2$. Nach dem Satz über monotone Konvergenz (m) und der Additivität für einfache Funktionen (a) gilt:
- \[ \int (f_1 + f_2 ) \overset{(\text{m})}{=} \lim \int (\varphi_j + \psi_j) \overset{(\text{a})}{=} \lim \int \varphi_j + \lim \int \psi_j \overset{(\text{m})}{=} \int f_1 + \int f_2. \]
- 
- Induktion über $N$ liefert
- \[ \int \sum_{n=1}^N f_n = \sum_{n=1}^N \int f_N. \]
- 
- Ist die Folge unendlich, so bilden wir den Grenzwert $N \to \infty$:
- \[ \int \sum_{n=1}^\infty f_n \overset{(\text{m})}{=} \sum_{n=1}^\infty \int f_n. \qedhere \]
-\end{proof}
-
-\begin{thm}
- Für eine Funktion $f \in L^+$ gilt $\int f = 0$ genau dann, wenn $f=0$ fast überall.
-\end{thm}
+Die Zerlegung $\nu = \nu_1 + \nu_s$ heißt \emph{Lebesgue-Zerlegung} des Maßes
+$\nu$ bezüglich $\mu$ und $f^*$ heißt \emph{Radon-Nikod\'{y}m-Ableitung} von
+$\nu$ bezüglich $\mu$.
 
 \begin{proof}
- Sei zuerst $f = \sum_j a_j \ind_{E_j}$, $a_j \ge 0$ eine einfache Funktion. Dann gilt $\int f = \sum_j a_j \mu( E_j ) = 0$ genau dann, wenn für alle $j$ entweder $a_j = 0$ oder $\mu( E_j ) = 0$, also ist $f = 0$ fast überall.
- 
- Allgemein: Wenn $f=0$ fast überall und $\varphi$ eine einfache Funktion ist mit $0 \le \varphi \le f$, dann ist $\varphi = 0$ fast überall. Also
- \[ \int f = \sup \left\{ \int \varphi \right\} = 0. \]
- 
- Andere Richtung: Es gilt
- \[ \{ x : f(x) > 0 \} = \bigcup_{n=1}^\infty E_n, \]
- wobei $E_n := \{ x : f(x) > \rez{n} \}$. Wäre die Aussage $f=0$ fast überall falsch, so hätten wir $\mu(E_n) > 0$ für ein $n$. Wegen $f \ge n \cdot \ind_{E_n}$ gilt dann 
- \[ \int f \ge n \mu( E_n ) > 0, \]
- Widerspruch.
-\end{proof}
-
-\begin{folg}
- Sei $f \in L^+$ und $\{ f_n\}$ eine monoton wachsende Folge in $L^+$, die fast überall gegen $f$ konvergiert. Dann gilt $\int f = \lim \int f_n.$
-\end{folg}
-
-\begin{proof}
- Übungsaufgabe.
-\end{proof}
-
-\begin{thm}[Lemma von Fatou]
- Sei $(f_n)_{n \in \nat}$ eine Folge in $L^+$. Dann gilt
- \[ \int \lim_{n \to \infty} f_n \diffop \mu \le \lim_{n \to \infty} \int f_n \diffop \mu. \]
-\end{thm}
-
-\begin{proof}
- Für alle $k \in \nat$ gilt
- \[ \inf_{n \ge k} f_n \le f_j \]
- für alle $j \ge k$. Damit folgt 
- \begin{align*}
-     \int \inf_{n \ge k} f_n \diffop \mu &\le \int f_j \diffop \mu, \\
-     \Rightarrow \int \inf_{n \ge k} f_n \diffop \mu &\le \inf_{j \ge k} \int f_j \diffop \mu. \tag{$*$}
- \end{align*}
- Wir bilden den Grenzwert $k \to \infty$ und wenden den Satz von der monotonen Konvergenz (m) an:
- \begin{align*}
-     \int \liminf_{n \to \infty} f_n \diffop \mu &= \int \lim_{n \to \infty} \underbrace{\inf{n \ge k} f_n}_{\text{aufsteigend, messbar, } > 0} \diffop \mu \\
-     &\overset{(\text{m})}{=} \lim_{k \to \infty} \int \inf_{n \ge k} f_n \diffop \mu \\
-     &\overset{(*)}{=} \lim_{k \to \infty} \inf_{n \ge k} \int f_n \diffop \mu \\
-     &= \liminf_{k \to \infty} f_k \diffop \mu. \qedhere
- \end{align*}
-\end{proof}
-
-\begin{folg}
- Sei $(f_n)_n$ eine Folge in $L^+$, die fast überall gegen eine Funktion $f \in L^+$ konvergiert. Dann ist
- \[ \int f \diffop \mu \le \liminf_{n \to \infty} \int f_n \diffop \mu. \]
-\end{folg}
-
-\begin{proof}
- Gilt die Konvergenz überall, dann ist
- \[ f(x) = \lim_{n \to \infty} f_n(x) = \liminf_{n \to \infty} f_n(x) \]
- für alle $x \in X$ und somit folgt die Behauptung aus dem Lemma von Fatou. 
- 
- Konvergenz überall können wir erreichen, indem wir $f_n$ und $f$ auf einer Nullmenge ändern\footnote{Passe $f_n$ und $f$ so an, dass $f'_n$ auch gegen $f'$ konvergiert auf der Nullmenge, wo $f_n$ \emph{nicht} gegen $f$ konvergiert.}, das ändert nicht die Integrale.
-\end{proof}
-
-\begin{lem}
- Sei $f \in L^+$ und $\int f \diffop \mu < \infty$. Dann
- \begin{enumerate}[(i)]
-  \item $\{ x \in X,  f(x) = \infty \}$ ist eine Nullmenge.
-  \item $\{ x \in X, f(x) > 0 \}$ ist $\sigma$-endlich.
- \end{enumerate}
-\end{lem}
-
-\begin{proof}
- Übungsaufgabe.
-\end{proof}
-
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-4.pdf+.
-
-\section{Integration komplexer Funktionen}
-In diesem Abschnitt ist $(X, \meas, \mu)$ ein Maßraum.
-
-\begin{defn}
- Sei $f:X \to \realext$ eine messbare Funktion. Ist $\int f^+ \diffop \mu < \infty$ oder $\int f^- \diffop \mu < \infty$, so definieren wir das \emph{Integral von $f$} bezüglich $\mu$ durch
- \[ \int f \diffop \mu := \int f^+ \diffop \mu - \int f^- \diffop \mu. \]
- Sind $\int f^+ \diffop \mu < \infty$ und $\int f^- \diffop \mu < \infty$, so heißt $f$ \emph{integrierbar}. 
- 
- Wegen $0 \le f^2 \le |f| = f^+ + f^-$ ist $f$ genau dann integrierbar, wenn $\int |f| \diffop \mu < \infty.$
-\end{defn}
-
-\begin{lem}
- Die Menge der reellwertigen integrierbaren Funktionen bildet einen reellen linearen Raum\footnotemark und das Integral ist ein lineares Funktional\footnotemark auf diesem Raum.
-\end{lem}
- \addtocounter{footnote}{-2} %3=n
- \stepcounter{footnote}\footnotetext{Ein linearer Raum $X$ ist abgeschlossen bezüglich Skalarmultiplikation und Addition}
- \stepcounter{footnote}\footnotetext{Sei $V$ ein $\mathbb{K}$-Vektorraum. Ein lineares Funktional ist eine lineare Abb. $T: V \to \mathbb{K}$.}
-
-\begin{proof}
- \textbf{Linearer Raum:} Das folgt aus
- \[ | af + bg | \le |a| \cdot |f| + |n| \cdot |g| \]
- für alle $a,b \in \real$, $f,g$ Funktionen.
- 
- Sind $f,g$ integrierbar, so folgt daraus, dass $af + bg$ integrierbar ist.
- 
- \textbf{Lineares Funktional:} $\int (af) \diffop \mu = a \int f \diffop \mu$ für alle $a \in \real$ ist trivial.
- 
- Seien $f,g$ integrierbar und $h = f+g$. Dann ist $h = h^+ - h^- = (f^+ - f^-) + (g^+ - g^-)$, also
- \[ h^+ + f^- + g^- = h^- + f^+ + g^+ \ge 0. \]
- Nach Satz 2.3.5 ist
- \[ \int h^+ \diffop \mu + \int f^- \diffop \mu + \int g^- \diffop \mu = \int h^- \diffop \mu + \int f^+ \diffop \mu + \int g^+ \diffop \mu \]
- und damit
- \[ \int h \diffop \mu = \int f \diffop \mu + \int g \diffop \mu. \qedhere \]
-\end{proof}
-
-\begin{defn}
- Eine messbare Funktion $f: X \to \complex$ heißt \emph{integrierbar}, falls $\int |f| \diffop \mu < \infty$.
- 
- \textbf{Allgemeiner:} $f$ heißt auf $E \in \meas$ integrierbar, falls $\int_E |f| \diffop \mu$ endlich ist. Wegen $|f| \le |\Re f| + |\Im f| \le 2 |f|$ folgt, dass $f$ genau dann integrierbar ist, wenn $\Re f$ und $\Im f$ integrierbar sind. In diesem Fall sei
- \[ \int f \diffop \mu = \int \Re f \diffop \mu + i \int \Im f \diffop \mu. \]
- Insbesondere gilt
- \[ \Re \left( \int f \diffop \mu \right) = \int \Re f \diffop \mu, \qquad
-    \Im \left( \int f \diffop \mu \right) = \int \Im f \diffop \mu. \]
-\end{defn}
-
-\begin{lem}
- Die Menge aller komplexwertigen integrierbaren Funktionen ist ein komplexer linearer Raum und das Integral ist ein lineares Funktional auf diesem Raum.
-\end{lem}
-
-\begin{proof}
- Einfach, ähnlich wie der Beweis von 2.5.2.
-\end{proof}
-
-Bezeichnung für den obigen Raum: $\intf^1(X)$, $\intf^1(X,\mu)$, $\intf^1(\mu)$ oder einfach $\intf^1$.
-
-\begin{lem}
- Für $f \in \intf^1$ gilt
- \[ \left| \int f \diffop \mu \right| \le \int |f| \diffop \mu. \]
-\end{lem}
-
-\begin{proof}
- Ist $\int f \diffop \mu = 0$, dann ist die Behauptung trivial.
- 
- \textbf{Fall 1:} $f$ ist reellwertig. Dann
- \[ \begin{aligned}
-     \left| \int f \diffop \mu \right| &\overset{\text{Def.}}{=} \left| \int f^+ \diffop \mu - \int f^- \diffop \mu \right| \\
-     &\le \left| \int f^+ \diffop \mu \right| + \left| \int f^- \diffop \mu \right|
-     = \int f^+ \diffop \mu + \int f^- \diffop \mu \\
-     &= \int ( f^+ + f^- ) \diffop \mu = \int |f| \diffop \mu.
-    \end{aligned} \]
- \textbf{Fall 2:} $f$ ist komplexwertig. Sei 
- \[ \alpha = \frac{ \obar{\int f  \diffop \mu} }{ | \int f \diffop \mu |}. \]
- Dann gilt $|\alpha| \le 1$ und
- \[ \left| \int f \diffop \mu \right| \overset{(\text{z})}{=} \alpha \int f \diffop \mu = \int \alpha f \diffop \mu, \]
- wobei (z): $z\obar{z} = |z|^2, z := \int f \diffop \mu$. Also
- \begin{align*}
-  \left| \int f \diffop \mu \right| &= \Re \left| \int f \diffop \mu \right| = \Re \left( \int \alpha f \diffop \mu \right) \\
-  &= \int \Re (\alpha f) \diffop \mu \le \int \underbrace{|\alpha f|}_{|\alpha|\cdot|f| \le |f|} \diffop \mu \\
-  &\le \int |f| \diffop \mu. \qedhere
- \end{align*}
-\end{proof}
- 
-\begin{lem}
- Ist $f \in \intf^1$, dann gilt $\{ x, f(x) \ne 0 \}$ ist $\sigma$-endlich.  
-\end{lem}
-
-\begin{proof}
- Übungsaufgabe.
-\end{proof}
-
-\begin{lem}
- Für $f,g \in \intf^1$ sind äquivalent:
- \begin{enumerate}[(i)]
-  \item $\int_E f \diffop \mu =  \int_E g \diffop \mu$ für alle $E \in \meas$.
-  \item $\int |f-g| \diffop \mu = 0$.
-  \item $f=g$ fast überall.
- \end{enumerate}
-\end{lem}
-
-\begin{proof}
- Übungsaufgabe.
-\end{proof}
-
-\begin{rmrk}
- Das Integral einer Funktion $f$ ändert sich also nicht, wenn wir $f$ auf einer Nullmenge modifizieren. Demzufolge können wir Funktionen integrieren, die nur fast überall definiert sind. In den nicht definierten Punkten können wir die Funktion zum Beispiel gleich 0 setzen.
- 
- In diesem Sinne können wir $\realext$-wertige Funktionen, die fast überall endlich sind, als $\real$-wertig betrachten.
-\end{rmrk}
-
-\textbf{Bezeichnung.} 
-$L^1(\mu)$ ist die Menge der Äquivalenzklassen von fast überall definierten $\mu$-integrierbaren Funktionen, wobei $f$ und $g$ äquivalent heißen, falls $f = g$ fast überall.
-
-Dann ist $L^1(\mu)$ ein komplexer linearer Raum und sogar ein metrischer Raum mit der Metrik
-\[ \rho( f,g ) := \int | f -g | \diffop \mu. \]
-Man verwendet die (eigentlich nicht korrekte) Schreibweise $f \in L^1(\mu)$ für die Äqui\-valenz\-klasse von $f$.
-
-\begin{thm}[Dominierte Konvergenz, Satz von Lebesgue]
- Seien $f_n, g \in \intf^1$, $n \in \nat$, sodass $f_n \to f$ fast überall und $|f_n| \le g$ für alle $n \in \nat$. Dann gilt
- \[ \int f \diffop \mu = \int \lim_{n \to \infty} f_n \diffop \mu = \lim_{n \to \infty} \int f \diffop \mu. \]
-\end{thm}
-
-\begin{proof}
- Die Funktion $f$ ist messbar und $|f| \le g$ fast überall, also ist $f \in \intf^1$. 
- 
- Es genügt, reellwertige Funktionen zu betrachten (man bildet sonst Real- und Imaginärteil). Es gilt
- \[ g + f_n \ge 0 \quad \text{und} \quad g - f_n \ge 0 \]
- für alle $n \in \nat$. Damit folgt mit dem Lemma von Fatou (f):
- \[ \begin{aligned}
-  \int(g+f) \diffop \mu &= \int \liminf_{n \to \infty} (g + f_n) \diffop \mu \\
-  &\overset{(\text{f})}{\le} \liminf_{n \to \infty} \int (g+f_n) \diffop \mu = \int g \diffop \mu + \liminf_{n \to \infty} \int f_n \diffop \mu 
-    \end{aligned} \]
-  sowie
- \[ \begin{aligned}
- \int(g-f) \diffop \mu &= \int \liminf_{n \to \infty} (g - f_n) \diffop \mu \\
-  &\overset{(\text{f})}{\le} \liminf_{n \to \infty} \int(g - f_n) \diffop \mu = \int g \diffop \mu - \limsup_{n \to \infty} \int f_n \diffop \mu.
-    \end{aligned} \]
- Folglich gilt
- \[ \liminf_{n \to \infty} \int f_n \diffop \mu \ge \int f \diffop \mu \ge \limsup_{n \to \infty} \int f_n \diffop \mu. \]
- Daraus folgt
- \[ \lim_{n \to \infty} \int f_n \diffop \mu = \int f \diffop \mu. \]
- Hier wurde verwendet, dass $\lim_{n \to \infty} a_n$ existiert $\Leftrightarrow$ $\liminf_{n \to \infty} a_n = \limsup_{n \to \infty} a_n$.
-\end{proof}
-
-%%%
-
-\begin{thm}
- Es sei $\{ f_j \}$ eine Folge in $\intf^1$ mit $\sum_1^\infty |f_j| < \infty$. Dann konvergiert $\sum_1^\infty f_j$ fast überall gegen eine Funktion in $\intf^1$ und es gilt
- \[ \int \sum_{j=1}^\infty f_j = \sum_{j=1}^\infty \int f_j. \]
-\end{thm}
-
-\begin{proof}
- Nach Satz 2.3.5 gilt
- \[ \int \sum_{j=1}^\infty | f_j | = \sum_{j=1}^\infty \int |f_j| < \infty \]
- und folglich $\sum_1^\infty | f_j | \in \intf^1$.
- 
- Wegen Lemma 2.3.10 ist $\sum_1^\infty |f_j|$ fast überall endlich, also konvergiert $\sum_1^\infty f_j$ fast überall.  Für alle $n$ gilt
- \[ \left| \sum_{j=1}^n f_j \right| \le \sum_{j=1}^n | f_j | \le \sum_{j=1}^\infty |f_j| =: g. \]
- Die Behauptung folgt nun aus dem Satz über dominierte Konvergenz.
-\end{proof}
-
-\begin{thm}
- \begin{enumerate}[(i)]
-  \item Für jede Funktion $f \in \intf^1$ und jedes $\eps > 0$ existiert eine integrierbare, einfache Funktion $\varphi = \sum a_j \ind_{E_j}$ mit $\int | f -\varphi | < \eps$.\footnotemark (Abstand $d(f,\varphi)$ in $\intf^1$)
-  \item Ist $\mu$ ein Lebesgue-Stieltjes-Maß auf $\real$, so können wir für die $E_j$ offene Intervalle nehmen.
-  \item Ist $\mu$ wie in (ii), so existiert eine stetige Funktion $g$, die außerhalb eines beschränkten Intervalls verschwindet\footnotemark, mit
-  \[ \int |f-g| \diffop \mu < \eps.\footnotemark \]
- \end{enumerate}
-
-\end{thm}
-\addtocounter{footnote}{-3} %3=n
- \stepcounter{footnote}\footnotetext{Das heißt die integrierbaren einfachen Funktionen sind \emph{dicht} in $\intf^1$.}
- \stepcounter{footnote}\footnotetext{$g$ hat einen \emph{kompakten Träger}, $\operatorname{supp} g := \obar{\{ x \in \real : g(x) \ne 0 \}}$.}
- \stepcounter{footnote}\footnotetext{Also sind auch die stetigen Funktionen mit kompaktem Träger dicht in $\intf^1$.}
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Sei$\{ \varphi_j \}$ wie in Satz 2.1.15(ii). Nach dem Satz über dominierte Konvergenz gilt $\int |\varphi_n - f| < \eps$, wenn $n$ hinreichend groß\footnote{Es ist $|\varphi_n| \le |f|$, $\varphi_j \to f$ und damit $| \varphi_n - f| \le |\varphi_n| + |f| \le 2 |f| =: g$.} ist.
-  \item Sei $\varphi = \sum a_j \ind_{E_j}$, wobei die $E_j$ disjunkt und die $a_j \ne 0$ sind. Dann ist 
-  \[ \mu(E_j)  = \rez{|a_j|} \int_{E_j} |\varphi| \le \rez{|a_j|} \int |f| < \infty. \]
-  Weiterhin gilt $\mu( E \Delta F ) = \int( \ind_E - \ind_F )$. 
-  
-  Nach Aufgabe 1.12.1 können wir $\ind_{E_j}$ in der $\intf^1$-Metrik beliebig approximieren durch endliche Linearkombinationen von Funktionen $\ind_{I_k}$, wobei die $I_k$ offene Intervalle sind.
-  \item Ist $I_k = (a_k, b_k)$ wie in (ii), so können wir $\ind_{I_k}$ in der $\intf^1$-Metrik beliebig durch stetige Funktionen approximieren, die außerhalb von $(a,b)$ verschwinden (auch Differenzierbarkeit ist möglich). \qedhere
- \end{enumerate}
-\end{proof}
-
-\begin{exmp*}
- Sei $g(x) = 0$ für $x \notin (a_k,b_k)$, $g(x) = 1$ für $x \in [a_k + \rez{n}, b_k - \rez{n}]$ und sei $g$ linear auf $[a, a + \rez{n}]$ und $[b-\rez{n},b]$. Dann gilt
- \[ \int | g - \ind_{(a_k,b_k)} | = \mu(( a, a+\rez{n})) + \mu( (b-\rez{n},b) )) \xrightarrow{n \to \infty} 0 \]
- nach dem Stetigkeitssatz (von oben).
-\end{exmp*}
-
-\begin{thm}[Stetigkeit und Differenzierbarkeit von Parameterintegralen]
- Sei $f:X \times [a,b] \to \complex$, $-\infty < a < b < \infty$, so das $f( \cdot, t ) : X \to \complex$ integrierbar ist. Wir schreiben
- \[ F(t) := \int_X f( x, t ) \diffop \mu(x), \quad t \in [a,b]. \]
- \begin{enumerate}[(i)]
-  \item Nehmen wir an, dass ein $g \in \intf^1(\mu)$ existiert mit $|f(x,t) \le g(x)$ für alle $x$ und $t$, und dass $\lim_{t \to t_0} f(x,t) = f(x,t_0)$ für alle $x$. Dann gilt
-  \[ \lim_{t \to t_0} F(t) = F(t_0). \]
-  Ist speziell $f(x, \cdot)$ stetig für alle $x$, so ist $F$ stetig.
-  \item Nehmen wir an, dass $\pdiff{f}{t}$ und ein $g \in \intf^1$ existieren, so dass $\left| \pdiff{f}{t} (x,t) \right| \le g(x)$ für alle $x$ und $t$. Dann ist $F$ differenzierbar und 
-  \[ F'(t) = \int \pdiff{f}{t} \diffop \mu(x), \quad t \in [a,b]. \]
- \end{enumerate}
-\end{thm}
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Wir wenden den Satz über dominierte Konvergenz auf $f_n(x) := f(x, t_n)$ an, wobei $\{ t_n \}$ eine beliebige Folge in $[a,b]$ mit $t_n \to t_0$ ist. 
-  \item Sei $\{ t_n \}$ wie oben. Es gilt
-  \[ \pdiff{f}{t}(x,t_0) = \lim_{n \to \infty} h_n(x), \qquad \text{wobei } h_n(x) := \frac{f(x,t_n) - f(x,t_0)}{t_n -t_0} \]
-  und $t_n \to t_0$. Hieraus folgt, dass $\pdiff{f}{t}$ messbar ist.
-  
-  Mit dem Mittelwertsatz (m) folgt
-  \[ |h_n(x)| \overset{(\text{m})}{\le} \sup_{t \in [a,b]} \left| \pdiff{f}{t} (x,t) \right| \le g(x) \]
-  und damit folgt
-  \[ F'(t_0) = \lim_{n \to \infty} \frac{F(t_n) - F(t_0)}{t_n - t_0} = \lim_{n \to \infty} \int h_n(x) \diffop \mu(x) \overset{(\text{d})}{=} \int \pdiff{f}{t} (x,t) \diffop \mu(x) \]
-  mit dem Satz über dominierte Konvergenz (d). \qedhere
- \end{enumerate}
-\end{proof}
-
-\begin{prgp}[Vergleich Lebesgue- und Riemann-Integral auf $\real$]
- Sei $[a,b]$ ein beschränktes Intervall. Eine \emph{Zerlegung} von $[a,b]$ ist eine endliche Folge $P = \{ t_j \}_0^n$ mit $a = t_0 < \ldots < t_n = b$. Sei $f$ eine beliebige, beschränkte, reellwertige Funktion auf $[a,b]$. Für jede Zerlegung $P$ sei
-\[ S_P f := \sum_{j=1}^n M_j(t_j-t_{j-1}), \qquad s_P f := \sum_{j=1}^n m_j(t_j-t_{j-1}), \]
-wobei $M_j$ bzw. $m_j$ das Supremum bzw. Infimum von $f$ über $(t_{j-1},t_j]$ bezeichnen. Gilt
-\[ i(f) := \inf_{p} S_p f = \sup_p s_p f =: I(f), \]
-so heißt $f$ \emph{Riemann-integrierbar} und das \emph{Riemann-Integral} von $f$ über $[a,b]$ wird definiert durch
-\[ \int_a^b f(x) \diffop x := I(f) = i(f). \]
-\end{prgp}
-
-\begin{thm}
- Sei $f$ eine beschränkte, reellwertige Funktion auf $[a,b]$.
- \begin{enumerate}[(i)]
-  \item Ist $f$ Riemann-integrierbar, dann ist $f$ Lebesgue-integrierbar und
-  \[ \int_a^b f(x) \diffop x = \int_{[a,b]} f(x) \diffop \lambda(x). \]
-  \item $f$ ist genau dann Riemann-integrierbar, wenn das Lebesgue-Maß der Menge
-  \[ \{ x \in [a,b] : f \text{ ist nicht stetig in } x \} \]
-  gleich Null ist.
- \end{enumerate}
-\end{thm}
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Für jede Partition $P$ sei
-  \[ G_P := \sum_{j=1}^n M_j \ind_{(t_{j-1},t_j]}, \qquad g_P := \sum_{j=1}^\infty m_j \ind_{(t_{j-1},t_j]}. \]
-  Dann gilt
-  \[ \int_{[a,b]} G_P \diffop \lambda = S_P f, \qquad \int_{[a,b]} g_P \diffop \lambda = s_P f. \]
-  Wir wählen eine Folge $\{ P_k \}$ von Partitionen, so dass
-  \begin{itemize}
-   \item ihre Feinheit $\max_j (t_j - t_{j-1}$ gegen Null geht,
-   \item $P_{k+1}$ eine Verfeinerung von $P_k$ ist, dann ist $g_{P_k}$ \emph{monoton wachsend} und $G_{P_k}$ \emph{monoton fallend},
-   \item $S_{P_k} f$ und $s_{P_k} f$ gegen $\int_a^b f(x) \diffop x$ konvergiert.
-  \end{itemize}
-  Sei $G := \lim G_{P_k}$ und $g := \lim g_{P_k}$. Dann ist $g \le f \le G$ und nach dem Satz über dominierte Konvergenz gilt
-  \[ \int G \diffop \lambda = \int g \diffop \lambda = \int_a^b f(x) \diffop x. \]
-  Folglich ist
-  \[ \int \underbrace{(G-g)}_{\ge 0} \diffop \lambda = 0 \qRq G \overset{\text{f.ü.}}{=} g \qRq G=g=f \text{ fast überall.} \]
-  Da $G$ messbar ist (Grenzwert von einfachen Funktionen) und $\lambda$ vollständig ist, ist auch $f$ messbar und
-  \[ \int_{[a,b]} f \diffop \lambda = \int_{[a,b]} G \diffop \lambda = \int_a^b f(x) \diffop x. \]
-  \item Wir definieren für $x \in [a,b]$
-  \[ h(x) := \liminf_{y \to x} f(y), \qquad H(x) := \limsup_{y \to x} f(y). \]
-  Dann gilt $h \le f \le H$ und $h(x) = H(x)$, wenn $f$ in $x$ stetig ist.
-  
-  Zu zeigen ist also: $f$ ist Riemann-integrierbar $\Leftrightarrow$ $h = H$ fast überall.
-  
-  Sei $f$ Riemann-integrierbar. Mit den Bezeichnungen von (i) gilt dann $H = G$ fast überall und $h=g$ fast überall (Warum? Übungsaufgabe!). Folglich sind $h$ und $H$ Lebesgue-messbar und
-  \[ \int_{[a,b]} h \diffop \lambda = i(f) = I(f) = \int_{[a,b]} H \diffop \lambda. \]
-  Da $h \le H$ folgt hieraus, dass $h = H$ fast überall.
-  
-  Ist $f$ fast überall stetig, so ist $f$ messbar (Warum? Übungsaufgabe!). Folglich sind auch $h$ und $H$ messbar und $h = H$ fast überall. Die Gleichung oben gilt auch in diesem Fall, das heißt $i(f) = I(f)$, also ist $f$ Riemann-integrierbar. \qedhere
- \end{enumerate}
-\end{proof}
-
-\begin{prgp}[Uneigentliches Riemann-Integral]
- Ist $f$ Riemann-integrierbar über $[a,b]$ für jedes $b > 0$ und Lebesgue-integrierbar über $[0,\infty)$, so gilt nach dem Satz über dominierte Konvergenz\footnote{Wähle eine Folge $b_n \to \infty$, definiere $f_n := \ind_{[a,b_n]} \cdot f$, also $\int_0^{b_n} f = \int_0^\infty f_n$, $|f_n| \le |f| =: g$.}
- \[ \int_{[0,\infty)} f \diffop \lambda = \lim_{b \to \infty} \int_a^b f(x) \diffop x \overset{\text{Def.}}{=} \int_0^\infty f(x) \diffop x. \]
-\end{prgp}
-
-Der Grenzwert oben kann also auch dann existieren, wenn $f$ nicht Lebesgue-integrierbar ist auf $[0,\infty)$, zum Beispiel
-\[ \sum_{n=1}^\infty (-1)^{n+1} \cdot \rez{n} \cdot \ind_{(n,n+1)}(x) := f(x). \]
-Es gilt: $f$ ist integrierbar $\Leftrightarrow$ $|f|$ ist integrierbar, aber
-\[ \int |f| = \int_{[0,\infty)} \sum_{n=1}^\infty \rez{n} \cdot \ind_{(n,n+1)} = \sum_{n=1}^\infty \rez{n} = \infty. \]
-Also ist $f$ nicht Lebesgue-integrierbar. 
-
-Wir können aber das uneigentliche Riemann-Integral berechnen:
-\[ \int_0^{N+1} f(x) \diffop x = \int_0^{N+1} \sum_{n=1}^\infty (-1)^{n+1} \cdot \rez{n} \cdot \ind_{(n,n+1)}(x) \diffop x = \sum_{n=1}^N (-1)^{n+1} \cdot \rez{n} \xrightarrow{N \to \infty} \ln 2. \]
-Die Reihe konvergiert nach dem Leibniz-Kriterium.
-
-Die Indikatorfunktion $f$ der Menge der rationalen Zahlen in $[0,1]$ ist Lebesgue-messbar, $f=0$ fast überall und damit ist sie Lebesgue-integrierbar mit $\int f = 0$. $f$ ist keinem Punkt stetig, also auch nicht Riemann-integrierbar.
-\[ 0 = i(f) \ne I(f) = 1. \]
-
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-6.pdf+.
-
-\section{Konvergenzarten}
-In diesem Abschnitt ist $X$ eine beliebige Menge, $\{ f_n \}$ eine Folge von komplexen Funktionen auf $X$.
-
-$f_n \to t$, $n \to \infty$ kann bedeuten:
-\begin{itemize}
- \item Punktweise Konvergenz: 
-  \[ \lim_{n \to \infty} f_n(x) = f(x) \text{ für alle } x \in X, \]
- \item Gleichmäßige Konvergenz:
-  \[ \lim_{n \to \infty} \| f_n - f \| = 0, \text{ wobei } \| g \| := \sup_{x \in X} | g(x) |. \]
-\end{itemize}
-
-Ist $(X, \mA, \mu)$ ein Maßraum, so können wir auch über \emph{Konvergenz fast überall} oder $L^1$-Konvergenz sprechen:
-\[ \lim_{n \to \infty} \| f_n - f \|_1 = 0, \text{ wobei } \| g \|_1 := \int_X |g| \diffop \mu. \]
-
-Die folgenden Beispiele sind nützlich ($X = \real$):
-\begin{enumerate}[(i)]
- \item $f_n = \rez{n} \cdot \ind_{(0, n]}$, $\int f_n \diffop \lambda = 1$,
- \item $f_n = \ind_{(n,n+1)}$, $\int f_n \diffop \lambda = 1$,
- \item $f_n = n \cdot \ind_{(0,\rez{n}]}$, $\int f_n \diffop \lambda = 1$,
- \item $f_n = \ind_{[j/2^k,(j+1)/2^k]}$, wobei $k \in \nat$, $0 \le j \le 2^k$, $n = j + 2^k$, $\int f_n \diffop \lambda = \rez{2^k}$ (``Wandernde Hüte'')
-\end{enumerate}
-
-In (i), (ii) und (iii) gilt $f_n \to 0$ punktweise, in (i) sogar gleichmäßig, aber nicht in (ii) und (iii).
-
-In (i), (ii) und (iii) konvergiert $f_n$ fast überall, aber keine $L^1$-Konvergenz, da $\| f_n - f \|_1 = \| f_n \|_1 = 1 \nrightarrow 0$ für $n \to \infty$.
-
-In (iv) gilt dagegen $f_n \to 0$ in der $L^1$-Metrik (Norm), aber die Folge konvergiert \emph{in keinem Punkt}.
-
-\textbf{Andererseits:} Wenn $f_n \to f$ fast überall und $| f_n | \le g \in L^1$ für alle $n$, dann $f_n \to f$ in $L^1$.
-\[ |f_n - f| \le | f_n | + | f | \le g + g \text{ f. ü. } \qRq \lim_{n \to \infty} \int | f_n - f | = \int \underbrace{\lim_{n \to \infty} | f_n - f |}_{= 0 \text{ f. ü.}} = 0.\]
-
-\begin{defn}
- Eine Folge $\{f_n\}$ messbarer, komplexer Funktionen auf einem Maßraum $(X,\mA,\mu)$ ist eine \emph{Cauchy-Folge nach Maß}, wenn für jedes $\eps > 0$ gilt:
- \[ \mu( \{ x : | f_n(x) - f_m(x) | \ge \eps \} ) \to 0; \quad n, m \to \infty. \]
- Die Folge $\{ f_n \}$ \emph{konvergiert nach Maß} gegen eine messbare Funktion $f$, wenn
- \[ \mu( \{ x : | f_n(x) - f(x) | \ge \eps \} ) \to 0; \quad n \to \infty. \]
-\end{defn}
-
-\textbf{Beispiel.} Die Folgen (i), (iii) und (iv) (\emph{nicht} (ii)) konvergieren gegen 0 nach Maß; (ii) ist keine Cauchy-Folge nach Maß.
-
-\begin{lem}
- Gilt $f_n \to f$ in $L^1$, so gilt auch $f_n \to f$ nach Maß.
-\end{lem}
-
-\begin{proof}
- Definiere $E_{n,\eps} := \{ | f_n(x) - f(x) | \ge \eps \}$. Es gilt:
- \[ \underbrace{\int | f_n - f |}_{\to 0 \text{ für } n \to \infty} \ge \int_{E_{n,\eps}} | f_n - f | \ge \eps \cdot \mu( E_{n,\eps} ). \qedhere \]
-\end{proof}
-
-Die Umkehrung ist falsch, siehe die Beispiele (i) und (iii).
-
-\begin{thm}
- Sei $\{ f_n \}$ eine Cauchy-Folge nach Maß. Dann existiert eine messbare Funktion $f$, sodass $f_n \to f$ nach Maß, und eine Teilfolge $\{ f_{nj} \}$ von $\{ f_n \}$, die fast überall gegen $f$ konvergiert. Gilt $f_n \to g$ nach Maß, so ist $g = f$ fast überall.
-\end{thm}
-
-\begin{proof}
- Wir wählen eine Teilfolge $\{ g_j \} := \{ f_{nj} \}$, sodass $\mu( E_j ) \le \rez{2^j}$, wobei 
- \[ E_j := \{ x : | g_j(x) - g_{j+1}(x) | \ge \rez{2^j} \}, \quad j \in \nat. \]
- Mit $F_k := \bigcup_k^\infty E_j$ ist
- \[ \mu( F_k ) \le \sum_{j=k}^\infty \rez{2^j} = 2^{1-k}. \]
- Für $k \le j \le i$ und $x \notin F_k$ gilt
- \[ | g_j(x) - g_i(x) | \le \sum_{l=j}^{i-1} | g_{l+1}(x) - g_l(x) | \le \sum_{l=j}^{i-1} \rez{2^l} = 2^{1-j}. \]
- Also ist $\{g_j\}$ punktweise Cauchy auf $F_k^c$. Mit $F := \bigcap_1^\infty F_k$ ist $\mu(F) = 0$ und damit ist die Funktion
- \[ f(x) := \begin{cases} \lim_{i \to \infty} g_j(x), &x \notin F, \\ 0 &x \in F \end{cases} \]
- messbar und $g_j \to f$ fast überall.
- 
- Die obige Ungleichung zeigt, dass
- \[ | g_j(x) - f(x) | \le 2^{1-j}, \quad j \ge k, \quad x \notin F_k. \]
- Wegen $\mu(F_k) \to 0$, $k \to \infty$ folgt hieraus, dass $g_j \to f$ nach Maß. Dann gilt aber auch $f_n \to f$ nach Maß, da
- \[ \{ x : | f_n(x) - f(x) | \ge \eps \} \subset \left\{ x : | f_n(x) - g_j(x) | \ge \frac{\eps}{2} \right\} \cup \left\{ x : | g_j(x) - f(x) | \ge \frac{\eps}{2} \right\} \]
- für alle $n$.
- 
- Nehmen wir an, dass $f_n \to g$ nach Maß. Dann gilt
- \[ \{ x : | f(x) - g(x) | \ge \eps \} \subset \left\{ x : | f(x) - f_n(x) | \ge \frac{\eps}{2} \right\} \cup \left\{ x : | f_n(x) - g(x) | \ge \frac{\eps}{2} \right\} \]
- für alle $n$. Also ist
- \[ \mu( \{ x : | f(x) - g(x) | \ge \eps \} ) = 0 \]
- für alle $\eps > 0$. Damit gilt $f = g$ fast überall.
-\end{proof}
-
-\begin{thm}[Jegorow]
- Sei $(X, \mA, \mu)$ ein endlicher Maßraum und $f_n, f$ messbar mit $f_n \to f$ fast überall.
- 
- Dann gilt: Für alle $\eps > 0$ existiert $E \in \mA$ mit $\mu(E) < \eps$, so dass $f_n \to f$ gleichmäßig auf $E^c$, das heißt
- \[ \sup_{x \in E^c} | f_n(x) - f(x) | \xrightarrow{n \to \infty} n. \]
-\end{thm}
-
-\begin{proof}
- Indem wir $f_n$, $f$ gegebenenfalls auf Nullmengen modifizieren, können wir o.B.d.A. annehmen, dass $f_n \to f$ (überall).
- 
- Definiere 
- \[ E_n(h) := \bigcup_{m \ge n} \left\{x_i | f_m(x) -f(x) | \ge \rez{h} \right\}. \]
- Es gilt $E_{n+1}(h) \subseteq E_n(h)$ und $\bigcup_{n \ge 1} E_n(h) = \emptyset$ (für $x \in X$ existiert wegen $f_n(x) \to f(x)$ also ein $N \in \nat$, sodass $| f_n(x) - f(x) | < \rez{h}$ für $n \ge N$, folglich ist $x \notin E_{n+1}(h)$).
- 
- Da $\mu$ ein endliches Maß ist, folgt aus der Stetigkeit von oben:
- \[ \mu( E_n(h) ) \xrightarrow{n \to \infty} \mu(\emptyset) = 0. \]
- Für $\eps > 0$, $k \in \nat$, wähle $n_k = n_k(\eps)$ mit
- \[ \mu( E_{n_k}(k) < \eps \cdot 2^{-k}. \]
- Für $E := \bigcup_{k \ge 1} E_{n_k}(k)$ gilt $\mu(E) < \eps$, denn
- \[ \mu(E) \le \sum_{k\ge 1} \underbrace{\mu( E_{n_k}(k) )}_{< \eps \cdot 2^{-k}} < \eps \]
- und $| f_n(x) - f(x) | < \rez{k}$ für alle $x \in E^c$ und $n \ge n_k$.
-\end{proof}
-
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-8.pdf+.
-
-\section{Produktmaße}
-In diesem Abschnitt sind $(X, \mM, \mu)$ und $(Y, \mN, \eta)$ Maßräume.
-
-Wir haben bereits die Produkt-$\sigma$-Algebra
-\[ \mM \otimes \mN := \sigma( \{ M \times N; M \in \mM, N \in \mN \} ) \]
-auf $X \times Y$ konstruiert. Wir werden jetzt ein Maß auf $\mM \otimes \mN$ konstruieren, das in natürlicher Weise als Produkt von $\mu$ und $\eta$ angesehen werden kann.
-
-Ein Rechteck $R$ ist eine Menge der Form $A \times E$ für $A \in \mM$, $E \in \mN$.
-
-Natürliche Idee: Das Produktmaß eines solchen Rechtecks durch $\mu(A) \cdot \eta(E)$ zu definieren.
-
-\begin{lem}
- Die Familie $\mA$ aller endlichen disjunkten Vereinigungen von Rechtecken ist eine Algebra und ein Erzeuger von $\mM \otimes \mN$.
-\end{lem}
-
-\begin{proof}
- Die erste Aussage folgt aus
- \[ (A \times E) \cap (B \times F) = (A \cap B) \times (E \cap F) \]
- wegen Lemma 1.11.1, dass
- \[ (A \times E)^C = (X \times E^C) \cup (A^C \times Y). \]
- 
- Die zweite Aussage folgt aus der Definition von $\mM \otimes \mN$.
-\end{proof}
-
-\begin{lem}
- Sei $B \in \mA$ die disjunkte Vereinigung der Rechtecke $A_1 \times E_1, \ldots, A_n \times E_n$. Dann hängt die Zahl
- \[ \pi( B ) := \sum_{j=1}^n \mu(A_j) \eta(E_j) \]
- nur von $B$ ab, nicht aber von der speziellen Wahl der $A_j$ und $E_j$. Weiterhin ist $\pi$ ein Prämaß auf $\mA$.
-\end{lem}
-
-\begin{proof}
- Nehmen wir an, dass $B = A \times E \ne \emptyset$. Für $x \in X, y \in Y$ gilt
- \[ \ind_A(x) \cdot \ind_E(y) = \ind_{A \times E}(x,y) = \sum_{j=1}^n \ind_{A_j \times E_j} (x,y) = \sum_{j=1}^n \ind_{A_j}(x) \cdot \ind_{E_j}(y). \]
- Wir integrieren bezüglich $x$ und verwenden Satz 2.3.5:
- \[ \begin{aligned}
-     \mu(A) \cdot \ind_E (y) 
-     &= \int \int_A(x) \diffop \mu(x) \cdot \ind_E(y) \\
-     &= \int \sum_{j=1}^n \ind_{A_j} (x) \cdot \ind_{E_j}(y) \diffop \mu(x) \\
-     &= \sum_{j=1}^n \mu(A_j) \cdot \ind_{E_j} (y).
-    \end{aligned} \]
- Wir integrieren bezüglich $y$:
- \[ \mu(A) \cdot \eta(E) = \sum_{j=1}^n \mu(A_j) \eta(E_j). \]
- Damit ist der Spezialfall bewiesen.
- 
- Aus diesem Spezialfall folgt: Betrachten wir zwei Darstellungen einer Menge $B \in \mA$, wobei die eine Darstellung eine Verfeinerung der anderen ist, so sind die Summen gleich.
- 
- Der allgemeine Fall folgt nun aus der Tatsache, dass zwei beliebige Darstellungen einer Menge $B \in \mA$ immer eine gemeinsame Verfeinerung besitzen.
- 
- Die letzte Aussage folgt daraus, dass die obigen Gleichungen auch für abzählbar viele $A_j$, $E_j$ gelten.
-\end{proof}
-
-\begin{defn}
- Nach dem vorliegenden Lemma und Satz 1.7.7 lässt sich $\pi$ zu einem Maß auf $\mM \otimes \mN$ fortsetzen. Dieses Maß heißt das \emph{Produkt} von $\mu$ und $\eta$. Es wird mit $\mu \times \eta$ bezeichnet.
-\end{defn}
-
-\begin{rmrk}
- Sind $\mu$ und $\eta$ $\sigma$-endlich, das heißt $X = \bigcup_j A_j$, $Y = \bigcup_j E_j$ mit $\mu(A_j) < \infty$, $\eta(E_j) < \infty$, dann gilt:
- \[ X \times Y = \bigcup_j \bigcup_k (A_j \times E_k), \]
- also $\mu \times \eta$ $\sigma$-endlich.
- 
- Nach Satz 1.7.7 ist dann $\mu \times \eta$ das \emph{einzige} Maß auf $\mM \otimes \mN$ mit 
- \[ (\mu \times \eta)(A \times E) = \mu(A) \cdot \eta(E) \]
- für alle Rechtecke $A \times E$.
-\end{rmrk}
-
-\begin{rmrk}
- Dieselbe Konstruktion kann man mit endlich vielen Faktoren durch\-führen.
- 
- Seien $(X_j, \mM_j, \mu_j)$, $j = 1, \ldots, n$ Maßräume. Unter einem Rechteck verstehen wir Mengen der Form
- \[ A_1 \times \ldots \times A_n, \quad A_j \in \mM_j. \]
- 
- Das Analogon von Lemma 2.9.1 bleibt gültig und dieselbe Konstruktion liefert dann ein Maß $\mu_1 \times \ldots \times \mu_n$ auf $\mM_1 \otimes \ldots \otimes \mM_n$ mit
- \[ (\mu_1 \times \ldots \times \mu_n)( A_1 \times \ldots \times A_n ) = \prod_{j=1}^n \mu_j(A_j). \]
- Sind die $\mu_j$ $\sigma$-endlich, so ist auch $\mu_1 \times \ldots \times \mu_n$ $\sigma$-endlich.
- 
- Im Falle der Eindeutigkeit gelten die Assoziativgesetze. 
- 
- Beispiel: Wenn wir $X_1 \times X_2 \times X_3$ mit $(X_1 \times X_2) \times X_3$ identifizieren, dann gilt
- \[ \mM_1 \otimes \mM_2 \otimes \mM_3 = (\mM_1 \otimes \mM_2) \otimes \mM_3. \]
- Die Gleichheit $\mu_1 \times \mu_2 \times \mu_3 = ( \mu_1 \times \mu_2 ) \times \mu_3$ folgt nun daraus, dass diese Maße auf Mengen der Form $A_1 \times A_2 \times A_3$ übereinstimmen, also wegen der Eindeutigkeit gleich sind.
-\end{rmrk}
-
-Im Weiteren betrachten wir nur zwei Faktoren.
-
-Für $E \subseteq X \times Y$, $x \in X$, $y \in Y$ schreiben wir
-\[ E_x := \{ y \in Y; (x,y) \in E \}, \quad E_y := \{ x \in X; (x,y) \in E \}. \]
-
-Für eine Funktion $f: X \times Y \to \real$ sei
-\[ f_x(y) := f^y(x) := f(x,y). \]
-
-\begin{lem}
- \begin{enumerate}[(i)]
-  \item Wenn $E \in \mM \otimes \mN$, dann gilt $E_x \in \mN$ und $E^y \in \mM$ für alle $x \in X$, $y \in Y$.
-  \item Ist $f$ $\mM \otimes \mN$-messbar, so ist $f_x$ $\mN$-messbar für alle $x \in X$ und $f^y$ $\mM$-messbar für alle $y \in Y$.
- \end{enumerate}
-\end{lem}
-
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Sei 
-   \[ \mR := \{ E \subseteq X \times Y, E_x \in \mN, E^y \in \mN \text{ für alle } x,y \}. \]
-   Dann enthält $\mR$ alle Rechtecke (so ist $(A \times B)_x = B$ oder $(A \times B)_x = \emptyset$ je nachdem, ob $x \in A$ oder $x \notin A$).
-   
-   Wegen $(\bigcup_j E_j)_x = \bigcup_j (E_j)_x$ und $(E_x)^C = (E^C)_x$ ist $\mR$ eine $\sigma$-Algebra, also $\mM \otimes \mN \subseteq \mR$.
-  \item Folgt aus (i) wegen
-   \[ (f_x^{-1})(B) = \{ y \in Y; f(x,y) \in B \} = \{ y: (x,y) \in f^{-1}(B) \} = (\underbrace{f^{-1}(B)}_{\in \mM \otimes \mN}) \in \mN. \]
-   Analog für $f^y$. \qedhere
- \end{enumerate}
-\end{proof}
-
-\begin{rmrk}
- Auch wenn $\mu$ und $\eta$ vollständig sind, ist das Produktmaß $\mu \times \eta$ im Allgemeinen nicht vollständig.
- 
- \textbf{Beispiel:} Nehmen wir an, dass $E \in \pot(Y) \setminus \mN$ und eine nichtleere Menge $A \in \mM$ mit $\mu(A) = 0$ existieren (z.B. für $X=Y=\real$, $\mu = \eta$ Lebesgue-Maß). Nach dem Lemma 2.9.6 ist $A \times E \notin \mM \otimes \mN$, obwohl $A \times E \subseteq A \times Y$ und $(\mu \times \eta)(A \times Y) = 0$.
-\end{rmrk}
-
-\begin{defn}
- Eine \emph{monotone Klasse} auf $X$ ist eine Familie $\mC \subseteq \pot(X)$, die abgeschlossen ist bezüglich abzählbarer, monoton wachsender Vereinigungen und abzählbarer, monoton fallender Durchschnitte. Jede $\sigma$-Algebra ist eine monotone Klasse und der Durchschnitt von monotonen Klassen ist eine monotone Klasse. Folglich existiert für eine beliebige Familie $\mE \subseteq \pot(X)$ eine eindeutige kleinste monotone Klasse, die $\mE$ enthält, die durch $\mE$ erzeugte monotone Klasse.
-\end{defn}
-
-\begin{lem}
- Ist $\mA$ eine Algebra, so ist die durch $\mA$ erzeugte monotone Klasse $\mC$ gleich der $\sigma$-Algebra $\mM$, die durch $\mA$ erzeugt wird.
-\end{lem}
-
-\begin{proof}
- Da $\mM$ eine monotone Klasse ist, die $\mA$ enthält, gilt $\mC \subseteq \mM$. 
- 
- Für $E \in \mC$ sei:
- \[ \mC(E) := \{ F \in \mC; E \setminus F, F \setminus E, F \cap E \in \mC \}. \]
- Offenbar sind $\emptyset, E \in \mC(E)$.
- 
- Wenn $E \in \mA$, dann gilt $F \in \mC(E)$ für alle $F \in \mA$ (da $\mA$ eine Algebra ist). Dann $E \in \mC(F)$ genau dann, wenn $F \in \mC(E)$. Weiterhin ist $\mC(E)$ eine monotone Klasse. 
- 
- Ist $E \in \mA$, dann gilt 
- \[ \mA \subseteq \mC(E) \qRq \mC \subseteq \mC(E), \]
- das heißt wenn $F \in \mC$, dann gilt $F \in \mC(E)$ für alle $E \in \mA$. Also $\mA \subseteq \mC(F)$ für alle $F \in \mC$ und damit $\mC \subseteq \mC(F)$ für alle $F \in \mC$.
- 
- Hieraus folgt, dass für alle $E,F \in \mC$ gilt $E \setminus F, F \setminus E, E \cap F \in \mC$. Wegen $X \in \mA \subseteq \mC$ folgt, dass $\mC$ eine Algebra ist. 
- 
- Wenn $(E_j) \in \mC$, dann ist auch $F_n := \bigcup_1^n E_j \in \mC$. Damit folgt aus der Abgeschlossenheit von $\mC$ unter monoton wachsenden Vereinigungen, dass $\bigcup_n F_n = \bigcup_j E_j \in \mC$. Folglich ist $\mC$ eine $\sigma$-Algebra, also $\mM \subseteq \mC$.
- 
- Aus $\mC \subseteq \mM$ und $\mM \subseteq \mC$ folgt $\mM = \mC$.
-\end{proof}
-
-\begin{thm}
- Seien $(X,\mM,\mu)$ und $(Y,\mN,\nu)$ $\sigma$-endliche Maßräume und $E \in \mM \otimes \mN$.
- 
- Die Funktionen $x \mapsto \nu(E_x)$ und $y \mapsto \mu(E^y)$ sind messbar auf $X$ bzw. $Y$ und
- \begin{align*}
-  (\mu \times\nu)(E) &= \int \nu(E_x) \diffop \mu(x), \tag{1} \\
-  (\mu \times\nu)(E) &= \int \mu(E^y) \diffop \nu(y). \tag{2}
- \end{align*}
-\end{thm}
-
-\begin{proof}
- \textbf{1. Fall:} $\mu$ und $\nu$ endlich. 
- 
- Sei $\mC$ die Menge aller $E \in \mM \otimes \mN$, für welche die Aussage des Satzes gilt.
- 
- Rechtecke der From $E= A \times B$, $A \in \mM$, $B \in \mN$, gehören zu $\mC$, da
- \[ \nu(E_x) = \ind_A (x) \nu(B), \qquad \mu(E^y) = \ind_B (y) \mu(A). \]
- Aus der Additivität folgt, dass endliche, disjunkte Vereinigungen von Rechtecken zu $\mC$ gehören.
- 
- Nach Lemma 2.9.1 und Lemma 2.9.9 genügt es zu zeigen, dass $\mC$ eine monotone Klasse ist. Ist $(E_n)_{n \in \nat}$ eine monoton wachsende Folge in $\mC$ und $E = \bigcup_{n \in \nat} E_n$, so sind $f_n: y \mapsto \mu(E_n^y)$ messbar und konvergieren punktweise und monoton wachsend gegen $f: y \mapsto \mu(E^y)$.
- 
- Folglich ist $f$ messbar und nach dem Satz von der monotonen Konvergenz (m) und wegen $E_n \in \mC$ (c) gilt
- \[ \begin{aligned}
-     \int \mu(E^y) \diffop \nu(y) 
-     &\overset{(\text{m})}{=} \lim_{n \to \infty} \int \mu((E_n)^y) \diffop \nu(y) \\
-     &\overset{(\text{c})}{=} \lim_{n \to \infty} \int (\mu \times \nu)(E_n) \\
-     &= (\mu \times \nu)(E).
-    \end{aligned} \]
- Analog sieht man, dass
- \[ (\mu \times \nu)(E) = \int \nu(E_x) \diffop \mu(x) \]
- gilt. Also ist $E \in \mC$.
- 
- Ist $(E_n)_{n \in \nat}$ eine monoton fallende Folge von $\mC$ und $E = \bigcap_{n \in \nat} E_n$, so gilt $\mu((E_n)^y) \le \mu(X) < \infty$ und $\nu(Y) < \infty$. Daher ist die Funktion $y \mapsto \mu((E_n)^y)$ in $\lebesgue'(\nu)$. Damit liefert analog zum vorhergehenden Schritt der Satz über dominierte Konvergenz, dass $E \in  \mC$ gilt.
- 
- \textbf{2. Fall:} $\mu, \nu$ $\sigma$-endlich.
- 
- Dann lässt sich $X \times Y$ als Vereinigung einer monoton wachsenden Folge $(X_j,Y_j)_{j \in \nat}$ von Rechtecken mit endlichem Maß darstellen.
- 
- Ist $E \in \mM \otimes \mN$, so können wir die Überlegungen des ersten Falls auf $E \cap (X_j \times Y_j)$, $j \in \nat$ anwenden:
- \[ \begin{aligned}
-     (\mu \times \nu)(E \cap (X_j \times Y_j)) 
-     &= \int \ind_{X_j}(x) \nu( E_x \cap Y_j ) \diffop \mu(x) \\
-     &= \int \ind_{Y_j}(y) \mu( E^y \cap X_j ) \diffop \nu(x).
-    \end{aligned} \]
- Mit dem Stetigkeitssatz (Anwenden auf die linke Seite) und dem Satz über monotone Konvergenz (rechte Seite) liefert eine Grenzwertbildung $j \to \infty$ die Behauptung.
-\end{proof}
-
-\begin{thm}[Fubini-Tonelli]
- Seien $(X,\mM,\mu)$ und $(Y,\mN,\nu)$ $\sigma$-endliche Maßräume.
- 
- \begin{enumerate}[(i)]
-  \item Tonelli: Ist $f \in \lebesgue^+(X \times Y)$, so sind die Funktionen $g:x \mapsto \int f_x \diffop \nu$ und $h:y \mapsto \int f^y \diffop \mu$ in $\lebesgue^+(X)$ bzw. $\lebesgue^+(Y)$ und
+  Sei $\rho := \nu + \mu$. Dann ist $\rho$ ein endliches Maß und $\mu \ll
+  \rho$, $\nu \ll \rho$. Sei für $u \in L^2(\rho)$\footnote{%
+    $L^2(\rho) = L^2(\mu)\cap L^2(\nu)$.}
+  \[ \Phi(u) := \int u^2 \diffop \mu + \int (1-u)^2 \diffop \nu. \]
+
+  Sei $d^2 := \inf_{u \in L^2} \Phi(u)$. Dann gilt
+  \[ d^2 \le \Phi(0) = \int 0 \diffop \mu + \int 1 \diffop \nu = \nu(x) <
+    \infty. \]
+  Für $u,w \in L^2(\rho)$ gilt
   \begin{align*}
-   \int f \diffop (\mu \times \nu)
-     &= \int \left[ \int f(x,y) \diffop \nu(y) \right] \diffop \mu(x), \tag{1} \\
-     &= \int \left[ \int f(x,y) \diffop \mu(x) \right] \diffop \nu(y). \tag{2}
+    \Phi(u+w) &+ \Phi(u-w) \\
+    &= \int (u+w)^2 + (u-w)^2 \diffop \rho + \int((1-u)-w)^2 + ((1-u)+w)^2 \diffop \nu \\
+    &= 2 \int u^2 \diffop \mu + 2 \int w^2 \diffop \mu + 2 \int (1-u)^2 \diffop \nu + 2 \int w^2 \diffop \nu \\
+    &= 2 \Phi(u) + 2 \| w \|^2_{L^2(\rho)}. \tag{1}
   \end{align*}
-  \item Fubini: Ist $f \in \lebesgue'(\mu \times \nu)$, so gilt $f_x \in \lebesgue'(\nu)$ für fast alle $x \in X$, $f^y \in \lebesgue'(\mu)$ für fast alle $y \in Y$. Die fast überall definierten Funktionen $g:x \mapsto \int f_x \diffop \nu$ und $h:y \mapsto \int f^y \diffop \mu$ sind in $\lebesgue'(X)$ bzw. $\lebesgue'(Y)$ und es gelten die Gleichungen (1) und (2).
- \end{enumerate}
-\end{thm}
 
-\begin{proof}
- \begin{enumerate}[(i)]
-  \item Ist $f$ Indikatorfunktion, so folgt die Aussage aus dem gerade bewiesenen Satz 2.9.10. Wegen Linearität gilt (i) damit für alle nicht-negativen, einfachen Funktionen.
- 
-  Sei $f \in \lebesgue^+(X \times Y)$ beliebig. Wir wählen eine Folge $(f_n)_{n \in \nat}$ von nicht-negativen, einfachen Funktionen, die punktweise und monoton wachsend gegen $f$ konvergieren (Satz 2.1.15).
-  
-  Nach dem Satz über monotone Konvergenz (m) konvergieren die zugehörigen $g_n$ und $h_n$ gegen $g$ und $h$. Folglich sind $g$ und $h$ messbar und es gilt
-  \[ \int g \diffop \mu \overset{(\text{m})}{=} \lim_{n \to \infty} g_n \diffop \mu \overset{(1)}{=} \lim_{n \to \infty} \int f_n \diffop (\mu \times \nu) \overset{(\text{m})}{=} \int f \diffop (\mu \times \nu), \]
-  \[ \int h \diffop \nu \overset{(\text{m})}{=} \lim_{n \to \infty} h_n \diffop \nu \overset{(2)}{=} \lim_{n \to \infty} \int f_n \diffop (\mu \times \nu) \overset{(\text{m})}{=} \int f \diffop (\mu \times \nu). \]
-  \item Aus (i) erhalten wir: Ist $f \in \lebesgue^+ (X \times Y)$ und $\int f \diffop (\mu \times \nu) < \infty$, so gilt fast überall $g < \infty$, $h < \infty$.
-  
-  Also ist $f_x \in L'(\nu)$ für fast alle $x$ bzw. $f^y \in L'(\mu)$ für fast alle $y$.
-  
-  Ist nun $f \in L'(\mu \times \nu)$ beliebig, so können wir die gerade gezeigten Aussagen für $(\Re f)^\pm$ bzw. $(\Im f)^\pm$ anwenden.
-  \qedhere
- \end{enumerate}
+  \textbf{Behauptung:} $\Phi$ nimmt Infimum an.
+
+  Wähle eine Folge $(f_n)$ in $L^2(\rho)$ mit $\Phi(f_n) \xrightarrow{n \to
+    \infty} d^2$. Betrachte für $m,n \in \nat$
+  \[ u = \frac{f_n + f_m}{2}, \qquad w = \frac{f_n - f_m}{2}. \]
+
+  Dann gilt
+  \begin{align*}
+    d^2 + \left\| \frac{f_n - f_m}{2} \right\|^2_{L^2(\rho)}
+    &\le \Phi \left( \frac{f_n + f_m)}{2} \right) + \left\| \frac{f_n - f_m}{2} \right\|^2_{L^2(\rho)} \\
+    &\overset{(1)}{=}
+      \rez{2} \Phi(\underset{u+w}{f_n}) +
+      \rez{2} \Phi(\underset{u-w}{f_m})
+      \xrightarrow{m,n \to \infty} d^2.
+  \end{align*}
+  Also gilt $\|f_n - f_m\|_{L^2(\rho)} \xrightarrow{m,n \to \infty} 0$, das
+  heißt $(f_n)$ ist eine Cauchy-Folge in $L^2(\rho)$.
+
+  Da $L^2(\rho)$ vollständig ist, existiert der Grenzwert $f$ in $L^2(\rho)$.
+  Wenden wir (1) auf $u = f_n$, $w = f - f_m$ an, so gilt
+  \begin{align*}
+    \Phi(f) + d^2
+    &\le \Phi(\underset{u+w}{f_n}) + \Phi(\underset{u+w}{2 f_n - f}) \\
+    &\overset{(1)}{=} 2 \Phi(f_n) + 2 \| f - f_n \|^2_{L^2(\rho)} \xrightarrow{n \to \infty} 2 d^2 + 0.
+  \end{align*}
+  Also ist $\Phi(f) = d^2$.
+
+  \textbf{Behauptung:} Der Minimierer $f$ ist eindeutig.
+
+  Sei $g \in L^2(\rho)$ ein weiterer Minimierer von $\Phi$ und betrachte
+  \[ u = \frac{f+g}{2}, \qquad w = \frac{f-g}{2}. \]
+  Dann gilt
+  \begin{align*}
+    d^2 + \left\| \frac{f+g}{2} \right\|^2_{L^2(\rho)}
+    &\le \Phi \left( \frac{f+g}{2} \right) + \left\| \frac{f-g}{2} \right\|^2_{L^2(\rho)} \\
+    &\overset{(1)}{=} \rez{2} \Phi(f) + \rez{2} \Phi(g) = d^2.
+  \end{align*}
+  Also ist $\|f-g\|_{L^2(\rho)} = 0$, daraus folgt $f=g$ $\rho$-fast überall,
+  wegen $\mu \ll \rho$ also auch $f=g$ $\mu$-fast überall.
+
+  \textbf{Behauptung:} Der Minimierer erfüllt $0 \le f \le 1$ $\mu$-fast überall.
+
+  Betrachte $g := \min \{ \max \{f,0\}, 1\}$. Dann ist $g \in L^2(\rho)$ und $0
+  \le g \le 1$ $\mu$-fast überall.
+  \begin{align*}
+    g^2 &= \min \{ \max \{ f^2, 0 \}, 1 \} \le f^2 \\
+    (1-g)^2 &= \min \{ \max \{ (1-f)^2, 0 \}, 1 \} \le (1-f)^2.
+  \end{align*}
+  Damit ist
+  \[ d^2 \le \Phi(g) \le \Phi(f) = d \]
+  und es folgt $\Phi(g) = d^2$, also ist $f=g$ $\mu$-fast überall.
+
+  \textbf{Zerlegung:} Sei $u \in L^+$ und $u_n := \min \{u,n\}$, $n \in \nat$.
+  Dann sind $u_n \in L^+$ und $(u_n)$ konvergiert punktweise und monoton wachsen
+  gegen $u$. Weiter gilt für alle $t \in \real \setminus \{0\}$
+  \begin{align*}
+    0 &\le \Phi(f + t \cdot u_n) - \Phi(f) \\
+    &= \int( f + t\cdot u_n)^2 - f^2 \diffop \mu + \int((1-f)-t \cdot u_n)^2 - (1-f)^2 \diffop \nu \\
+    &= t^2 \int u_n^2 \diffop \mu + t^2 \int u_n^2 \diffop \nu
+      + 2 t \left( \int u_n f \diffop \mu - \int u_n (1-f) \diffop \nu \right)
+  \end{align*}
+  Nach Division durch $t^2$ folgt
+  \[ 0 \le \int u_n^2 \diffop \mu + \int u_n^2 \diffop \nu
+      + \frac{2}{t} \left( \int u_n f \diffop \mu - \int u_n (1-f) \diffop \nu
+      \right), \]
+  also ist 
+  \[ \int u_n f \diffop \mu - \int u_n (1-f) \diffop \nu = 0. \]
+  Dann gilt mit dem Satz von der monotonen Konvergenz:
+  \begin{align*}
+    \int u f \diffop \mu
+    &= \lim_{n \to \infty} \int u_n f \diffop \mu = \lim_{n \to \infty} \int u_n (1-f) \diffop \nu
+      = \int u (1-f) \diffop \nu. \tag{2}
+  \end{align*}
+
+  Sei $N := \{f=1\} \in \mM$ und setze $\nu_{as}(E) = \nu(E \cap \{f \ne 1 \})$,
+  $\nu_s = \nu(E \cap N)$, $E \in \mM$. Dann gilt $\nu = \nu_{as} + \nu_s$ und
+  $\nu_{as}$, $\nu_s$ sind endliche Maße.
+
+  Weiter gilt für $u = \ind_N$ in (2)
+  \[ \mu(N) = \int \ind_N \diffop \mu = \int f \cdot \ind_N \diffop \mu
+    \overset{(2)}{=} \int (1-f) \cdot \ind_N \diffop \nu = 0 \]
+  und
+  \[ \nu_s(X \setminus N) = \nu((X \setminus N) \cap N) = 0, \]
+  also ist $\nu_s \perp \mu$.
+
+  Weiter ist $\nu_{as}(N) = \nu(N \cap (X \setminus N)) = 0$.
+
+  Für $E \in \mM$ gilt
+  \begin{align*}
+    \nu_{as}(E) = \nu(E \cap \{ f \ne 1 \} )
+    &= \int_{E \cap \{ f \ne 1 \}} \frac{1-f}{1-f} \diffop \mu \\
+    &\overset{(2)}{=} \int_{E \cap \{ f \ne 1 \}} \frac{f}{1-f} \diffop \mu
+      = \int_E \underbrace{\frac{f}{1-f} \cdot \ind_{\{ f \ne 1 \}}}_{f^*} \diffop \mu.
+  \end{align*}
+  Also ist $\diffop \nu_{as} = f^* \diffop \mu$ und es folgt $\nu_{as} \ll \mu$.
+
+  \textbf{Behauptung:} Die Zerlegung ist eindeutig.
+
+  Seien $\tilde{nu}_{as}$, $\tilde{nu}_s$ weitere Maße mit den obigen
+  Eigenschaften. Dann existiert ein $\tilde{N} \in \mM$ mit $\mu(\tilde{N}) = 0$
+  und $\tilde{\nu}_s(X \setminus \tilde{N}) = 0$. Wir setzen $M = N \cup
+  \tilde{N}$. Dann gilt $\mu(M) = 0$, $\tilde{\nu}_{s}(X \setminus M) = 0$,
+  $\nu_s(X \setminus M) = 0$.
+
+  Für $E \in \mM$ erhalten wir
+  \begin{align*}
+    \nu_s(E)
+    &= \nu_s(E \cap M) + \nu_s(E \cap (X \setminus M)) = \nu_s(E \cap M) \\
+    &= \nu(E \cap M) - \nu_{as}(E \cap M) \\
+    &= \nu(E \cap M) \\
+    &= \nu(E \cap M) - \tilde{\nu}_{as}(E \cap M) = \tilde{\nu}_s(E \cap M) \\
+    &= \tilde{\nu}_s(E \cap M) + \tilde{\nu}_s(E \cap (X \setminus M)) = \tilde{\nu}_s(E).
+  \end{align*}
+  Dabei gilt $\nu_{as}(E \cap M) = \tilde{\nu}_{as}(E \cap M) = 0$, weil $\nu
+  \ll \mu$, $\tilde{\nu} \ll \mu$.
+
+  Es folgt $\nu_{as}(E) = \tilde{\nu}_{as}(E)$.
 \end{proof}
 
-\begin{rmrk}
- \begin{enumerate}[(a)]
-  \item Die Klammern ``$[\,]$'' in (1) und (2) werden gelegentlich auch weggelassen, man schreibt auch
-   \[ \int \left[ \int f(x,y) \diffop \mu(x) \right] \diffop \nu(y) 
-      = \iint f(x,y) \diffop \mu(x) \diffop \nu(y)
-      = \iint f \diffop \mu \diffop \nu. \]
-  \item Sei $X = Y = [0,1]$, $\mM = \mN = \borel([0,1])$, $\mu = \lambda |_{\borel([0,1])}$, $\nu$ Zählmaß und $D = \{ (x,y) \in [0,1] \times [0,1] : x = y \}$. 
-  
-  Dann gilt 
-  \[ \iint \ind_D \diffop \lambda \diffop \nu = 0, \qquad \iint \ind_D \diffop \nu \diffop \lambda = 1. \]
-  Man kann sogar zeigen, dass
-  \[ \int \ind_D \diffop (\lambda \times \nu) = (\lambda \times \nu)(D) = \infty. \]
-  
-  Also darf die $\sigma$-Additivität für die Anwendbarkeit des Satzes nicht weggelassen werden!
-  \item Die Sätze von Fubini und Tonelli werden oft zusammen verwendet. Man möchte häufig die Reihenfolge der Integration in einem Doppelintegral $\iint f \diffop \mu \diffop \nu$ vertauschen. Zuerst zeigt man, dass $\iint |f| \diffop \mu \diffop \nu < \infty$, indem man das Integral nach Tonelli als iteriertes Integral auswertet. Danach wendet man den Satz von Fubini an.
- \end{enumerate}
-\end{rmrk}
-
-Eine ``vollständige'' Version des Satzes von Fubini-Tonelli folgt ohne Beweis.
 \begin{thm}
- Seien $(X, \mM, \mu)$ und $(Y, \mN, \nu)$ \emph{vollständige} $\sigma$-endliche Maßräume und sei $(X \times Y, \mA, \sigma)$ die Vervollständigung von $(X \times Y, \mM \otimes \mN, \mu \times \nu)$. Ist $f$ $\mA$-messbar und 
- \[ \text{entweder} \quad \text{(a)} \quad f \ge 0 \quad \text{oder} \quad \text{(b)} \quad f \in L'(\sigma), \] 
- so gilt: $f_x$ ist $\mN$-messbar für fast alle $x$ bzw. $f^y$ ist $\mM$-messbar für fast alle $y$. Im Falle (b) sind diese Funktionen fast überall integrierbar.
- 
- Weiterhin sind $x \mapsto \int f_x \diffop \nu$ und $y \mapsto \int f^y \diffop \mu$ messbar, im Falle (b) auch integrierbar und
- \begin{align*}
-  \int f \diffop \sigma
-  &= \int \left[ \int f(x,y) \diffop \nu(y) \right] \diffop \mu(x) \tag{1}\\
-  &= \int \left[ \int f(x,y) \diffop \mu(x) \right] \diffop \nu(y). \tag{2}
- \end{align*}
+  Seien $\mu, \nu$ $\sigma$-endliche Maße auf $(X,\mM)$. Dann existieren
+  eindeutig bestimmte $\sigma$-endliche Maße $\nu_s$, $\nu_{as}$ auf $(X,\mM)$
+  mit
+  \[ \nu = \nu_{as} + \nu_s, \quad \nu_{as} \ll \mu, \quad \nu_s \perp \mu. \]
+  Weiterhin existiert eine $\mu$-fast überall eindeutig bestimmte Funktion $f^*
+  \in L^+$ mit
+  \[ \diffop \nu_{as} = f^* \diffop \mu. \]
 \end{thm}
-
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2.10.pdf+.
-
-\section{Das Lebesgue-Integral auf \texorpdfstring{$\real^n$}{IRn}}
-\begin{defn}
- Das \emph{Lebesgue-Maß auf $\real^n$} ist die Vervollständigung des Produktmaßes $\lambda \times \ldots \times \lambda$ auf $\borel(\real) \otimes \ldots \otimes \borel(\real)$.
-\end{defn}
- 
-Die $\sigma$-Algebra der $\lambda_n$-messbaren Mengen wird mit $\lebesgue_n$ bezeichnet, ihre Elemente heißen \emph{Lebesgue-messbare Mengen}.
- 
-Wenn keine Verwechselungsgefahr besteht, werden wir einfach $\lambda$ statt $\lambda_n$ und $\int f(x) \diffop x$ statt $\int f \diffop \lambda_n$ schreiben.
- 
-Ist $E  = \prod_1^n E_j$ ein Rechteck in $\real^n$, so wird $E_j \subseteq \real$ als \emph{Seite} von $E$ bezeichnet.
 \end{document}
