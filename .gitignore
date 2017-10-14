@@ -2,10 +2,21 @@
 *.aux
 *.log
 *.pdf
-!geom/img/*.pdf
 *.backup
 *.toc
 *.out
+
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*/auto
+
+*.dvi
+
+# Do not ignore tikz outputs in GEOM
+!geom/img/*.pdf
+
+# Ignore homework, exercises, photos
 */ha
 */uebung
 */foto
