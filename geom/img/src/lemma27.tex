@@ -1,0 +1,44 @@
+\documentclass{scrartcl}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows, calc, through}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{0mm}
+\pagestyle{empty}
+
+\begin{document}
+\definecolor{ccqqcc}{rgb}{0.8,0,0.8}		% lila
+\definecolor{ffzzqq}{rgb}{1,0.6,0}			% orange	
+\definecolor{qqccqq}{rgb}{0,0.8,0}			% grün
+\definecolor{xdxdff}{rgb}{0.49,0.49,1}	
+\definecolor{qqqqff}{rgb}{0,0,1}
+\definecolor{colPkt}{rgb}{0,0,0}		
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+				
+  \clip(-0.5,-0.5) rectangle (8.5,3);
+  \draw (0,0)       coordinate (S);
+  \draw (1.5,0.75)  coordinate (A);
+  \draw (4.57,2.29) coordinate (C);
+  \draw (1.93,0)    coordinate (A');
+  \draw (7.63,0)    coordinate (C');
+  \draw (2.6363,0.6109) coordinate (Q);
+
+  \draw [color=ccqqcc] (A)--(C');
+  \draw [color=ccqqcc] (C)--(A');
+
+  \draw [domain=-0.5:8.5] plot(\x,{(-0--0.75*\x)/1.5});
+  \draw [domain=-0.5:8.5] plot(\x,{(-0-0*\x)/1.93});
+  %\draw [dash pattern=on 4pt off 4pt,domain=-0.67155:7.83438] plot(\x,{(--0.1--0.04802*\x)/0.37095});
+
+  \fill [color=colPkt] (S)  circle (1.5pt) node[below] {\footnotesize $S$};
+  \fill [color=colPkt] (A)  circle (1.5pt) node[above] {\footnotesize $P_2$};
+  \fill [color=colPkt] (C)  circle (1.5pt) node[above] {\footnotesize $\pi(x)$};
+  \fill [color=colPkt] (A') circle (1.5pt) node[below] {\footnotesize $x$};
+  \fill [color=colPkt] (C') circle (1.5pt) node[below] {\footnotesize $P_1$};
+  \fill [color=ccqqcc] (Q)  circle (1.5pt) node[below] {\footnotesize $P$};
+  \draw (5.9,2.9) node[below] {\footnotesize $g_2$};
+  \draw (8.2,0)   node[above] {\footnotesize $g_1$};
+\end{tikzpicture}
+\end{document}
