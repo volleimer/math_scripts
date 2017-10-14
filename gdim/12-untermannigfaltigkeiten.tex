@@ -1,0 +1,732 @@
+\section{Untermannigfaltigkeiten des \texorpdfstring{$\real^n$}{IRn}}
+
+\subsection{Untermannigfaltigkeiten des \texorpdfstring{$\real^n$}{IRn}}
+\textbf{Vorspann.} Eine Menge $M$ heißt abzählbar $:\Leftrightarrow$ Es existiert eine injektive Abbildung $M \to \real$. Nicht abzählbare Mengen heißen überabzählbar.
+
+\begin{exmp}
+ $\nat, \integer$ und $\rat$ sind abzählbar, aber $\real$ ist überabzählbar.
+\end{exmp}
+
+\textbf{Erinnerung.} Ist $M \subset \real$ abzählbar, so ist $\lebesgue^1(M) = 0$. Aber $\lebesgue^1( [0,1] ) = 1$, also ist $[0,1]$ überabzählbar.
+
+Sei $(X,d)$ ein metrischer Raum. 
+\begin{itemize}
+ \item Die \emph{offene Kugel} mit Radius $r > 0$ um $y \in X$:
+  \[ B_r(x) := \{ x \in X : d(x,y) < r \}, \]
+ \item $U \subset X$ ist \emph{offen} $:\Leftrightarrow$ $\forall x \in U \exists r > 0 : B_r(x) \subset U$,
+ \item $A \subset X$ ist \emph{abgeschlossen} $:\Leftrightarrow$ $X \setminus A$ ist offen,
+ \item Für $x \in X$ ist eine \emph{Umgebung von $x$} eine offene Menge, die $x$ enthält.
+\end{itemize}
+
+Für beliebige Mengen $M \subset X$ definiert man 
+\begin{itemize}
+ \item den \emph{Abschluss} $\obar{M} :=$ Durchschnitt aller abgeschlossenen Mengen, die $M$ enthalten ($=$ ``kleinste'' abgeschlossene Menge, die $M$ enthält),
+ \item das \emph{Innere} $M^O :=$ Vereinigung aller offenen Teilmengen von $M$, 
+ \item der \emph{Rand} $\partial M := \obar{M} \setminus M^O$.
+\end{itemize}
+\textbf{Beispiel.} $M = [0,1)$ $\Rightarrow$ $\obar{M} = [0,1]$, $M^O = (0,1)$, $\partial M = \{ 0, 1 \}$.
+
+Sei $Y$ ein metrischer Raum. Eine Abbildung $f: X \to Y$ heißt \emph{Homöomorphismus} $:\Leftrightarrow$ $f$ ist bijektiv und $f$ und $f^{-1}$ sind stetig (Anschaulich ``stetige Deformation'').
+
+$K \subset \real^n$ ist \emph{kompakt} $:\Leftrightarrow$ $K$ ist beschränkt und abgeschlossen.
+
+\begin{thm}
+ Sei $K \subset \real^n$ kompakt. Sei $I$ eine beliebige\footnotemark Indexmenge und $i \in I$. Sei $U_i \subset \real^n$ offen. Zudem gelte $K \subset \bigcup_{i \in I} U_i$. Dann existiert eine \emph{endliche} Teilmenge $J \subset I$, sodass $K \subset \bigcup_{i \in J} U_i$.
+\end{thm}
+\footnotetext{Im Allgemeinen eine überabzählbare.}
+
+Diese sogenannte \emph{Heine-Borel-Eigenschaft} ist äquivalent zur Kompaktheit in $\real^n$ und ist in beliebigen metrischen Räumen die \emph{Definition} von Kompaktheit.
+
+Sei $(X,d)$ ein metrischer Raum und $M \subset X$. Eine Teilmenge $V \subset M$ heißt \emph{offen in} (oder relativ zu) $M$ $:\Leftrightarrow$ $M$ ist ein metrischer Raum mit Metrik $d$ $(M,d|_M)$ mit offener Teilmenge $V$.
+
+\begin{rmrk}
+$V$ offen in $M \subset X$ $\Leftrightarrow$ Es existiert $U \subset X$ offen, sodass $V = M \cap U$.
+\end{rmrk}
+
+\begin{proof}
+ Das folgt leicht aus der Tatsache, dass 
+ \[ B_r^M(z) = \{ x \in M: d(x,z) < r \} = B_r^X(z) \cap M. \qedhere \]
+\end{proof}
+
+\subsubsection{Immersionen}
+Sei $U \subset \real^k$ offen. Eine Abbildung $\varphi \in C^1(U, \real^n)$ heißt \emph{Immersion} $:\Leftrightarrow$ Für jedes $x \in U$ sind die Vektoren $\partial_1 \varphi(x), \partial_2 \varphi(x), \ldots, \partial_k \varphi(x)$ linear unabhängig ($\circ$).
+
+\textbf{Idee.} Lokal ist 
+\[ \varphi(x) = \varphi(z) + \underbrace{\nabla \varphi(z)}_{\in \real^{n \times k}} x. \]
+Daher lineare Algebra für affine $\varphi$ (das heißt $\nabla\varphi \equiv A$)
+\[ \begin{aligned}
+   \rang(A) &= 2 & &\rightsquigarrow & &\dim \text{Bild}(A) = 2 \text{ (Ebene)} \\
+   \rang(A) &= 1 & &\rightsquigarrow & &\dim \text{Bild}(A) = 1  \\
+   \rang(A) &= 0 & &\rightsquigarrow & &\dim \text{Bild}(A) = 0 \, (\{0\})
+   \end{aligned} \]
+   
+\begin{rmrk}
+ \begin{enumerate}
+  \item Lineare Unabhängigkeit kann nur erfüllt sein, wenn $n \ge k$.
+  \item Für alle $x \in U$ ist 
+   \[ \nabla\varphi(x) = \begin{pmatrix} \partial_1 \varphi(x) & \partial_2 \varphi(x) & \ldots & \partial_k \varphi(x) \end{pmatrix} \in \real^{n \times k}.\]
+   Bedingung ($\circ$) ist äquivalent zu
+   \[ \rang( \nabla \varphi(x) ) := \text{ Rang von } \nabla \varphi(x) = k. \]
+   Mit anderen Worten: Es existieren Indizes $i_1, \ldots, i_k$, sodass $\pdiff{(\varphi_{i_1}, \ldots, \varphi_{i_k})}{(x_1, \ldots, x_k)}$ invertierbar ist.
+   
+   $\pdiff{(\varphi_{i_1}, \ldots, \varphi_{i_k})}{(x_1, \ldots, x_k)}$ ist an jeder Stelle $x \in U$ eine invertierbare $(k \times k)$-Matrix, das heißt 
+   \[ \det \pdiff{(\varphi_{i_1}, \ldots, \varphi_{i_k})}{(x_1, \ldots, x_k)} = \det \nabla \begin{pmatrix} \varphi_{i_1} \\ \ldots \\ \varphi_{i_k} \end{pmatrix}(x) \ne 0. \]
+   Da dieser Ausdruck stetig von $x$ abhängt, gilt: Wenn ($\circ$) in $x_0 \in U$ erfüllt ist, dann existiert $r > 0$, sodass ($\circ$) erfüllt ist für alle $x \in B_r(x_0)$.
+  \item Wenn $k=n$, dann ist die Immersion $\varphi$ nach dem \emph{Satz über die Umkehrfunktion} lokal invertierbar.
+ \end{enumerate}
+\end{rmrk}
+
+\begin{defn}
+ Sei $U \subset \real^k$ offen und $\varphi: U \to \real^n$ eine Immersion.
+ \begin{itemize}
+  \item Für alle $x \in U$ definiert man den $k$-dimensionalen Untervektorraum von $\real^n$:
+  \[ T_x \varphi := \spn \{ \partial_1 \varphi(x), \ldots, \partial_k \varphi(x) \}. \]
+ \item Die von $\varphi$ induzierte Riemannsche Metrik auf $U$ ist die Abbildung $g_\varphi: U \to \real^{k \times k}$, definiert durch $g_\varphi(x) := (\nabla \varphi(x))^T (\nabla \varphi(x))$. Komponentenweise:
+  \[ (g_\varphi)_{ij}(x) = \partial_i \varphi(x) \cdot \partial_j \varphi(x), \]
+  wobei mit $\cdot$ das Skalarprodukt im $\real^n$ gemeint ist.
+ 
+  \textbf{Beispiel.} $k=2, n=3$, $g = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$. Jedes $\varphi$ mit $g_\varphi = g$ ist ``lokal längenerhaltend'' (isometrische Immersion).
+ \item Per Definition ist $g_\varphi(x)$ positiv definit und symmetrisch.
+ \end{itemize}
+\end{defn}
+
+\textbf{Beispiele.}
+\begin{enumerate}
+ \item Kurven im $\real^n$ ($k=1$). Sei $U = (a,b) \subset \real$. Eine Immersion ist eine Abbildung $\varphi:(a,b) \to \real^n$ mit ``Geschwindigkeitsvektor'' $\varphi'(x) \ne 0$ für alle $x \in (a,b)$.
+ \[ T_x \varphi = \spn\{ \varphi'(x)\} \text{ und } g_\varphi(x) = | \varphi'(x) |^2. \]
+ \item Graphen im $\real^n$. Sei $U \subset \real^{n-1}$ offen und $f: U \to \real$ stetig differenzierbar. Definiere $\varphi: U \to \real^n$ durch $\varphi(x) := (x, f(x))$, das heißt 
+ \[ \varphi(x) = \begin{pmatrix} x_1 \\ \vdots \\ x_{n-1} \\ f(x) \end{pmatrix}. \]
+ Dann ist $\varphi$ stetig differenzierbar und $\varphi(U) =  \mathrm{graph}(f)$; $\partial_i \varphi(x) = \vec{e}_i + \partial_i f(x) \vec{e}_n$.
+ \[ \begin{aligned}
+     (g_\varphi)_{ij} &= \partial_i \varphi \cdot \partial_j \varphi \\
+     &= (\vec{e}_i + \partial_i f \vec{e}_n) \cdot (\vec{e}_j + \partial_j f \vec{e}_n) \\
+     &= \delta_{ij} + \partial_i f \partial_j f.
+    \end{aligned} \]
+\end{enumerate}
+
+\subsubsection{Satz}
+\begin{thm}
+ Sei $U \subset \real^k$ offen, $\varphi \in C^1(U, \real^n)$ eine Immersion und $z \in U$. Dann existiert $r > 0$, sodass die Einschränkung $\varphi|_{B_r(z)} : B_r(z) \to \real^n$ ein Homöomorphismus von $B_r(z)$ auf $\varphi(B_r(z))$ ist.
+\end{thm}
+
+\begin{proof}
+ Für $k = n$ folgt das aus dem Satz über Umkehrabbildungen. Sei also $k < n$. Ohne Einschränkung sei $\pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar. Wende den Satz über Umkehrabbildungen an auf $\tilde{\varphi} = ( \varphi_1, \ldots, \varphi_k): U \to \real^k$, da ja $\nabla \varphi = \pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar ist. Also existiert $r > 0$ und eine offene Menge $V \subset \real^k$, sodass $\tilde{\varphi}: B_r(z) \to V$ bijektiv ist mit stetig differenzierbarer Umkehrabbildung $\tilde{\psi}: V \to B_r(z)$. Da $\tilde{\varphi}|_{B_r(z)}$ injektiv ist, ist auch $\varphi|_{B_r(z)}$ injektiv, also $\varphi:B_r(z) \to \varphi(B_r(z))$ bijektiv.
+ 
+ Die Umkehrabbildung $\psi : \varphi(B_r(z)) \to B_r(z)$, $(y_1, \ldots, y_k) \mapsto \tilde{\psi}(y_1, \ldots, y_k)$ ist stetig, da $\tilde{\psi}$ stetig ist.
+\end{proof}
+
+\subsubsection{Definition}
+Sei $M \subset \real^n$.
+\begin{itemize}
+  \item $M$ heißt \emph{Untermannigfaltigkeit} von $\real^n$ $:\Leftrightarrow$ Für jedes $y \in M$ existiert eine Umgebung $V \subset \real^n$ von $y$, eine offene Menge $U \subset \real^n$ und eine Immersion $\varphi: U \to \real^n$, sodass $\varphi: U \to M \cap V$ ein Homöomorphismus ist.
+  
+  Man nennt dann $\varphi: U \to M \cap V$ eine \emph{lokale Parametrisierung} von $M \cap V$ (oder von $M$ nahe $y$). 
+  
+  Für jedes $z \in M \cap V$ nennt man $\varphi^{-1}(z)$ die \emph{lokalen Koordinaten} von $z$ unter $\varphi$.
+  \item Der \emph{Tangentialraum} an $M$ im Punkt $y = \varphi(x)$ ist der $k$-dimensionale Vektorraum $T_y M := T_y \varphi = \spn \{ \partial_1 \varphi(x), \ldots, \partial_k \varphi(x) \}$. 
+  
+  Die Elemente von $T_y M$ heißen \emph{Tangentialvektoren} an $M$ im Punkt $y$.
+\end{itemize}
+
+\begin{rmrk}
+ Für alle $y \in M$ ist $T_y M$ wohldefiniert: Wenn $\varphi_i: U_i \to V \cap M$ ($i = 1,2$) lokale Parametrisierungen nahe $y \in M \cap V$ sind, dann
+ \[ T_{\varphi^{-1}_1(y)} \varphi_1 = T_{\varphi^{-1}_2(y)} \varphi_2. \]
+\end{rmrk}
+
+\begin{proof}
+ Wähle $i \in \{1, \ldots, k\}$ und definiere $\gamma(t) := \varphi_1^{-1}(y) + t e_i$.
+ Da $U_1$ offen ist, existiert $\eps > 0$, sodass $\gamma( [-\eps, \eps] ) \subset U_1$. Definiere $\Gamma := \varphi_2^{-1} \circ \varphi_1 \circ \gamma$. In Satz 1.6 werden wir sehen: $\varphi_2^{-1} \circ \varphi_1: U_1 \to U_2$ ist ein $C^1$-Diffeomorphismus. Also ist $\Gamma \in C^1( (-\eps,\eps), \real^k)$ und wegen der Kettenregel
+ \[ \partial_1 \varphi_1 ( \varphi^{-1} (y) ) \overset{\text{Def. von } \varphi}{=} (\varphi_1 \circ \gamma) (0) \overset{\text{Def. von } \Gamma}{=} (\varphi_2 \circ \Gamma) (0) = \nabla \varphi_2( \varphi_2^{-1}(y) ) \Gamma'(0), \]
+ und die rechte Seite liegt im Bild von $\nabla \varphi_2( \varphi_2^{-1}(y) )$.
+ 
+ Der Beweis für $\partial_2 \varphi_1, \ldots, \partial_k \varphi_1$ verläuft analog.
+\end{proof}
+
+\textbf{Beispiele für Untermannigfaltigkeiten.}
+\begin{enumerate}
+ \item Wenn $U \subset \real^k$ offen und $\varphi: U \to \real^n$ eine \emph{injektive} Immersion ist und $V \subset U$, dann ist $\varphi(V) \subset \real^k$ eine $k$-dimensionale Untermannigfaltigkeit.
+ \begin{itemize}
+  \item Wenn $\varphi$ nicht injektiv ist, dann ist $V$ im Allgemeinen keine Untermannigfaltigkeit.
+  \item $\varphi(U)$ ist im Allgemeinen auch keine Untermannigfaltigkeit, siehe \ref{sect:offen}.
+ \end{itemize}
+ \item Sphären $\partial B_r(x)$ sind $(n-1)$-dimensionale Untermannigfaltigkeiten, weil $B_r(x) \subset \real^n$ eine $C^1$-berandete Menge ist.
+\end{enumerate}
+
+\begin{rmrk}
+ Oben definierte Untermannigfaltigkeiten sind genauer sogenannte $C^1$-""Untermannigfaltigkeiten. Eine $C^m$-Untermannigfaltigkeit für $m \in \nat \setminus \{0\}$ erhält man, wenn man die Parametrisierungen in $C^m$ liegen. Hier wird nur $C^1$ betrachtet. Zum Beispiel in der Geometrie wird meist mindestens $C^2$ genutzt, weil man dann Eigenschaften wie die Krümmung übertragen kann.
+\end{rmrk}
+
+\newpage
+
+\subsubsection{Äquivalente Definitionen von UM}
+\begin{thm}
+ Sei $M \subset \real^n$. Dann sind folgende Aussagen äquivalent:
+ \begin{enumerate}
+  \item $M$ ist $k$-dimensionale Untermannigfaltigkeit.
+  \item Für alle $y \in M$ existiert eine Umgebung $V \subset \real^n$, ein offenes $W \subset \real^n$ und ein $f \in C^1(W, \real^{n-k})$, so dass mit $x' = (x_1, \ldots, x_k)$:
+  \[ M \cap V = \{ \big(x_1, \ldots, x_k, f_1(x'), \ldots, f_{n-k}(x') \big) : x' \in W \}. \]
+  Für $k = n-1$ ist das der Graph von $f$.
+  \item Für alle $y \in M$ existiert eine Umgebung $V \in \real^n$ und ein stetig differenzierbares $F:V \to \real^{n-k}$; $\nabla F(x)$ hat Rang $n-k$ für jedes $x \in V \cap M$ und
+  \[ V \cap M = \{ x \in V : F(x) = 0 \}. \]
+  \item Für alle $y \in M$ existiert eine Umgebung $V \subset \real^n$ und eine offene Menge $W \subset \real^n$ sowie ein $C^1$-Diffeomorphismus $\Phi: V \to W$, so dass
+  \[ \Phi(V \cap M) = \{ x \in W : x_{k+1} = \cdots = x_n = 0 \} = W \cap (\real^k \times \{ 0 \}), \]
+  wobei $\{ 0 \} \in \real^{n-k}$.
+ \end{enumerate}
+\end{thm}
+
+\begin{proof}
+ \begin{itemize}
+  \item \textbf{1. $\Rightarrow$ 2.} Sei also $y \in M$ mit Umgebung $V \subset \real^n$, $U' \subset \real^k$ offen und $\varphi: U' \to \real^n$ eine Immersion, so dass $\varphi: U' \to M \cap V$ ein Homöomorphismus ist. Diese existieren nach der Definition der Untermannigfaltigkeit immer. Ohne Einschränkung\footnote{Evtl. nach Umnummerierung der $\varphi_i$} sei
+  \[ \pdiff{ (\varphi_1, \ldots, \varphi_k) }{ (x_1, \ldots, x_k) } \]
+  an der Stelle $z := \varphi^{-1}(y)$ invertierbar. Das heißt mit $\tilde{\varphi} := ( \varphi_1, \ldots \varphi_k)$ ist $\nabla \tilde{\varphi}(z)$ invertierbar. Aus dem Satz über die Umkehrfunktion folgt nach Verkleinerung von $U'$, dass eine offene Menge $W \subset \real^k$ existiert, so dass $\tilde{\varphi}: U' \to W$ ein $C^1$-Diffeomorphismus ist. Definiere
+  \[ \tilde{f} :=\varphi \circ \tilde{\varphi}^{-1} : W \to \real^n. \]
+  Dann ist $\tilde{f}_i(x) = x_i$ für $i = 1, \ldots, k$. Also hat $f := (\tilde{f}_{k+1}, \ldots, \tilde{f}_{n-k})$ die gewünschte Eigenschaft.
+  \item \textbf{2. $\Rightarrow$ 3.} Seien $V \subset \real^n$ und $U \subset \real^k$ offen und $f = (f_1, \ldots, f_{n-k}): U \to \real^{n-k}$ in $C^1$, so dass $M \cap V = \{ (x', f_1(x'), \ldots, f_{n-k}(x') ) : x' \in U \}$. Definiere $F: V \to \real^{n-k}$ durch 
+  \[ F(x) := ( x_{k+1} - f_1(x'), \ldots, x_n - f_{n-k}(x') ). \]
+  Dann ist 
+  \[ M \cap V = \{ x \in V : F(x) = 0 \} \]
+  und da $(\partial_{k+1} F, \ldots, \partial_n F)$ invertierbar\footnote{Sogar die Einheitsmatrix, da in der $j$-ten Komponente nur $x_j$ vorkommt und $x'$ nur $x_1$ bis $x_k$ enthält.} ist, hat $\nabla F$ Rang $n-k$.
+  \item \textbf{3. $\Rightarrow$ 4.} Sei $V \subset \real^n$ Umgebung von $y \in M$ und $F \in C^1(V, \real^{n-k})$, so dass $M \cap V = \{ x \in V : F(x)=0 \} \cap V$. Ohne Einschränkung seien $\partial_{k+1} F(y), \ldots, \partial_n F(y)$ linear unabhängig. Definiere $\Phi: V \to \real^n$ durch
+  \[ \Phi(x) := \begin{pmatrix} x_1 \\ \vdots \\ x_k \\ F_1(x) \\ \vdots \\ F_{n-k}(x) \end{pmatrix}. \]
+  Dieses $\Phi$ hat die gewünschte Eigenschaft.
+  \item \textbf{4. $\Rightarrow$ 1.} Sei $\Phi: V \to W$ wie in 4. gegeben. Dann ist
+  \[ \varphi(x_1, \ldots, x_k) := \Phi^{-1}( x_1, \ldots, x_k, \underbrace{0 \ldots, 0}_{n-k} ) \]
+  eine lokale Parametrisierung von $M$ nahe $y^{n-k}$. \qedhere
+ \end{itemize}
+\end{proof}
+
+\subsubsection{Tangentialraum}
+\begin{thm}
+ Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit. Dann sind folgende Aussagen äquivalent:
+ \begin{enumerate}
+  \item $v \in T_y M$.
+  \item Es existieren $\eps > 0$ und $\alpha \in C^1((-\eps,\eps),\real^n)$ mit $\alpha((-\eps,\eps)) \subset M$ und $\alpha(0) = y$ und $\alpha'(0) = v$.
+  \item Für eine (bzw. jede) Abbildung $F \in C^1(V,\real^{n-k})$ wie in Satz XII.1.4 (3) gilt $v \in \ker \nabla F(y)$.
+ \end{enumerate}
+\end{thm}
+
+\textbf{Beweisskizze.}
+ $v \in T_y M \Rightarrow \exists \mu \in \real^k$, so dass $v = \sum_{i=1}^j \mu_i \partial_i \varphi(z)$, wobei $\varphi$ eine lokale Parametrisierung nahe $y$ und $z := \varphi^{-1}(y)$.
+ \[ \rightsquigarrow \alpha(t) := \varphi( \underbrace{z + t\mu}_{\in U \text{ für } |t| < \eps} ), \Rightarrow \alpha'(0) = v. \]
+ $\alpha(0) = y$
+ \[ \rightsquigarrow 0 = (F \circ \alpha)'(0) = \nabla F( y ) v. \]
+
+\clearpage
+ 
+\subsubsection{Parameter-Transformation}
+\begin{lem}
+ Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit, $V \subset \real^n$ eine Umgebung von $y \in M$. Sei $\varphi: U \to V \cap M$ eine lokale Parametrisierung\footnotemark, sei $W \subset \real^n$ offen und sei $\Phi:V \to W$ eine $C^1$-invertierbare Abbildung wie in Satz XII.1.4 (4). Dann ist
+ \[ \Phi \circ \varphi : U \to W \cap ( \real^k \times\{ 0 \} ) \]
+ $C^1$-invertierbar.
+\end{lem}
+\footnotetext{Ein Homöomorphismus von $U$ nach $M \cap V$.}
+
+\begin{proof}
+ $\varphi: U \to M \cap V$ und $\Phi: V \to W$ sind bijektiv, also $\Phi \circ \varphi: U \to W \cap (\real^k \times \{ 0 \})$ ebenfalls bijektiv. Außerdem sind $\varphi, \Phi$ stetig differenzierbar, also ist auch $\Phi \circ \varphi$ stetig differenzierbar.
+ 
+ Kettenregel $\Rightarrow$ $\forall x \in U$ gilt
+ \[ \partial_i ( \Phi \circ \varphi )( x ) = \nabla \Phi(\varphi(x)) \partial_i \varphi(x) \]
+ $\nabla \Phi(\varphi(x))$ ist invertierbar, weil $\Phi$ Diffeomorphismus, die $\partial_i \varphi(x)$ sind linear unabhängig für $i=1,\ldots,k$. Also ist $(\partial_1 (\Phi \circ \varphi)(x), \ldots, \partial_k (\Phi \circ \varphi)(x))$ linear unabhängig, das heißt $\nabla( \Phi \circ \varphi )(x)$ invertierbar für alle $x \in U$. Daher ist $\Phi \circ \varphi$ ein $C^1$-Diffeomorphismus wegen des Satzes über die Umkehrabbildung (siehe Analysis 2).
+\end{proof}
+
+\begin{thm}
+ Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit, $y \in M$, $V \subset \real^n$ Umgebung von $y$ und seien $\varphi_{1/2}: U_{1/2} \to M \cap V$ lokale Parametrisierungen. Dann ist $\varphi_2^{-1} \circ \varphi_1 : U_1 \to U_2$ ein $C^1$-Diffeomorphismus.
+\end{thm}
+
+\begin{proof}
+ Als Komposition von Homöomorphismen ist $\varphi_2^{-1} \circ \varphi_1$ auch ein Homöo\-morphis\-mus. Zudem gilt
+ \[ \varphi_2^{-1} \circ \varphi_1 = (\Phi \circ \varphi_2)^{-1} \circ (\Phi \circ \varphi_1), \]
+ wobei $\Phi$ wie im Lemma definiert ist. Dann sind die $\Phi \circ \varphi_i$ $C^1$-Diffeomorphismen, also auch ihre Umkehrfunktionen und damit ebenfalls $(\Phi \circ \varphi_2)^{-1} \circ (\Phi \circ \varphi_1)$.
+\end{proof}
+
+\subsubsection{Offene Mengen mit \texorpdfstring{$C^1$}{C1}-Rand}\label{sect:offen}
+Sei $U \subset \real^n$ offen und beschränkt. $U$ hat einen \emph{$C^1$-Rand} $:\Leftrightarrow$ Für alle $z \in \partial U$ existiert $r > 0$ und $F \in C^1( B_r(z) )$, so dass $\nabla F(x) \ne 0$ für alle $x \in B_r(z)$ und
+\[ U \cap B_r(z) = \{ x \in B_r(z) : F(x) < 0 \}. \]
+
+\begin{rmrk}
+ Es gilt dann
+ \[ B_r(z) \cap \partial U = \{ x \in B_r(z) : F(x) = 0 \} \]
+ und
+ \[ B_r(z) \setminus \obar{U} = \{ x \in B_r(z) : F(x) > 0 \}. \]
+\end{rmrk}
+
+\begin{proof}
+ Übungsaufgabe.
+\end{proof}
+
+\begin{thm}
+ Sei $U \subset \real^n$ offen, beschränkt und $C^1$-berandet. Dann ist $\partial U \subset \real^n$ eine $(n-1)$-dimensionale Untermannigfaltigkeit.
+\end{thm}
+
+\begin{proof}
+  Das folgt aus der Bemerkung und Satz 1.4.
+\end{proof}
+
+$\mathbb{S}^{n-1} := \partial B_1(0)$, wobei $B_1(0) \subset \real^n$, also die Oberfläche der $n$-dimensionalen Einheitskugel.
+
+\begin{kor}
+ Sei $U \subset \real^n$ offen, beschränkt und $C^1$-berandet. Dann existiert genau eine Abbildung $\nu: \partial U \to \mathbb{S}^{n-1}$, so dass für alle $y \in \partial U$ gilt:
+ \begin{enumerate}
+  \item $\nu(y) \in (T_y \partial U)^\perp$ und
+  \item Es existiert $\eps > 0$, so dass $y + t \nu(y) \notin U$ für alle $t \in (0,\eps)$.
+ \end{enumerate}
+ Diese Abbildung $\nu(y) : \partial U \to \real^n$ ist stetig.
+\end{kor}
+
+\begin{proof}
+ Die Existenz folgt einfach durch die Definition
+ \[ \nu(y) := \frac{\nabla F(y)}{|\nabla F(y)|}. \]
+ 
+ Wegen  $\dim \partial U = n-1 = \dim T_y \partial U$ für alle $y \in \partial U$ gilt
+ \[ \dim( T_y \partial U )^\perp = n - (n-1) = 1. \]
+ Weil $|\nu(z)| = 1$ folgt
+ \[ \nu(z) = \pm \frac{\nabla F(y)}{|\nabla F(y)|} \]
+ und das Vorzeichen wird wie in der Bemerkung festgelegt.
+\end{proof}
+
+\begin{exmp}
+ \begin{itemize}
+  \item $B_r(0)$ (mit $\partial B_r(0) = \{ x \in \real^n : |x| = r \}$) ist $C^1$-berandet. Die Funktion $F \in C^1(\real^n)$ kann sogar global definiert werden, nämlich durch $F(x) = |x|^2 - r$.
+  \item Wenn $U$ $C^1$-berandet ist, dann ist $\partial U$ lokal ein Graph; siehe Satz XII.1.4. Das werden wir im Beweis des Satzes von Gauss verwenden.
+ \end{itemize}
+\end{exmp}
+
+\clearpage
+
+\subsubsection{Kleiner Exkurs: Extrema mit Nebenbedingungen}
+\begin{thm}
+ Sei $M \subset \real$ eine Untermannigfaltigkeit, sei $V \subset \real^n$ offen, sei $f \in C^1(V)$ und sei $z \in M \cap V$ ein lokales Extremum von $f$ auf $M$, das heißt es existiert $r > 0$, so dass
+ \[ f(y) \le f(z) \text{ für alle } y \in M \cap B_r(z) \]
+ (oder mit $\ge$). Dann ist
+ \[ \nabla f(z) \in (T_z M)^\perp. \]
+\end{thm}
+
+\begin{proof}
+ Ohne Einschränkung sei $B_r(z) \subset V$ und $U := B_R(0) \subset \real^k$. Sei $\varphi: U \to M \cap B_r(z)$ eine lokale Parametrisierung nahe $z$. Ohne Einschränkung sei $\varphi(0) = z$. Dann hat für jedes $i = 1, \ldots, k$ die Funktion
+ \[ \tilde{f}_i:(-R,R) \to \real, \quad \tilde{f}_i(t) := f( \varphi(te_i) ) \]
+ ein lokales Extremum in $t=0$. Also ist
+ \[ 0 = \tilde{f}'_i(0) = \nabla f( z ) \cdot \partial_i \varphi(0) \]
+ für alle $i = 1, \ldots, k$, das heißt $\nabla f( z )$ ist orthogonal zu $\spn \{ \partial_1 \varphi(0), \ldots, \partial_k \varphi(0) \}$.
+\end{proof}
+
+\begin{rmrk}
+ Daraus folgt die sogenannte Lagrange-Multiplikator-Regel: Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit und $V \subset \real^n$ eine Umgebung von $z \in M$, so dass $F \in C^1(V, \real^{n-k})$, $F = (F_1, \ldots, F_{n-k})$ existiert und $V \cap M = V \cap \{ F = 0 \}$. Wegen Satz XII.1.5 ist
+ \[ T_z M = \ker \nabla F(z) = \{ \underbrace{\nabla F_1(z)}_{\in \real^n}, \ldots, \nabla F_{n-k}(z) \}^\perp. \]
+ Also 
+ \[ (T_z M)^\perp = \spn \{ \nabla F_1(z), \ldots, \nabla F_{n-k}(z) \}. \]
+ 
+ Für $f$ wie im Satz existieren also sogenannte \emph{Lagrange-Multiplikatoren} $\lambda_1, \ldots, \lambda_{n-k} \in \real$, so dass
+ \[ \nabla f(z) = \sum_{i=1}^{n-k} \lambda_i \nabla F_i(z). \]
+ 
+ Formal ist $\nabla f(t) = \sum \lambda_i \nabla F_i(z) = 0$ genau die notwendige Bedingung für ein Extremum der Funktion 
+ \[ f - \sum_{i=1}^{n-k} \lambda_i F_i \]
+ auf $V$. Das heißt ``$z$ ist Extrempunkt von $f$ auf $M$ $\Rightarrow$ Es existieren $\lambda_i$, so dass $z$ Extrempunkt von $f \sum_{i=1}^{n-k} \lambda_i F_i$ auf $V$''.
+ 
+ $\rightsquigarrow$ Variationsprobleme mit Nebenbedingungen, siehe theoretische Mechanik.
+\end{rmrk}
+
+\subsection{Integrale über Untermannigfaltigkeiten}
+Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit und $f: M \to \real$. Wir wollen das Integral $\int_M f$ definieren. Wir beschränken uns auf den Fall, dass $M$ durch endlich viele lokale Parametrisierungen überdeckt werden kann. Wegen der Heine-Borel-Eigenschaft ist das für kompakte Untermannigfaltigkeiten immer der Fall. Zum Beispiel $M = \partial W$, wobei $W \subset \real^n$ offen, beschränkt und $C^1$-berandet ist.
+
+\subsubsection{Lokales Integral}
+Wir betrachten zunächst einen Spezialfall. Es existiere $U \subset \real^k$ offen, $V \subset \real^n$ offen und eine Immersion $\varphi : U \to \real^n$ von $M$, so dass $\varphi: U \to V \cap M$ ein Homöomorphismus ist und
+\[ \{ y \in M : f(y) \ne 0 \} \subset M \cap V. \]
+Ein solches $f$ heißt \emph{integrierbar} über $M$ $:\Leftrightarrow$ die Funktion
+\[ (f \circ \varphi) \cdot \sqrt{\det g_\varphi} = (f \circ \varphi) \cdot \sqrt{ \det((\nabla \varphi)^T(\nabla \varphi))} : U \to \real \]
+ist über $U$ integrierbar. Dann definiert man
+\[ \begin{aligned}
+    \int_M f :&= \int_M f \diffop \vol_M := \int_M f \diffop \vol_k := \int_M f(y) \diffop \vol_k(y) \\
+    :&= \int_U (f \circ \varphi) \cdot \sqrt{\det g_\varphi} \diffop \lebesgue^k \\
+     &= \int_U (f(\varphi(x)) \cdot \sqrt{\det ((\nabla \varphi)^T(\nabla \varphi))} \diffop \lebesgue^k(x).
+   \end{aligned} \]
+
+\begin{rmrk}
+ Dieses Integral ist wohldefiniert, das heißt es ist unabhängig von der Parametrisierung $\varphi$.
+\end{rmrk}
+
+\begin{proof}
+ Sei $V \subset \real^n$ offen, $f = 0$ auf $M \setminus V$ und seien $\varphi: U \to M \cap V$ und $\tilde{\varphi}: \tilde{U} \to M \cap V$ Parametrisierungen. Wegen Satz 1.6 existiert ein $C^1$-Diffeomorphismus $\rho: \tilde{U} \to U$, so dass $\tilde{\varphi} = \varphi \circ \rho$. Mit der Transformationsformel folgt
+ \[
+  \int_U (f \circ \varphi) \cdot \sqrt{\det g_\varphi} \diffop \lebesgue^k = \int_{\tilde{U}} \underbrace{(f \circ \varphi \circ \rho)}_{f \circ \tilde{\varphi}} \cdot \underbrace{\sqrt{ \det g_\varphi \circ \rho } \cdot | \det \nabla \rho |}_{\sqrt{\det g_{\tilde{\varphi}}}} \diffop \lebesgue^k. 
+ \]
+ Definition von $g_\varphi := \nabla \varphi^T \nabla \varphi$ und $g_{\tilde{\varphi}} := \nabla \tilde{\varphi}^T \nabla \tilde{\varphi}$.
+\end{proof}
+
+\subsubsection{Globales Integral und Zerlegung der Eins}
+\begin{rmrk}[Messbare Zerlegung der Eins]
+ Sei $M \subset \real^n$ und seien $V_1, \ldots, V_m \subset M$ Borel-messbar, $M = V_1 \cup V_2 \cup \ldots \cup V_m$. Dann existieren Borel-messbare Funktionen $\alpha_1, \ldots, \alpha_m : M \to [0,1]$, so dass
+ \begin{enumerate}
+  \item $\alpha_j = $ auf $M \setminus V_j$.
+  \item $\sum_{j=1}^m \alpha_j = 1$ für alle $y \in M$.
+ \end{enumerate}
+\end{rmrk}
+
+\begin{proof}
+ Definiere $W_1 := V_1$ und für $j \ge 2$ definiere 
+ \[ W_j := V_j \setminus \bigcup_{i=1}^{j-1} V_i. \]
+ Die $W_j$ sind Borel-messbar, paarweise disjunkt und $M = W_1 \cup \ldots W_m$. Definiere $\alpha_j = \chi_{W_j}$.
+\end{proof}
+
+Sei nun $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit, die von endlich vielen Parametrisierungen überdeckt wird, das heißt es existieren $U_1, \ldots, U_m \subset \real^k$ und $V_1, \ldots, V_m \subset \real^n$ offen und Immersionen $\varphi_i : U_i \to V_i \cap M$ (Homöomorphismen) und sei $M = \bigcup_{j=1}^m V_j$.
+
+Eine Funktion $f : M \to \real$ heißt integrierbar über $M$ $:\Leftrightarrow$ Für jedes $j = 1, \ldots, m$ ist $\chi_{V_j} j$ integrierbar über $M$. 
+
+Dann definiert man (mit $\alpha_j$ wie in der Bemerkung):
+\[ \int_M f := \int_M f \diffop \vol_k := \sum_{j=1}^m \int_M \alpha_j \cdot f. \]
+
+\begin{rmrk}
+ Diese Definition ist unabhängig von der Überdeckung durch Karten und der Zerlegung der Eins.
+\end{rmrk}
+
+\begin{proof}
+Seien $V_i \subset \real^n$ offen mit Zerlegung der Eins $\alpha_i$, $i = 1, \ldots, m$ und $W_j \subset \real^n$ mit Zerlegung der Eins $\beta_j$, $j = 1, \ldots, l$ jeweils Überdeckungen von $M$. Dann ist 
+\[ (V_i \cap W_j)_{\substack{i = 1,\ldots,m \\ j=1,\ldots,l}} \]
+eine Überdeckung mit zugehöriger Zerlegung $\alpha_i \beta_j$. Da zum Beispiel
+\[ \sum_{i = 1}^m \alpha_i \beta_j = \beta_j, \qquad \sum_{j=1}^l \alpha_i \beta_j = \alpha_i, \]
+gilt auch
+\[ \sum_{i=1}^m \int_f \alpha_i = \sum_{j=1}^l \sum_{i=1}^m \int f \alpha_i \beta_j = \sum_{j=1}^l f \beta_j. \qedhere \]
+\end{proof}
+
+\subsubsection{\texorpdfstring{$k$}{k}-dimensionales Volumen}
+Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit. $A \subset M$ hat \emph{endliches ($k$-)Volumen} (``Fläche'' falls $k=2$, ``Länge'' falls $k=1$) $:\Leftrightarrow$ $\chi_A$ ist integrierbar über $M$. Man definiert
+\[ \vol_k (A) := \int_M \chi_A. \]
+Eine Funktion $f : M \to \real$ heißt über $A$ integrierbar $:\Leftrightarrow$ $\chi_a f$ ist über $M$ integrierbar. Man setzt $\int_A f := \int_M \chi_A f$.
+
+\begin{exmp}
+ Sei $I \subset \real$ ein offenes Intervall und $\varphi \in C^1(I,\real)$ eine Immersion und ein Homöomorphismus von $I$ auf $\varphi(I)$. Für jedes Intervall $J$ mit $\obar{J} \subset I$ ist dann $M := \varphi(J) \subset \real^n$ eine 1-dimensionale Untermannigfaltigkeit; es gilt $g_\varphi(x) = |\varphi'(x)|^2$, also
+ \[ \vol_1( \varphi(J) ) = \int_M \chi_{\varphi(J)} = \int_I \chi_{\varphi(J)} \circ \varphi \sqrt{ g_\varphi } = \int_J | \varphi'(x) | \diffop x. \]
+\end{exmp}
+
+\clearpage
+
+\subsubsection{Verhalten unter Homothetien}
+\begin{thm}
+ Sei $M \subset \real^n$ eine $k$-dimensionale Untermannigfaltigkeit und $\lambda > 0$. Dann ist $\lambda M \subset \real^n$ auch eine $k$-dimensionale Untermannigfaltigkeit. Eine Funktion $f: \lambda M \to \real$ ist über $\lambda M$ integrierbar genau dann, wenn $x \mapsto f(\lambda x)$ über $M$ integrierbar ist und es gilt
+ \[ \int_{\lambda M} f = \lambda^k \int_M f(\lambda y) \diffop \vol_k (y). \]
+ ..
+\end{thm}
+
+\begin{proof}
+ Sei $V \subset \real^n$ offen. Wenn $\varphi: U \to V \cap M$ eine lokale Parametrisierung ist, dann ist $\lambda \varphi : U \to \lambda (V \cap M) = (\lambda V) \cap (\lambda M)$ auch eine lokale Parametrisierung von $\lambda M$. Offenbar gilt
+ \[ (g_{\lambda \varphi})_{ij} = \partial_i (\lambda \varphi) \partial_j (\lambda \varphi) = \lambda^2 \partial_i \varphi \partial_j \varphi = \lambda^2 (g_\varphi)_{ij}. \]
+ Also ist $\det g_{\lambda \varphi} = \lambda^{2k}  \det g_\varphi$. Damit folgt
+ \begin{align*}
+  \int_{\lambda M} f 
+  &= \int_U f(\lambda \varphi(x)) \sqrt{ \det g_{\lambda \varphi}(x) } \diffop \lebesgue^k(x) \\
+  &= \int_U f(\lambda \varphi(x)) \sqrt{ \lambda^{2k} \det g_{\varphi}(x) } \diffop \lebesgue^k(x) \\
+  &= \lambda^k \int_U f(\lambda \varphi(x)) \sqrt{ \det g_{\varphi}(x) } \diffop \lebesgue^k(x) \\
+  &= \lambda^k \int_M f(\lambda y) \diffop \vol_k(y). \qedhere
+ \end{align*}
+\end{proof}
+
+\subsubsection{Koflächen-Formel}
+\begin{thm}
+ Sei $f: \real^n \to \real$ integrierbar. Dann ist $f$ für $\lebesgue^n$-fast alle $r > 0$ über der Sphäre $\mathbb{S}_r := \partial B_r(0)$ integrierbar und es gilt
+ \[ \begin{aligned}
+     \int_{\real^n} f \diffop \lebesgue^n
+     &= \int_0^\infty \left( \int_{\mathbb{S}_r} f \diffop \vol_{\mathbb{S}_r} \right) \diffop r \\
+     &= \int_0^\infty \left( \int_{\mathbb{S}_1} f(r \xi) \diffop \vol_{\mathbb{S}_1}(\xi) \right) r^{n-1} \diffop r.
+    \end{aligned} \]
+\end{thm}
+
+\begin{exmp}[Rotationssymmetrische Funktionen]
+ Sei $\tilde{f}:(0,\infty) \to \real$, so dass die Funktion $f: \real^n \to \real$, $f(x) := \tilde{f}(|x|)$ $\lebesgue^n$-integrierbar ist. Dann folgt aus Satz 2.5:
+ \[ \int_{\real^n} f \diffop \lebesgue^n = \int_0^\infty \left( \int_{\mathbb{S}_1} \tilde{f}(r) \diffop \vol_{\mathbb{S}_1} \right) r^{n-1} \diffop r = \vol( \mathbb{S}_1 ) \int_0^\infty \tilde{f}(r) r^{n-1} \diffop r. \]
+\end{exmp}
+
+\subsection{Divergenzsatz (Integralsatz von Gauss)}
+\subsubsection{Funktionen mit kompaktem Träger}
+Sei $U \subset \real^n$ (zum Beispiel $U = \real^n$) und $\varphi: U \to \real$. Der \emph{Träger}\footnote{Englisch support, daher Symbol $\spt \varphi$} von $\varphi$ ist definiert als:
+\[ \spt \varphi := \obar{\{ x \in U : \varphi(x) \ne 0 \}}. \]
+Der Abschluss wird dabei in $\real^n$ gemacht. Eine Funktion $\varphi: U \to \real$ hat einen \emph{kompakten Träger} in $U$ $:\Leftrightarrow$ $\spt \varphi$ ist kompakt.
+
+\begin{rmrk}
+ Äquivalent:
+ \begin{enumerate}
+  \item $\varphi$ hat kompakten Träger in $U$.
+  \item Es existiert $K \subset U$ kompakt, so dass $\varphi = 0$ auf $U \setminus K$.
+  \item Die Menge $\{x \in U : \varphi(x) \ne 0 \}$ ist beschränkt.
+ \end{enumerate}
+\end{rmrk}
+ 
+\begin{proof}
+ $1 \Rightarrow 2$ und $2 \Rightarrow 3$ sind klar. $3 \Rightarrow 1$ folgt daraus, dass der Abschluss einer beschränkten Menge auch beschränkt ist. In $\real^n$ sind abgeschlossene, beschränkte Mengen kompakt.
+\end{proof}
+
+Für $k \in \nat$ und $U \subset \real^n$ offen schreibt man
+\[ C_c^k(U) := \{ \varphi \in C^k(U) : \varphi \text{ hat kompakten Träger in } U \}. \]
+Für $k=0$ muss $U$ nicht offen sein (unten $U \cup M$).
+
+\begin{rmrk}
+ $C_c^{k+1}(U) \subset C_c^k(U) \subset C_c^k(\real^n)$. Wenn $f \in C_c^0(\real^n)$, dann ist
+ \[ \| f \|_{C^0(\real^n)} := \sup \{ |f(x)| : x \in \real^n \} < \infty. \]
+\end{rmrk}
+
+\begin{proof}
+ Erster Teil klar; letzte Inklusion in dem Sinne, dass wenn $f \in C_c^k(U)$, dann $\tilde{f} \in C^k_c(\real^n)$ ist, wobei
+ \[ \tilde{f}(x) := \begin{cases} f(x) &\text{falls } x \in U, \\ 0 &\text{sonst.} \end{cases} \]
+ Sei nun $f: \real^n \to \real$ stetig und $f = 0$ auf $\real^n \setminus K$. Da $f$ stetig ist, folgt $\| f \|_{C^0(K)} < \infty$. Aber $f(\real^n) = f(K) \cup \{ 0 \}$.
+\end{proof}
+
+$\| f \|_{C^0(\real^n)} := \sup \{ | f (x) | : x \in \real^n \}$ ist endlich.
+
+$\operatorname{spt} \varphi :=$ Abschluss in $\real^n$ von $\{ x \in U : \varphi(x) = 0 \}$.
+
+\subsubsection{Divergenzsatz von Gauß}
+\begin{defn}
+ Sei $U \subset \real^n$, $F = (F_1, F_2, \ldots, F_n)^T : U \to \real^n$ (man nennt $F$ ein \emph{Vektorfeld}). Für $F \in C^1(U)$ setze für alle $x \in U$
+ \[ \div F(x) := \sum_{j=1}^n \partial_j F_j(x) = (\spur \nabla F(x)), \]
+ das heißt $\div F: U \to \real$.
+\end{defn}
+
+\begin{rmrk}
+ Englisch ``diverge'' heißt ``auseinander treiben''.
+\end{rmrk}
+
+\begin{exmp} Sei $F: \real^2 \to \real^2$.
+ \begin{enumerate}
+  \item $F(x) := x = (x_1, x_2)^T$. $\div F(x) = 1 + 1 = 2.$
+  \item $F(x) := -x$. $\div F(x) = -2$.
+  \item $F(x) := (-x_2, x_1)^T$. $\div F(x) = 0$.
+ \end{enumerate}
+\end{exmp}
+
+\begin{thm}[Divergenzsatz]
+ Sei $U \subset \real^n$ offen, beschränkt und $C^1$-berandet mit äußerem Einheitsnormalenvektorfeld $\nu: \partial U \to \real^n$. Sei $F \in C^0( \obar{U}, \real^n ) \cap C^1( U, \real^n)$. Dann gilt
+ \[ \int_U \div F \diffop \lebesgue^n = \int_{\partial U} F \cdot \nu \diffop \vol_{n-1}. \]
+\end{thm}
+
+\begin{exmp}
+ \begin{enumerate}[a)]
+  \item $U = B_r(0) \subset \real^n$, $r > 0$ fest, $F(x) = (1,0)^T$, also $\div F(x) = 0$. Aus dem Satz folgt
+  \[ \int_{\partial B_r(0)} F \cdot \nu \diffop \vol_1 = \int_{B_r} \div F \diffop \lebesgue^2 = 0. \]
+  \item $F(x) = x$, $U = B_r(0) \subset \real^2$. Also $F \cdot \nu = r > 0$ überall auf $\partial B_r(0)$.
+  \[ \begin{aligned}
+      \int_{\partial B_r(0)} F \cdot \nu \diffop \vol_1 = r \vol_1( \partial B_r(0) ) = 2 \pi r^2, \\
+      \int_{B_r} \div F \diffop \lebesgue^2 = \int_{B_r} (1+1) \diffop \lebesgue^2 = 2 \lebesgue^2(B_r(0)) = 2 \pi r^2. 
+     \end{aligned} \]
+  \item $F(x) = (-x_2, x_1)^T$, $U = B_r(0)$. Dann ist $F \cdot \nu = 0$ auf ganz $\partial B_r(0)$.
+  \[ \int_{B_r} \div F \diffop \lebesgue^2 = \int_{\partial B_r(0)} F \cdot \nu \diffop \vol_1 = 0. \]
+ \end{enumerate}
+\end{exmp}
+
+\textbf{Interpretation.}
+Sei $F:\real^2 \to \real^2$ ein Geschwindigkeitsvektorfeld einer Flüssigkeit, das heißt ein Teilchen im Punkt $x$ bewegt sich mit Geschwindigkeit $F(x)$. In jedem $x \in \partial U$ misst $F(x) \cdot \nu(x)$ den in $x$ aus $U$ ``herausströmenden'' Anteil der Flüssigkeit. Also ist $\int_{\partial U} F \cdot \nu$ das Volumen, welches pro Zeiteinheit aus $U$ heraus fließt.
+
+\begin{rmrk}
+ Wenn $n=1$, das heißt $U = (a,b) \subset \real$, so lässt sich $\partial U = \{ a,b \}$ als 0-dimensionale Untermannigfaltigkeit auffassen mit ``Normalenvektor'' $\nu(a) = -1$, $\nu(b) = 1$. Dann gilt für $F: U \to \real$
+ \[ \underbrace{\int_U \div F \diffop x}_{F'} = \underbrace{\int_{\partial U} F \diffop \vol}_{F(a)\cdot(-1)+F(b)\cdot(1)}. \]
+ Also folgt $\int_U F' = F(b) - F(a)$ und damit der Hauptsatz der Differential- und Integralrechnung. 
+\end{rmrk}
+
+\begin{folg}
+ Für $U \subset \real^n$ und $F(x) := x$ gilt 
+ \[ \div F(x) = \sum_{j=1}^n \underbrace{\partial_i F_i(x)}_1 = n \]
+ und damit
+ \[ n \cdot \lebesgue^n (U) = \int_U \underbrace{\div F}_n \diffop \lebesgue^n = \int_{\partial U} \underbrace{F \cdot \nu}_{\vec{x} \cdot \nu(x)} \diffop \vol_{n-1}. \]
+ Zum Beispiel $U = B_1(0) \subset \real^n$, also $\vol_{n-1}( \partial B_1 ) = n \cdot \lebesgue^n (B_1)$, für $n = 3$ gilt also 
+ \[ \vol_2 (\diffop B_r) = 3 \cdot \lebesgue^3 (B_1) = 3 \frac{4}{3} \pi = 4 \pi. \]
+ 
+ Außerdem folgen die ``Green'schen Formeln,'' siehe Übung.
+\end{folg}
+
+\subsubsection{Spezialfall 1}
+\begin{thm}
+ Sei $U \subset \real^n$ offen und beschränkt, sei $f \in C^1_C(U)$. Dann gilt für alle $i \in \{ 1, \ldots, n \}$:
+ \[ \int_U \partial_i f \diffop \lebesgue^n = 0. \]
+\end{thm}
+
+\begin{folg}
+ Für $F \in C^0(\obar{U}, \real^n) \cap C_C^1(U, \real^n)$ gilt
+ \[ \int_U \div F \diffop \lebesgue^n = \int_{\partial U} F \cdot \nu \diffop \vol_{n-1} = 0, \]
+ wobei $F = 0$ auf $\partial U$.
+\end{folg}
+
+\begin{proof}
+ Nehme an $i=1$, die anderen $i$ folgen dann analog. Sei $\tilde{f}:\real^n \to \real$ gegeben durch 
+ \[ \tilde{f}(x) := \begin{cases} f(x) &\text{für } x \in U \\ 0 &\text{für } x \notin U. \end{cases} \]
+ Also gilt $\tilde{f} \in C^1_C(\real^n)$ und damit
+ \[ \begin{aligned}
+     \int_U \partial_1 f \diffop \lebesgue^n 
+     &= \int_{\real^n} \partial_1 \tilde{f} \diffop \lebesgue^1 \\
+     &= \int_{\real^{n-1}} \underbrace{ \left( \int_\real \partial_1 \tilde{f}(x_1, \ldots, x_n) \diffop x_1 \right) }_{=0, (*)} \diffop \lebesgue^{n-1}(x_2, \ldots, x_n) = 0 
+    \end{aligned} \]
+ Zu ($*$): $U$ ist beschränkt, also existiert $R >0$, so dass $U \subset [-R,R]^n$. Damit gilt für alle $(x_2, \ldots, x_n)$
+ \begin{align*}
+  \int_\real \partial_1 \tilde{f}(x_1, \ldots, x_n) \diffop x_1
+  &= \int_{-R}^R \partial_1 \tilde{f} (x_1, \ldots, x_n) \diffop x_1 \\
+  &= \Big[ \tilde{f} (x_1, \ldots, x_n) \Big]_{x_1 = -R}^R = 0 - 0 = 0. \qedhere
+ \end{align*}
+\end{proof}
+
+%%%%%%%
+
+\subsubsection{Spezialfall 2}
+\begin{lem}
+ Sei $\rho : \real \to \real$ $\lebesgue^1$-integrierbar, sei $a \in \real$ und $f: \real \to \real$ messbar, beschränkt und stetig in $a$. Dann ist für alle $\eps > 0$
+ \[ t \mapsto \rho \left( \frac{t-a}{\eps} \right) f(t) \]
+ $\lebesgue^1$-integrierbar und es gilt
+ \[ \lim_{\eps \to 0} \rez{\eps} \int_\real \rho \left( \frac{t-a}{\eps} \right) f(t) \diffop \lebesgue^1(t) = f(a) \int_\real \rho \diffop \lebesgue^1. \]
+\end{lem}
+
+\begin{proof}
+ Die Messbarkeit folgt aus der Messbarkeit von $\rho$ und $f$. Definiere $\Phi_\eps(t) := \frac{t-a}{\eps}$. Die Transformationsformel XI.5.5 besagt, da $\rho$ integrierbar ist:
+ \[ (\rho \circ \Phi_\eps ) \cdot | \Phi'_\eps | = \rez{\eps} \rho \circ \Phi_\eps \]
+ ist integrierbar. Also ist auch $(\rho \circ \Phi_\eps)$ integrierbar. Weil $f$ beschränkt ist, folgt auch die Integrierbarkeit von $(\rho \circ \Phi_\eps) f$ und es gilt
+ \[ \rez{\eps} \int_\real \rho( \Phi_\eps(t) ) f(t) \diffop \lebesgue^1(t) =
+    \int_\real \rho(t) = f( \underbrace{\Phi^{-1}_\eps (t)}_{a + \eps t} ) \diffop \lebesgue^1 (t). \]
+ Da $f$ stetig in $a$ ist, gilt $f(a + \eps t) \rho(t) \to \rho(t) f(a)$ für $\eps \to 0$ für alle $t \in \real$. Wir finden eine Majorante:
+ \[ | f(a+\eps t) \rho(t) | \le \left( \sup_\real |f| \right) \cdot | \rho(t) |. \]
+ Die rechte Seite ist integrierbar, da $\rho$ integrierbar ist. Also folgt die Behauptung aus der majorierten Konvergenz.
+\end{proof}
+
+\clearpage
+
+\begin{thm}
+ Sei $V \subset \real^{n-1}$ offen und beschränkt, $g \in C^1(V)$ und für $x' = (x_1, \ldots x_{n-1})^T \in V$, $x_n \in \real$ seien
+ \[ \begin{aligned}
+     U &:= \{ (x',x_n) \in V \times \real : x_n < g(x') \} \\
+     M &:= \operatorname{graph} g := \{ (x', x_n) \in V \times \real : x_n = g(x') \}.
+    \end{aligned} \]
+ Dann gilt für alle $F \in C^0_C(U \cup M, \real^n) \cap C^1(U,\real^n)$, so dass $\div F$ integrierbar ist über $U$:
+ \[ \int_U \div F = \int_M F \cdot \nu. \]
+ Hierbei ist $\nu: M \to \real^n$ gegeben durch
+ \[ \nu(x', g(x')) := \frac{ (- \nabla' g(x'), 1) }{ | (- \nabla' g(x'), 1) | } \]
+ mit $x'= (x_1, \ldots, x_{n-1})$ und $\nabla' = (\partial_1, \ldots, \partial_{n-1})$.
+\end{thm}
+
+\begin{proof}
+ Übliche Parametrisierung: $\varphi: V \to \real^n$, $\varphi(x') := (x', g(x'))$. Für $i = 1, \ldots, n-1$ gilt $\partial_i \varphi(x') = e_i + \partial_i g(x') e_n$, also
+ \[ \det g_\varphi = 1 + | \nabla' g |^2. \]
+ Da $\nu \circ \varphi = \frac{(-\nabla' g, 1)}{|(-\nabla' g, 1)|}$, folgt
+ \[ \begin{aligned}
+     \int_M F \nu \diffop \vol_{n-1} 
+     &= \int_V (F \circ \varphi)(\nu \circ \varphi) (\det g_\varphi)^{1/2} \diffop \lebesgue^{n-1} \\
+     &= -\int_V G(x') \diffop \lebesgue^{n-1} (x'),
+    \end{aligned} \]
+ wobei 
+ \[ G(x') := -F(x', g(x') ) \cdot \begin{pmatrix} - \nabla' g(x') \\ 1 \end{pmatrix}. \]
+ 
+ Sei $\eta \in C^1(\real)$, so dass $\eta = 1$ auf $(-\infty, 1]$ und $\eta = 0$ auf $[-\rez{2},\infty)$. Setze
+ \[ \psi_\eps(x) := \eta \left( \frac{x_n - g(x')}{\eps} \right). \]
+ Es ist $F \psi_\eps \in C^1_C(U)$, denn $F$ und $\psi_\eps$ sind $C^1$ und $F \psi_\eps = 0$ außerhalb der kompakten Menge $\{ (x', x_n) : x_n \le g(x') - \frac{\eps}{2} \} \cap \spt F \subset U$.
+ 
+ Aus Satz 3.3 folgt
+ \[ 0 = \int_U \div( F \psi_\eps ) = \int_U \psi_\eps \div F + \int_U F \cdot \nabla \psi_\eps. \]
+ Da $\psi_\eps \to 1$ auf $U$ punktweise und $| \psi_\eps | \le 1$ gilt, dass $\psi_\eps \div F \to \div F$ punktweise und dass $|\div F|$ eine Majorante ist. Aus der majorierten Konvergenz folgt daher $\int_U \psi_\eps \div F \to \int_U \div F$. 
+ 
+ Es bleibt noch zu zeigen: $\int_U F \nabla \psi_\eps \to \int_V G$ für $\eps \to 0$. Aus dem Satz von Fubini folgt
+ \[ \begin{aligned} 
+    \int_U F \nabla \psi_\eps 
+    &= \int_V \left( \int_{-\infty}^{g(x')} F(x', x_n) \nabla \psi_\eps( x', x_n) \diffop \lebesgue^1(x_n) \right) \diffop \lebesgue^{n-1}(x') \\
+    &= \int_V G_\eps(x') \diffop \lebesgue^{n-1}(x'),
+    \end{aligned} \]
+ wobei
+ \[ G_\eps(x') := \rez{\eps} \int_\real F(x', x_n) \cdot \begin{pmatrix} - \nabla' g \\ 1 \end{pmatrix} \eta' \left( \frac{x_n - g(x')}{\eps} \right) \diffop \lebesgue^1(x_n). \]
+ Für jedes $x' \in V$ setzt $F(x',x_n) := F(x', g(x'))$ für alle $x_n \ge g(x')$. Damit ist $F(x', \cdot)$ stetig in $g(x')$. Also folgt aus dem Lemma, dass $\lim_{\eps \to 0} G_\eps(x') = G(x')$ für alle $x' \in V$, denn $\int_\real \eta' = -1$ wegen des Hauptsatzes der Integralrechnung. 
+ 
+ Nun wenden wir die majorierte Konvergenz an, um $\int_U F \nabla \psi_\eps \to \int_V G$ für $\eps \to 0$ zu zeigen. Behauptung: Es existiert $M > 0$, so dass
+ \[ \left| F(x', x_n) \cdot \begin{pmatrix} \nabla' g \\ 1 \end{pmatrix} \right| \le M \tag{$*$} \]
+ für alle $(x',x_n) \in V \times \real$. Dann folgt nämlich
+ \[ |G_\eps (x') | \le M \cdot \rez{eps} \left| \int \eta' \left( \frac{x_n - g(x')}{\eps} \right) \diffop \lebesgue^1(x_n) \right| \overset{\text{Lemma}}{=} M. \]
+
+ Um ($*$) zu zeigen, $F$ ist beschränkt, $\nabla' g$ ist stetig, also beschränkt auf einer kompakten Teilmenge $K \subset V$. Wir setzen
+ \[ K := \{ x' \in V : \exists x_n \in \real \text{ mit } (x', x_n) \in \spt F \}. \qedhere \]
+\end{proof}
+
+\subsubsection{Stetig differenzierbare Zerlegung der Eins}
+\begin{thm}
+ Sei $K \subset \real^n$ kompakt, $J \in \nat$ und $U_0, \ldots, U_J \subset \real^n$ offen, so dass $K \subset \bigcup_{j=0}^J U_j$. Dann existieren $\varphi_j \in C_C^1(U_j)$ mit $0 \le \varphi_j \le 1$ und $\sum_{j=0}^J \varphi_j(x) = 1$ für alle $x \in K$.
+\end{thm}
+
+\subsubsection{Beweis des Divergenzsatzes}
+\begin{proof}
+Da $U$ $C^1$-berandet ist, existiert für alle $y \in \partial U$ ein $r > 0$, so dass $B_r(y) \cap U$ der Subgraph einer $C^1$-Funktion ist. $\partial U$ ist kompakt, da $\partial U$ beschränkt und abgeschlossen ist. Also existieren wegen Heine-Borel $N \in \nat$, $y_1, \ldots, y_N \in \partial U$ und $r_1, \ldots, r_N > 0$, so dass $\partial U = \bigcup_{i=1}^N B_{r_i}(y_i)$. Mit $U_0 := U$ und $U_i := B_{r_i}(y_i)$ gilt also $\obar{U} \subset \bigcup_{j=0}^N U_j$.
+
+Da $\obar{U}$ kompakt ist, existiert eine Zerlegung der Eins wie in Satz 3.5: $\varphi_1, \ldots, \varphi_N$. Insbesondere gilt $F = \sum_{j=0}^N F_{\varphi_j}$.
+
+Wegen der Linearität der Aussage des Divergenzsatzes genügt es, den Divergenzsatz separat für jedes $F_{\varphi_j}$ zu zeigen. Für $i=0$ haben wir das in Satz 3.3 gemacht und für $i = 1, \ldots, N$ in Satz 3.4. 
+\end{proof}
+
+\subsubsection{Satz von Stokes in 2d}
+Für ein differenzierbares Vektorfeld $F=(F_1,F_2): U \to \real^2$, wobei $U \subset \real^2$ offen, definiert man die \emph{Rotation} $\rot F : U \to \real$ durch
+\[ \rot F(x) := \partial_1 F_2(x) - \partial_2 F_1(x). \]
+
+Wir definieren die \emph{Drehung gegen den Uhrzeigersinn im $\frac{\pi}{2}$} eines Vektors $v = (v_1, v_2) \in \real^2$ durch
+\[ v^\perp := (-v_2, v_1). \]
+Dann gilt $\rot F = - \div F^\perp$.
+
+Wenn $U \subset \real^2$ offen, beschränkt und $C^1$-berandet ist und $\nu:\partial U \to \real^2$ die äußere Normale bezeichnet, dann ist $\nu^\perp:\partial U \to \real^2$ an jedem Punkt $y \in \partial U$ ein Tangentialvektor an $\partial U$ in $y$.
+
+\begin{thm}
+ Sei $U \subset \real^2$ offen, beschränkt und $C^1$-berandet. Sei $F \in C^1( U, \real^2) \cap C^0( \obar{U}, \real^2 )$, so dass $\rot F$ integrierbar\footnotemark über $U$ ist. Dann gilt
+ \[ \int_U \rot F = \int_{\partial U} F \cdot \nu^\perp. \]
+\end{thm}
+\footnotetext{$F \cdot \nu^\perp$ ist dann integrierbar über $\partial U$, weil $\partial U$ eine kompakte Menge ist, also nimmt $F \cdot \nu^\perp$ als stetige Funktion ihr (endliches) Maximum auf $\partial U$ an.}
+
+\begin{proof}
+ Divergenzsatz anwenden auf $F^\perp$.
+\end{proof}
+
+\subsubsection{Rotation in \texorpdfstring{$\real^3$}{IR3}}
+Für $v,w \in \real^3$ definieren wir das \emph{Vektorprodukt} in $\real^3$:
+\[ v \times w = 
+   \begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix} \times
+   \begin{pmatrix} w_1 \\ w_2 \\ w_3 \end{pmatrix} :=
+   \begin{pmatrix} v_2 w_3 - v_3 w_2 \\ v_3 w_1 - v_1 w_3 \\ v_1 w_2 - v_2 w_1 \end{pmatrix}. \]
+
+Für ein differenzierbares Vektorfeld $F: U \to \real^3$, wobei $U \subset \real^3$ offen, definiert man die Rotation $\rot F: U \to \real^3$ durch
+\[ \rot F := \nabla \times F = \begin{pmatrix} \partial_2 F_3 - \partial_3 F_2 \\ \partial_3 F_1 - \partial_1 F_3 \\ \partial_1 F_2 - \partial_2 F_1 \end{pmatrix}. \]
+
+\subsubsection{Orientierbarkeit}
+Sei $M \subset \real^3$ eine \emph{Fläche}, das heißt eine 2-dimensionale Untermannigfaltigkeit. Dann heißt $M$ \emph{orientierbar} $:\Leftrightarrow$ Es existiert ein sogenanntes Normalenvektorfeld $\nu \in C^0(M,\real^3)$, so dass für alle $y \in M$ gilt, dass $|\nu(y)| = 1$ und $\nu(y) \in (T_y M)^\perp$.
+
+\begin{rmrk}
+ In jedem $V \cap M$, wobei $V \subset \real^3$ offen, so dass eine Parametrisierung (Immersion) $\varphi: U \to \real^2 \xrightarrow{\text{Homöo.}} V \cap M$ existiert, gibt es ein solches stetiges $\nu$, nämlich
+ \[ \nu(\varphi(x)) := \frac{\partial_1 \varphi(x) \times \partial_2 \varphi(x)}{|\partial_1 \varphi(x) \times \partial_2 \varphi(x) |}. \]
+ Aber im Allgemeinen lässt sich kein global (auf ganz $M$) definiertes stetiges Normalenvektorfeld finden. Ein Beispiel für eine nicht orientierbare Fläche ist das \emph{Möbiusband}.
+\end{rmrk}
+
+Sei $\Gamma \in \real^3$ eine \emph{Kurve}, das heißt eine 1-dimensionale Untermannigfaltigkeit. Dann ist $\Gamma$ \emph{orientiert} $:\Leftrightarrow$ Es existiert ein sogenanntes Tangentialvektorfeld $\tau \in C^0(\Gamma, \real^3)$, so dass $|\tau(y)| = 1$ und $\tau(y) \in T_y \Gamma$ für alle $y \in \Gamma$.
+
+Sei nun $U \subset \real^2$ offen, beschränkt und $C^1$-berandet. Sei $V \subset \real^2$ offen und $\obar{U} \subset V$ und sei $\varphi \in C^1(V, \real^3)$ eine Immersion. Zudem sei $\varphi: V \to \real^3$ injektiv. Dann ist wegen der Anmerkung $\varphi(U) \subset \real^3$ eine orientierbare Fläche mit Normale
+\[ n := \frac{\partial_1 \varphi \times \partial_2 \varphi}{|\partial_1 \varphi \times \partial_2 \varphi|} \cdot \varphi^{-1}. \tag{1} \]
+Zudem ist $\varphi(\partial U)$ eine orientierte Kurve mit Tangentialvektorfeld
+\[ \tau := \frac{D_{\nu^\perp} \varphi}{| D_{\nu^\perp} \varphi |} \cdot \varphi^{-1}, \tag{2} \]
+wobei $\nu: \partial U \to \real^2$ das äußere Normalenfeld an $U$ ist. Erinnerung:
+\[ \begin{aligned}
+    D_{\nu^\perp} \varphi(x) :&= \nabla \varphi(x) \nu^\perp (x) \\
+    &= \partial_1 \varphi(x) \nu_1^\perp(x) + \partial_2 \varphi(x) \nu_2^\perp(x) \\
+    &= \partial_1 \varphi(x) \nu_2^(x) + \partial_2 \varphi(x) \nu_1(x).
+   \end{aligned} \]
+
+Sei $M \subset \real^3$ eine orientierbare Fläche mit Normale $n$ und $\Gamma \subset \real^3$ eine orientierte Kurve mit Tangente $\tau$. Dann heißt $(\Gamma, \tau)$ \emph{orientierter Rand} von $(M,n)$ $:\Leftrightarrow$ Für jedes $y \in M \cup \Gamma$ existieren eine Umgebung $V \subset \real^3$, $W \subset \real^2$ offen, eine injektive Immersion $\varphi: W \to \real^3$ und $U \subset \real^2$ offen, beschränkt und $C^1$-berandet, so dass
+\[ M \cap V = \varphi(W \cap U) \quad \text{und} \quad \Gamma \cap V = \varphi( W \cap \partial U ) \]
+und zudem gelten (1) und (2).
+
+\begin{rmrk}
+ Dann gilt $\Gamma = \obar{M} \setminus M$.
+\end{rmrk}
+
+\clearpage
+
+\subsubsection{Stokes auf orientierten Flächen im \texorpdfstring{$\real^3$}{IR3}}
+\begin{lem}
+ Sei $U \subset \real^2$ offen, beschränkt und $C^1$-berandet. Seien $W \subset \real^2$ offen, so dass $\obar{U} \subset W$ und $\varphi:W \to \real^3$ eine injektive Immersion. Wenn es ein offenes $V \subset \real^3$ gibt, so dass $\varphi(W) \subset V$, dann gilt für jedes $F \in C^1(V,\real^3)$:
+ \[ \int_{\varphi(U)} \rot F \diffop \vol_2 = \int_{\varphi(\partial U)} F \cdot \tau \diffop \vol_1. \]
+ Dabei ist $\tau$ wie zuvor die Tangente an $\varphi(\partial U)$.
+\end{lem}
+
+\textbf{Beweisidee.}
+Durch ``Zurückziehen'' via $\varphi$ reduziert man das Lemma auf Satz 3.7.
+
+Ähnlich wie der Divergenzsatz aus zwei Spezialfällen durch eine geeignete Zerlegung der Eins folgte, erhalten wir aus dem Lemma:
+\begin{thm}
+ Sei $M \subset \real^3$ eine orientierbare Fläche mit Normale $n: M \to \real^3$ und $\Gamma \subset \real^3$ eine orientierte Kurve mit Tangente $\tau: \Gamma \to \real^3$ und sei $(\Gamma,\tau)$ der orientierte Rand von $(M,n)$. Zudem sei $V \subset \real^3$ offen und beschränkt, so dass $M \cup \Gamma \subset V$ und sei $F \in C^1(V,\real^3)$. Dann gilt
+ \[ \int_M n \cdot \rot F \diffop \vol_2 = \int_\Gamma \tau \cdot F \diffop \vol_1. \]
+\end{thm}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "skript_gdim"
+%%% End:

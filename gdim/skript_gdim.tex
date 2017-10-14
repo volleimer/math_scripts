@@ -49,209 +49,37 @@
 
 \clearpage
 
-\input{11-masstheorie}
+\include{11-masstheorie}
+
+\include{12-untermannigfaltigkeiten}
+
+\include{13-gdg}
 
 \clearpage
 
-\section{Untermannigfaltigkeiten des \texorpdfstring{$\real^n$}{IRn}}
-
-\subsection{Untermannigfaltigkeiten des \texorpdfstring{$\real^n$}{IRn}}
-\textbf{Vorspann.} Eine Menge $M$ heißt abzählbar $:\Leftrightarrow$ Es existiert eine injektive Abbildung $M \to \real$. Nicht abzählbare Mengen heißen überabzählbar.
-
-\begin{exmp}
- $\nat, \integer$ und $\rat$ sind abzählbar, aber $\real$ ist überabzählbar.
-\end{exmp}
-
-\textbf{Erinnerung.} Ist $M \subset \real$ abzählbar, so ist $\lebesgue^1(M) = 0$. Aber $\lebesgue^1( [0,1] ) = 1$, also ist $[0,1]$ überabzählbar.
-
-Sei $(X,d)$ ein metrischer Raum. 
+\subsection*{Weitere Vorlesungen}
 \begin{itemize}
- \item Die \emph{offene Kugel} mit Radius $r > 0$ um $y \in X$:
-  \[ B_r(x) := \{ x \in X : d(x,y) < r \}, \]
- \item $U \subset X$ ist \emph{offen} $:\Leftrightarrow$ $\forall x \in U \exists r > 0 : B_r(x) \subset U$,
- \item $A \subset X$ ist \emph{abgeschlossen} $:\Leftrightarrow$ $X \setminus A$ ist offen,
- \item Für $x \in X$ ist eine \emph{Umgebung von $x$} eine offene Menge, die $x$ enthält.
+\item Methoden der Analysis (Di. 5. DS, Mi 3. DS), Hornung/Jachan,
+  ``Geometrische Analysis'' 
+\item Wissenschafltiches Arbeiten, Ausblicke aus der Riemannschen Geometrie (Do
+  2. DS, Fr 4. DS), Hardering
+\item Vorlesungen aus dem Masterstudium, bauen aufeinander auf.
 \end{itemize}
 
-Für beliebige Mengen $M \subset X$ definiert man 
+\subsubsection*{Klausurschwerpunkte}
 \begin{itemize}
- \item den \emph{Abschluss} $\obar{M} :=$ Durchschnitt aller abgeschlossenen Mengen, die $M$ enthalten ($=$ ``kleinste'' abgeschlossene Menge, die $M$ enthält),
- \item das \emph{Innere} $M^O :=$ Vereinigung aller offenen Teilmengen von $M$, 
- \item der \emph{Rand} $\partial M := \obar{M} \setminus M^O$.
+  \item Majorierte Konvergenz
+  \item Maße
+  \item Untermannigfaltigkeiten (nur Rechnen)
+  \item Divergenzsatz
+  \item Immersionen
+  \item Differentialgleichungen
+  \item Explizite Lösungen mit Trennung der Variablen
+  \item Existenztheorie (rechte Seite lokal Lipschitz-stetig)
+  \item Rechte Seite global Lipschitz
+  \item konstante Koeffizienten
+  \item Aussagen über Existenz eines LFS, Voraussetzungen für genauere Lösung
 \end{itemize}
-\textbf{Beispiel.} $M = [0,1)$ $\Rightarrow$ $\obar{M} = [0,1]$, $M^O = (0,1)$, $\partial M = \{ 0, 1 \}$.
-
-Sei $Y$ ein metrischer Raum.
-\begin{itemize}
- \item Eine Abbildnung $f: X \to Y$ heißt \emph{Homöomorphismus} $:\Leftrightarrow$ $f$ ist bijektiv und $f$ und $f^{-1}$ sind stetig (Anschaulich ``stetige Deformation'').
- \item $K \subset \real^n$ ist \emph{kompakt} $:\Leftrightarrow$ $K$ ist beschränkt und abgeschlossen.
-\end{itemize}
-
-\begin{thm}
- Sei $K \subset \real^n$ kompakt. Sei $I$ eine beliebige\footnotemark Indexmenge und $i \in I$. Sei $U_i \subset \real^n$ offen. Zudem gelte $K \subset \bigcup_{i \in I} U_i$. Dann existiert eine \emph{endliche} Teilmenge $J \subset I$, sodass $K \subset \bigcup_{i \in J} U_i$.
-\end{thm}
-\footnotetext{Im Allgemeinen eine überabzählbare.}
-
-Diese sogenannte \emph{Heine-Borel-Eigenschaft} ist äquivalent zur Kompaktheit in $\real^n$ und ist in beliebigen metrischen Räumen die \emph{Definition} von Kompaktheit.
-
-Sei $(X,d)$ ein metrischer Raum und $M \subset X$. Eine Teilmenge $V \subset M$ heitß \emph{offen in} (oder relativ zu) $M$ $:\Leftrightarrow$ $M$ ist ein metrischer Raum mit Metrik $d$ $(M,d|_M)$ mit offener Teilmenge $V$.
-
-\begin{rmrk}
-$V$ offen in $M \subset X$ $\Leftrightarrow$ Es existiert $U \subset X$ offen, sodass $V = M \cap U$.
-\end{rmrk}
-
-\begin{proof}
- Das folgt leicht aus der Tatsache, dass 
- \[ B_r^M(z) = \{ x \in M: d(x,z) < r \} = B_r^X(z) \cap M. \qedhere \]
-\end{proof}
-
-\subsubsection{Immersionen}
-Sei $U \subset \real^k$ offen. Eine Abbildung $\varphi \in C^1(U, \real^n)$ heißt \emph{Immersion} $:\Leftrightarrow$ Für jedes $x \in U$ sind die Vektoren $\partial_1 \varphi(x), \partial_2 \varphi(x), \ldots, \partial_n \varphi(x)$ linear unabhängig ($\circ$).
-
-\textbf{Idee.} Lokal ist 
-\[ \varphi(x) = \varphi(z) + \underbrace{\nabla \varphi(z)}_{\in \real^{k \times n}} x. \]
-Daher lineare Algebra für affine $\varphi$ (das heißt $\nabla\varphi \equiv A$)
-\[ \begin{aligned}
-   \rang(A) &= 2 & &\rightsquigarrow & &\dim \text{Bild}(A) = 2 \text{ (Ebene)} \\
-   \rang(A) &= 1 & &\rightsquigarrow & &\dim \text{Bild}(A) = 1  \\
-   \rang(A) &= 2 & &\rightsquigarrow & &\dim \text{Bild}(A) = 0 \, (\{0\})
-   \end{aligned} \]
-   
-\begin{rmrk}
- \begin{enumerate}
-  \item Lineare Unabhängigkeit kann nur erfüllt sein, wenn $n \ge k$.
-  \item Für alle $x \in U$ ist 
-   \[ \nabla\varphi(x) = \begin{pmatrix} \partial_1 \varphi(x) & \partial_2 \varphi(x) & \ldots & \partial_n \varphi(x) \end{pmatrix} \in \real^{n \times k}.\]
-   Bedingung ($\circ$) ist äquivalent zu
-   \[ \rang( \nabla \varphi(x) ) := \text{ Rang von } \nabla \varphi(x) = k. \]
-   Mit anderen Worten: Es existieren Indizes $i_1, \ldots, i_k$, sodass $\pdiff{(\varphi_{i_1}, \ldots, \varphi_{i_k})}{(x_1, \ldots, x_k)}$ invertierbar ist.
-   
-   $\pdiff{(\varphi_{i_1}, \ldots, \varphi_{i_k})}{(x_1, \ldots, x_k)}$ ist an jeder Stelle $x \in U$ eine invertierbare $(k \times k)$-Matrix, das heißt 
-   \[ \det \pdiff{(\varphi_{i_1}, \ldots, \varphi_{i_k})}{(x_1, \ldots, x_k)} = \det \nabla \begin{pmatrix} \varphi_{i_1} \\ \ldots \\ \varphi_{i_k} \end{pmatrix}(x) \ne 0. \]
-   Da dieser Ausdruck stetig von $x$ abhängt, gilt: Wenn ($\circ$) in $x_0 \in U$ erfüllt ist, dann existiert $r > 0$, sodass ($\circ$) erfüllt ist für alle $x \in B_r(x_0)$.
-  \item Wenn $k=n$, dann ist die Immersion $\varphi$ nach dem \emph{Satz über die Umkehrfunktion} lokal invertierbar.
- \end{enumerate}
-\end{rmrk}
-
-\begin{defn}
- Sei $U \subset \real^k$ offen und $\varphi: U \to \real^n$ eine Immersion.
- \begin{itemize}
-  \item Für alle $x \in U$ definiert man den $k$-dimensionalen Untervektorraum von $\real^n$:
-  \[ T_x \varphi := \spn \{ \nabla \partial_1 \varphi(x), \ldots, \partial_k \varphi(x), \]
- \item Die von $\varphi$ induzierte Riemannsche Metrik auf $U$ ist die Abbildung $g_\varphi: U \to \real^{k \times k}$, definiert durch $g_\varphi(x) := (\nabla \varphi(x))^T (\nabla \varphi(x))$. Komponentenweise:
-  \[ (g_\varphi)_{ij}(x) = \partial_i \varphi(x) \cdot \partial_j \varphi(x), \]
-  wobei mit $\cdot$ das Skalarprodukt im $\real^n$ gemeint ist.
- 
-  \textbf{Beispiel.} $k=2, n=3$, $g = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$. Jedes $\varphi$ mit $g_\varphi = g$ ist ``lokal längenerhaltend'' (isometrische Immersion).
- \item Per Definition ist $g_\varphi(x)$ positiv definit und symmetrisch.
- \end{itemize}
-\end{defn}
-
-\textbf{Beispiele.}
-\begin{enumerate}
- \item Kurven im $\real^n$ ($k=1$). Sei $U = (a,b) \subset \real$. Eine Immersion ist eine Abbildung $\varphi:(a,b) \to \real^n$ mit ``Geschwindigkeitsvektor'' $\varphi'(x) \ne 0$ für alle $x \in (a,b)$.
- \[ T_x \varphi = \spn\{ \varphi'(x)\} \text{ und } g_\varphi(x) = | \varphi'(x) |^2. \]
- \item Graphen im $\real^n$. Sei $U \subset \real^{n-1}$ offen und $f: U \to \real$ stetig differenzierbar. Definiere $\varphi: U \to \real^n$ durch $\varphi(x) := (x, f(x))$, das heißt 
- \[ \varphi(x) = \begin{pmatrix} x_1 \\ \vdots \\ x_{n-1} \\ f(x) \end{pmatrix}. \]
- Dann ist $\varphi$ stetig differenzierbar und $\varphi(U) =  \mathrm{graph}(f)$; $\partial_i \varphi(x) = \vec{e}_i + \partial_i f(x) \vec{e}_n$.
- \[ \begin{aligned}
-     (g_\varphi)_{ij} &= \partial_i \varphi \cdot \partial_j \varphi \\
-     &= (\vec{e}_i + \partial_i f \vec{e}_n) \cdot (\vec{e}_j + \partial_j f \vec{e}_n) \\
-     &= \delta_{ij} + \partial_i f \partial_j f.
-    \end{aligned} \]
-\end{enumerate}
-
-\subsubsection{Satz}
-\begin{thm}
- Sei $U \subset \real^k$ offen, $\varphi \in C^1(U, \real^n)$ eine Immersion und $z \in U$. Dann existiert $r > 0$, sodass die Einschränkung $\varphi|_{B_r(z)} : B_r(z) \to \real^n$ ein Homöomorphismus von $B_r(z)$ auf $\varphi(B_r(z))$ ist.
-\end{thm}
-
-\begin{proof}
- Für $k = n$ folgt das aus dem Satz über Umkehrabbildungen. Sei also $k < n$. Ohne Einschränkung sei $\pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar. Wende den Satz über Umkehrabbildungen an auf $\tilde{\varphi} = ( \varphi_1, \ldots, \varphi_k): U \to \real^k$, da ja $\nabla \varphi = \pdiff{(\varphi_{1}, \ldots, \varphi_{k})}{(x_1, \ldots, x_k)}(z)$ invertierbar ist. Also existiert $r > 0$ und eine offene Menge $V \subset \real^k$, sodass $\tilde{\varphi}: B_r(z) \to V$ bijektiv ist mit stetig differenzierbarer Umkehrabbildung $\tilde{\psi}: V \to B_r(z)$. Da $\tilde{\varphi}|_{B_r(z)}$ injektiv ist, ist auch $\varphi|_{B_r(z)}$ injektiv, also $\varphi:B_r(z) \to \varphi(B_r(z))$ bijektiv.
- 
- Die Umkehrabbildung $\psi : \varphi(B_r(z)) \to B_r(z)$, $(y_1, \ldots, y_k) \mapsto (\tilde{\psi}(y_1, \ldots, y_k)$ ist stetig, da $\tilde{\psi}$ stetig ist.
-\end{proof}
-
-\subsubsection{Definition}
-Sei $M \subset \real^n$.
-\begin{itemize}
-  \item $M$ heißt \emph{Untermannigfaltigkeit} von $\real^n$ $:\Leftrightarrow$ Für jedes $y \in M$ existiert eine Umgebung $V \subset \real^n$ von $y$, eine offene Menge $U \subset \real^n$ und eine Immersion $\varphi: U \to \real^n$, sodass $\varphi: U \to M \cap V$ ein Homöomorphismus ist.
   
-  Man nennt dann $\varphi: U \to M \cap V$ eine \emph{lokale Parametrisierung} von $M \cap V$ (oder von $M$ nahe $y$). 
-  
-  Für jedes $z \in M \cap V$ nennt man $\varphi^{-1}(z)$ die \emph{lokalen Koordinaten} von $z$ unter $\varphi$.
-  \item Der \emph{Tangentialraum} an $M$ im Punkt $y = \varphi(x)$ ist der $k$-dimensionale Vektorraum $T_y M := T_y \varphi = \spn \{ \partial_1 \varphi(x), \ldots, \partial_k \varphi(x) \}$. 
-  
-  Die Elemente von $T_y M$ heißen \emph{Tangentialvektoren} an $M$ im Punkt $y$.
-\end{itemize}
-
-\begin{rmrk}
- Für alle $y \in M$ ist $T_y M$ wohldefiniert: Wenn $\varphi_i: U_i \to V \cap M$ ($i = 1,2$) eine lokale Parametrisierung nahe $y \in M \cap V$ sind, dann
- \[ T_{\varphi^{-1}_1(y)} \varphi_1 = T_{\varphi^{-1}_2(y)} \varphi_2. \]
-\end{rmrk}
-
-\begin{proof}
- Wähle $i \in \{1, \ldots, k\}$ und definiere $\gamma(t) := \varphi_1^{-1}(y) + t e_i$.
- Da $U_1$ offen ist, existiert $\eps > 0$, sodass $\gamma( [-\eps, \eps] ) \subset U_1$. Definiere $\Gamma := \varphi_2^{-1} \circ \varphi_1 \circ \gamma$. In Satz 1.6 werden wir sehen: $\varphi_2^{-1} \circ \varphi_1: U_1 \to U_2$ ist ein $C^1$-Diffeomorphismus. Also ist $\Gamma \in C^1( (-\eps,\eps), \real^k)$ und wegen der Kettenregel
- \[ \partial_1 \varphi_1 ( \varphi^{-1} (y) ) \overset{\text{Def. von } \varphi}{=} (\varphi_1 \circ \gamma) (0) \overset{\text{Def. von } \Gamma}{=} (\varphi_2 \circ \Gamma) (0) = \nabla \varphi_2( \varphi_2^{-1}(y) ) \Gamma'(0), \]
- und die rechte Seite liegt im Bild von $\nabla \varphi_2( \varphi_2^{-1}(y) )$.
- 
- Der Beweis für $\partial_2 \varphi_1, \ldots, \partial_k \varphi_1$ verläuft analog.
-\end{proof}
-
-\textbf{Beispiele für Untermannigfaltigkeiten.}
-\begin{enumerate}
- \item Wenn $U \subset \real^k$ offen und $\varphi: U \to \real^n$ eine \emph{injektive} Immersion ist und $V \subset U$, so dass $V \subset u$, dann ist $\varphi(V) \subset \real^k$ eine $k$-dimensionale Untermannigfaltigkeit.
- \begin{itemize}
-  \item Wenn $\varphi$ nicht injektiv ist, dann ist $V$ im Allgemeinen keine Untermannigfaltigkeit.
-  \item $\varphi(U)$ ist im Allgemeinen auch keine Untermannigfaltigkeit, siehe \ref{offen}.
- \end{itemize}
- \item Sphären $\partial B_r(x)$ sind $n-1$-dimensionale Untermannigfaltigkeiten, weil $B_r(x) \subset \real^n$ eine $C^1$-berandete Menge ist.
- \item 
-\end{enumerate}
-
-\begin{rmrk}
- Oben definierte Untermannigfaltigkeiten sind genauer sogenannte $C^1$-""Untermannigfaltigkeiten. Eine $C^m$-Untermannigfaltigkeit für $m \in \nat \setminus \{0\}$ erhält man, wenn man die Parametrisierungen in $C^m$ liegen. Hier wird nur $C^1$ betrachtet. Zum Beispiel in der Geometrie wird meist mindestens $C^2$ genutzt, weil man dann Eigenschaften wie die Krümmung übertragen kann.
-\end{rmrk}
-
-\newpage
-
-\subsubsection{Satz}
-\begin{thm}
- Sei $M \subset \real^n$. Dann sind folgende Aussagen äquivalent:
- \begin{enumerate}
-  \item $M$ ist $k$-dimensionale Untermannigfaltigkeit.
-  \item Für alle $y \in M$ existiert eine Umgebung $V \subset \real^n$, ein offenes $W \subset \real^n$ und ein $f \in C^1(W, \real^{n-k})$, so dass mit $x' = (x_1, \ldots, x_k)$:
-  \[ M \cap V = \{ \big(x_1, \ldots, x_k, f_1(x'), \ldots, f_{n-k}(x') \big) : x' \in W \}. \]
-  Für $k = n-1$ ist das der Graph von $f$
-  \item Für alle $y \in M$ existiert eine Umgebung $V \in \real^n$ und ein stetig differenzierbares $F:V \to \real^{n-k}$; $\nabla F(x)$ hat Rang $n-k$ für jedes $x \in V \cap M$ und
-  \[ V \cap M = \{ x \in V : F(x) = 0 \}. \]
-  \item Für alle $y \in M$ existiert eine Umgebung $V \subset \real^n$ und eine offene Menge $W \subset \real^n$ sowie ein $C^1$-Diffeomorphismus $\Phi: V \to W$, so dass
-  \[ \Phi(V \cap M) = \{ x \in W : x_{k+1} = \cdots = x_n = 0 \} = W \cap (\real^k \times \{ 0 \}), \]
-  wobei $\{ 0 \} \in \real^{n-k}$.
- \end{enumerate}
-\end{thm}
-
-\begin{proof}
- \begin{itemize}
-  \item \textbf{1. $\Rightarrow$ 2.} Sei also $y \in M$ mit Umgebung $V \subset \real^n$, $U' \subset \real^k$ offen und $\varphi: U' \to \real^n$ eine Immersion, so dass $\varphi: U' \to M \cap V$ ein Homöomorphismus ist. Diese existieren nach der Definition der Untermannigfaltigkeit immer. Ohne Einschränkung\footnote{Evtl. nach Umnummerierung der $\varphi_i$} sei
-  \[ \pdiff{ (\varphi_1, \ldots, \varphi_k) }{ (x_1, \ldots, x_k) } \]
-  an der Stelle $z := \varphi^{-1}(y)$ invertierbar. Das heißt mit $\tilde{\varphi}:( \varphi_1, \ldots \varphi_k)$ ist $\nabla \tilde{\varphi}(z)$ invertierbar. Aus dem Satz über die Umkehrfunktion folgt nach Verkleinerung von $U'$, dass eine offene Menge $W \subset \real^k$ existiert, so dass $\tilde{\varphi}: U' \to W$ ein $C^1$-Diffeomorphismus ist. Definiere
-  \[ \tilde{f} :=\varphi \circ \tilde{\varphi}^{-1} : W \to \real^n. \]
-  Dann ist $\tilde{f}_i(x) = x_i$ für $i = 1, \ldots, k$. Also hat $f := (\tilde{f}_{k+1}, \ldots, \tilde{f}_{n-k})$ die gewünschte Eigenschaft.
-  \item \textbf{2. $\Rightarrow$ 3.} Seien $V \subset \real^n$ und $U \subset \real^k$ offen und $f = (f_1, \ldots, f_{n-k}): U \to \real^{n-k}$ in $C^1$, so dass $M \cap V = \{ (x', f_1(x'), \ldots, f_{n-k}(x') ) : x' \in U \}$. Definiere $F: V \to \real^{n-k}$ durch 
-  \[ F(x) := ( x_{k+1} - f_1(x'), \ldots, x_n - f_{n-k}(x') ). \]
-  Dann ist 
-  \[ M \cap V = \{ x \in V : F(x) = 0 \} \]
-  und da $(\partial_{k+1} F, \ldots, \partial_n F)$ invertierbar\footnote{Sogar die Einheitsmatrix, da in der $j$-ten Komponente nur $x_j$ vorkommt und $x'$ nur $x_1$ bis $x_k$ enthält.} ist, hat $\nabla F$ Rang $n-k$.
-  \item \textbf{3. $\Rightarrow$ 4.} Sei $V \subset \real^n$ Umgebung von $y \in M$ und $F \in C^1(V, \real^{n-k})$, so dass $M \cap V = \{ x \in V : F(x)=0 \} \cap V$. Ohne Einschränkung seien $\partial_{k+1} F(y), \ldots, \partial_n F(y)$ linear unabhängig. Definiere $\Phi: V \to \real^n$ durch
-  \[ \Phi(x) := \begin{pmatrix} x_1 \\ \vdots \\ x_k \\ F_1(x) \\ \vdots \\ F_{n-k}(x) \end{pmatrix}. \]
-  Dieses $\Phi$ hat die gewünschte Eigenschaft.
-  \item \textbf{4. $\Rightarrow$ 1.} Sei $\Phi: V \to W$ wie in 4. gegeben. Dann ist
-  \[ \varphi(x_1, \ldots, x_k) : \Phi^{-1}( x_1, \ldots, x_k, \underbrace{0 \ldots, 0}_{n-k} ) \]
-  eine lokale Parametrisierung von $M$ nahe $y^{n-k}$. \qedhere
- \end{itemize}
-
-\end{proof}
-
+Formelsamlung: 1 A4-Blatt
 \end{document}

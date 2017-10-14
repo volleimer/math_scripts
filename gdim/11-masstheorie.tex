@@ -4,7 +4,7 @@
 \addcontentsline{toc}{subsection}{Motivation und Idee des Lebesgue-Integrals}
 \subsubsection*{Erinnerung an das Riemann-Integral auf $[a,b] \subset \real$}
 \addcontentsline{toc}{subsubsection}{Erinnerung an das Riemann-Integral auf \texorpdfstring{$[a,b] \subset \real$}{[a,b] in IR}}
-Bausteine sind die Treppenfunktionen $\varphi \in \stair$ mit zugehöriger Unterteilung $a = x_0 < x_1 < \ldots < x_n = b$ und $\varphi = c_k$ auf $(x_{k_1},x_k)$:
+Bausteine sind die Treppenfunktionen $\varphi \in \stair$ mit zugehöriger Unterteilung $a = x_0 < x_1 < \ldots < x_n = b$ und $\varphi = c_k$ auf $(x_{k-1},x_k)$:
 \[ \int_a^b \varphi := \sum_{k=1}^n c_k \cdot (x_k - x_{k-1}). \]
 
 Das Integral für beliebige (Riemann-integrierbare) $f:[a,b]\to\real$: Approximation von $f$ durch folgendermaßen gewählte Treppenfunktionen $\varphi \in \stair$:
@@ -277,7 +277,8 @@ Hierbei ist $f_\pm := \max \{ \pm f, 0 \}$.\footnote{Beachte: $f_-$ ist nach Def
 \footnotetext{$\mu(\{ x \in X: f(x) = \infty$ oder $f(x) = -\infty \} ) = 0$}
 
 \begin{rmrk}
- Keine Äquivalenz in (b), zum Beispiel $f: \real \to \real$ gegeben durch $f(x)$ für alle $x$ mit Maßraum $(\real, \borel(\real), \lebesgue^1 )$.
+ Keine Äquivalenz in (b), zum Beispiel $f: \real \to \real$ gegeben durch $f(x)
+ = x $ für alle $x$ mit Maßraum $(\real, \borel(\real), \lebesgue^1 )$.
 \end{rmrk}
 
 \subsubsection{Integration über Teilmengen}
@@ -290,6 +291,8 @@ Hierbei ist $f_\pm := \max \{ \pm f, 0 \}$.\footnote{Beachte: $f_-$ ist nach Def
  $(X,\mA,\mu) = (\real, \borel(\real), \lebesgue^1 )$, $f \equiv 1$ und $Z = [a,b]$ mit $a,b \in \real$, $a \le b$. Dann ist $f$ nicht integrierbar (auf $\real$), aber über $Z$ integrierbar, da $\chi_Z f = \chi_{[a,b]}$ und
  \[ \int_\real \chi_{[a,b]} \diffop \lebesgue^1 = \lebesgue^1( [a,b] ) = b - a. \]
 \end{exmp}
+
+\clearpage
 
 \subsection{Konvergenzsätze}
  Riemann-Integral: $f_k \to f$ \emph{gleichmäßig} $\Rightarrow$ $\int f_k \to \int f$. Das ist eine sehr starke Bedingung.
@@ -339,9 +342,11 @@ Beispiel einer $\lebesgue^1$-integrierbaren, aber nicht Riemann-integrierbaren F
    \qRq \int_{[a,b]} f \diffop \lebesgue^1 = 0. \]
    
 \subsubsection*{Uneigentliches Riemann-Integral}
-Eine Funktion $f:(0,\infty) \to \real$ heißt uneigentlich Riemann-integrierbar $:\Leftrightarrow$ $\forall 0 < \eps < R < \infty$ gilt $f$ ist Riemann-integrierbar auf $[\eps,R]$. Dann:
+Eine Funktion $f:(0,\infty) \to \real$ heißt uneigentlich Riemann-integrierbar $:\Leftrightarrow$ $\forall 0 < \eps < R < \infty$ gilt $f$ ist Riemann-integrierbar auf $[\eps,R]$. Dann existiert
 \[ \int_0^\infty f := \lim_{\substack{\eps \to 0 \\ R \to \infty}} \int_\eps^R f \]
-Es gilt: wenn $f \ge 0$ und uneigentlich Riemann-integrierbar ist auf $(0,\infty)$, dann ist $f$ auch $\lebesgue^1$-integrierbar. auf $(0,\infty)$.
+in $\real$. 
+
+Es gilt: Wenn $f \ge 0$ und uneigentlich Riemann-integrierbar ist auf $(0,\infty)$, dann ist $f$ auch $\lebesgue^1$-integrierbar auf $(0,\infty)$.
 
 \begin{proof}
  Wende monotone Konvergenz an auf $\chi_{[\eps,R]} f \uparrow f$ für $\eps \to 0$, $R \to \infty$.
@@ -349,6 +354,8 @@ Es gilt: wenn $f \ge 0$ und uneigentlich Riemann-integrierbar ist auf $(0,\infty
 
 Aber ohne Voraussetzung $f \ge 0$ ist die Aussage im Allgemeinen falsch. Zum Beispiel ist $f(x) := \frac{\sin x}{x}$ uneigentlich Riemann-integrierbar auf $(0,\infty)$, aber nicht $\lebesgue^1$-integrierbar, denn $|f(x)| \ge \rez{2 |x|}$ auf einer Menge $E := \{ x \in \real: |\sin x| \ge \rez{2} \}$. Man kann leicht zeigen, dass
 \[ \int_E \rez{|x|} \diffop x = \sum_{i=1}^\infty ( \log b_i - \log a_i ) = \infty. \]
+
+\clearpage
 
 \subsubsection{Majorierte Konvergenz}
 \begin{thm}
@@ -369,9 +376,11 @@ Suche eine Folge $(f_k)$ mit $\int_\real f_k = 1$, aber $f_k \to 0$ punktweise. 
 \[ \int_\real f_k = k \cdot \lebesgue^1 \left( -\rez{2k}, \rez{2k} \right) = k \cdot \rez{k} = 1 \]
 und für alle $x \ne 0$ gilt $f_k(x) \to 0$. Damit gilt aber $\int_\real f = 0$!
 
+\clearpage
+
 \subsection{Parameterabhängige Integrale}
 Situation: $f(x,t)$ und betrachte
-\[ \int_X f(x,t) \diffop \mu(x) := \int_X f( \cdot, t ) \diffop \mu \]
+\[ \int_X f(x,t) \diffop \mu(x) := \int_X f( \cdot, t ) \diffop \mu, \]
 wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von $t$ ab?
 
 \subsubsection{Stetige Abhängigkeit}
@@ -391,10 +400,15 @@ wobei $f( \cdot, t)(x) := f(x,t)$. Wie hängt $\int_X f(x,t) \diffop \mu(x)$ von
 \end{thm}
 
 \begin{proof}
- Sei $(t_k)_{k \in \nat} \subset U$ mit $t_k \to a$ und definiere $f_k(x) := f(x, t_k)$ und $f_\infty(x) := f(x, a)$. Nach Voraussetzung ist jedes $f_k$ messbar und majoriert durch $f$:
+ Sei $(t_k)_{k \in \nat} \subset U$ mit $t_k \to a$ und definiere $f_k(x) :=
+ f(x, t_k)$ und $f_\infty(x) := f(x, a)$. Nach Voraussetzung ist jedes $f_k$
+ messbar und majoriert durch $F$:
  \[ |f_k(x)| = |f(x,t_k)| \le F(x) \text{ für alle } x \in X. \]
- Zudem gilt wegen 2. $f_k \to f$ punktweise auf $X$. Daher folgt die Behauptung aus der majorierten Konvergenz.
+ Zudem gilt wegen 2. $f_k \to f$ punktweise auf $X$. Daher folgt die Behauptung
+ aus der majorierten Konvergenz. 
 \end{proof}
+
+\clearpage
 
 \subsubsection{Differenzierbare Abhängigkeit}
 \begin{thm}
@@ -499,7 +513,11 @@ Es folgt eine weitere maßtheoretische Eigenschaft:
 \end{itemize}
 
 \subsubsection{Euklidische Eigenschaften}
-\textbf{Formale Anmerkung.} Wenn sich das Volumen einer Menge $E \subset \real^n$ elemtargeometrisch berechnen lässt, dann stimmt es mit dem Lebesgue-Maß $\lebesgue^n(E)$ überein. Mit anderen Worten: Das $n$-dimensionale Lebesgue-Maß ist die natürliche Fortsetzung des Volumenbegriffs auf die Klasse der Borel-messbaren Mengen $\borel(\real^n)$.
+\textbf{Formale Anmerkung.} Wenn sich das Volumen einer Menge $E \subset
+\real^n$ elemen\-tar\-geo\-metrisch berechnen lässt, dann stimmt es mit dem
+Lebesgue-Maß $\lebesgue^n(E)$ überein. Mit anderen Worten: Das $n$-dimensionale
+Lebesgue-Maß ist die natürliche Fortsetzung des Volumenbegriffs auf die Klasse
+der Borel-messbaren Mengen $\borel(\real^n)$. 
 
 \begin{thm}[Verhalten unter affinen Transformationen]
  Sei $T \in \realmat{n}{n}$ invertierbar, sei $a \in \real^n$ und definiere $\Phi:\real^n \to \real^n$ durch $\Phi(x) = a + Tx$. Dann gilt für jede Borel-messbare Menge $E \in \real^n$:
@@ -562,7 +580,7 @@ Gegenstück für höhere Dimensionen:
     \item $\theta :=$ Winkel zwischen $x_3$-Achse und Vektor $x$
     \item $\varphi :=$ Winkel zwischen $x_1$-Achse und Vektor $x$
    \end{itemize}
-   Transformation von Polar- in euklidische Koordinaten:$\Phi: [0, \infty) \times [0,\pi] \times [0,2\pi] \to \real^3$, wobei
+   Transformation von Polar- in euklidische Koordinaten: $\Phi: [0, \infty) \times [0,\pi] \times [0,2\pi] \to \real^3$, wobei
    \[ (r,\theta, \varphi) \mapsto ( r \sin \theta \cos \varphi, r \sin \theta \sin \varphi, r \cos \theta ). \]
    Rechnung (Übung) ergibt
    \[ \det \nabla \Phi( r, \theta, \varphi) = r^2 \sin \theta. \]
@@ -600,7 +618,7 @@ Analog $f( x, \cdot ) := f(x,y)$.
 Wir legen den Maßraum $(\real^n, \borel(\real^n), \lebesgue^n)$ zugrunde\footnote{``Integrierbar'' heißt also $\lebesgue^n$-integrierbar und Borel-messbar.}.
 
 \begin{lem}[Cavalieri]
-Sei $A \in \real^{k+\ell}$. Dann gilt
+Sei $A \subset \real^{k+\ell}$ eine Borelmenge. Dann gilt
 \begin{enumerate}
  \item Für alle $y \in \real^\ell$ ist der Schnitt $A_y := \{ x \in \real^k : (x,y) \in A \}$ eine Borelmenge in $\real^k$.
  \item Die Funktion $\real^\ell \to [0,\infty]$, $y \mapsto \lebesgue^n(A_y)$ ist Borel-messbar.
@@ -627,14 +645,14 @@ Betrachte zum Beispiel Würfel in $\real^3$
     &= \int_{\real^k} \left( \int_{\real^\ell} f(x,y) \diffop \lebesgue^\ell (y) \right) \diffop \lebesgue^k (x).
  \end{aligned} \]
  Insbesondere ist eine Borel-messbare Funktion $F: \real^k \times \real^\ell \to [-\infty, \infty]$ genau dann $\lebesgue^{k+\ell}$-integrierbar, wenn
- \[ \int_{\real^\ell} \left( \int |F(x,y)| \diffop \lebesgue^k (x) ) \right) \diffop \lebesgue^\ell (y) < \infty. \]
+ \[ \int_{\real^\ell} \left( \int_{\real^k} |F(x,y)| \diffop \lebesgue^k (x) ) \right) \diffop \lebesgue^\ell (y) < \infty. \]
  Analog gilt das auch für $x \leftrightarrow y$ und $k \leftrightarrow \ell$.
 \end{thm}
 
 \begin{proof}
  Aufgrund des Lemmas gilt der Satz für die Funktion $f = \chi_A$ mit Borel-Menge $A \subset \real^{k+\ell}$. Wegen Linearität also auch für einfache Funktionen $f$. Nun sei $f$ wie im Satz. Gemäß Übungsblatt 2 existieren einfache Funktionen $\varphi_n : \real^{k+\ell} \to [0, \infty)$, so dass $\varphi_n (x,y) \uparrow f(x,y)$ für alle $(x,y) \in \real^{k+\ell}$ und $\int \varphi_n \diffop \lebesgue^{k+\ell} \rightarrow \int f \diffop \lebesgue^{k+\ell}$.
  
- Sei $y \in \real^\ell$ fest. Dann ist jedes $\varphi_n(\cdot, y)$ Borel-messbar in $\real^k$, weil der Satz für einfach Funktionen $\varphi_n$ gilt. Da $\varphi_n(\cdot, y) \uparrow f( \cdot, y)$ punktweise auf $\real^k$, folgt mit der monotonen Konvergenz:
+ Sei $y \in \real^\ell$ fest. Dann ist jedes $\varphi_n(\cdot, y)$ Borel-messbar in $\real^k$, weil der Satz für einfache Funktionen $\varphi_n$ gilt. Da $\varphi_n(\cdot, y) \uparrow f( \cdot, y)$ punktweise auf $\real^k$, folgt mit der monotonen Konvergenz:
  \[ \Phi_n(y) := \int \varphi_n(x,y) \diffop \lebesgue^k (x) \uparrow \underbrace{\int f(x,y) \diffop \lebesgue^k (x)}_{:= F(y)}. \]
  
  Nun sei $y$ wieder beliebig. $\Phi_n$ ist messbar wegen Satz für einfache Funktionen $\varphi_n$, daher ist $F$ auch messbar.

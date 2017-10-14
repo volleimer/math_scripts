@@ -1,0 +1,1249 @@
+\section{Gewöhnliche Differentialgleichungen}
+\subsection{Gewöhnliche Differentialgleichungen erster Ordnung}
+Sei $G \subset \real$ und $f:G \to \real$ stetig. Dann nennt man
+\[ y' = f(x,y) \]
+eine \emph{gewöhnliche Differentialgleichung erster  Ordnung}.
+
+Unter einer \emph{Lösung} versteht man eine auf einem Intervall $I \subset
+\real$ differenzierbare Funktion $\varphi:I \to \real$, so dass
+\[ \operatorname{graph} \varphi \subset G \quad \text{und} \quad \varphi'(x) =
+  f(x,\varphi(x)) \text{ für alle } x \in \real. \]
+
+\textbf{Geometrische Interpretation.} GDG (ordinary differential equation, ODE)
+bestimmt ein Richtungsfeld. In jedem Punkt $(x_1, x_2) \in G$ wird eine Steigung
+$f(x_1,x_2)$ vorgegeben. Gesucht ist eine differenzierbare Funktion $\varphi$,
+deren Graph in jedem seiner Punkte $(x,\varphi(x))$ die vorgegebene Steigung
+$f(x,\varphi(x))$ hat.
+
+Nur in ``Spezialfällen'' lässt sich eine Lösung explizit angeben. Oft erhält man
+sie durch mehr oder weniger gezieltes ``Raten''. Solche Fälle werden in diesem
+Abschnitt behandelt.
+
+``Explizites Hinschreiben'' ist nicht nötig, um relevante Informationen zu
+erhalten.
+
+\subsubsection{Trivialer Fall \texorpdfstring{$f(x,y)=f(x)$}{f(x,y)=f(x)}}
+Sei $f:(a,b) \to \real$ stetig. Lösungen von $y' = f(x)$ erhält man durch
+Integration:
+\[ \varphi(x) = c + \int_a^x f(x) \diffop x, \]
+wobei $c \in \real$ beliebig.
+
+\subsubsection{Getrennte Variablen \texorpdfstring{$f(x,y) = g(x)h(y)$}{f(x,y) =
+    g(x)h(y}}
+Sein $I,J$ offene Intervalle und $g:I \to \real$ und $h:J \to \real$ stetig mit
+$h \ne 0$ auf $J$. Eine GDG der Form
+\[ y' = g(x) h(x) \]
+heißt GDG mit \emph{getrennten Variablen}.
+
+Man kann sie auf eine Gleichung reduzieren, in der keine Ableitungen $y'$
+vorkommen.
+
+Methode zum Erraten der Lösungsgleichung:
+\[ \diff{y}{x} = g(x) h(y), \qquad \frac{\diffop y}{h(y)} = g(x) \diffop x,
+  \qquad \int \frac{\diffop y}{h(y)} = \int g(x) \diffop x. \]
+
+\begin{thm}
+  Seien $I,J \subset \real$ offene Intervalle und $g:I \to \real$ sowie $h:J \to
+  \real$ stetig und $h(y) \ne 0$ für alle $y \in J$. Sei $(x_0, y_0) \in I
+  \times J$ und definiere $G(x) := \int_{x_0}^x g$ und $H(y) := \int_{y_0}^y
+  \rez{h}$.
+
+  Sei $I' \subset I$ mit $x_0 \in I'$ ung $G(I') \subset H(J)$. Dann existiert
+  genau eine Lösung $\varphi: I' \to \real$ der GDG $y' = g(x) h(y)$ mit
+  $\varphi(x_0)=y_0$. Diese Lösung erfüllt $H \circ \varphi = G$ auf $I'$.
+\end{thm}
+
+\begin{proof}
+  Sei $\varphi:I' \to \real$ Lösung mit $\varphi(x_0) = y_0$. Da $\varphi'(x) =
+  g(x) h(\varphi(x))$, folgt für alle $x \in I'$: 
+  \[ H(\varphi(x)) = \int_{x_0}^x \frac{\varphi'(t)}{h(\varphi(t))} \diffop t =
+    \int_{x_0}^x g(t) \diffop t = G(x). \] 
+  Da $H' = \rez{h} \ne 0$, ist $H$ streng monoton. Also existiert eine stetig
+  differenzierbare Umkehrfunktion (vgl. Analysis II) $H^{-1}:H(J) \to \real$.
+  Also gilt
+  \[ \varphi = H^{-1} \circ G. \]
+  Daraus folgt auch die Eindeutigkeit.
+
+  Dass $\varphi$ eine Lösung mit $\varphi(x_0) = y_0$ ist, folgt durch
+  Nachrechnen und Kettenregel.
+\end{proof}
+
+\subsubsection{Homogene lineare DGD
+  \texorpdfstring{$f(x,y)=a(x)y$}{f(x,y)=a(x)y}}
+\begin{thm}
+  Sei $I \subset \real$ ein Intervall, $a:I \to \real$ stetig, $x_0 \in I$ und
+  $c \in \real$.
+
+  Dann existiert genau eine Lösung $\varphi:I \to \real$ der GDG $y' = a(x) y$
+  mit $\varphi(x_0) = c$, nämlich
+  \[ \varphi(x) = c \cdot \exp \left( \int_{x_0}^x a(t) \diffop t  \right). \]
+\end{thm}
+
+\begin{proof}
+  Dass $\varphi$ eine Lösung mit $\varphi(x_0) = c$ ist, folgt durch
+  Nachrechnen.
+
+  Eindeutigkeit: Sind $\varphi_1$ und $\varphi_2$ Lösungen von $y'=b(x)+a(x)y$
+  mit $\varphi_1(x_0) = \varphi_2(x_0)$, dann ist
+  $\tilde{\varphi}=\varphi_1-\varphi_2$ Lösung von $y'=a(x)y$ mit
+  $\tilde{\varphi}(x_0) = 0$. Aber gemäß Satz 1.3 gibt es höchstens eine solche
+  Lösung, nämlich $\tilde{\varphi} = 0$.
+\end{proof}
+
+\begin{exmp}
+  $y' = 2xy + x^2$ ist von der Form $y'=a(x)+b(x)$ mit $a(x) = 2x$. Also $A(x) =
+  x^2$ (für $x_0=0$) etc.
+\end{exmp}
+
+\subsection{Systeme gewöhnlicher Differentialgleichungen}
+\subsubsection{System}  
+\begin{defn}
+  Sei $G \subset \real \times \real^n$ und $f:G \to \real^n$, $(x,y) \mapsto
+  f(x,y)$ ein stetiges Vektorfeld. Dann ist $y'=f(x,y)$ ein \emph{System} von
+  $n$ gewöhnlichen Differentialgleichungen erster Ordnung.
+
+  Unter einer Lösung versteht man ein auf einem Intervall $I \subset \real$
+  differenzierbares Vektorfeld $\varphi:I \to \real^n$, sodass
+  $\operatorname{graph} \varphi \subset G$ und $\varphi'(x) = f(x,\varphi(x))$
+  für alle $x \in I$.
+
+  System gekoppelter Gleichungen:
+  \begin{align*}
+    \varphi'_1 &= f_1(x, \varphi_1, \ldots, \varphi_n) \\
+               &\vdots \\
+    \varphi'_n &= f_1(x, \varphi_1, \ldots, \varphi_n)
+  \end{align*}
+
+  Wichtig: weiterhin $x \in \real$, das heißt eindimensional. Für $x \in
+  \real^n$ ergeben sich partielle Differentialgleichungen.
+\end{defn}
+
+\subsubsection{GDG als Integralgleichungen}
+\begin{thm}
+  Sei $G \subset \real \times \real^n$ und $f:G \to \real^n$ stetig und sei
+  $(a,c) \in G$. Sei $I \subset \real$ ein Intervall mit $a \in I$ und $\varphi:
+  I \to \real^n$ stetig und $\operatorname{graph} \varphi \subseteq G$.
+
+  Dann sind äquivalent:
+  \begin{enumerate}[1)]
+  \item $\varphi$ ist Lösung der GDG $y'=f(x,y)$ mit $\varphi(a) = c$.
+  \item $\varphi$ erfüllt die Integralgleichung
+    \[ \varphi(x) = c + \int_a^x f(t, \varphi(t)) \diffop t \]
+    für alle $x \in I$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  $2) \Rightarrow 1):$ $\varphi(a) = c$ ist klar. Da $\varphi$ stetig ist, ist
+  auch $t \mapsto f(t,\varphi(t))$ stetig, also folgt aus dem Hauptsatz, dass
+  $\varphi$ stetig differenzierbar ist.
+  \[ \varphi'(x) = f(x,\varphi(x)) \]
+  für alle $x \in I$.
+
+  $1) \Rightarrow 2):$ $\varphi$ ist stetig (also Riemann-integrierbar) mit
+  $\varphi'(t) = f(t,\varphi(t))$. Wenn $\varphi(a) = c$, dann folgt
+  \[ \varphi(x) - \underbrace{\varphi(a)}_{=c}
+    = \int_a^x \varphi'(t) \diffop t
+    \overset{\text{GDG}}{=} \int_a^x f(t,\varphi(t)) \diffop t.
+    \qedhere \]
+\end{proof}
+
+\subsubsection{Lipschitz-stetige Abbildungen}
+Seien $X,Y$ metrische Räume und $f:X \to Y$.
+\begin{itemize}
+\item $f$ heißt \emph{Lipschitz-stetig} (oder einfach Lipschitz)
+  $:\Leftrightarrow$ Es existiert $L \in \real^+$, sodass
+  \[ d_Y( f(x), f(\tilde{x})) \le L d_X(x,\tilde{x}). \]
+  \item Die kleinste Zahl (Infimum) $L$, für die das gilt, heißt
+    \emph{Lipschitzkonstante} von $f$.
+\end{itemize}
+
+\begin{rmrk}
+  Lipschitz-stetige Abbildungen sind stetig.
+\end{rmrk}
+
+\textbf{Erinnerung.} Wenn $L < 1$, dann heißt $f$ Kontraktion.
+
+$f$ ist \emph{lokal Lipschitz-stetig} $:\Leftrightarrow$ Für alle $x \in X$
+existiert eine offene Umgebung $U \subset X$, sodass $f$ Lipschitz-stetig ist
+auf $U$.
+
+In diesem Kapitel: ``Lipschitz-Bedingung''
+
+Sei $G \subset \real \times \real^n$ und $f:G \to \real^n$, $(x,y) \mapsto
+f(x,y)$.
+\begin{itemize}
+\item $f$ erfüllt eine \emph{Lipschitz-Bedingung} $:\Leftrightarrow$ Es
+  existiert $L \in \real$, sodass
+  \[ | f(x,y) - f(x,\tilde{y}) | \le L |y-\tilde{y}| \]
+  für alle $(x,y), (x,\tilde{y}) \in G$.
+
+  Mit anderen Worten: $f$ ist Lipschitz bezüglich $y$ und zwar gleichmäßig
+  bezüglich $x$.
+\item $f$ erfüllt eine \emph{lokale} Lipschitz-Bedingung $:\Leftrightarrow$ Für
+  alle $(a,b) \in G$ existiert eine Umgebung $U \subset \real \times \real^n$,
+  sodass $f$ die Lipschitz-Bedingung auf $G \cap U$ erfüllt.
+\end{itemize}
+
+\begin{thm}
+  Sei $G \subset \real \times \real^n$ offen, $f:G \to \real^n$, $(x,y) \mapsto
+  f(x,y)$, sodass für alle $i = 1, \ldots, n$ $\pdiff{f}{y_i}:G \to \real^n$
+  existiert und \emph{stetig} sind.
+
+  Dann genügt $f$ lokal einer Lipschitz-Bedingung.
+\end{thm}
+
+\begin{proof}
+  Sei $(a,b) \in G$. Da $G$ offen ist, existiert $r > 0$, sodass
+  \[ V:= \{ (x,y) \in \real \times \real^n:|x-a| \le r \text{ und } |y-b| \le r
+    \} \]
+  in $G$ enthalten ist.
+
+  Da $V$ kompakt und $\pdiff{f}{y_i}$ stetig ist, ist
+  \[ C := \max_{i=1, \ldots, n} \sup \left\{ \left| \pdiff{f}{y_i} \right|(x) :
+      x \in V \right\} \]
+  endlich. Also folgt aus dem Mittelwertsatz in $\real^n$, dass $f$ die
+  Lipschitz-Bedingung auf $V$ erfüllt.
+\end{proof}
+
+\subsubsection{Eindeutigkeitssatz}
+Das folgende Lemma gilt auf allgemeinen topologischen Räumen.
+
+\begin{lem}
+  Sei $I \subset \real$ ein Intervall und sei $J \subset I$ relativ offen und
+  relativ abgeschlossen in $I$. Dann ist $J = \emptyset$ oder $J = I$.
+\end{lem}
+
+\begin{proof}
+  Sei $J$ nichtleer. Wenn $I$ degeniert ist, dann ist nichts mehr zu zeigen.
+  Also sei $I$ ein echtes Intervall. Fixiere ein $x_0 \in J$ und setze $x_1 :=
+  \sup \{ x \in I : [x_0, x] \subset J \}$.
+
+  Behauptung: $x_1 = \sup I$.
+
+  Angenommen $x_1 < \sup I$, dann existiert $r > 0$, sodass $[x_1, x_1 + r]
+  \subset I$. Insbesondere ist $x_1 \in I$, weil $x_0 \in I$ und $x_0 \le x_1 <
+  \sup I$. Außerdem ist $[x_0,x_1) \subset J$ wegen Definition von $x_1$.
+
+  Da $J$ abgeschlossen in $I$ ist und $x_1 \in I$, folgt $x_1 \in J$. Da $J$
+  offen in $I$ ist, existiert $\delta > 0$, sodass $B_\delta(x_1) \cap I \subset
+  J$. Also wenn wir zudem $\delta \in (0,r)$ wählen, dann folgt
+  $[x_1,x_1+\delta] \subset J$.
+
+  Damit gilt $[x_0,x_1+\delta] \subset J$. Das widerspricht der Maximalität von
+  $x_1$, also $[x_0, \sup I ] \cap I \subset J$. Analog folgt $[\inf I, x_0]
+  \cap I \subset J$. Damit gilt $I = J$.
+\end{proof}
+
+\begin{thm}
+  Sei $G \subset \real \times \real^n$ und $f: G \to \real^n$ lokal
+  Lipschitz. Sei $I \subset \real$ ein Intervall und $\varphi, \psi: I \to
+  \real^n$ Lösungen der GDG $y' = f(x,y)$. Wenn zudem ein $x_0 \in I$ existiert,
+  so dass $\varphi(x_0) = \psi(x_0)$, dann ist $\varphi(x) = \psi(x)$ für alle
+  $x \in I$.
+\end{thm}
+
+\begin{rmrk}
+  Ohne die lokale Lipschitz-Bedingung an $f$ ist die Aussage im Allgemeinen
+  falsch.
+\end{rmrk}
+
+\begin{proof}
+  Setze $J := \{x \in I: \varphi(x) = \psi(x) \}$.
+
+  Behauptung: $J$ relativ abgeschlossen in $I$.
+
+  Da $\varphi, \psi$ stetig ist, ist auch $\varphi-\psi$ stetig. Also ist die
+  Urbildmenge $J$ der abgeschlossenen Menge $\{0\}$ abgeschlossen.
+
+  Alternativer Beweis: Sei $x_n \in J$, sodass $x' := \lim x_n$ in $I$
+  existiert. Dann gilt wegen der Stetigkeit: $\varphi(x') = \lim \varphi(x_n) =
+  \lim \psi(x_n) = \psi(x')$. Also ist $x' \in J$.
+
+  Behauptung: $J$ ist offen in $I$. Mit anderen Worten: für alle $a \in J$
+  existiert $\eps > 0$, sodass $B_\eps(a) \cap I \subset J$.
+
+  Sei $a \in J$. Aus Satz 2.2 folgt
+  \[ \varphi(x) - \psi(x) = \int_a^x f(t,\varphi(t)) - f(t,\psi(t)) \diffop
+    t. \]
+  Wegen der lokalen Lipschitz-Bedingung von $f$ existieren $L, \eps > 0$, sodass
+  \[ |f(t,\varphi(t)) - f(t,\psi(t)) | \le L |\varphi(t) - \psi(t)| \]
+  für alle $t \in B_\eps(a) \cap I$.
+
+  Also gilt für alle $x \in B_\eps(a) \cap I$:
+  \[ | \varphi(x) - \psi(x) | \le \int_a^x |f(t,\varphi(t)) - f(t,\psi(t))|
+    \diffop t \le L \int_a^x | \varphi(t) - \psi(t) | \diffop t. \]
+
+  Das nun folgende Argument ist ein Spezialfall des sogenannten Gronwall-Lemmas:
+  Definiere
+  \[ F(r) := \sup \{ | \varphi(t) - \psi(t) | : t \in I \cap B_r(a) \} \]
+  für $r > 0$. Offensichtlich ist $F$ monoton wachsend. Aus der letzten
+  Ungleichung folgt
+  \[ | \varphi(x) - \psi(x) | \le L \cdot |x-a| \cdot F( |x-a| ) \]
+  für alle $x \in I \cap B_\delta(a)$.
+
+  Sei nun $\eps \in (0,\delta)$. Dann folgt wegen der Monotonie $|\varphi(x) -
+  \psi(x) | \le L \eps F(\eps)$ für alle $x \in B_\eps(a) \cap I$ und damit
+  $F(\eps) \le L \eps F(\eps)$ für alle $\eps \in (0,\delta)$.
+
+  Insbesondere existiert $\eps \in (0,\delta)$, sodass $L \eps = \rez{2}$. Also
+  gilt $F(\eps) \le \rez{2} F(\eps)$ für dieses $\eps$, also $F(\eps)=0$.
+
+  Das bedeutet gerade: $\varphi = \psi$ auf $I \cap B_\eps(a)$, das heißt $I
+  \cap B_\eps(a) \subset J$.
+
+  Insgesamt haben wir gezeigt: $J$ ist relativ offen und abgeschlossen in $I$.
+  Also gilt $J=I$, das heißt $\varphi = \psi$ auf $I$.
+\end{proof}
+
+\begin{exmp}
+  (siehe Übung) $y' = y^{2/3}$ zeigt, dass die Lipschitz-Bedingung an $f$ nicht
+  redundant ist.
+\end{exmp}
+
+\subsubsection{Der Banachraum \texorpdfstring{$C^0(K)$}{C0(K)}}
+Ein Banachraum ist ein normierter Vektorraum, der vollständig ist (als durch die
+Norm induzierter metrischer Raum).
+
+\begin{thm}
+  Sei $K \subset \real^n$ kompakt und für jedes $f \in C^0(K)$ definiere
+  \[ \| f \| := \sup \{ | f(x) : x \in K \}. \]
+  Dann ist $(C^0(K), \|\cdot\|)$ ein Banachraum.
+\end{thm}
+
+\begin{proof}
+  Norm-Eigenschaften von $\|\cdot\|$ folgen aus den Norm-Eigenschaften von
+  $|\cdot|$ auf $\real$ und der Tatsache, dass stetige Funktionen auf kompakten
+  Mengen beschränkt sind (also $\|f\| < \infty$).
+
+  Die Vollständigkeit folgt aus der Tatsache, dass gleichmäßig konvergente
+  Folgen stetiger Funktionen stetig sind.
+\end{proof}
+
+\subsubsection{Existenzsatz von Picard-Lindelöf}
+\begin{thm}
+  Sei $G \subset \real \times \real^n$ offen, erfülle $f:G \to \real^n$ eine
+  lokale Lipschitz-Bedingung und sei $(a,c) \in G$. Dann existiert $\eps > 0$
+  und eine Lösung $\varphi:[a-\eps,a+\eps] \to \real^n$ des GDG-Systems $y' =
+  f(x,y)$ mit $\varphi(a) = c$.
+\end{thm}
+
+\begin{proof}
+  Da $G$ offen ist, existiert $\delta, r > 0 $, sodass
+  \[ Q_{\delta,r} := \{ (x,y) \in \real \times \real^n : |x-a| \le \delta,
+    |y-c| \le r \} \]
+  in $G$ enthalten ist und $f$ eine Lipschitz-Bedingung auf $Q_{\delta,r}$
+  erfüllt. Da $f$ stetig und $Q_{\delta,r}$ kompakt ist, existiert $M > 0$,
+  sodass $|f| \le M$ auf $Q_{\delta,r}$. Setze
+  \[ \eps := \min \{ \delta, \frac{r}{M}, \rez{2L} \},
+    \quad X := C^0([a-\eps,a+\eps], \real^n),
+    \quad Y := \{ \psi \in X: \|\psi - c\| \le r \}. \]
+
+  Definiere die Abbildung $T:Y \to X$, $\psi \mapsto T\psi$,
+  \[ (T\psi)(x) := c + \int_a^x f(t,\psi(t)) \diffop t. \]
+  Beachte, dass $Y$ eine abgeschlossene Teilmenge des vollständigen metrischen
+  Raumes $X$ ist, also ist $Y$ vollständig. Damit ist der Fixpunktsatz in $Y$
+  anwendbar.
+
+  Zu zeigen: $T(Y) \subset Y$, $T$ ist eine Kontraktion.
+
+  Behauptung: $T$ ist wohldefiniert und $T(Y) \subset Y$.
+
+  Sei $\psi \in Y$. Da $\| \psi - c \| \le r$, gilt $\operatorname{graph} \psi
+  \subset Q_{\eps,r} \subset Q_{\delta,r} \subset G$, also im
+  Definitionsbereich von $f$. Zudem ist $t \mapsto f(t, \psi(t))$
+  Riemann-integrierbar und $T\psi$ ist stetig, also in $X$ und damit ist $T$
+  wohldefiniert.
+
+  Da
+  \begin{align*}
+    | (T\psi)(x) - c )
+    &= \left| \int_a^x f(t,\psi(t)) \diffop t  \right| \\
+    &\le \int_a^x |f(t,\varphi(t))| \diffop t \\
+    &\overset{(\circ)}{\le} M \cdot |x-a| \le M \cdot \eps \le r,
+  \end{align*}
+  wobei ($\circ$): $|f| \le M$ auf $Q_{\eps,r}$ und damit $\operatorname{graph}
+  \psi \subset Q_{\eps,r}$.
+
+  Da das für alle $x \in [a-\eps,a+\eps]$ gilt, ist $T \psi \in Y$.
+
+  Behauptung: $T: Y \to Y$ ist eine Kontraktion.
+
+  Seien $\psi_1, \psi_2 \in Y$. Dann gilt
+  \begin{align*}
+    |(T\psi_1)(x) - (T\psi_2)(x) |
+    &= \left| \int_a^x f(t,\psi_1(t)) - f(t,\psi_2(t)) \diffop t \right| \\
+    &\le L \cdot \int_a^x | \psi_1(t) - \psi_2(t) | \diffop t \\
+    &\le L |x-a| \| \psi_1 - \psi_2 \| \le \rez{2} \| \psi_1 - \psi_2 \|,
+  \end{align*}
+  wobei $\psi_1(t) - \psi_2(t) \le \| \psi_1 - \psi_2 \|$ für alle $t \in
+  [a-\eps,a+\eps]$ und $|x-a| \le \eps$.
+
+  Also ist $\| T\psi_1 - T\psi_2 \| \le \rez{2} \| \psi_1 - \psi_2$ für alle
+  $\psi_1, \psi_2 \in Y$. Wegen des Fixpunktsatzes von Banach (siehe Analysis 2)
+  existiert $\varphi \in Y$, sodass $\varphi = T \varphi$, und wegen Satz 2.2
+  löst dieses $\varphi$ die GDG.
+\end{proof}
+
+\begin{rmrk}
+  Gemäß Satz 2.4 ist $\varphi$ die einzige Lösung mit $\varphi(a) = c$.
+
+  Im Beweis des Fixpunktsatzes findet man Fixpunkte iterativ. Hier $\psi_0 := c$
+  und $\psi_{k+1}:= c + \int_a^x f(t,\psi_k(t))$ liefert eine gleichmäßig
+  konvergente Folge $(\psi_k)$, die gegen die Lösung $\varphi$ konvergiert.
+
+  Die Lösung existiert im Allgemeinen auf einem \emph{kleinen} Intervall.
+\end{rmrk}
+
+\subsection{Gewöhnliche Differentialgleichungen höherer Ordnung}
+\subsubsection{GDG \texorpdfstring{$n$}{n}-ter Ordnung}
+
+\begin{defn}
+  Sei $G \subset \real \times \real^n$ und $f:G \to \real$ stetig. Dann heißt
+  \[ y^{(n)} = f(x,y,y',\ldots, y^{(n-1)})\]
+  gewöhnliche Differentialgleichung \emph{$n$-ter Ordnung}. Unter einer
+  \emph{Lösung} versteht man eine auf dem Intervall $I \subset \real$ $n$-mal
+  differenzierbare Funktion $\varphi: I \to \real$, sodass:
+  \[ \{ (x, \varphi(x), \varphi'(x), \ldots, \varphi^{(n-1)}(x):x \in I) \}
+    \subset G \]
+  und für alle $x \in I$ gilt
+  \[ \varphi^{(n)}(x) = f(x,\varphi(x), \ldots, \varphi^{(n-1)}(x)). \]
+\end{defn}
+
+Beispiel: $y'' = -2y$.
+
+\subsubsection{Reduktion auf System erster Ordnung}
+Eine Gleichung $n$-ter Ordnung $y^{(n)} = f(x, \ldots, y^{(n-1)})$ ist äquivalent
+zum folgenden System 1. Ordnung:
+\begin{align*}
+  y'_0 &= y_1 \\
+  y'_0 &= y_1 \\
+       &\vdots \\
+  y'_{n-2} &= y_{n-1} \\
+  y'_{n-1} &= f(x,y_0,\ldots, y_{n-1}).
+\end{align*}
+
+Diese Äquivalenz ist leicht zu sehen (siehe Forster Analysis 2). Völlig analog
+kann man auch jedes \emph{System} $n$-ter Ordnung auf ein System 1. Ordnung
+reduzieren.
+
+\subsubsection{Existenz und Eindeutigkeit}
+Folgerung aus den Resultaten für Systeme 1. Ordnung:
+
+\clearpage
+
+\begin{kor}
+  Sei $G \subset \real \times \real^n$ offen, $f:G \to \real$ stetig und $(x,y)
+  \mapsto f(x,y)$ erfülle eine lokale Lipschitz-Bedingung. Dann
+  \begin{enumerate}
+  \item (Eindeutigkeit) Seien $\varphi, \psi: I \to \real$ Lösungen von
+    \[ y^{(n)} = f(x,y,\ldots,y^{(n-1)}).\]
+    Für ein $a \in I$ gelte:
+    \[ \varphi(a) = \psi(a), \quad \varphi'(a) = \psi'(a), \quad \ldots \quad
+      \varphi^{(n-1)}(a) = \psi^{(n-1)}(a). \]
+    Dann ist $\varphi(x) =  \psi(x)$ für alle $x \in I$.
+  \item (Existenz) Sei $(a,c_0, \ldots, c_{n-1}) \in G$. Dann existiert $\eps >
+    0$ und eine Lösung $\varphi:[a-\eps, a+\eps] \to \real$ von $y^{(n)} =
+    f(x,y, \ldots, y^{(n-1)})$, die den $n$ Anfangsbedingungen genügt:
+    \[ \varphi(a) = c_0, \quad \varphi'(a) = c_1, \quad \ldots \quad
+      \varphi^{(n-1)}(a) = c_{n-1}.\]
+  \end{enumerate}
+\end{kor}
+
+\subsection{Lineare Systeme}
+\subsubsection{Homogene und inhomogene lineare Systeme}
+Sei $I \subset \real$ ein Intervall und $A:I \to \real^{n \times n}$ stetig.
+Dann heißt $y' = A(x) y$ \emph{homogenes} lineares System 1. Ordnung.
+
+Sei zudem $b: I \to \real^n$ stetig. Dann heißt $y' = A(x)y + b(x)$
+\emph{inhomogenes} lineares System 1. Ordnung.
+
+Das zum inhomogenen System $y' = A(x)y + b(x)$ gehörige homogene System ist $y'
+= A(x) y$.
+
+Komplexe GDG: Sei $A:I \to \complex^{n \times n}$ und $b:I \to \complex^n$. Da
+$\complex = \real \times \real$, ist ein System von $n$ komplexen GDG äquivalent
+zu einem System von $2n$ reellen GDG. Im Folgenden ist $\koer = \complex$ oder
+$\real$.
+
+\subsubsection{Existenz und Eindeutigkeit der Lösung}
+ \begin{lem}
+  Sei $I \subset \real$ ein  Intervall, $f: I \times \koer^n \to \koer^n$
+  erfülle eine (globale) Lipschitz-Bedingung.
+
+  Dann existiert für alle $(x_0,c) \in I \times \koer^n$ genau eine Lösung
+  $\varphi:I \to \koer^n$ der GDG $\varphi'=f(x,y)$ mit $\varphi(x_0) = c$.
+ \end{lem}
+
+ \begin{proof}
+  Die Eindeutigkeit folgt aus Satz 2.4.
+  
+  Für die Existenz benutzt man den Satz von Picard-Lindelöf. Definiere $\varphi_k: I \to \real^n$ induktiv durch $\varphi_0(x) := c$ und 
+  \[ \varphi_{k+1}(x) := c + \int_{x_0}^x f(t, \varphi_k(t)) \diffop t. \]
+  Dieser Ausdruck ist wohldefiniert, da $\varphi_k$ induktiv stetig ist, also ist $f( \cdot, \varphi_k(\cdot) )$ Riemann-integrierbar.
+  
+  Sei $J \subset I$ ein kompaktes Teilintervall (z.B. $I = \real$ und $J = [-R,R]$). Nun wird gezeigt, dass die Folge $(\varphi_k)$ eine Cauchy-Folge im Banach-Raum $C^0(J,\real^n)$ mit Norm $\| f \|_J := \sup \{ |f(x)| : x \in J \}$ ist.
+  \[ | \varphi_{k+1}(x) - \varphi_k(x) | \le \frac{L^k | x - x_0 |^k}{k!} \| \varphi_1 - \varphi_0 \|_J \]
+  für alle $k \in \nat$, $x \in J$.
+  
+  Wir zeigen nun die Konvergenz der rechten Seite durch Induktion nach $k$.
+  
+  Induktionsanfang: $k=0$ klar.
+  
+  Induktionsschritt:
+  \[ \begin{aligned}
+     | \varphi_{k+2}(x) - \varphi_{k+1}(x) | 
+     &\le \int_{x_0}^x \left| f(t, \varphi_{k+1}(t) ) - f(t, \varphi_k(t)) \right| \diffop t. \\
+     &\le L \int_{x_0}^x \frac{L^k}{k!} |t-x_0|^k \diffop t \cdot \|\varphi_0 - \varphi_1\|_J  
+     \end{aligned} \]
+     
+  Aus der Behauptung folgt nun, dass die Reihe $\sum_{k=0}^\infty | \varphi_{k+1}(x) - \varphi_k(x)|$ auf $J$ durch die konvergente Reihe
+  \[ \sum_{k=0}^\infty \frac{(L \lebesgue^1(J))^k}{k!} = \exp( L \lebesgue^1(J) ) \]
+  majoriert wird. Da $\lim_{k \to \infty} \varphi_k = \sum_{i=0}^\infty (\varphi_{i+1} - \varphi_i)$ folgt, dass $\varphi_k \to: \varphi$ auf $J$ gleichmäßig konvergiert.
+  
+  Da $J$ beliebig war, haben wir gezeigt, dass $\varphi \in C^0(I, \real^n)$ existiert, so dass $\varphi_k \to \varphi$ gleichmäßig konvergiert auf kompakten Teilmengen (Kompakta).
+  
+  Grenzübergang $k \to \infty$ in der Definition von $\varphi_{k+1}$ ergibt
+  \[ \varphi(x) = c + \int_{x_0}^x f(t, \varphi(t) ) \diffop t \]
+  für alle $x \in I$.
+  
+  Gemäß Satz 2.2 folgt also: $\varphi$ ist Lösung.
+ \end{proof}
+
+\begin{rmrk}
+ Der Beweis verwendet nur, dass für jedes kompakte Teilintervall $J \subset I$ $f:J \times \koer^n \to \koer^n$ eine (globale) Lipschitz-Bedingung erfüllt (im Beweis durfte $L$ von $J$ abhängen).
+\end{rmrk}
+
+\begin{thm}
+ Sei $I \subset \real$ ein Intervall, $A: I \to \koer^{n \times n}$ und $b:I \to \koer^n$ seien stetig. Dann existiert für alle $x \in I$ und alle $c \in \koer^n$ genau eine Lösung $\varphi:I \to \koer^n$ mit $\varphi(x_0) = c$ des linearen GDG-Systems
+ \[ y' = A(x) y + b(x). \]
+\end{thm}
+
+\begin{proof}
+ Definiere $f(x,y) := A(x) y + b(x)$ und sei $J \subset I$ ein kompaktes Teilintervall. Dann
+ \[ | f(x,y) - f(x,\tilde{y}) | = | A(x) (y-\tilde{y}) | \le L |y-\tilde{y}|, \]
+ weil $A$ stetig und $J$ kompakt sind ($L := \sup \{ \|Ax\|: x \in J \} < \infty$).
+ 
+ Die Behauptung folgt nun aus dem Lemma.
+\end{proof}
+
+\begin{rmrk}
+ Bei \emph{linearen} GDG existiert die Lösung also \emph{global}. Bei \emph{nichtlinearen} GDG hingegen existiert die Lösung im Allgemeinen nur \emph{lokal}.
+\end{rmrk}
+
+\subsubsection{Homogene lineare GDG-Systeme}
+\begin{thm}
+ Sei $I \subset \real$ ein nicht degeneriertes Intervall und $A:I \to \koer^{n \times n}$ stetig. Dann bildet die Menge $L_H$ aller Lösungen $\varphi:I \to \koer^n$ der homogenen linearen Gleichung 
+ \[ y' = A(x) y \]
+ einen $n$-dimensionalen Vektorraum über $\koer$.
+ 
+ Seien $\varphi_1, \ldots, \varphi_k \in L_H$. Dann sind äquivalent:
+ \begin{enumerate}
+  \item $\varphi_1, \ldots, \varphi_k$ sind linear unabhängig\footnotemark (als Elemente des Vektorraums aller Abbildungen $I \to \koer^n$),
+  \item es existiert $x_0 \in I$, so dass $\varphi_1(x_0), \ldots, \varphi_k(x_0)$ linear unabhängig\footnotemark (in $\koer^n$) sind,
+  \item für alle $x \in I$ sind $\varphi_1, \ldots, \varphi_k$ linear unabhängig\footnotemark (in $\koer^n$). 
+ \end{enumerate}
+
+\end{thm}
+\addtocounter{footnote}{-2}
+\footnotetext{%
+ Das heißt, wenn $\lambda_1, \ldots, \lambda_k \in \koer$ und $\lambda_1
+ \varphi_1(x) + \ldots + \lambda_k \varphi_k(x) = 0$ für alle $x$, dann gilt
+ $\lambda_1 = \ldots = \lambda_k = 0$.}
+\addtocounter{footnote}{1}
+\footnotetext{%
+ Das heißt, wenn $\lambda_1, \ldots, \lambda_k \in \koer$ und $\lambda_1
+ \varphi_1(x_0) + \ldots + \lambda_k \varphi_k(x_0) = 0$, dann gilt $\lambda_1 =
+ \ldots = \lambda_k = 0$.}
+\addtocounter{footnote}{1}
+\footnotetext{%
+ Das heißt, wenn $\lambda_1, \ldots, \lambda_k: I \to \koer$ und $\lambda_1(x)
+ \varphi_1(x) + \ldots + \lambda_k(x) \varphi_k(x) = 0$ für alle $x \in I$, dann
+ gilt $\lambda_1(x) = \ldots = \lambda_k(x) = 0$ für alle $x \in I$.} 
+ 
+\begin{proof}
+ $L_H$ ist ein Vektorraum: Sind $\varphi_1, \varphi_2: I \to \koer$ in $L_H$ (Lösungen), das heißt $\varphi'(x) = A(x) \varphi(x)$ ($i=1,2$), dann ist auch $\varphi_1 + \varphi_2 \in L_H$, denn
+ \[ (\varphi_1 + \varphi_2)'(x) = \varphi'_1(x) + \varphi'_2(x) = A(x) \varphi_1(x) + A(x) \varphi_2(x) = A(x) (\varphi_1(x) + \varphi_2(x)). \]
+ Die Skalarmultiplikation zeigt man analog.
+ 
+ Behauptung: $\dim L_H \ge n$.
+ 
+ Seien $v_1, \ldots, v_n \in \koer^n$ linear unabhängig und $x_0 \in I$. Gemäß Satz 4.2 existieren $\varphi_1, \ldots, \varphi_n \in L_H$ mit $\varphi_i(x_0) = v_i$ für $i = 1, \ldots, n$. Also ist $\{ \varphi_i \}$ linear unabhängig (als Abb.), weil $\{ \varphi_i(x_0) \}$ linear unabhängig ist.
+ 
+ Behauptung: $\dim L_H \le n$.
+ 
+ Seien $\varphi_1, \ldots, \varphi_{n+1} \in L_H$. Wären sie linear unabhängig, dann existiert gemäß 3. (noch zu zeigen) insbesondere ein $x_0 \in I$, so dass $\varphi_1(x_0), \ldots, \varphi_{n+1} \in \koer^n$ linear unabhängig sind. Widerspruch!
+ 
+ Zu den äquivalenten Aussagen: Es ist klar, dass 3. $\Rightarrow$ 2. $\Rightarrow$ 1. gilt. Also muss noch 1. $\Rightarrow$ 3. gezeigt werden.
+ 
+ Seien also $\varphi_1, \ldots, \varphi_k \in L_H$ linear unabhängig (als Abbildungen $I \to \koer^n$) und sei $x_0 \in I$ beliebig. Wir zeigen nun, dass dann $\varphi_1(x_0), \ldots, \varphi_k(x_0) \in \koer^n$ linear unabhängig sind. 
+ 
+ Seien $\lambda_1, \ldots, \lambda_k \in \koer$ sind, so dass
+ \[ \lambda_1 \varphi_1(x_0) + \ldots + \lambda_k \varphi_k(x_0) = 0. \]
+ Dann ist $\varphi := \lambda_1 \varphi_1 + \ldots + \lambda_k \varphi_k$ eine Lösung der GDG. Außerdem ist $\varphi(x_0) = 0$. Wegen der Eindeutigkeit von Lösungen der GDG mit gegebenen Anfangsdaten muss dann $\varphi \equiv 0$ für alle $x$ sein, das heißt 
+ \[ \lambda_1 \varphi_1 + \ldots + \lambda_k \varphi_k = 0 \]
+ als Abbildungen $I \to \koer^n$. Daraus folgt $\lambda_1 = \ldots = \lambda_k = 0$.
+\end{proof}
+
+\subsubsection{Lösungsfundamentalsystem}
+Eine Basis des Vektorraums aller Lösungen eines homogenen linearen GDG-Systems
+heißt \emph{Lösungsfundamentalsystem} (LFS).
+
+Wenn also $A:I \to \koer^n$ und $L_H$ Lösungsraum von $y' = A(x) y$ und
+$\varphi_1, \ldots, \varphi_n \in L_H$ linear unabhängig sind, dann ist
+$(\varphi_1, \ldots, \varphi_n)$ ein LFS.
+
+Für jede Lösung $\varphi: I \to \koer^n$ existieren eindeutige $c_1, \ldots, c_n
+\in \koer$, so dass
+\[ \varphi(x) = c_1 \varphi_1(x) + \ldots + c_n \varphi_n(x) \]
+für alle $x \in I$. Die $c_i$ werden festgelegt durch den Wert $\varphi(x_0)$ an
+einem Punkt $x_0$.
+
+Oft ist diese kompakte Schreibweise zweckmäßig:
+\[ \Phi := ( \varphi_1 | \varphi_2 | \cdots | \varphi_n ) =
+   \begin{pmatrix}
+     (\varphi_1)_1 & \cdots & (\varphi_n)_1 \\
+     \vdots & & \vdots \\
+     (\varphi_1)_n & \cdots & (\varphi_n)_n
+   \end{pmatrix}. \]
+ Dann ist $\Phi:I \to \koer^{n \times x}$ eine (matrixwertige) Lösung von
+ \[ \Phi' = A(x) \Phi. \]
+ Und da $\{ \varphi_i \}_1^n$ linear unabhängig, ist $\Phi(x)$ invertierbar für
+ alle $x \in I$.
+
+ \begin{exmp}
+   Homogenes lineares System:
+   \[ \begin{aligned}
+       y'_1 &= - y_2 \\
+       y'_2 &= y_1
+     \end{aligned} \]
+   Das ist von der Form $y' = A(x) y$ mit $A(x) = \begin{pmatrix} 0 & -1 \\ 1 &
+     0 \end{pmatrix}$ für alle $x \in I$.
+
+   Lösungen (raten): $\varphi_1 = (\cos x, \sin x)^T$, $\varphi_2 = (- \sin x,
+   \cos x)^T$. Sie sind linear unabhängig, weil die Matrix
+   \[ \Phi(x) := (\varphi_1(x) | \varphi_2(x)) = \begin{pmatrix} \cos x & - \sin x \\ \sin x & \cos x
+     \end{pmatrix} \in SO(2) \]
+   ist für alle $x \in I$ und damit invertierbar ($\det \Phi = -1$). Also ist $\varphi_1, \varphi_2$ ein LFS.
+ \end{exmp}
+
+ \subsubsection{Inhomogene lineare Systeme}
+ \begin{thm}
+   Sei $I \subset \real$ ein nicht degeneriertes Intervall und $A: I \to
+   \koer^{n \times n}$, $b: I \to \koer^n$ stetige Abbildungen und sei $L_H$ der
+   Vektorraum aller Lösungen des homogenen Systems $y' = A(x) y$.
+
+   Dann ist die Menge $L_I$ aller Lösungen $\varphi:I \to \koer^n$ des inhomogenen
+   Systems
+   \[ y' = A(x) y + b(x) \]
+   ein affiner Raum der Form $\psi_0 + L_H$. Dabei ist $\psi_0 \in L_I$ eine
+   beliebige Lösung des inhomogenen Systems.
+ \end{thm}
+
+ \begin{proof}
+   Das folgt aus der Tatsache, dass
+   \[ \psi_0, \psi_1 \in L_I \qLRq \psi_0 - \psi_1 \in L_H, \]
+   weil
+   \[ (\psi_0 - \psi_1)' = \psi'_0 - \psi'_1 = A\psi_0 + b - ()A\psi_1 + b).
+     \qedhere \]
+ \end{proof}
+
+\subsubsection{Variation der Konstanten - Formel}
+Um alle Lösungen $L_I$ zu finden, muss man also $L_H$ kennen und eine spezielle
+Lösung $\psi_0 \in L_I$. Letztere definiert man so:
+
+\clearpage
+
+\begin{thm}
+  Mit den Bezeichnungen von Satz 4.5 gilt: Sei $\varphi_1, \ldots, \varphi_n \in
+  L_H$ ein LFS und setze $\Phi := ( \varphi_1 | \cdots | \varphi_n)$. Sei $x_0
+  \in I$ und $c \in \koer^n$. Dann ist
+  \[ \psi(x) := \Phi(x) \left(  \Phi^{-1}(x_o) c + \int_{x_0}^x \Phi^{-1}(t)
+      b(t) \diffop t \right) \]
+  die Lösung der inhomogenen GDG $y' = A(x) y + b(x)$ mit $\psi(x_0) = c$.
+\end{thm}
+
+\begin{proof}
+  Offenbar erfüllt $\psi$ die Anfangsbedingung.
+
+  Dass $\psi$ eine Lösung ist, erhält man durch Nachrechnen:
+  \[ \psi' = \underbrace{\Phi'(\cdots)}_{= A(x) \Phi(x)} + \Phi(x) \Phi^{-1}(x)
+    b(x). \qedhere \]
+\end{proof}
+
+\begin{rmrk}
+  Wenn man nur irgendeine spezielle Lösung der inhomogenen GDG sucht, dann wählt
+  man zum Beispiel $c=0$. Es gilt dann
+  \[ \psi(x) = \Phi(x) \int_{x_0}^x \Phi^{-1}(t) b(t) \diffop t. \]
+\end{rmrk}
+
+\begin{exmp}
+  Bestimme die allgemeine Lösung von
+  \[ y'_1 = -y_2, \quad y'_2 = y_1 + x. \]
+  Das System ist von der Form $y' = Ay + b(x)$, wobei $A := \begin{pmatrix} 0 &
+    -1 \\ 1 & 0 \end{pmatrix}$ und $b:\real \to \real^2$, $b(x) := (0,x)^T$.
+  
+  Lösungsfundamentalsystem: $\Phi(x) = \begin{pmatrix} \cos x & - \sin x \\ \sin
+    x & \cos x \end{pmatrix}$.
+
+  Da $\Phi(x) \in SO(2)$, ist $\Phi^{-1}(x) = \Phi^T(x) = \begin{pmatrix} \cos x
+    & \sin x \\ - \sin x & \cos x \end{pmatrix}$. Also gilt
+  \[ \Phi^{-1}(t) b(t) =  \begin{pmatrix} t \sin t \\ t \cos t \end{pmatrix} \]
+  und wir erhalten
+  \[ u(x) := \int_{x_0}^x \Phi^{-1}(t) b(t) = \begin{pmatrix} \sin x - x \cos x
+      \\ \cos x + x \sin x \end{pmatrix}. \]
+  Also ist eine spezielle Lösung 
+  \[ \psi(x) := \Phi(x) u(x) = \begin{pmatrix} -x \\ 1 \end{pmatrix}. \]
+  Für die allgemeine Lösung der zugehörigen homogenen Gleichung hinzu addieren:
+  \[ \varphi(x) = \psi(x) + c_1 \pmat{\sin x \\ \cos x} + c_2 \pmat{-\sin x \\
+        \cos x} \]
+    mit $c_1, c_2 \in \koer^n$ beliebig.
+\end{exmp}
+
+\subsubsection{Lineare GDG \texorpdfstring{$n$}{n}-ter Ordnung}
+Sei $I \subset \real$ ein Intervall und $a_0, \ldots, a_{n-1}: I \to \koer$
+stetige Funktionen. Dann heißt
+\[ y^{(n)} + a_{n-1}(x) y^{(n-1)} + \ldots + a_0(x) = 0 \tag{H} \]
+\emph{homogene lineare GDG $n$-ter Ordnung}.
+
+Ist $b:I \to \koer^n$ stetig, dann heißt
+\[ y^{(n)} + a_{n-1}(x) y^{(n-1)} + \ldots + a_0(x) = b(x) \tag{I} \]
+\emph{inhomogene lineare GDG $n$-ter Ordnung}.
+
+\begin{thm}
+  \begin{enumerate}
+    \item Die Menge $L_H$ aller Lösungen $\varphi:I \to \koer$ von (H) ist ein
+      $n$-dimensionaler Vektorraum über $\koer$.
+    \item Die Menge $L_I$ aller Lösungen $\varphi:I \to \koer$ von (I) ist ein
+      affiner Raum der Form $\tilde{\varphi}_0 + L_H$.
+    \item Seien $\varphi_1, \ldots, \varphi_n \in L_H$. Diese Lösungen sind
+      genau dann linear unabhängig, wenn die sogenannte Wronski-Determinante für
+      ein (äquivalent: alle) $x \in I$ ungleich Null ist.
+      \[ \text{Wronski-Det. } := \det
+        \begin{pmatrix}
+          \varphi_1 & \cdots & \varphi_n \\
+          \varphi'_1 & \cdots & \varphi'_n \\
+          \vdots & & \vdots  \\
+          \varphi^{(n-1)}_1 & \cdots & \varphi^{(n-1)}_n 
+        \end{pmatrix}. \]
+    \end{enumerate}
+  \end{thm}
+
+  \begin{proof}
+    Alles folgt unmittelbar auf den entsprechenden Resultaten für Systeme erster
+    Ordnung (via Abschnitt 3.2).
+
+    Betrachte zur Illustration den Fall $n=2$, also die inhomogene lineare GDG
+    zweiter Ordnung
+    \[ y'' + a_1(x) y' + a_0(x) y = b(x). \]
+    Diese Gleichung ist äquivalent zum System ($z_0 := y, z_1 := y'$)
+    \[ \begin{aligned}
+        z'_0 &= z_1 \\
+        z'_1 &= -a_1(x) z_1 - a_0(x) z_0 + b(x) 
+      \end{aligned} \]
+    Mit $z := \pmat{z_0 \\ z_1}$ wird das zum linearen System $z' = A(x) z +
+    B(x)$, wobei
+    \[ A(x) := \pmat{0 & 1 \\ -a_0(x) & -a_1(x)}, \quad B(x) := \pmat{0 \\
+        b(x)}.\]
+
+    Jeder Lösung $\psi = \pmat{\psi_0 \\ \psi_1}$ dieses Systems entspricht eine
+    Lösung $\varphi := \psi_0$ der Gleichung zweiter Ordnung. Umgekehrt: wenn
+    $\varphi$ die Gleichung löst, dann löst $\psi := \pmat{\varphi \\ \varphi'}$
+    das System.
+
+    Daraus folgt die Behauptung.
+  \end{proof}
+
+  \begin{rmrk}
+    Für beliebige Funktionen $\varphi_1, \ldots, \varphi_n:I \to \koer$ gilt:
+    Wronski-Determinante $\ne 0$ $\Rightarrow$ $\{ \varphi_i \}$ linear
+    unabhängig. Aber die Umkehrung gilt nur für Lösungen der GDG.
+  \end{rmrk}
+
+\begin{exmp}
+  Homogene GDG zweiter Ordnung
+  \[ y'' - \rez{2x} y' + \rez{2x^2}y = 0 \]
+  auf $I := (0,\infty)$.
+
+  Zwei Lösungen raten: $\varphi_1(x)=x$, $\varphi_2(x) = \sqrt{x}$.
+  Wronski-Determinante:
+  \[ \det \pmat{\varphi_1 & \varphi_2 \\ \varphi'_1 & \varphi'_2}
+    = \det \pmat{ x & \sqrt{x} \\ 1  & \rez{2 \sqrt{x}} }
+    = - \frac{\sqrt{x}}{2} \ne 0 \]
+  auf $I$. Also ist $\varphi_1, \varphi_2$ ein LFS.
+
+  Um die allgemeine Lösung der inhomogenen Gleichung
+  \[ y'' -\rez{2x} y' + \rez{2x^2}y = 1 \]
+  zu erhalten, rate eine \emph{spezielle} Lösung der inhomogenen Gleichung:
+  $\psi_0(x) := \frac{2}{3} x^2$. Damit ist die \emph{allgemeine} Lösung
+  \[ \psi(x) = \frac{2}{3} x^2 + c_1 x + c_2 \sqrt{x}. \]
+\end{exmp}
+
+\subsection{Lineare GDG mit konstanten Koeffizienten}
+
+\subsubsection{Lineare Differentialoperatoren mit konstanten Koeffizienten}
+Jedem Polynom mit (konstanten) Koeffizienten $a_0, \ldots, a_{n-1} \in
+\complex$,
+\[ P(z) = a_0 + a_1 z + \ldots + a_{n-1}z^{n-1} + z^n,\]
+ordnet man folgenden Differentialoperator der Ordnung $n$ mit konstanten
+Koeffizienten zu:
+\[ P \left( \diff{}{x} \right) := a_0 + a_1 \diff{}{x} + a_2
+  \frac{\diffop^2}{\diffop x^2} + \ldots
+  + a_{n-1} \frac{\diffop^{n-1}}{\diffop x^{n-1}}
+  + \frac{\diffop^n}{\diffop x^n}. \]
+Ein solcher Differentialoperator ordnet einer $n$-mal differenzierbaren Funktion
+$\varphi: \real \to \complex$ die Funktion
+\[ P \left(  \diff{}{x} \right) \varphi := a_0 \varphi + a_1 \varphi' + \ldots
+  + \varphi^{(n)} \]
+zu.
+
+Mit $P$ assoziiert man die lineare homogene GDG $P\left( \diff{}{x} \right) y =
+0$, das heißt
+\[ a_0 y + a_1 y' + \ldots + a_{n-1}y^{(n-1)} + y^{(n)} = 0. \]
+
+Umgekehrt ist jeder lineare gewöhnliche Differentialoperator mit konstanten
+Koeffizienten von dieser Form.
+
+\clearpage
+
+\subsubsection{Paarweise verschiedene Nullstellen}
+\begin{lem}
+  Für jedes $\lambda \in \complex$ und jedes Polynom $P$ gilt
+  \[ P\left( \diff{}{x} \right) e^{\lambda x} = P(\lambda) e^{\lambda x}. \]
+  Insbesondere gilt: Wenn $P(\lambda) = 0$, dann ist $\varphi:\real \to
+  \complex$,
+  \[ \varphi(x) := e^{\lambda x} \]
+  eine Lösung der GDG $P\left( \diff{}{x} \right) y = 0$.
+\end{lem}
+
+\begin{proof}
+  Das folgt aus der Tatsache, dass
+  \[ \diff{}{x} e^{\lambda x} = \lambda e^{\lambda x}, \]
+  also auch $\frac{\diffop^k}{\diffop x^k} e^{\lambda x} = \lambda^k e^{\lambda
+    x}$. 
+\end{proof}
+
+\begin{prp}
+  Seien $\lambda_1, \ldots, \lambda_n \in \complex$ paarweise verschieden. Dann
+  sind die Funktionen $\varphi_k : \real \to \complex$, $\varphi_k(x) :=
+  e^{\lambda_k x}$ linear unabhängig.
+\end{prp}
+
+\begin{proof}
+  Induktion nach $n$:
+
+  $n=1$. Aus $\mu e^{\lambda x} = 0$ folgt $\mu = 0$. Die Behauptung gilt also.
+
+  $n-1 \Rightarrow n$. Seien $\mu_1, \ldots, \mu_n \in \complex$ und
+  \[ \mu_1 e^{\lambda_1 x} + \ldots + \mu_n e^{\lambda_n x} = 0. \]
+  Zu zeigen: $\mu_1 = \ldots = \mu_n = 0$.
+  
+  Skizze: Zuerst multipliziere mit $e^{-\lambda_1 x}$, dann leite ab und nutze
+  die Induktionsvoraussetzung.
+\end{proof}
+
+Alternativ kann man die Wronski-Determinante an der Stelle $x \in \real
+\setminus \{ 0 \}$ bestimmen.
+
+\begin{thm}
+  Sei $P(z) = a_0 + a_1 z + \ldots + a_{n-1} z^{n-1} + z^n$ mit $a_i \in
+  \complex$ und habe $P$ $n$ \emph{verschiedene} Nullstellen $\lambda_1, \ldots,
+  \lambda_n \in \complex$.
+
+  Dann bilden die Funktionen $\varphi_n: \real  \to \complex$
+  \[ \varphi_k := e^{\lambda_k x} \]
+  für $k = 1, \ldots, n$ ein LFS der GDG $P\left( \diff{}{x} \right) y = 0$.
+\end{thm}
+
+\begin{proof}
+  Kombination von Lemma und Proposition.
+\end{proof}
+
+\subsubsection{Hauptsatz über Lösung linearer homogener GDG mit konstanten Koeffizienten}
+Wegen des Fundamentalsatzes der Algebra kann man jedes Polynom wie folgt
+zerlegen:
+\[ P(z) = (z-\lambda_1)^{k_1} (z-\lambda_2)^{k_2} \cdots (z-\lambda_r)^{k_r}, \tag{$\ast$} \]
+wobei $\lambda_1, \ldots, \lambda_r \in \complex$ paarweise verschieden sind und
+$k_1 , \ldots, k_r \in \nat \setminus \{0\}$.
+
+\begin{exmp}
+  $P(z) = z^2$. Also $P\left( \diff{}{x} \right) y = y''$. Die GDG $y'' = 0$ hat
+  Lösungen der Form $\varphi(x) = ax + b$.
+
+  Aus 5.2 erhalten wir aber nur Lösungen der Form $\varphi(x) = a e^{0x} = a$.
+\end{exmp}
+
+\begin{thm}
+  $P$ sei ein Polynom mit Koeffizienten in $\complex$ mit $r \in \nat$
+  verschiedenen Nullstellen $\lambda_1, \ldots \lambda_r \in \complex$ mit
+  Vielfachheiten $k_1, \ldots, k_r \in \nat \setminus \{0\}$.
+
+  Dann besitzt die lineare homogene GDG
+  \[ P \left( \diff{}{x} \right) y = 0 \]
+  das folgende LFS:
+  \[ \varphi_{jm}(x) := x^m e^{\lambda_j x}, \]
+  wobei $j=1,\ldots,r$, $m=0,\ldots,k_j-1$.
+\end{thm}
+
+Zum Beweis benötigen wir zwei Hilfssätze.
+
+\begin{lem}
+  Sei $\lambda \in \complex$ und $k \in \nat \setminus \{0 \}$ und $f: \real \to
+  \complex$ sei $k$-mal differenzierbar.
+
+  Dann gilt
+  \[ \left( \diff{}{x} - \lambda  \right)^k (f(x)e^{\lambda x}) = f^{(k)}(x)
+    e^{\lambda x}.  \]
+\end{lem}
+
+\begin{proof}
+  Vollständige Induktion nach $k$.
+
+  $k=1$.
+  \[ \left( \diff{}{x} - \lambda  \right)^k (f(x)e^{\lambda x})
+    = \diff{}{x} (f(x) e^{\lambda x}) - \lambda f(x) e^{\lambda x}
+    = f'(x) e^{\lambda x}. \]
+
+  $k \Rightarrow k+1$. Genauso.
+\end{proof}
+
+Insbesondere: Wenn $f^{(k)} \equiv 0$, dann ist $\varphi(x) :=) f(x)
+e^{\lambda_i x}$ für jedes $i = 1, \ldots, r$ eine Lösung der GDG $P\left(
+  \diff{}{x} \right) = 0$, wobei $P$ wie in ($\ast$) ist.
+
+\begin{lem}
+  Sei $P$ ein Polynom und $\lambda \in \complex$, sodass $P(\lambda) \ne 0$. Sei
+  $g : \real \to \complex$ eine Polynomfunktion. Dann existiert eine
+  Polynomfunktion $h:\real \to \complex$ von demselben Grad wie $g$, sodass
+  gilt:
+  \[ P \left( \diff{}{x}  \right) (g(x) e^{\lambda x}) = h(x) e^{\lambda x}. \]
+  Genauer: Es existieren $c_j \in \complex$, sodass
+  \[ h = P(\lambda) g + c_1 g' + \ldots c_{k-1} g^{(k-1)}, \]
+  wobei $k$ der Grad von $g$ ist.
+\end{lem}
+
+\begin{proof}
+  Es existieren $n \in \nat$ und $c_j \in \complex$, sodass
+  \[ P(z) = \sum_{j=0}^n c_j (z-\lambda)^j. \]
+  Gemäß des vorherigen Lemmas gilt also:
+  \[ P \left( \diff{}{x} \right) (g(x) e^{\lambda x}) =  \sum_{j=0}^n c_j \left(
+    \diff{}{x} - \lambda \right)^j (g(x) e^{\lambda x}) = \sum_{j=0}^n c_j
+  g^{(j)}(x) e^{\lambda x} =: h(x).
+  \qedhere
+  \]
+\end{proof}
+
+\begin{prp}
+  Sei $r \in \nat \setminus \{ 0 \}$m seien $\lambda_1$, $\lambda_2 \in
+  \complex$ paarweise verschieden und seien $k_1, \ldots, k_r \in \nat \setminus
+  \{0\}$.
+
+  Dann sind die Funktionen $\varphi_{jm}:\real \to \complex$
+  \[ \varphi_{jm}(x) := x^m e^{\lambda_j} \]
+  für $j = 1, \ldots, r$, $m = 0, \ldots, k_j - 1$, linear unabhängig.
+\end{prp}
+
+\begin{proof}
+  Betrachte Linearkombinationen der $\varphi_{jm}$. Seien $q_{jm} \in \complex$
+  und betrachte
+  \[ \sum_{j=1}^r \sum_{m=0}^{k-1} q_{jm} x^m e^{\lambda_j x} = 0 \]
+  für alle $x \in \real$.
+
+  Zu zeigen: $q_{jm} = 0$. Wir beweisen daher folgende allgemeine Tatsache:
+
+  Für $j = 1, \ldots, r$ seien $g_j: \real  \to \complex$ Polynomfunktionen und
+  seien $\lambda_1, \ldots, \lambda_r$ paarweise verschieden. Wenn
+  \[ \sum_{j=1}^r g_j(x) e^{\lambda_j x} = 0 \]
+  für alle $x \in \real$, dann ist $g_j = 0$ für alle $j$.
+
+  Der Beweis erfolgt durch Induktion nach $r$:
+
+  $r=1$: Sei
+  \[ g_1(x) e^{\lambda_1 x} = 0 \qRq g_1 \equiv 0 \]
+  für alle $j$.
+
+  Induktionsschritt: Wenn $g_j = 0$ für eines der $j$, dann folgt die
+  Behauptung aus der Induktionsvoraussetzung. Wir zeigen nun, dass die
+  Alternative nicht eintreten kann. Seien alle $g_j$ von der Nullfunktion
+  verschieden. Sei $k \in \nat$ echt größer als der Grad der Polynomfunktion
+  $g_r$. Setze $Q(z) := (z - \lambda_r)^k$. Da $k > \operatorname{grad} g_r$
+  ist, folgt aus Lemma 1:
+  \[ Q \left( \diff{}{x} \right) (g_r(x) e^{\lambda_r x}) = g_r^{(k)}(x)
+    e^{\lambda_r x} = 0. \]
+  Hingegen ist für $j < r$ stets $Q(\lambda_j) \ne 0$, da $\lambda_j =
+  \lambda_r$. Also existieren wegen Lemma 2 Polynomfunktionen $h_j \ne 0$ (weil
+  $g_j \ne 0$), so dass
+  \[ Q\left( \diff{}{x} \right) (g_j(x) e^{\lambda_j x}) = h_j(x) e^{\lambda_j
+      x}. \]
+  Also ist
+  \[ 0 = Q\left( \diff{}{x} \right) \left( \sum_{j=1}^r g_j(x) e^{\lambda_j x}
+    \right) = \sum_{j=1}^{r-1} \underbrace{h_j(x)}_{\ne 0} e^{\lambda_j x}. \]
+  Aber aus der Induktionsvoraussetzung folgt, dass $h_j \equiv 0$ für alle
+  $j=1,\ldots,r-1$. Widerspruch!
+\end{proof}
+
+\begin{thm}
+  Sei $P(x) = (z- \lambda_1)^{k_1} \cdots (z - \lambda_r)^{k_r}$. Dann bilden
+  \[ \varphi_{jm}(x) := x^m e^{\lambda_j x} \]
+  für $j=1, \ldots, r$ und $m=0, \ldots,k-1$ ein LFS der GDG $P\left( \diff{}{x}
+  \right) y = 0$.
+\end{thm}
+
+\begin{proof}
+  Dass die $\varphi_{jm}$ linear unabhängig sind, folgt aus der Proposition.
+
+  Es ist noch zu zeigen, dass es Lösungen sind, das heißt
+  \[ P \left(  \diff{}{x} \right) \varphi_{jm}(x) = 0 \]
+  für alle $j,m$.
+
+  Aber für jedes $j$ existiert ein Polynom $Q_j$, so dass $P(z) = Q_j(z)(z -
+  \lambda_j)^{k_j}$. Aber wegen Lemma 1 gilt
+  \[ \left( \diff{}{x} - \lambda_j \right)^{k_j} (x^m e^{\lambda_j x}) = 0\]
+  für alle $m \le k_j-1$. Also auch
+  \[ P \left( \diff{}{x} \right) (x^m e^{\lambda_j x}) =
+    Q_j \left( \diff{}{x} \right) \left( \diff{}{x} - \lambda_j \right)^{k_j}
+    (x^m e^{\lambda_j x}) = 0. \qedhere\]
+\end{proof}
+
+\begin{exmp}
+  \begin{itemize}
+  \item Sei $y''=0$, also $P(x) = z^2 = (z-0)^2$. Der Satz liefert das LFS
+    $\{e^{0x},x \cdot e^{0x}\} = \{ 1, x\}$. Das heißte die Lösungen von $y'' =
+    0$ sind genau die affin-linearen Funktionen.
+  \item Betrachte
+    \[ y^{(4)} + 8 y'' + 16y = 0, \]
+    also $P(z) = z^4 + 8 z^2 + 16 = (z-2i)^2(z+2i)^2$. Der Satz liefert das LFS
+    \[ \{ e^{-2ix}, e^{2ix}, xe^{-2ix}, xe^{2ix} \}. \]
+    Durch geeignete Linearkombination erhält man das reelle LFS
+    \[ \{ \cos(2x), \sin(2x), x \cos(x), x \sin(2x) \}. \]
+  \end{itemize}
+\end{exmp}
+
+\subsubsection{Lineare GDG-Systeme 1. Ordnung mit konstanten Koeffizienten}
+% Muss 5.4 sein
+Sei $A \in \complex^{n \times n}$, das zugehörige (homogene) GDG-System ist $y' =
+Ay$.
+
+\begin{rmrk}
+  Sei $A \in \complex^{n \times n}$ und $v \in \complex^n$ ein Eigenvektor zum
+  Eigenwert $\lambda \in \complex$. Dann ist $\varphi:\real \to \complex^n$
+  \[ \varphi(x) := v e^{\lambda x} \]
+  eine Lösung von $y' = Ay$.
+\end{rmrk}
+
+\begin{proof}
+  Es ist
+  \[ \varphi'(x) = \lambda v e^{\lambda x} = A v e^{\lambda x} = A \varphi(x).
+    \qedhere \]
+\end{proof}
+
+Erinnerung lineare Algebra:
+\begin{itemize}
+  \item $A \in \complex^{n \times n}$ heißt \emph{diagonalisierbar}
+    $:\Leftrightarrow$ Es existiert eine Basis von Eigenvektoren von $A$.
+
+    Das ist äquivalent zur Existenz einer invertierbaren Matrix $S \in
+    \complex^{n \times n}$, so dass $S^{-1} A S$ eine Diagonalmatrix ist.
+  \item Wenn $A \in \complex^{n \times n}$ $n$ \emph{verschiedene} Eigenwerte
+    hat, dann ist $A$ diagonalisierbar.
+  \item Nicht jede Matrix $A \in \complex{n \times n}$ ist diagonalisierbar.
+    Aber durch Ähnlichkeits\-trans\-for\-mationen kann jede Matrix auf
+    \emph{Jordan-Normalform} gebracht werden. Diese besteht dann aus Blöcken der
+    Form $\lambda I_k + N_k$, wobei $I_k$ die $(k \times k)$-Einheitsmatrix und
+    \[ N_k =
+      \begin{pmatrix}
+        0 & 1 & \cdots & 0 \\
+        & \ddots & \ddots \\
+        & & \ddots & 1 \\
+        0 & \cdots & 0 & 0
+      \end{pmatrix}
+      = e_1 \otimes e_2 + \ldots + e_{k-1} \otimes e_k \]
+    mit den Einheitsvektoren $e_j \in \real^k$.
+
+    $a,b \in \real^n$. Dann ist $a \otimes b$ die $n \times n$-Matrix mit
+    Einträgen $(a \otimes b)_{ij} := a_i b_j$. Zum Beispiel
+    \[ e_1 \otimes e_1 = \pmat{1 & 0  & \cdots & 0 \\ 0 & 0 \\ \vdots & & \ddots
+        \\ 0 & & & 0}. \]
+\end{itemize}
+
+\subsubsection*{Diagonalisierbare Systeme}
+\begin{thm}
+  Sei $A \in \complex^{n \times n}$ diagonalisierbar mit der Basis von
+  Eigenvektoren $\{ v_1, \ldots, v_n \}$ zu den Eigenwerten $\lambda_1, \ldots,
+  \lambda_n \in \complex$. Dann bilden die Abbildungen $\varphi_m(x) := v_m
+  e^{\lambda_m x}$ ($m=1,\ldots,n$) ein LFS der GDG $y' = Ay$.
+\end{thm}
+
+\begin{proof}
+Aus der Bemerkung folgt, dass es sich um Lösungen handelt.
+
+Die lineare Unabhängigkeit folgt aus der linearen Unabhängigkeit von $\{ v_1,
+\ldots, v_n \}$.
+\end{proof}
+
+\begin{thm}[Systeme in Jordan-Block-Gestalt]
+  Sei $A = \lambda I + N \in \complex^{n \times n}$. Dann bilden die folgenden
+  Abbildungen $\varphi_k: \real \to \complex^n$ ein LFS von $y' = A y$:
+  \[ \varphi_k(x) := \left(\sum_{i=1}^k \frac{k^{k-i}}{(k-i)!} e_i\right)
+    e^{\lambda x}, \]
+  wobei $(e_1, \ldots, e_n)$ die Standard-ONB von $\real^n$ ist.
+\end{thm}
+
+\begin{proof}
+  Ansatz: $\varphi(x) = \psi(x) e^{\lambda x}$. Einsetzen in $\varphi' = A
+  \varphi$ zeigt: $\varphi$ ist Lösung genau dann, wenn $\psi' = N\psi$.
+  
+  Ausgeschrieben:
+  \[ \psi'_1 = \psi_2, \quad \psi'_2 = \psi_3, \quad \ldots \quad \psi'_n =
+    0. \]
+  Wir können das System zu einer Gleichung der Form $\varphi^{(n)}=0$ umwandeln.
+  Die Lösung ist ein Polynom\footnote{%
+    $(\varphi^{(n-1)})' = 0$, das heißt $\varphi^{(n-1)}=c_0$, also
+    $\varphi^{(n-2)} = c_0 x + c_1$ usw.
+  } vom Grad $\le n-1$. Siehe auch Beweis 2.
+\end{proof}
+
+\begin{rmrk}
+  \begin{itemize}
+    \item Wenn $A$ auf mehreren Jordan-Blöcken besteht, dann kann man jeden
+      Block separat betrachten, weil die entsprechenden Untersysteme nicht
+      miteinander gekoppelt sind.
+    \item Wenn $A$ erst noch auf Jordan-Gestalt transformiert werden muss, dann
+      verwendet man die folgende Tatsache.
+  \end{itemize}
+\end{rmrk}
+
+\begin{rmrk}
+  Sei $A \in \complex^{n \times n}$ und $S \in \complex^{n \times n}$
+  invertierbar. Die Abbildung $\varphi:\real \to \complex^n$ löst $y'=Ay$ genau
+  dann, wenn $\psi := S^{-1} \varphi$ das System $(S^{-1} A S)y$ löst.
+\end{rmrk}
+
+\textbf{Fazit.} Für lineare GDG mit konstanten Koeffizienten kann man das LFS explizit
+angeben.
+
+\subsubsection{Fundamentalsystem \texorpdfstring{$e^{tA}$}{exp(tA)}}
+Ab jetzt bezeichnen wir die unabhängige Variable mit $t$ statt $x$, weil man
+sich Abbildungen $\real \to \real^n$ oft als zeitabhängige Trajektorien
+vorstellt.
+
+Erinnerung Analysis 2, X.2.1: Für jede Matrix $A \in \complex^{n \times n}$
+konvergiert die Exponentialreihe
+\[ e^A := \exp(A) := \sum_{k=0}^\infty \frac{A^k}{k!} \]
+absolut in $\complex^{n \times n}$.
+
+\begin{lem}
+  Sei $A \in \complex^{n \times n}$. Dann gilt
+  \[ \diff{}{t} (\exp(tA)) = A \exp(tA) = \exp(tA)A. \]
+\end{lem}
+
+\begin{proof}
+  Definiere $F,F_m:\real \to \complex^{n \times n}$ durch
+  \[ F(t) := e^{tA}, \qquad F_m(t) := \sum_{k=0}^m \frac{tA^k}{k!}, \]
+  wobei $A^0 := I_{n \times n}$.
+  
+  Aus Analysis 2, Satz X.2.1 folgt: $F_M$ konvergiert gleichmäßig auf
+  Kompakta\footnote{%
+    Das heißt auf jedem beschränkten Intervall.
+  }
+  gegen $F$. Da $AF_m(t) = F_m(t) A$ für alle $m \in \nat$, folgt $A e^{tA} =
+  e^{tA} A$. Offenbar gilt
+  \[ F'_m(t) = \sum_{k=1}^m \frac{kt^{k-1}A^k}{k!} = A \underbrace{\sum_{k=1}^m
+      \frac{(tA)^k}{(k-1)!}}_{F_{m-1}(t)} \to e^{tA}. \]
+  Also konvergiert $F'_m$ gleichmäßig auf Kompakta gegen $AF$.
+
+  Wegen $F_m \to F$ gleichmäßig auf Kompakta, folgt also aus Analysis 2 Satz
+  VII.3.5, dass $F' = AF$.
+\end{proof}
+
+\begin{thm}
+  Sei $A \in \complex^{n \times n}$ und setze $\Phi(t) := e^{tA}$. Dann ist
+  $\Phi$ (das heißt die Spalten von $\Phi$) ein LFS des GDG-Systems $y' = Ay$.
+\end{thm}
+
+\begin{proof}
+  Das Lemma besagt, dass $\Phi$ (das heißt jede Spalte $t \mapsto \Phi(t) e_k$)
+  eine Lösung ist.
+
+  Noch zu zeigen: Lineare Unabhängigkeit.
+
+  Wegen Satz XIII.4.3 müssen wir die Unabhängigkeit nur an der Stelle $t=0$
+  verifizieren. Aber $e^{0A} = I$.
+\end{proof}
+
+\subsubsection{Eigenschaften von  \texorpdfstring{$e^A$}{exp(A)}}
+\begin{thm}
+  Seien $A, B \in C^{n \times n}$. Dann gilt
+  \begin{enumerate}
+  \item Wenn $AB=BA$, dann ist $e^{A+B} = e^B e^A$.
+  \item Wenn $\det B \ne 0$, dann $e^{B^{-1}AB}= B^{-1}e^A B$.
+  \item $e^{\diag(\lambda_1, \ldots, \lambda_n)} = \diag(e^{\lambda_1},
+    \ldots, e^{\lambda_n})$.
+  \end{enumerate}
+  Insbesondere:
+  \begin{enumerate}[(i)]
+  \item $(e^A)^{-1}= e^{-A}$.
+  \item $e^{(s+t)A}= e^{sA}e^{tA}$.
+  \item $e^{A+\lambda I}= e^\lambda e^A$.
+  \end{enumerate}
+\end{thm}
+Hier bezeichnet
+\[ \diag(\lambda_1, \ldots, \lambda_n) := \sum_{i=1}^n \lambda_i e_i \otimes
+  e_i = \pmat{ \lambda_1 & & 0 \\ & \ddots \\ 0 & & \lambda_n}. \]
+
+\begin{proof}
+  2. folgt aus $(B^{-1}AB)^k = (B^{-1}A^kB)$, was leicht induktiv gezeigt wird.
+
+  3. folgt aus $(\diag(\lambda_1, \ldots, \lambda_n))^k = \diag(\lambda_1^k,
+  \ldots, \lambda_n^k)$ für alle $k \in \nat$.
+
+  1. folgt wie in Fall $n=1$ (Cauchy-Produkt, ...).
+\end{proof}
+
+\begin{proof}[Zweiter Beweis zu Satz 5.4]
+  Sei $A = \lambda I + N$ wie in der Voraussetzung. Das LFS ist
+  \[ e^{tA} = e^{t\lambda I + tN} = e^{\lambda t} e^{tN}. \]
+  Da aber $N^n = 0$ (also $N$ nilpotent), besteht die Exponentialreihe
+  aus nur endlich vielen Summanden:
+  \[ \exp(tN) = \sum_{k=1}^{n-1} \frac{(tN^k)}{k!}. \]
+  Ausrechnen ergibt:
+  \[ \exp(tN) = \begin{pmatrix}
+      1 & t & \frac{t^2}{2!} & \cdots & \frac{t^{(n-1)}}{(n-1)!} \\
+      0 & 1 & \ddots\\
+      \vdots & 0 & \ddots & \ddots \\
+      \vdots & \vdots  & & \ddots \\
+      0 & 0 & 0 & \cdots & 1
+    \end{pmatrix} \]
+  Damit folgt die Behauptung des Satzes.
+\end{proof}
+
+\subsubsection{Inhomogene Systeme}
+Sei $A \in \complex^{n \times n}$ und $b: \real \to \complex^n$ stetig. Lösungen
+von $y' = Ay + b(x)$ sind dann gegeben durch die Formel:
+\[ \varphi(t) = e^{tA} c + \int_0^F e^{t-s}A b(s) \diffop s. \]
+
+\subsubsection{Beispiel}
+Sei $A \in \real^{2 \times 2}$, betrachte $y' = Ay$. Die Eigenwerte von $A$
+lösen $\det(A-\lambda I) = 0$, das heißt
+\[ \lambda = \frac{\operatorname{Tr} A}{2} \pm \sqrt{ \underbrace{\left(
+        \frac{\operatorname{Tr} A}{2} \right)^2 - \det A}_{=: D}}. \]
+Fälle:
+\begin{enumerate}
+\item $D=0$. Dann ist $\lambda = \frac{\operatorname{Tr} A}{2} \in \real$
+  Nullstelle mit Vielfachheit 2. Es gibt zwei Fälle:
+  \begin{enumerate}[a)]
+  \item Es existieren zwei linear unabhängige Eigenvektoren zu $\lambda$. Also
+    ist $A$ diagonalisierbar.
+  \item $\dim \ker (A-\lambda I) = 1$. Dann existiert $S \in \real^{2 \times 2}$
+    invertierbar, sodass $S^{-1}AS= \pmat{\lambda & 1 \\ 0 & \lambda}$.
+  \end{enumerate}
+\item $D \ne 0$. Dann ist $A$ diagonalisierbar, da zwei verschiedene Eigenwerte
+  existieren.
+  \begin{enumerate}[a)]
+  \item $D > 0$. Dann sind die Eigenwerte und Eigenvektor reell.
+  \item $D < 0$. Dann sind die Eigenwerte $\in \complex \setminus \real$ und
+    die Eigenvektoren ebenfalls nicht reell.
+  \end{enumerate}  
+\end{enumerate}
+
+Siehe auch Forster Analysis 2.
