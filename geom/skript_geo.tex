@@ -61,522 +61,510 @@
 \input{01_isometrien}
 
 \clearpage
+\input{02_projektive}
+
+\clearpage
+\input{03_struktur}
+
+\clearpage
+\input{04_noneuclid}
+
+\begin{proof}
+  %% Noch machen
+\end{proof}
+
+\clearpage
 \setcounter{secnumdepth}{1}
-\section{Projektive Geometrie}
+\section{Quadriken}
 \setcounter{secnumdepth}{0}
-$(P,G,I)$: $P$, $G$ Mengen, $I \subseteq P \times G$.
-
-$P$: Menge der Punkte \\
-$G$: Menge der Geraden \\
-$I$: Inzidenzrelation.
-
-Schreib- und Sprechweisen:
-\begin{itemize}
- \item Statt $(p,g) \in I$ schreibe $pIg$, ``$p$ liegt auf $g$''. 
- \item Zwei Geraden $g_1$, $g_2$ ``schneiden sich in $p$'' heißt $pIg_1$ und $pIg_2$. 
- \item Drei Punkte $p_1$, $p_2$, $p_3$ heißen ``kollinear'', falls es $g \in G$ gibt, so dass $p_1$, $p_2$, $p_3$ auf $g$ liegen.
- \item Für $g_1, g_2 \in G$ ist
-  \[ g_1 \cap g_2 = \begin{cases}
-                   p, &\text{falls sich } g_1, g_2 \text{ in } p \text{ schneiden.} \\
-                   \emptyset, &\text{falls sie sich nicht schneiden.} \\
-                   g_1 = g_2, &\text{falls die Geraden zusammen fallen.}
-                  \end{cases} \]
-\end{itemize}
-
-\subsection{Projektiver Raum}
-\begin{defn*}\label{def:proj}
- Ein \emph{projektiver Raum} $\proj = (P,G,I)$ besteht aus zwei Mengen $P$, $G$ und einer Relation $I \subseteq P \times G$, sodass gilt:
- \begin{enumerate}[\hspace{.5cm}{A}1)]
-  \item Durch je zwei (verschiedene) Punkte $p_1$, $p_2$ geht genau eine Gerade. Bezeichne diese Gerade mit $p_1 p_2$.
-  \item Sind $p_1$, $p_2$, $p_3$, $p_4$ vier Punkte, sodass sich die Geraden $p_1 p_2$ und $p_3 p_4$ schneiden, dann treffen sich auch $p_1 p_3$ und $p_2 p_4$.
-  \item Auf jeder Geraden liegen mindestens drei Punkte.
-  \item Es gibt mindestens zwei Geraden.
- \end{enumerate}
-\end{defn*}
-
 \begin{defn*}
- Der projektive Raum $\proj = (P,G,I)$ heißt eine \emph{projektive Ebene}\footnote{Die Zeichenebene ist keine projektive Ebene! Zum Beispiel kann man in A2 $p_1$, $p_2$, $p_3$, $p_4$ so wählen, dass $p_1 p_3$ und $p_2 p_4$ parallel sind.}, falls die folgende Verschärfung von A2 gilt:
- \begin{enumerate}[\hspace{.5cm}{A}1)]
-  \item [A2')] Je zwei Geraden schneiden sich.
- \end{enumerate}
+  Eine \emph{Hyperfläche zweiter Ordnung} bzw. \emph{Quadrik} in $\real^n$ ist
+  eine Menge der Form
+  \[ Q = \{ x \in \real^n : x^T A x + 2 \angles{b,x} + c = 0\}, \]
+  wobei $A \in \real^{n,n}$ sei mit $A^T = A$, $b \in \real^n$, $c \in \real$.
+
+  Andere Schreibweise:
+  \[ \pmat{x^T & 1} \cdot \pmat{A & b \\ b^T c} \cdot \pmat{x\\1} = 0. \]
 \end{defn*}
 
-\begin{bem}
- Aus A1 folgt: Falls Geraden $g_1$, $g_2$ mindestens zwei Punkte $p_1$, $p_2$ gemeinsam haben, dann folgt $g_1 = g_2$. Das heißt zwei (verschiedene) Geraden $g_1$, $g_2$ schneiden sich in höchstens einem Punkt.
-\end{bem}
-
-Erinnerung: In einem Schiefkörper $(K, +, \cdot)$ gelten alle Körperaxiome, bis auf die Kommutativität von $\cdot$. Also ist $(K, +)$ eine abelsche Gruppe (mit neutralem Element $0$) und $(K \setminus \{ 0 \}, \cdot)$ ist eine Gruppe (mit neutralem Element 1). Es gelten die Distributivgesetze:
-\begin{align*}
- a(b+c) = ab + ac, \\
- (a+b)c = ac + bc.
-\end{align*}
-
-Im (Links-)Vektorraum $V$ über dem Schiefkörper $K$ gelten alle Axiome außer, dass der Skalarbereich ein Schiefkörper ist, zum Beispiel $\lambda( \mu x ) = (\lambda \mu) x$, $\lambda, \mu \in K$, $x \in V$.
-
-Wenn man eine lineare Abbildung durch Matrizen beschreiben will, besser Rechtsvektorraum $A(x\lambda) = (Ax) \lambda$.
-
-\begin{bem}
- Grundlegendes aus der linearen Algebra gilt auch für Vektorräume über Schiefkörpern (z.B. Basis, Dimension, Dimensionssatz). Determinanten sind nicht vernünf\-tig definierbar und alles was mit ihnen zusammenhängt gilt damit auch nur eingeschränkt.
-\end{bem}
-
-\begin{defn*}
- Ein \emph{echter Schiefkörper} $K$ ist ein Schiefkörper, bei dem die Multiplikation \emph{nicht} kommutativ ist.
-\end{defn*}
-
-Sei $K$ ein Schiefkörper, $V$ ein (Links-)$K$-Vektorraum. Definiere
-\begin{itemize}
- \item $P := \{ Kx | x \in V \setminus \{ 0 \} \}$ Menge der 1-dimensionalen linearen Unterräume,
- \item $G := \{ Kx + Ky | x, y \in V $ linear unabhängig $\}$ Menge der 2-dimensionalen linearen Unterräume.
- \item $p I G \Leftrightarrow p \subseteq g$, $p$ liegt auf $g$, wenn falls der 1-dimensionale Unterraum $p$ in $g$ enthalten ist.
-\end{itemize}
-
-\begin{defn*}
- $\proj(V) := (P,G,I)$.
-\end{defn*}
-
-\begin{deno*}
- $[x] := Kx$ (für $x \in V \setminus \{ 0 \}$), $[x,y] := Kx + Ky$ ist die lineare Hülle von $x,y$.
-\end{deno*}
-
-\begin{thm}
- Falls $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ mit $\dim V \ge 3$ ist, dann ist $\proj(V)$ ein projektiver Raum. Ist $\dim V = 3$, dann ist $\proj(V)$ eine projektive Ebene.
-\end{thm}
-
-\begin{proof}
- A1) Für $[x], [y] \in P$ mit $[x] \ne [y]$ gilt $x,y$ sind linear unabhängig und damit ist $[x,y]$ der einzige zweidimensionale Unterraum, der $[x]$ und $[y]$ enthält.
- 
- A2) Seien $p_1 = [x_1]$, $p_2 = [x_2]$, $p_3 = [x_3]$, $p_4 = [x_4] \in P$ vier verschiedene Punkte, sodass sich $p_1 p_2 = [x_1, x_2]$ und $p_3 p_4 = [x_3, x_4]$ treffen. Dann ist $\dim ( [x_1 x_2] \cap [x_3 x_4] ) \ge 1$ und wir erhalten mit der Dimensionsformel:
- \begin{align*}
-  \dim( [x_1, x_2, x_3, x_4]) &= \dim( [x_1, x_2] ) + \dim( [x_3, x_4] ) - \dim( [x_1,x_2] \cap [x_3,x_4] ) \\
-  &\le 2+2-1 = 3.
- \end{align*}
- Nun benutzen wir nochmals die Dimensionsformel, um $\dim( [x_1,x_3] \cap [x_2,x_4] )$ abzuschätzen:
- \begin{align*}
-  \dim( [x_1,x_3] \cap [x_2,x_4] ) &= \dim( [x_1, x_3] ) + \dim( [x_2, x_4] ) - \dim( [x_1, x_2, x_3, x_4]) \\
-  &\ge 2 + 2 - 3 = 1.
- \end{align*}
- Also treffen sich auch $p_1 p_3$ und $p_2 p_4$.
- 
- A3) Sei $[x,y] \in G$, also $\{ x,y \}$ linear unabhängig, dann sind auch $\{ x, x+y \}$ und $\{ y, x+y \}$ linear unabhängig, also $[x]$, $[y]$, $[x+y]$ drei verschiedene Punkte auf $[x,y]$.
- 
- A4) Da $\dim V \ge 3$ gibt es linear unabhängige Vektoren $x,y,z \in V$. Damit ist $[x,y] \ne [y,z]$ (beide in $G$).
- 
- A2') Falls $\dim V = 3$, $g_1, g_2 \in G$, $g_1 \ne g_2$, dann gilt 
- \[ \dim( g_1 \cap g_2 ) = \dim g_1 + \dim g_2 - \dim( g_1 + g_2 ) = 2 + 2 - 3 = 1. \qedhere \]
-\end{proof}
-
-\begin{defn*}
- Unter einem \emph{Dreieck} verstehen wir ein Tripel $(A_1, A_2, A_3)$ von nicht kollinearen Punkten. $A_1, A_2, A_3$ heißen die \emph{Ecken}, $A_2 A_3, A_1 A_3, A_1 A_2$ heißen die \emph{Seiten} des Dreiecks.
-\end{defn*}
-
-\subsection{Satz von Desargues}
-\begin{defn*}
- Sei $\proj$ ein projektiver Raum. $\proj$ heißt \emph{desarguessch} (oder in $\proj$ gilt der Satz von Desargues), falls für je zwei Dreiecke $(A_1, A_2, A_3)$, $(B_1, B_2, B_3)$, bei denen die einander entsprechenden Ecken und Seiten verschieden sind, gilt: 
- \begin{addmargin}[.5cm]{0cm}
- Wenn die drei Verbindungsgeraden durch die einander entsprechenden Ecken durch einen Punkt gehen, dann sind die drei Schnittpunkte der einander entsprechenden Seiten kollinear. 
- \end{addmargin}
- Also:
- \begin{addmargin}[.5cm]{0cm}
- Falls es $Z \in P$ gibt mit $z = A_1 B_1 \cap A_2 B_2 \cap A_3 B_3$, dann sind
- \[ P_{12} := A_1 A_2 \cap B_1 B_2, \quad P_{13} := A_1 A_3 \cap B_1 B_3, \quad P_{23} := A_2 A_3 \cap B_2 B_3 \]
- kollinear.
- \end{addmargin}
-
- Falls die 10 Punkte $Z, A_1, A_2, A_3, B_1, B_2, B_3, P_{12}, P_{13}, P_{23}$ und 10 Geraden\footnote{Die sechs Seiten der Dreiecke, die drei Verbindungsgeraden und die Gerade, auf der $P_{12}, P_{13}, P_{23}$ liegen.}  paarweise verschieden sind, nennt man diese Konfiguration aus 10 Punkten und 10 Geraden die \emph{Konfiguration von Desargues}.
-\end{defn*}
-
-\begin{figure}[ht]
- \center
- \includegraphics[width=12cm]{img/desargues}
-\end{figure}
-
-\begin{thm}
- Sei $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ mit $\dim V \ge 3$. Dann ist $\proj(V)$ desarguessch.
-\end{thm}
-
-\begin{proof}
- Falls $Z$ mit einer Ecke übereinstimmt ist die Behauptung trivial. Sei also o.B.d.A. $Z \ne A_i$, $Z \ne B_i$, $A_i \ne B_i$ für $i = 1,2,3$. Seien $Z = [v]$, $A_i = [v_i]$. 
- 
- Wir können nun $B_i = [v + v_i]$, $i = 1,2,3$ annehmen. Begründung: Wähle $v$ fest und $\tilde{v}_i$ mit $[\tilde{v}_i] = A_i$. Dann sind $B_i = [\lambda_i v + \mu_i \tilde{v}_i]$ für gewisse $\lambda_i, \mu_i \in K$. Es gilt $\lambda_i \ne 0$ weil $B_i \ne Z$ und $\mu_i \ne 0$ weil $B_i \ne A_i$. Also gilt 
- \[ B_i = \lambda_i^{-1} [\lambda_i v + \mu_i \tilde{v}_i] = [v + \underbrace{\lambda_i^{-1} \mu_i \tilde{v}_i}_{=: v_i}] = [v + v_i], \]
- $A = [v_i]$ weil $[\tilde{v_i}] = [v_i]$. Damit folgt 
- \[ P_{12} = A_1 A_2 \cap B_1 B_2 = [v_1 , v_2] \cap [v + v_1, v + v_2 ] = [v_1 - v_2], \]
- denn die projektiven Geraden $A_1 A_2$ und $B_1 B_2$ sind nach Voraussetzung verschieden, also
- \[ \dim( [v_1, v_2] \cap [v + v_1, v + v_2 ] ) = 2 + 2 - \dim[v_1, v_2, v] = 1 \]
- und $v_1 - v_2 \in [v_1, v_2] \cap [v + v_1, v + v_2]$, der Punkt $v_1-v_2$ liegt sowohl in der linearen Hülle von $(v_1, v_2)$ als auch in $(v + v_1, v + v_2)$.
-
- Entsprechend folgen $P_{23} = [v_2 - v_3]$, $P_{13} = [v_1 - v_3]$. Also liegen $P_{12}$, $P_{13}$, $P_{23}$ auf der projektiven Geraden $[v_1 - v_2, v_2 - v_3]$. Damit gilt in $\proj(V)$ der Satz von Desargues.
-\end{proof}
-
-\subsection{Satz von Pappos}
-\begin{defn*}
- Sei $\proj$ ein projektiver Raum. In $\proj$ \emph{gilt der Satz von Pappos}\footnote{Pappos von Alexandria, ca. 300}, falls für je 7 verschiedene Punkte $Z, A_1, A_2, A_3, B_1, B_2, B_3$ gilt:
- \begin{addmargin}[.5cm]{0cm} 
- Falls $Z, A_1, A_2, A_3$ auf einer Geraden $g$ liegen und $Z, B_1, B_2, B_3$ auf einer Geraden $h \ne g$ liegen, dann sind die Punkte 
- \[ P_{12} := A_1 B_2 \cap A_2 B_1, \quad P_{23} := A_2 B_3 \cap A_3 B_2, \quad P_{13} := A_1 B_3 \cap A_3 B_1 \]
- kollinear.
- \end{addmargin}
-\end{defn*}
-
-\newpage
-
-\begin{figure*}[ht]
- \center
- \includegraphics[width=12cm]{img/pappos}
-\end{figure*}
-
-\begin{thm}
- Sei $V$ ein $K$-Vektorraum über einem Schiefkörper $K$ und $\dim V \ge 3$. Dann gilt in $\proj(V)$ der Satz von Pappos genau dann, wenn $K$ kommutativ, also ein Körper ist.
-\end{thm}
-
-\begin{proof}
- Seien 
- \[ \begin{aligned}
-     Z   &:= g \cap h = [u], \\
-     A_1 &:= [v] \text{ und o.B.d.A. } A_2 = [u + v] \text{ (ersetze ggf. $v$ durch ein geeignetes $\lambda v$)}, \\
-     B_1 &:= [w] \text{ und o.B.d.A. } B_2 = [u + w].
-    \end{aligned} \]
- $u, v, w$ sind linear unabhängig, da $g \ne h$. Dann ist $P_{12} = A_1 B_2 \cap A_2 B_1 = [u + v + w]$. 
- 
- ``$\Leftarrow$'' Sei $K$ ein Körper. Zu zeigen: $P_{12}, P_{13}, P_{23}$ sind kollinear.
- 
- Für $A_3, B_3$ gibt es $r, s \in K$ mit $A_3 = [ru+v]$, $B_3 = [su+w]$. Dann ist 
- \[ P_{13} = A_3 B_1 \cap A_1 B_3 = [ru + v, w] \cap [v, su + w] = [rsu+sv+rw] =: [v_{13}], \]
- denn $s(ru+v) + rw = rsu + sv + rw = sv + r(su + w)$. Dabei gilt $rs = sr$, weil $K$ kommutativ ist.
- \[ P_{23} = A_2 B_3 \cap A_3 B_2 = [u+v, su + w] \cap [ru + v, u+w] \]
- und es gilt
- \[ \begin{aligned}
-    (rs-1)u + (s-1)v + (r-1)w 
-    &= (s-1) (u+v) + (r-1)(su +w) \\
-    &= (s-1)(u+w) + (s-1)(ru+v),
-    \end{aligned} \]
- also folgt
- \[ P_{23} = [ (rs-1)u + (s-1)v + (r-1)w ] =: [v_{23}]. \]
- Wir sehen nun $v_{13} - v_{23} = u + v + w$, also ist $P_{12} \in P_{13} P_{23}$ und damit sind die Punkte kollinear.
- 
- ``$\Rightarrow$'' Gelte der Satz von Pappos. Zu zeigen: $K$ ist ein Körper, also $rs = sr$ für $r,s \in K$.
- 
- Seien o.B.d.A.\footnote{Wir schließen 0 und 1 aus, da sie mit allen Elementen von $K$ kommutieren.} $r,s \in K \setminus \{ 0, 1 \}$, $A_3 := [ru+v]$, $B_3 := [su+v]$. Dann gibt es $x,y \in V$ mit $[x+y] = [u + v + w]$.
- 
- Seien $P_{13} = [x]$, $P_{23} = [y]$, dann gibt es wegen des Satzes von Pappos $t_1, \ldots, t_8 \in K$, so dass
- \begin{align*}
-    x &=   &   t_1 v + t_2 (su+w) &= t_3 w + t_4 (ru+v) \tag{1} \\
-    y &=   &   t_5 (u+v) + t_6 (su+w) &= t_7 (u+w) + t_8 (ru+v) \tag{2} \\
-  x+y &=   &   u+v+w &= t_1 v + t_2 (su+w) + t_5 (u+v) + t_6 (su+w) \tag{3}
- \end{align*}
- Weil $u,v,w$ linear unabhängig sind, folgt aus (3)
- \[ \left. \begin{aligned}
-    w: \quad 1 &= t_2 + t_6 \\
-    u: \quad 1 &= (t_2+t_6) s + t_5 = s + t_5 \\
-    v: \quad 1 &= t_1 + t_5
-    \end{aligned}
-    \quad \right\} \Rightarrow 
-    \begin{aligned}
-     t_1 &= s, \\
-     t_2 &= 1 - t_6, \\
-     t_5 &= 1 - s. 
-    \end{aligned} \]
- Zusammen mit (1) folgt
- \[ v: \quad t_4 = t_1 = s, \qquad u: \quad t_2 s = t_4 r, \qquad w: \quad t_2 = t_3. \]
- Mit $t_2 = 1 - t_6$ aus (3) gilt also
- \[ (1-t_6)s = t_2 s = t_4 r = sr \qRq t_6 s = s - sr \qRq t_6 = 1 - srs^{-1}. \tag{$\circ$} \]
- Zusammen mit (2) folgt
- \[ u: \quad t_5 + t_6s = t_7 + t_8 r, \qquad v: \quad t_8 = t_5, \qquad w: \quad t_7 = t_6. \]
- Nun setzen wir ($\circ$) und $t_5 = 1-s$ ein:
- \begin{align*}
-     t_5 + t_6 s = t_6 + t_5 r \quad
-     &\Rightarrow & (1-s) + (s-sr) &= (1 - srs^{-1}) + (1-s)r \\
-     &\Rightarrow & -srs^{-1} + r &= 0 \\
-     &\Rightarrow & srs^{-1} &= r \\
-     &\Rightarrow & rs &= sr. \qedhere 
- \end{align*}
-\end{proof}
-
-\begin{bem}
- Aus dem Beweis des Satzes folgt in $\proj(V)$ ($V$ ist ein $K$-Vektorraum mit $\dim V \ge 3$): $K$ kommutativ $\Leftrightarrow$ Es existieren paarweise verschiedene $Z, A_1, A_2, B_1, B_2 \in \proj(V)$ mit $Z = A_1 A_2 \cap B_1 B_2$. Für alle $A_3$ auf $A_1 A_2$ mit $A_3 \ne A_1, A_2$ und $B_3$ auf $B_1 B_2$ mit $B_3 \ne B_1, B_2$ gilt: $P_{ij} = A_i B_j \cap A_j B_i$, $i \ne j$ sind kollinear.
- 
- Das heißt im Satz von Pappos kann man $Z, A_1, A_2, B_1, B_2$ fest wählen.
-\end{bem}
-
-\begin{deno*}
- Der Vektor $x \ne 0$ aus $K^n$ heißt \emph{homogene Koordinaten} von $[x] \in \proj(V)$. Falls $x \in K^n$ mit $x_n \ne 0$, dann ist
- \[ \left[ \begin{pmatrix} x_1 \\ \vdots \\ x_{n-1} \\ x_n \end{pmatrix} \right] =
-    \left[ \begin{pmatrix} x_n^{-1} x_1 \\ \vdots \\ x_n^{-1} x_{n-1} \\ 1 \end{pmatrix} \right]. \]
-\end{deno*}
-
-Für $V = \real^n$ ist
-\[ [x] = \left[ \frac{x}{\|x\|} \right] = \left[ \frac{-x}{\|x\|} \right]. \]
-Der projektive Raum $\proj(\real^n)$ kann daher mit der $S^{n-1} \subseteq \real^n$ nach Identifikation von Antipodenpaaren identifiziert werden.
- 
-$S^{n-1}$ ist die Einheitssphäre. $x \in S^{n-1}$ heißt $x \in \real^n$, $\| x \| = 1$. Wir betrachten also statt Geraden die äquivalenten (gegenüberliegenden) Punkte der Einheitssphäre $S^{n-1}_\pm$, das heißt $x \sim x' \Leftrightarrow x = x'$ oder $x = -x'$.
-
-\subsection{Dualität für projektive Ebenen}
-\begin{thm}
- Sei $\proj = (P,G,I)$ eine projektive Ebene. Dann ist auch $\proj^* := (G,P,I^{-1})$ mit $I^{-1} := \{ (g,p) : (p,g) \in I \}$ eine projektive Ebene.
-\end{thm}
-
-$\proj^*$ ist die zu $\proj$ \emph{duale Ebene}. Offensichtlich gilt $\proj^{**} = \proj$.
-
-\begin{proof}
- Zu zeigen: $\proj^*$ erfüllt die Axiome der projektiven Ebene A1), A2'), A3) und A4) (siehe S. \pageref{def:proj}).
- \begin{enumerate}[\hspace{.5cm}A2)]
-  \item[A1)] Durch je zwei (verschiedene) Punkte $p_1$, $p_2$ geht genau eine Gerade.
-  \item[A2')] Je zwei Geraden schneiden sich.
-  \item[A3)] Auf jeder Geraden liegen mindestens drei Punkte.
-  \item[A4)] Es gibt mindestens zwei Geraden.
- \end{enumerate}
- 
- Die zu einer Aussage über $(P,G,I)$ duale Aussage ist die entsprechende Aussage für $(G,P,I^{-1})$\footnotemark.
- \footnotetext{Vertausche die Rollen von Punkten und Geraden und $I$ mit $I^{-1}$. Begriffe werden analog dualisiert, zum Beispiel die Gerade $P_1 P_2$ entspricht dem Punkt $g_1 \cap g_2$. Kollineare Punkte entsprechen kopunktalen Geraden.}
- 
- Aus A1) und A2') folgt die Aussage:
- \begin{enumerate}[\hspace{.5cm}A2)]
-  \item [$\widetilde{\text{A2}}$')] Je zwei Geraden schneiden sich in genau einem Punkt.
- \end{enumerate}
-
- Für die ersten beiden dualen Axiome folgt:
- \begin{enumerate}[\hspace{.5cm}{A}1 {dual})]
-  \item[A1 dual)] ist offenbar dieselbe Aussage wie $\widetilde{\text{A2}}$').
-  \item[A2' dual)] ist dieselbe Aussage wie A1).
- \end{enumerate}
-
- Die zu A3) und A4) dualen Aussagen sind
- \begin{enumerate}[\hspace{.5cm}{A}1 {dual})]
-  \item[A3 dual)] Durch jeden Punkt gehen mindestens drei Geraden.
-  \item[A4 dual)] Es gibt mindestens zwei Punkte.
- \end{enumerate}
- Aus A3) und A4) folgt offenbar A4 dual). 
- 
- Zu zeigen: In $\proj$ gilt A3 dual). Sei $P$ ein Punkt. Dann gibt es nach A1) eine Gerade $g$ durch $P$.  Auf dieser liegen nach A3) mindestens zwei weitere Punkte $P_1$ und $P_2$. Nach A4) gibt es mindestens eine weitere Gerade $h$ und nach A2') schneiden sich $g$ und $h$ in einem Punkt $X$. Auf $h$ gibt es nach A3) zwei Punkte $Q_1, Q_2 \ne X$. Die Geraden $PQ_1, PQ_2$ und $PP_1$ sind paarweise verschieden. Damit gibt es mindestens drei Geraden durch $P$.
-\end{proof}
-
-\textbf{Dualitätsprinzip.} Wenn eine Aussage für alle projektiven Ebenen gilt, dann gilt auch die duale Aussage für alle projektiven Ebenen\footnote{Vertausche zum Beweis einfach $\proj$ mit $\proj^*$.}.
+Eine Quadrik ist also die Nullstellenmenge eine Polynoms zweiten Grades in $n$
+Variablen.
 
 \begin{exmp*}
- Dualisiere die Aussage ``$\proj = (P,G,I)$ ist desarguessch.'' Beweise: Wenn $\proj$ desarguessch ist, dann ist es auch $\proj^*$.
- 
- \begin{addmargin}[.5cm]{0cm} 
- \textbf{Aussage von Desargues.} Für alle $A_1, A_2, A_3, B_1, B_2, B_3 \in P$ mit $A_i \ne B_i$, sodass $A_1, A_2, A_3$ nicht kollinear sind und $B_1, B_2, B_3$ nicht kollinear sind, gilt: Falls $Z$ der Schnittpunkt von $A_1 B_1$, $A_2 B_2$ und $A_3 B_3$ ist, dann sind 
- \begin{align*}
-  P_{12} &:= A_1 A_2 \cap B_1 B_2, \\
-  P_{23} &:= A_2 A_3 \cap B_1 B_2, \\
-  P_{13} &:= A_3 A_1 \cap B_3 B_1 
- \end{align*}
- kollinear.
- 
- \textbf{Duale Aussage.} Für alle $g_1, g_2, g_3, h_1, h_2, h_3 \in G$ mit $g_i \ne h_i$, sodass $g_1, g_2, g_3$ nicht kopunktal\footnote{Das heißt, dass die drei Geraden sich nicht in \emph{einem} Punkt schneiden, sondern ein Dreieck bilden.} und $h_1, h_2, h_3$ nicht kopunktal sind, gilt: Falls $f$ eine Gerade durch $g_1 \cap h_1$, $g_2 \cap h_2$, $g_3 \cap h_3$ ist, dann sind
- \begin{align*}
-  l_{12} &:= (g_1 \cap g_2)(h_1 \cap h_2), \\
-  l_{23} &:= (g_2 \cap g_3)(h_2 \cap h_3), \\
-  l_{31} &:= (g_3 \cap g_1)(h_3 \cap h_1 )
- \end{align*}
- kopunktal.
- \end{addmargin}
+  Die Gleichung
+  \[ 9x^2 - 4 xy + 6 y^2 + 2x + 4y - 1 = 0 \]
+  hat die äquivalente Darstellung
+  \[ \pmat{x & y} \cdot \pmat{9 & -2 \\ -2 & 6} \cdot \pmat{x\\y} + 2
+    \angles{\pmat{1\\2},\pmat{x\\y}} - 1  = 0. \]
 \end{exmp*}
 
-\setcounter{thm}{5}
+Zwei Mengen $M_1, M_2$ heißen \emph{affin äquivalent}, wenn es eine bijektive
+affine Abbildung $\psi: \real^n \to \real^n$ gibt mit $\psi(M_1) = M_2$.
+
+\textbf{Ziel:} Klassifikation der Quadriken bis auf Kongruenz, Resultat ist eine
+``Normalform'' (bzgl. Isometrie).
+
+\textbf{1. Schritt.} (Hauptachsentransformation) Wir wissen, dass wegen $A=A^T$
+eine orthogonale Matrix $S \in O(n)$ existiert, so dass $S^T A S = S^{-1} A S =:
+D$ eine Diagonalmatrix ist.
+
+Wenn $(b_1, \ldots, b_n)$ eine Orthonormalbasis aus Eigenvektoren ist und $(d_1,
+\ldots, d_n)$ die zugehörigen Eigenwerte, dann ist
+\[ S = \pmat{b_1 & \cdots & b_n}, \qquad D = \pmat{d_1 & & 0 \\ & \ddots \\ 0 &
+    & d_n}. \]
+
+Seien o.B.d.A.. $d_1, \ldots, d_k \ne 0$, $d_{k+1} = \cdots = d_n = 0$, also $k
+= \rang A$.
+
+Die Transformation $\tilde{x} = S^T x = S^{-1} x$, also $x = S \tilde{x}$ ergibt
+\[ 0 = x^T A x + 2 \angles{b,x} + c = \tilde{x}^T \underbrace{(S^T A S)}_{=D}
+  \tilde{x} + 2 \underbrace{\angles{b, S \tilde{x}}}_{=\angles{S^T b, \tilde{x}}=\angles{\tilde{b},\tilde{x}}} + c. \]
+
+\textbf{2. Schritt.} Ziel: In den Variablen $\tilde{x}_1, \ldots, \tilde{x}_k$
+die linearen Terme durch eine Translation eliminieren.
+
+Wir führen eine quadratische Ergänzung durch:
+\[ d_i \tilde{x}_i^2 + 2 \tilde{b}_i \tilde{x}_i = d_i \left( \tilde{x}_i +
+    \frac{\tilde{b}_i}{d_i} \right)^2 - \frac{\tilde{b}_i^2}{d_i}. \]
+Nach dem zweiten Schritt haben wir eine Gleichung der Form
+\[ \sum_{i=1}^k d_i x_i^2 + \sum_{i=k+1}^1 \tilde{b}_i x_i + \hat{c} = 0, \]
+wobei $\hat{c} = c - \sum_1^k \frac{\tilde{b}_i^2}{d_i}$.
+
+\textbf{3. Schritt.} Die vorhandenen linearen Terme zusammenfassen.
+
+Für $\hat{c} \ne 0$ kann man im letzten Schritt die Gleichung so normieren, dass
+o.B.d.A. der konstante Term -1 ist.
+
+\textbf{1. Fall.}
+\[ \frac{x_1^2}{a_1^2} + \cdots + \frac{x_h^2}{a_h^2} -
+  \frac{x_{h+1}^2}{a_{h+1}^2} - \cdots - \frac{x_k^2}{a_k^2} = 1 \]
+mit $0 \le h \le k \le n$. Falls $h = 0$ erhalten wir die leere Menge.
+
+\textbf{2. Fall.}
+\[ \frac{x_1^2}{a_1^2} + \cdots + \frac{x_h^2}{a_h^2} -
+  \frac{x_{h+1}^2}{a_{h+1}^2} - \cdots - \frac{x_k^2}{a_k^2} = 0 \]
+mit $0 \le h \le k \le n$ und $k-h \le h$ (ggf. muss man die Gleichung mit -1
+multiplizieren).
+
+\textbf{3. Fall.}
+\[ x_{k+1} = \frac{x_1^2}{a_1^2} + \cdots + \frac{x_h^2}{a_h^2} -
+  \frac{x_{h+1}^2}{a_{h+1}^2} - \cdots - \frac{x_k^2}{a_k^2} \]
+mit $0 \le h \le k \le n$ und $k-h \le h$ (ggf. vertausche $x_{k+1}$ mit $-x_k$).
+
+3. Fall: (Vorbereitung zu 5) $\hat{b} \ne 0$.
+\[ \hat{x}^T D \hat{x} + \underbrace{\angles{\hat{b},\hat{x}}  + \tilde{c}}_{\| \hat{b} \| \cdot \hat{x}_{k+1}} = 0, \]
+also
+\[ \hat{x}_{k+1} = \angles{ \frac{\hat{b}}{\| \hat{b} \|}, \hat{x}} +
+  \frac{\tilde{c}}{\hat{b}}. \]
+
+\clearpage
+
 \begin{thm}
- Eine projektive Ebene $\proj$ ist desarguessch $\Leftrightarrow$ $\proj^*$ ist desarguessch.
+  \begin{enumerate}[a)]
+    \item Jede Quadrik in $\real^n$ ist kongruent zu genau einer der folgenden
+      Mengen $\{x \in \real^n : $ Gleichung gilt $\}$:
+      \begin{enumerate}[1)]
+        \item $\emptyset$
+        \item
+          \[ \frac{x_1^2}{a_1^2} + \cdots + \frac{x_h^2}{a_h^2} -
+            \frac{x_{h+1}^2}{a_{h+1}^2} - \cdots - \frac{x_k^2}{a_k^2} = 1 \]
+          mit $1 \le h \le k \le n$, $a_1 \ge \ldots \ge a_h > 0$, $a_{h+1} \ge
+          \ldots \ge a_k \ge 0$.
+        \item
+          \[ x_1^2 + \cdots + \frac{x_h^2}{a_h^2} -
+            \frac{x_{h+1}^2}{a_{h+1}^2} - \cdots - \frac{x_k^2}{a_k^2} = 0 \]
+          mit $1 \le h \le k \le n$, $k-h \le h$, $1 \ge \ldots \ge a_h > 0$, $a_{h+1} \ge \ldots \ge a_k \ge 0$.
+
+          Achtung: Falls $k-h=h$, gibt es zwei solche Darstellungen kongruenter
+          Mengen (multipliziere die Gleichung mit $-a_{h+1}^2$).
+        \item
+          \[ x_1^2 + \ldots + x_k^2 = 0 \]
+          $(n-k)$-dimensionaler linearer Unterraum ($x_1 = x_2 =  \ldots = x_k =
+          0$). 
+        \item
+          \[  \frac{x_1^2}{a_1^2} + \ldots + \frac{x_h^2}{a_h^2} -
+            \frac{x_{h+1}^2}{a_{h+1}^2} - \ldots - \frac{x_k^2}{a_k^2} =
+            x_{k+1}. \] 
+          mit $1 \le h \le k \le n-1$, $k-h \le h$, $a_1 \ge a_2 \ge \ldots \ge
+          a_h > 0$, $a_{h+1} \ge a_{h+2} \ge \ldots \ge a_k > 0$.
+
+          Falls $k-h = h$, gibt es wieder  zwei Möglichkeiten (ersetze $x_{k+1}$
+          durch $-x_{k+1}$).
+    \end{enumerate}
+    \item Jede Quadrik in $\real^n$ ist affin äquivalent zu genau einer der
+      obigen Mengen, wobei alle vorkommenden $a_i = 1$ gesetzt werden.
+  \end{enumerate}
 \end{thm}
 
-\subsection{Endliche projektive Räume}
+\textbf{Zum Beweis:}  Die Existenz wird über die Konstruktion der Normalform gezeigt.
 
-\begin{defn*}
- Ein projektiver Raum $\proj = (P,G,I)$ heißt \emph{endlich}, falls $P$ endlich ist.
-\end{defn*}
+Der Beweis der Eindeutigkeit wird weggelassen, ist aber anschaulich klar und nicht schwer zu
+zeigen.
 
-\begin{deno*}
- Sei $g \in G$, dann bezeichnet $(g) := \{ p \in P : (p,g) \in I \}$ die Menge der Punkte auf der Geraden $g$.
-\end{deno*}
+Zu b) vergleiche den Beweis zum Trägheitssatz von Sylvester.
 
-\begin{thm*}[Hessenberg]
- Sei $\proj$ ein projektiver Raum, in dem der Satz von Pappos gilt. Dann gilt auch der Satz von Desargues.
-\end{thm*}
+\bigskip
 
-Beweis nicht in der Vorlesung, siehe zum Beispiel
+\textbf{Beispiele.}
+Wir betrachten nun die Möglichkeiten speziell für $n=2$:
 \begin{itemize}
- \item H. Lenz: Vorlesungen über projektive Geometrie,
- \item R. Lingenberg: Grundlagen der Geometrie I.
+  \item $\frac{x^2}{a^2}+{y^2}{b^2} = 1$, Ellipse mit (Länge der) Halbachsen $a$ und $b$.
+  \item $\frac{x^2}{a^2} - {y^2}{b^2} = 1$, Hyperbel mit Halbachse $a$ und Steigung der Asymptoten $\pm b/a$.
+  \item $y = \frac{x^2}{2p}$, Parabel
+  \item $-x^2 - y^2 = 1$, $\emptyset$.
+  \item $x^2 + y^2 = 0$, Punkt.
+  \item $\frac{x^2}{a^2} - \frac{y^2}{b^2} = 0$, äquivalent zu $x^2 -
+      \frac{a^2}{b^2} y^2 = 0$, Paar sich schneidender Geraden.
+  \item $\frac{x^2}{a^2} = -1$ $\Leftrightarrow$ $x = \pm a$ Paar paralleler
+    Geraden.
+  \item $x^2 = 0$ Gerade ($x=0$, $y$ beliebig).
 \end{itemize}
 
-Beispiel für eine nichtdesarguessche projektive Ebene (siehe auch Übung): Moulton-Ebene.
+\subsection{Ellipse und Hyperbel}
+Betrachte die Lösungsmenge der Gleichung
+\[ \frac{x^2}{a^2} + \eps \frac{y^2}{b^2} = 1, \]
+wobei $\eps \in \{ -1, 1 \}$.
 
-\begin{lem}
- Sei $\proj$ ein projektiver Raum, $g_1, g_2 \in G$. Dann gibt es eine bijektive Abbildung $\varphi:(g_1) \to (g_2)$.
-\end{lem}
+Für $\eps = 1$ handelt es sich um eine Ellipse mit Halbachsen $a,b$, sei $a \ge
+b$. Für $\eps = -1$ ist es eine Hyperbel.
 
-\begin{proof}
- Sei O.B.d.A. $g_1 \ne g_2$. Wir unterscheiden zwei Fälle:
- \begin{enumerate}
-  \item $(g_1) \cap (g_2) = \{ s \} \ne \emptyset$. Seien $P_1 \in (g_1)$, $P_2 \in (g_2)$ mit $P_1 \ne P_2 \ne S$ (diese existieren nach A3)). Nach A3) gibt es auch $P$ mit $P \ne P_1$, $P \ne P_2$ auf $P_1 P_2$. Es ist offenbar $P \notin (g_1)$ und $P \notin (g_2)$. Nach A2) schneidet eine Gerade $Px$ mit $x \in (g_1)$, $x \ne S$ die Gerade $g_2$ in einem eindeutig bestimmten Punkt $\pi(x) \ne S$. Die Gerade $PS$ schneidet $g_2$ nur in $S$. Definiere $pi:(g_1) \to (g_2)$ mit $\pi( x ) = xP \cap g_2$. $\pi$ ist offenbar bijektiv.
-  \item $(g_1) \cap (g_2) ) \emptyset$. Wähle  auf $g_1$, $g_2$ Punkte $P_1 \in (g_1)$, $P_2 \in (g_2)$. Sei $h := P_1 P_2$. Dann gibt es nach dem 1. Fall bijektive Abbildungen $\pi_1: (g_1) \to (h)$ und $\pi_2: (h) \to (g_2)$. Also ist $\pi_2 \circ \pi_1: (g_1) \to (g_2)$ bijektiv. \qedhere
- \end{enumerate}
-\end{proof}
+Die ``Brennpunkte'' sind $F_1 = (c,0)$, $F_2 = (-c, 0)$. Der Abstand der
+Brennpunkte vom Mittelpunkt ist $c$, wobei
+\[ c = \sqrt{a^2 - \eps b^2}. \]
 
-\begin{figure*}[ht]
- \center
- \includegraphics[width=12cm]{img/lemma27}
-\end{figure*}
+Wir definieren zur Abkürzung
+\[ e := \frac{c}{a} = \sqrt{1 - \eps \frac{b^2}{a^2}}. \]
+Man nennt $e$ die (numerische) \emph{Exzentrizität} der Ellipse.
 
-In einem endlichen projektiven Raum $\proj$ liegen also auf jeder Geraden gleich viele Punkte.
+Die Abstände der Brennpunkte zu einem Punkt auf der Ellipse bzw. Hyperbel
+$P = (x,y)$ werden mit $r_{1,2}$ bezeichnet. Mit der Definition von $e$ folgt
+\[ r_1 = PF_1 = \sqrt{(x-c)^2 + y^2} = \sqrt{x^2 - 2cx + a^2 - \eps b^2 +
+    y^2} \]
+Setze ein $y^2 = \eps( b^2 - x^2 \cdot \frac{b^2}{a^2})$, da $(x,y)$ auf der
+Kurve liegt, also
+\[ r_1 = \sqrt{e^2 x^2 - 2 eax + a^2} =
+  \begin{cases}
+    a - ex, &\text{für } \eps = 1, \\
+    ex - a, &\text{für } \eps = -1, (x,y) \text{ auf dem rechten Ast }(x \ge a).
+  \end{cases} \]
+Es folgt
+\[ r_2 = PF_2 = a + ex\]
+genau entsprechend (ersetze $e$ durch $-e$). Bei der Hyperbel ist wieder $(x,y)$
+auf dem rechten Ast.
 
-\begin{defn*}
- Ein endlicher projektiver Raum $\proj$ hat die \emph{Ordnung $q$}, wenn auf jeder Geraden $q+1$ Punkte liegen.
-\end{defn*}
+Also gilt
+\[ r_2 + \eps r_1 = 2a \]
+konstant, somit ist $r_1 + r_2 = 2a$ für $\eps = 1$ (Ellipse)
+``Gärtnerkonstruktion''\footnote{Nehme einen Strick der Länge $2a$ und befestige
+  ihn in $F_1$, $F_2$. Dann lässt sich eine Ellipse mit den gewünschten
+  Eigenschaften abstecken.}.
 
-\begin{thm*}[Wedderburn]
- Jeder endliche Schiefkörper ist ein Körper.
-\end{thm*}
-
-\begin{thm}
- Sei $\proj = (P,G,I)$ eine projektive Ebene der Ordnung $q$. Dann gilt $|P| = |Q| = q^2 + q +1$. Auf jeder Geraden liegen $q+1$ Punkte und durch jeden Punkt gehen $q+1$ Geraden.
-\end{thm}
-
-\begin{proof}
- Nach Lemma 2.7 und Definition liegen auf jeder Geraden genau $q+1$ Punkte. Sei $p \in P$, $g \in G$ mit $p \notin (g)$. Jede Gerade durch $p$ schneidet $(g)$ in genau einem Punkt und durch jeden Punkt $p_1 \in (g)$ gibt es die Gerade $p p_1$. Damit haben wir eine Bijektion zwischen der Menge der Geraden durch $p$ und der Menge der Punkte auf $g$ definiert. Also gehen durch jeden Punkt $p$ genau $q++1$ Geraden. Damit gibt es genau 
- \[ \text{(Geraden durch $p$)} \cdot \text{(Punkte $\ne p$ auf $g$ durch $p$)} + \text{Punkt $p$} = (q+1)q + 1 = q^2 + q +1 \]
- Punkte. Dies ist auch gleich der Anzahl der Geraden, da $\proj^* = (G,P,I^{-1})$ auch eine projektive Ebene der Ordnung $q$ ist.
-\end{proof}
-
-\subsubsection*{Endliche Körper}
-\begin{defn*}
- Sei $K$ ein Körper. Die \emph{Charakteristik} von $K$ ist definiert als
- \[ \chr K = \begin{cases} 
-    p, &\text{falls $p \in \nat$ die kleinste Zahl mit $1 + 1 + \ldots + 1 = 0$ ist.} \\
-    0, &\text{falls es keine solche Zahl gibt.}         
-   \end{cases} \]
-Falls $\chr K \ne 0$, dann ist $\chr K$ eine Primzahl, denn anderenfalls wäre $p = nm$ mit $1 < n < p$ und $1 < m < p$, also
-\[ \underbrace{( 1 + 1 + \ldots + 1)}_n \cdot \underbrace{( 1 + 1 + \ldots + 1)}_m = 0 \]
-\end{defn*}
-
-\begin{exmp*}
- $\integer_p$ ist für eine Primzahl $p$ ein Körper der Charakteristik $p$.  
-\end{exmp*}
-
-Falls $K$ ein endlicher Körper ist, dann ist $\chr(K) = p \ne 0$ eine Primzahl. In $K$ betrachte die Menge
-\[ P := \{ 0, 1, 1+1, \ldots, (p-1) \cdot 1 \} \subseteq K. \]
-Dies ist ein Unterkörper von $K$ und $K$ ist ein $P$-Vektorraum, $\dim K = n \ne \infty$. $K$ hat genau $p^n$ Elemente. Also ist $(K,+) \simeq \integer_p^n$.
-
-Es gilt $(K \setminus \{ 0 \}, \cdot ) \simeq \integer_{q-1}$, wobei $q = p^n = |K|$, das heißt es gibt $a \in K$ mit
-\[ K^* := K \setminus \{ 0 \} = \{ 1, a, a^2, a^3, \ldots, a^{q-2} \}. \]
-Also ist jedes Element von $K$ Nullstelle des Polynoms $x^q - x \in K[x]$. 
-
-Die Abbildung $\varphi: K \to K$ mit $\varphi(x) = x^p$ ist ein Körperautomorphismus von $K$, denn
-\begin{align*}
- \varphi(xy) &= (xy)^p = \varphi(x) \varphi(y) \\
- \varphi(x+y) &= (x+y)^p = \sum_{\nu = 0}^p \begin{pmatrix} p \\ \nu \end{pmatrix} x^\nu y^{p-\nu} \overset{\footnotemark}{=} x^p + y^p = \varphi(x) + \varphi(y)
-\end{align*}
-\footnotetext{Denn $\begin{pmatrix} p \\ \nu \end{pmatrix}$ ist  in $K$ für $1 \le \nu \le p-1$ durch $p$ teilbar, also $\begin{pmatrix} p \\ \nu \end{pmatrix} = 0$.}
-
-$\varphi$ ist bijektiv, denn $\varphi^n = \id$,  $x^{p^n} = x^q = x$.
-
-\begin{thm*}
- Sei $p$ eine Primzahl und $n \in \nat$. Dann gibt es bis auf Isomorphie genau einen Körper mit $q=p^n$ Elementen. Er ist der ``kleinste'' Körper, in dem das Polynom $x^q - x \in P[x]$ in Linearfaktoren zerfällt\footnote{Der ``Zerfällungskörper'' von $x^q - x$ über $P$.}.
- 
- Die Unterkörper von $K$ mit $q = p^n$ sind genau die Körper der Form 
- \[ \{ x \in K | x^{p^i} = x \} = \{ 0 \} \cup \{ a^{k p^{n-i}} : k = 0, 1, \ldots, p^i -1 \},\]
- wobei $i \ge 1$ ein Teiler von $n$ ist. Also gibt es zu jedem $i \ge 1$ mit $i|n$ ($i$ teilt $n$) genau einen Unterkörper von $K$ mit $p^n$ Elementen und diese sind alle Unterkörper von $K$.
-\end{thm*}
-
-\subsubsection*{Konstruktion eines Körpers mit \texorpdfstring{$p^n$}{p hoch n} Elementen}
-Wähle ein irreduzibles\footnote{Irreduzibel heißt, dass es \emph{keine} Polynome $p_1, p_2$ kleineren Grades gibt, sodass $p_0 = p_1 p_2$.} Polynom $n$-ten Grades $p_0(x) \in \integer_p[x]$. Dann ist $\integer_p[x] / (p_0)$ ein Körper mit $p^n$ Elementen.
-
-Erzeugtes Ideal
-\[ \{ p_0 f | f \in \integer_p[x] \} \]
-
-\begin{defn*}
- Sei $\proj = (P,G,I)$, $\proj' = (P',G',I')$ projektive Räume. Eine \emph{Kollineation} $\alpha: \proj \to \proj'$ ist ein Paar $\alpha = (\alpha_1, \alpha_2)$ von bijektiven Abbildungen $\alpha_1:P \to P'$, $\alpha_2: G \to G'$, sodass $(p,g) \in I \Leftrightarrow (\alpha_1(p), \alpha_2(g) ) \in I'$ für alle $p \in P$, $g \in G$. 
- 
- $\proj=(P,G,I)$ und $\proj' = (P', G', I')$ heißen \emph{isomorph} (geschrieben $\proj \simeq \proj'$), wenn es eine Kollineation $\alpha: \proj \to \proj'$ gibt.
- 
- Schreibweise: Wir schreiben $\alpha(p), \alpha(g)$ statt $\alpha_1(p), \alpha_2(g)$, falls keine Missverständnisse zu befürchten sind.
-\end{defn*}
+Für $\eps = -1$ (Hyperbel, rechter Ast bei $x \ge a$) gilt $|r_2 - r_1| = 2a$
+für beide Äste.
 
 \begin{bem}
- Die Menge der Kollineationen $\alpha: \proj \to \proj'$ ist mit $\circ$ eine Gruppe.
+  Aus $e = \rez{2} \| F_2 - F_1 \| = \sqrt{a^2 - \eps b^2}$ folgt
+  \[ b = \sqrt{ \eps \left( a^2 - \left( \frac{\| F_2 - F_1 \|}{2} \right)^2 \right) }
+      = \sqrt{ \left| a^2 - \left( \frac{\| F_2 - F_1 \|}{2} \right)^2 \right| } \]
 \end{bem}
 
-\begin{thm*}[Koordinatisierungssatz]
- Sei $\proj = (P,G,I)$ ein desarguesscher projektiver Raum. Dann gibt es einen Schiefkörper $K$ mit einem $K$-Vektorraum $V$ mit $\dim V \ge 3$, sodass $\proj \simeq \proj(V)$ gilt.
-\end{thm*}
-
-\subsubsection*{Desarguessche endliche projektive Ebenen}
-Sei $\proj$ eine endliche desarguessche projektive Ebene. Nach dem Koordinatisierungssatz gibt es einen $K$-Vektorraum $V$ über einem Schiefkörper $K$ mit $\proj \simeq \proj(V)$ und $\dim V \ge 3$. Da $\proj$ endlich ist, ist auch $K$ endlich. Nach dem Satz von Wedderburn ist $K$ ein Körper. Also hat $K$ nach Klassifikation der endlichen Körper $p^n$ Elemente, wobei $p$ eine Primzahl ist.
-
-Ferner gilt: Bis auf Isomorphie gibt es zu jeder Primzahl $p$ und $n \in \nat$ genau einen solchen Körper mit $q = p^n$ Elementen. Man bezeichnet ihn mit $GF(q)$ bzw. $\mathbf{F}_q$.
-
-Bis auf Isomorphie gibt es genau eine desarguessche projektive Ebene der Ordnung $q = p^n$.
-
-\subsubsection*{Nichtdesarguessche endliche projektive Ebenen}
-Für jedes $q \le 8$ gibt es \emph{keine} nichtdesarguessche projektive Ebene der Ordnung $q$. Für jedes $q = p^n$ mit $n \ge 2$, $p$ Primzahl, $q \ge 9$ gibt es (mindestens) eine nichtdesarguessche projektive Ebene der Ordnung $q$.
-
-\emph{Jede bisher bekannte} endliche projektive Ebene ist von der Ordnung $q = p^n$, $p$ Primzahl, $n \ge 1$. \emph{Jede bisher bekannte} projektive Ebene von Primzahlordnung ist desarguessch.
-
-\textbf{Folgerung aus Koordinatisierungssatz, Satz von Wedderburn und Satz von Hessenberg.}
-In einer endlichen projektiven Ebene $\proj$ sind äquivalent:
-\begin{enumerate}[(1)]
- \item $\proj$ ist desarguessch.
- \item In $\proj$ gilt der Satz von Pappos.
-\end{enumerate}
-
-Ein Satz zur Nicht-Existenz bestimmter projektiver Ebenen:
-\begin{thm*}[Bruck-Ryser]
- Falls $q = 4n+1$ oder $q = 4n+2$, $n \in \nat$ \emph{und} $q$ nicht die Summe zweier Quadratzahlen ist, dann gibt es \emph{keine} projektive Ebene der Ordnung $q$.
-\end{thm*}
-
-\begin{bem}
- Sei $q = r^2 m$, $r,m \in \nat$ und $m$ nicht durch eine Quadratzahl teilbar, dann sind äquivalent:
- \begin{enumerate}[(1)]
-  \item $q$ ist \emph{nicht} die Summe zweier Quadratzahlen.
-  \item $m$ ist durch eine Zahl der Form $4k+3$ teilbar, $k \in \nat_0$.
- \end{enumerate}
-\end{bem}
-
-Das Wissen um die Nichtexistenz von projektiven Ebenen anderer Ordnung als im Satz von Bruck-Ryser ist sehr begrenzt. Die einzige andere Zahl, die bisher als Ordnung einer projektiven Ebene ausgeschlossen wurde, ist $q = 10$. Dieser Beweis wurde mit massivem Computereinsatz geführt.
-
-Also sind bisher bekannt:
-\begin{center}\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c}
- Ordnung &    & 2  & 3  & 4  & 5  & 6    & 7  & 8  & 9  & 10 \\
- \hline
- Bekannt &    & Ja & Ja & Ja & Ja & Nein & Ja & Ja & Ja & Nein* \\[5pt]
- Ordnung & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 \\
- \hline
- Bekannt & Ja & ?  & Ja & Nein & ? & Ja & Ja & ? & Ja & ?
-\end{tabular}\end{center}
-
-\subsection{Unterräume projektiver Räume}
-\begin{defn*}
- Sei $\proj = (P,G,I)$ ein projektiver Raum. $U \subseteq P$ heißt ein \emph{Unterraum}, falls für je zwei (verschiedene) Punkte $p_1, p_2 \in U$ gilt $(p_1 p_2) \subseteq U$.
-\end{defn*}
-
-Offensichtlich erfüllt für jeden Unterraum $U \subseteq P$ die Inzidenzstruktur $\ubar{U} = (U,G',I')$ mit $G' = \{ g \in G : (g) \subseteq U \}$ die Axiome A1), A2), A3), aber \emph{nicht unbedingt} A4).
-
-Also nach Definition sind $\emptyset$, $\{ p \}$, $(g)$ für $p \in P$, $g \in G$ Unterräume von $\proj$, aber keine projektiven Räume, da A4) nicht erfüllt ist. 
-
-Der Durchschnitt beliebiger Unterräume ist wieder ein Unterraum.
-
-\begin{defn*}
- Sei $X \subseteq P$. Dann definiere $\angles{x} := \bigcap \{ U : x \in U, U \subset P \text{ Unterraum} \}$. $\angles{x}$ heißt der von $x$ \emph{aufgespannte Unterraum}. Er ist der kleinste Unterraum von $\proj$, der $x$ enthält.
- 
- $x$ heißt ein \emph{Erzeugendensystem} in $\proj$, falls $\angles{x} = P$.
- 
- $\proj$ heißt \emph{endlich erzeugbar}, falls es ein endliches Erzeugendensystem gibt.
- 
- Schreibweisen: Statt $\angles{ \{p_1, \ldots, p_n \} }$ schreibe $\angles{ p_1, \ldots, p_n }$. Statt $\angles{ x \cup \{p\} }$ schreibe $\angles{x,p}$. Statt $\angles{x \cup y}$ schreibe $\angles{x,y}$.
- 
- $\angles{ \emptyset } = \emptyset$, $\angles{ p } = \{ p \}$ für $p \in P$, $\angles{ p,q } = ( p,q )$, falls $p \ne q$, $p,q \in P$
-\end{defn*}
-
-\setcounter{thm}{17}
 \begin{prp}
- Sei $U \subseteq P$ ein Unterraum, $p \in P \setminus U$, $U \ne \emptyset$. Dann gilt
- \[ \angles{ U,p } = \bigcup \{ (pq) : q \in U \}. \]
+  \begin{enumerate}[a)]
+    \item $\{ x \in \real^2 : \| x - F_1 \| + \| x - F_2 = 2a \}$, wobei $2a >
+      \| F_2 - F_1 \|$ sei, ist eine Ellipse mit den Brennpunkten $F_1$ und
+      $F_2$. Die größere Halbachse hat die Länge $a$ und die kleinere Halbachse
+      $b$ mit
+      \[ b = \sqrt{a^2 - \left( \frac{\|F_2 - F_1 \|}{2} \right)^2 }. \]
+    \item $\{ x \in \real^2 : \| x - F_1 \| - \| x - F_2 = 2a \}$, wobei $2a <
+      \| F_2 - F_1 \|$ sei, ist eine Hyperbel mit den Brennpunkten $F_1$ und
+      $F_2$, die kongruent ist zu
+      \[ \left\{ \pmat{u \\ v} \in \real^2 : \frac{u^2}{a^2} - \frac{v^2}{b^2} =
+          1 \right\} \]
+      mit
+      \[ b = \sqrt{\left( \frac{\|F_2 - F_1 \|}{2} \right)^2 - a^2}. \]
+  \end{enumerate}
 \end{prp}
 
-Beweis als Übung (Axiom A2) wird wesentlich verwendet).
+\begin{proof}
+  Das folgt aus den oben gezeigten Zusammenhängen.
+\end{proof}
 
-\begin{prp}[Austauschsatz]
- Sei $U \subseteq P$ ein Unterraum, $U \ne \emptyset$ und $p \in P \setminus U$. Dann gilt: Aus $q \in \angles{U,p} \setminus U$ folgt $q \in \angles{U,q}$.
-\end{prp}
+\begin{defn*}
+  Eine Menge $M \subseteq \real^n$ heißt \emph{konvex}, wenn für je zwei Punkte
+  $x,y \in M$ die Verbindungsstrecke $\{ \lambda x + (1-\lambda) y : \lambda \in
+  [0,1] \} \subseteq M$ ist.
+\end{defn*}
 
+\begin{kor}
+  \begin{enumerate}[a)]
+    \item Falls $M$ konvex ist und $\varphi: \real^n \to \real^m$ eine affine
+      Abbildung, dann ist auch $\varphi(M)$ konvex.
+    \item Die Kugel $\{ x : \| x \| \le r \}$ ist konvex und damit ist auch das
+      Vollellipsoid
+      \[ \frac{x_1^2}{a_1^2} + \ldots + \frac{x_n^2}{a_n^2} \le 1 \]
+      konvex.
+    \item Falls $M \subseteq \real^2$ konvex und abgeschlossen ist und $T$ eine
+      Tangente an $\partial M$ ist, dann liegt $M$ ganz in einem der beiden von
+      $T$ begrenzten Halbräume.
+    \end{enumerate}
+\end{kor}
+
+\begin{proof}
+  Zu a) $\varphi$ bildet Strecken auf Strecken ab.
+
+  Zu b) Für $\lambda \in [0,1]$ ist
+  \[ \| \lambda x + (1-\lambda ) y \| \le \lambda \| x \| + (1-\lambda) \|y\| <
+    r, \]
+  falls $\| x \| < r$ und $\| y \| < r$ ist.
+
+  Annahme: In jedem der beiden Halbräume, die von $T$ begrenzt werden, läge ein
+  Punkt, dann wären wegen $M$ konvex auch die Verbindungsstrecke zu $P$ in in
+  $M$, Widerspruch zu $T$ Tangente.
+\end{proof}
+
+\begin{thm}
+  Für jeden Punkt $P$ der Ellipse gilt, dass die Tangente an die Ellipse in $P$
+  mit den beiden ``Brennstrahlen'' $PF_1$ und $PF_2$ den gleichen
+  Winkel\footnotemark bildet.
+\end{thm}
+\footnotetext{In der Optik: Einfallswinkel $=$ Ausfallswinkel}
+
+\begin{proof}
+  Behauptung $\angle T_1 PF_1 = \angle T_2 PF_2$.
+
+  Spiegle $F_2$ an der Tangente $T$. Nenne das Bild $F_2'$. Die Strecke $F_1
+  F_2'$ ist die kürzeste Verbindung zwischen $F_1$ und $F_2'$.
+
+  Sei $P_1$ der Schnittpunkt von $F_1 F_2'$ mit der Tangente $T$. Also ist $P_1$
+  der Punkt auf $T$, für den $\|F_1 - P_1\| + \| F_2 - P_1 \|$ minimal ist
+  (Beachte $\|F_2 - P_1\|=\|F_2' - P_1\|$).
+
+  Für $P$ gilt das selbe, da jeder Punkt außerhalb der Ellipse eine größere
+  Abstandssumme zu $F_!$ und $F_2$ hat und alle anderen Punkte auf $T$ außerhalb
+  der Ellipse liegen. Also ist $P=P_1$, also stimmen die Winkel überein.
+\end{proof}
+
+\begin{thm}
+  Für jeden Punkt auf der Hyperbel gilt, dass die Tangente an die Hyperbel mit
+  den ``Brennstrahlen'' $PF_1$ und $PF_2$ den gleichen Winkel bildet.
+\end{thm}
+
+\begin{proof}
+  Analog zum Beweis von Satz 5.4.
+\end{proof}
+
+\begin{thm}
+  \begin{enumerate}[a)]
+    \item Die Menge der Punkte, die von der Geraden $y= -c$ und dem Brennpunkt
+      $F= \pmat{0\\c}$ den gleichen Abstand haben, ist die Parabel
+      \[ \left\{ \left. \pmat{x\\y} \right| y = \frac{x^2}{4c} \right\}. \]
+      $p = 2c$ ist der Abstand zwischen Brennpunkt und ``Leitgerade'' ($y=-c$).
+    \item Für jeden Punkt $P$ auf der Parabel gilt: Die Tangente an die Parabel
+      in $P$ halbiert den Winkel zwischen dem Strahl $PF$ und dem Strahl von
+      $P$, der die Leitgerade senkrecht schneidet.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Zu a):
+  \[ x^2 + (y-c)^2 = (y+c)^2 \qLRq y = \frac{x^2}{4c}. \]
+
+  Zu b):
+  \[ \diff{y}{x} = \frac{x}{2c}, \quad \angles{\pmat{1 \\ x/2c},
+      \pmat{0\\c}-\pmat{x\\-c}} = 0, \]
+  also trifft die Tangente die Verbindungsgerade zwischen $F$ und dem Fußpunkt
+  auf der Leitgeraden senkrecht.
+\end{proof}
+
+Anwendung:
+\begin{itemize}
+  \item Parabelantenne
+  \item Parabolspiegel
+  \item Brennspiegel
+\end{itemize}
+
+\subsection{Klassifikation und Beschreibung der dreidimensionalen Quadriken}
+Jede Variable kommt in der Normalform quadratisch vor.
+
+\begin{itemize}
+  \item Ellipsoid mit den Halbachsen $a,b,c$:
+    \[ \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1 \]
+    Scheitel:
+    \[ \pmat{\pm a\\0\\0}, \pmat{0\\\pm b\\0}, \pmat{0\\0\\\pm c} \]
+    Spezialfälle: Sind zwei der Halbachsen gleich lang, ergibt sich ein
+    Rotationsellipsoid. Ist $a=b=c$, so ergibt sich eine Sphäre.
+  \item Einschaliges Hyperboloid:
+    \[ \frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 1 \]
+    Spezialfall: Falls $a=b$, so ergibt sich ein einschaliges
+    Rotationshyperboloid.
+  \item Zweischaliges Hyperboloid:
+    \[ \frac{x^2}{a^2} - \frac{y^2}{b^2} - \frac{z^2}{c^2} = 1 \]
+    Spezialfall: Für $b=c$ zweischaliges Rotationshyperboloid
+  \item Punkt:
+    \[ \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 0  \qLRq
+      \pmat{x\\y\\z} = \pmat{0\\0\\0} \]
+  \item Elliptischer Kegel bzw. Doppelkegel:
+    \[ \frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 0 \]
+    Spezialfall: Falls $a=b$ Rotationsdoppelkegel
+  \item Elliptisches Paraboloid:
+    \[ \frac{x^2}{a^2} + \frac{y^2}{b^2}  = z \]
+    Spezialfall: Falls $a=b$ Rotationsparaboloid
+  \item Hyperbolisches Paraboloid:
+    \[ \frac{x^2}{a^2} - \frac{y^2}{b^2}  = z \]
+  \item Wenn eine Variable gar nicht vorkommt, erhält man einen Zylinder über
+    einer Quadrik im $\real^2$.
+\end{itemize}
+
+\begin{thm}
+  Sei $H \subseteq \real^3$ ein einschaliges Hyperboloid.
+  \begin{enumerate}[a)]
+  \item Durch jeden Punkt von $H$ gehen genau zwei Geraden, die ganz in $H$
+    enthalten sind.
+  \item Die Menge der Geraden auf $H$ kann man in zwei Teilmengen $G$ und $G'$
+    zerlegen, sodass durch jeden Punkt von $H$ jeweils genau eine Gerade aus $G$
+    und eine aus $G'$ geht.
+
+    Ferner gilt für je zwei verschiedene Geraden $g_1,g_2 \in G$ und $g_1',g_2'
+    \in G'$:
+    \begin{itemize}
+    \item $g_1$ und $g_2$ sind windschief zueinander.
+    \item $g_1'$ und $g_2'$ sind windschief zueinander.
+    \item $g_1$ und $g_1'$ schneiden sich oder sind parallel zueinander.
+    \end{itemize}
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Da alle Behauptungen des Satzes unter bijektiven affinen Abbildungen erhalten
+  bleiben, können wir o.B.d.A. annehmen, dass das Hyperboloid die Form
+  \[ H = \left\{ \left. \pmat{x_1\\x_2\\x_3} \right| x_1^2 + x_2^2 - x_3^2 = 1
+    \right\} \]
+  hat (Rotationshyperboloid).
+
+  Die Gerade $\pmat{1\\0\\0} + \real \pmat{u_1 \\ u_2 \\ u_3}$ durch
+  $\pmat{1\\0\\0}$ liegt genau dann auf $H$, wenn für alle $t \in \real$
+  \[ (1+t u_1)^2 + (tu_2)^2 - (tu_3)^2 = 1 \]
+  gilt. Damit folgt
+  \[ 1 + 2 t u_1 + t^2(u_1^2 + u_2^2 - u_3^2 = 0), \]
+  also folgt $u_1 = 0$ und $u_2^2 = u_3^2$ und damit $u_2=u_3$ oder $u_2=-u_3$.
+
+  Damit haben wir die beiden Geraden
+  \[ g_0 = \pmat{1\\0\\0} + \real \pmat{0\\1\\1}, \quad g_0' = \pmat{1\\0\\0} +
+    \real \pmat{0\\1\\-1} \]
+  auf $H$.
+
+  Die Geradenschar $G$ sei die Menge der Geraden, die aus $g_0$ durch Rotation
+  um die $z$-Achse hervorgehen. $G'$ entsprechend mit $g_0'$.
+
+  $\bigcup G \subseteq H$, $\bigcup G' \subseteq H$ ist klar, da $H$
+  rotationssymmetrisch (zur $z$-Achse) ist.
+
+  Die Gerade $g_0$ trifft jeden der Kreise
+  \[ \left\{  \left. \pmat{x_1\\x_2\\x_3} \right| x_1^2 + x_2^2 - x_3^2 = 1
+      \text{ und } x_3 = h \right\} \]
+  in genau einem Punkt. Folglich gilt, dass durch jeden Punkt in $H$ genau eine
+  Gerade aus $G$ und eine aus $G'$ geht. Also ist $\bigcup G = H = \bigcup G'$.
+  Ferner folgt, dass je zwei verschiedene Geraden aus $G$ (bzw. aus $G'$) sich
+  nicht schneiden.
+
+  Sie sind auch nicht parallel, da
+  \[ \begin{pmatrix}
+      \cos \alpha & \sin \alpha & 0 \\
+      - \sin \alpha & \cos \alpha & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \cdot \pmat{0\\1\\1} \ne \pmat{0\\1\\1} \]
+  für $\alpha \notin 2 \pi \integer$.
+
+  Betrachten wir $g \in G$ und $g' \in G'$ und den Schnitt mit dem Kreis $x_1^2
+  + x_2^2 = 1$, $x_3 = 0$. Wegen der Symmetrie von $H$ gibt es eine Spiegelung
+  an einer Ebene $E$, welche $H$ auf sich abbildet und $g$ auf $g'$. Falls $g$
+  $E$ schneidet, dann ist das auch ein Schnittpunkt mit $g'$. Anderenfalls ist
+  $g$ parallel zu $E$ und damit sind auch $g$ und $g'$ parallel.
+
+  Keine weiteren Geraden auf $H$: Sei $h$ eine Gerade auf $H$. Sie kann nicht
+  parallel zur $xy$-Ebene sein, schneidet also die $xy$-Ebene. Nach Drehung um
+  die $z$-Achse kann der Schnittpunkt auf $\pmat{1\\0\\0}$ abgebildet werden.
+  Durch $\pmat{1\\0\\0}$ gehen aber nur $g_0 $ und $g_0'$.
+\end{proof}
+
+\clearpage
+
+\subsection{Geraden auf dem hyperbolischen Paraboloid}
+\begin{thm}
+  Sei $H \subseteq \real^3$ ein hyperbolisches Paraboloid
+  \[ H = \left\{ \left. \pmat{x\\y\\z} \right| z = \frac{x^2}{a^2} -
+      \frac{y^2}{b^2} \right\} \]
+  \begin{enumerate}[a)]
+  \item Durch jeden Punkt von $H$ gehen genau zwei Geraden, welche ganz in $H$
+    enthalten sind.
+  \item Die Menge der Geraden auf $H$ kann in zwei Teilmengen $G$ und $G'$
+    zerlegt werden, sodass durch jeden Punkt in $H$ jeweils genau eine Gerade
+    aus $G$ und $G'$ geht.
+  \end{enumerate}
+
+  Ferner gilt:
+  \begin{enumerate}[i)]
+  \item Je drei Geraden aus $G$ (bzw. aus $G'$) sind paarweise windschief, aber
+    haben linear abhängige Richtungsvektoren, sie sind alle parallel zu einer
+    Ebene, welche die $z$-Achse enthält.
+  \item Je zwei Geraden $g \in G$ und $g' \in G'$ schneiden sich.
+  \item Beweglichkeit des Stangenmodells: Es gibt eine Schar von affinen
+    Abildungen mit einem Parameter (welche keine Bewegungen sind), die alle
+    Geraden auf $H$ isometrisch abbilden.
+  \end{enumerate}
+\end{thm}
+
+\begin{defn*}
+  Eine \emph{Homothetie} ist eine Abbildung $\varphi: \real^n \to \real^n$ der
+  Form
+  \[ \varphi(x) = \lambda x + t \]
+  für alle $x \in \real^n$, wobei $\lambda > 0$ sei.
+
+  Zwei Mengen $M_1$ und $M_2$ heißen \emph{homothetisch}, falls eine Homothetie
+  $\varphi:\real^n \to \real^n$ gibt mit $\varphi(M_1) = M_2$.
+\end{defn*}
+
+\subsection*{Schnitt einer Quadrik im $\real^3$ mit einer Schar paralleler Ebenen}
+Sei $Q$ ein Ellipsoid, ein Hyperboloid (ein- oder zweischalig) oder ein
+Doppelkegel ($\rang A = 3$, Menge $\ne \emptyset$, kein Punkt).
+
+Schnitt mit der Schar von parallelen Ebenen
+\[ \{ x \in \real^3 | \angles{x,u} = a \} \]
+mit $u$ fest und $\| u \| = 1$, $a \in \real$ (Scharparameter).
+
+Durch eine Bewegung können wir erreichen, dass $u = (0,0,1)^T$ und ferner, dass
+der Schnitt mit der (neuen) $xy$-Ebene in Normalform ist. Damit können wir für
+die Form von $Q$ zwei Fälle unterscheiden:
+
+1. Fall:
+\[ a_{11} x^2 + a_{22} y^2 + a_{33} z^2 + 2 a_{13}xz + 2 a_{23} yz + 2 b_3 z +
+  c = 0. \]
+2. Fall:
+\[ a_{11} x^2 + a_{33} z^2 + 2 a_{13}xz + 2 a_{23} yz + 2 b_2 y + 2 b_3 z +
+  c = 0 \]
+mit $a_{11} \ne 0$, $a_{23} \ne 0$ wegen
+\[ \det \pmat{ a_{11} & 0 & a_{13} \\ 0 & 0 & a_{23} \\ a_{31} & a_{32} &
+    a_{33}} \ne 0, \quad a_{13} = a_{31}, \quad a_{23} = a_{32}, \]
+das heißt
+\[ a_{11} x^2 + 2 a_{13} xz + (a_{33} z^2 + 2 b_3 z + c) = -2(a_{23}z +
+  b_2)y. \] 
+
+Im ersten Fall erhalten ir für $z=a$ eingesetzt
+\[ 0 = a_{11} \left( x + \frac{a_{13}}{a_{11}} a \right)^2
+  + a_{22} \left( y + \frac{a_{23}}{a_{22}} a \right)^2
+  + \left( a_{33} - \frac{a_{13}^2}{a_{11}} - \frac{a_{23}^2}{a_{22}} \right)
+  a^2, \]
+also für jedes feste $a$ (in der Ebene $z=a$) eine Quadrik mit Mittelpunkt
+$(-\frac{a_{31}}{a_{11}}, -\frac{a_{32}}{a_{22}}, 1)^T a$, das heißt die
+Mittelpunkte liegen auf einer Geraden.
+
+Ferner sind es entweder homothetische Ellipsen (bzw. $\emptyset$ oder ein Punkt)
+oder es sind Hyperbeln mit demselben Winkel zwischen den Asymptoten (bzw. ein
+Paar von Geraden mit demselben Winkel).
+
+Im zweiten Fall erhalten wir für $z=a$ eingesetzt stets eine Parabel, außer im
+Fall
+\[ 2(a_{23}a + b_2) = 0. \]
+Dann ist es die leere Menge, ein paar paralleler Geraden oder eine Gerade.
 \end{document}

@@ -1,4 +1,6 @@
+\setcounter{secnumdepth}{1}
 \section{Isometrien des \texorpdfstring{$\real^n$}{Rn}}
+\setcounter{secnumdepth}{0}
 Eine Isometrie eines metrischen Raumes $(X, d)$ ist eine bijektive Abbildung $f: X \to X$ mit
 \[ d( f(x), f(y) ) = d(x,y) \text{ für alle } x, y \in X. \]
 
@@ -55,9 +57,10 @@ Wir wollen die Isometriegruppe des $(\real^n, d)$ untersuchen mit $d(x,y) := \| 
 \begin{thm}
  Sei $g: V \to V$ eine affine Abbildung mit $\dim V < \infty$ ($V$ euklidischer Vektorraum) und $f: V \to V$ mit $f(x) = g(x) - t$ mit $t := g(0)$ die zugehörige lineare Abbildung.
  
- Falls 1 \emph{kein} Eigenwert von $f$ ist, dann hat $g$ hat genau einen Fixpunkt $x_0$ und lässt sich schreiben als\footnote{$f$ ist also im obigen Sinn ähnlich zu $g$.}
+ Falls 1 \emph{kein} Eigenwert von $f$ ist, dann hat $g$ hat genau einen Fixpunkt $x_0$ und lässt sich schreiben als\footnotemark
  \[ g(x) = f(x-x_0) + x_0. \]
 \end{thm}
+\footnotetext{$f$ ist also im obigen Sinn ähnlich zu $g$.}
 
 \begin{proof}
  Für einen Fixpunkt von $g$ gilt
@@ -83,7 +86,7 @@ Sei $f:\real^n \to \real^n$ und $f(x) = Ax + t$ eine Isometrie, also $A \in O(n)
  \[ \tilde{f}(x) = A(x-x_0) + x_0. \qedhere \]
 \end{proof}
 
-\subsection*{Klassifikation der Isometrien des $\real^2$}
+\subsection{Klassifikation der Isometrien des \texorpdfstring{$\real^2$}{IR2}}
 Sei $A \in O(2)$, also $\left(\begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix}, \begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix}\right)$ ist eine Orthonormalbasis des $\real^2$ und $a_{11}^2 + a_{21}^2 = 1$. Dann gibt es $\varphi \in [0,2 \pi)$ mit $a_{11} = \cos \varphi$, $a_{21} = \sin \varphi$ und es ist entweder $\begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix} = \begin{pmatrix} - \sin \varphi \\ \cos \varphi \end{pmatrix}$, falls $\det A = 1$ oder $\begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix} = \begin{pmatrix} \sin \varphi \\ - \cos \varphi \end{pmatrix}$, falls $\det A = -1$.
 
 \begin{enumerate}[1)]
@@ -103,6 +106,8 @@ Sei $A \in O(2)$, also $\left(\begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix}, \b
  
  Die affine Abbildung $f(x) = Ax + t_1 + t_2$ mit $t_1 \in \ker(A-E)$, $t_2 \in \ker(A-E)^\bot$ beschreibt für $t_1 = 0$ eine \emph{Spiegelung} an einer Geraden und für $t_1 \ne 0$ eine \emph{Schubspiegelung} an einer Geraden.
 \end{enumerate}
+
+\newpage
 
 %\begin{table}[ht]
  {\center \small
@@ -143,7 +148,9 @@ Sei $A \in O(2)$, also $\left(\begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix}, \b
 
 Vorschlag zum zusätzlichen Selbststudium: Die 17 kristallographischen Gruppen der Ebene
 
-\subsection*{Isometrien des $\real^3$}
+\newpage
+
+\subsection{Isometrien des \texorpdfstring{$\real^3$}{IR3}}
 Zunächst sei $A \in O(3)$ eine orthogonale $3 \times 3$-Matrix. Das charakteristische Polynom $\chi_A$ ist vom Grad 3, hat also mindestens eine reelle Nullstelle. Ferner haben alle reellen oder komplexen Nullstellen den Betrag 1.
 
 Falls das charakteristische Polynom über $\real$ in Linearfaktoren zerfällt, gibt es eine Orthonormalbasis des $\real^3$ aus Eigenvektoren von $A$ und die Matrix $A$ ist \emph{bezüglich dieser Basis} von der Form 
@@ -241,7 +248,7 @@ Im ersten Fall ($\det A = 1$) ist die lineare Abbildung eine \emph{Drehung} um d
  Im Gegensatz dazu: bei Schraubungen wähle den Basisvektor $b_1 \in \ker(A-E)$ (mit $\|b_1\| = 1$), so dass $t_1 = \lambda b_1$ mit $\lambda > 0$. Dann ist $\varphi$ auch eindeutig bestimmt (in der Drehebene, vgl. $\real^2$).
 \end{bem}
 
-\subsection*{Normale Endomorphismen des $\real^n$}
+\subsection{Normale Endomorphismen des \texorpdfstring{$\real^n$}{IRn}}
 \begin{mydef}
 Sei $V$ ein unitärer oder euklidischer Raum mit Skalarprodukt $\langle \cdot, \cdot \rangle$ und $f:V \to V$ ein Endomorphismus. Falls $f^*:V \to V$ ein Endomorphismus ist, sodass für alle $x,y \in V$ gilt
 \[ \langle f(x), y \rangle = \langle x, f^*(y) \rangle, \]
@@ -257,9 +264,10 @@ Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = 
  \begin{enumerate}[(1)]
   \item Es gibt eine Orthonormalbasis aus Eigenvektoren von $A$.
   \item $A$ ist normal.
-  \item $A$ ist unitär ähnlich zu einer Diagonalmatrix, das heißt es gibt eine unitäre Matrix\footnote{$S \in U(S)$: Zeilen- und Spaltenvektoren sind orthonormal bzgl. des Standardskalarprodukts, $S^{-1} = S^*$.} $S$ mit $S^{-1} A S = D$, $D$ Diagonalmatrix.
+  \item $A$ ist unitär ähnlich zu einer Diagonalmatrix, das heißt es gibt eine unitäre Matrix\footnotemark\, $S$ mit $S^{-1} A S = D$, $D$ Diagonalmatrix.
  \end{enumerate}
 \end{thm}
+\footnotetext{$S \in U(S)$: Zeilen- und Spaltenvektoren sind orthonormal bzgl. des Standardskalarprodukts, $S^{-1} = S^*$.}
 
 \begin{folg}
  Sei $A \in \compmat{n}{n}$, dann sind äquivalent:
@@ -287,7 +295,7 @@ Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = 
 \end{proof}
 
 \begin{thm}[Normalform für über $\complex$ diagonalisierbare Matrizen]
- Sei $A \in \realmat{n}{n}$ und $A$ als Element von $\compmat{n}{n}$ aufgefasst diagonalisierbar\footnote{$A$ ist zu einer Diagonalmatrix $D$ ähnlich, also ex. $S$, so dass $D=S^{-1} A S$.}. Dann gibt es eine Matrix $S \in \GL(n, \real)$ für welche $S^{-1} A S$ die Gestalt
+ Sei $A \in \realmat{n}{n}$ und $A$ als Element von $\compmat{n}{n}$ aufgefasst diagonalisierbar\footnotemark. Dann gibt es eine Matrix $S \in \GL(n, \real)$ für welche $S^{-1} A S$ die Gestalt
  \[ S^{-1} A S = \begin{pmatrix}
      d_1 &        &     &     &        &      \\
          & \ddots &     &     & 0      &      \\
@@ -300,6 +308,7 @@ Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = 
  
  Ferner gilt: Falls $A$ normal ist, dann kann $S \in O(n)$ gewählt werden, das heißt $S^T = S^{-1}, S \in \realmat{n}{n}$).
 \end{thm}
+\footnotetext{$A$ ist zu einer Diagonalmatrix $D$ ähnlich, also ex. $S$, so dass $D=S^{-1} A S$.}
 
 \begin{proof}
  Das charakteristische Polynom $\chi_A = \det ( XE - A )$ zerfällt über $\complex$ in Linearfaktoren. Da $A \in \realmat{n}{n}$ ist $\det(XE-A)$ ein Polynom mit reellen Koeffizienten und die Nullstellen kommen reell oder in Paaren komplex konjugierter Zahlen vor.
@@ -343,14 +352,14 @@ Ein Endomorphismus $f$ heißt \emph{normal}, falls $f^*$ existiert und $f f^* = 
  Insgesamt haben wir also eine reelle Orthonormalbasis gefunden, bezüglich der die normale Matrix $A$ die gewünschte Normalform hat.
 \end{proof}
 
-\subsection*{Geometrische Interpretation}
+\subsection{Geometrische Interpretation}
 Sei $z = a \pm ib = |z| e^{\pm i \varphi} = |z| ( \cos \varphi \pm i \sin \varphi)$ ein paar komplex konjugierter Eigenwerte von $A$ mit $b \ne 0$. Die zugehörige $2 \times 2$-Matrix
 \[ \begin{pmatrix} |z| \cos \varphi & - |z| \sin \varphi \\ |z| \sin \varphi & |z| \cos \varphi \end{pmatrix}
    = |z| \begin{pmatrix} \cos \varphi & - \sin \varphi \\ \sin \varphi & \cos \varphi \end{pmatrix} \]
 beschreibt eine \emph{Drehstreckung} mit Streckungsfaktor $|z| = \sqrt{a^2 + b^2}$ und Drehwinkel $\varphi$ (mit $\varphi \ne 0, pi$).
 
 \textbf{Folgerung aus Satz 1.8:}
-\begin{thm}
+\begin{thm}{}
  \begin{enumerate}[a)]
   \item Sei $A \in O(n)$ und $k = \dim \ker(A-E)$. Dann lässt sich $A$ als Produkt von $n-k$ Spiegelungen an Hyperebenen schreiben.
   \item Jede Isometrie des $\real^n$ lässt sich als Produkt von höchstens $n+1$ Spiegelungen an (affinen) Hyperebenen schreiben.

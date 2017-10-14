@@ -1,0 +1,357 @@
+\setcounter{secnumdepth}{1}
+\section{Die Struktursätze und Zentralkollineationen}
+\setcounter{secnumdepth}{0}
+
+\begin{thm}[Koordinatierungssatz, 1. Hauptsatz der projektiven Geometrie]
+ Sei $\proj$ ein desarguesscher projektiver Raum. Dann gibt es einen Schiefkörper $K$, einen $K$-Vektorraum $V$ und eine Kollineation\footnotemark $\alpha: \proj \to \proj(V)$ (das heißt $\proj \simeq \proj(V)$). 
+\end{thm}
+\footnotetext{Def. siehe Seite \pageref{def:kollineation}.}
+
+Der Beweis des Satzes ist sehr lang und wird daher weggelassen.
+
+\subsection{Darstellung von Kollineationen durch bijektive semilineare Abbildungen}
+\begin{defn*}
+ Seien $V, V'$ Vektorräume über $K$ bzw. $K'$ (Schiefkörper). Eine \emph{semilineare Abbildung} $\varphi: V \to V'$ bezüglich eines Körperisomorphismus $\alpha: K \to K'$ ist eine Abbildung, sodass für alle $x,y \in V$ gilt
+ \[ \varphi(x+y) = \varphi(x) + \varphi(y) \]
+ und für alle $x \in V$, $\lambda \in K$ gilt
+ \[ \varphi( \lambda x ) = \alpha(\lambda) \varphi(x). \]
+\end{defn*}
+
+\begin{exmp*}
+ $\varphi: \complex^3 \to \complex^3$ mit
+ \[ \varphi\left( \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} \right) = \begin{pmatrix} \obar{x_1} \\ \obar{x_2} \\ \obar{x_3} \end{pmatrix} \]
+ ist eine semilineare Abbildung bezüglich der komplexen Konjugation.
+ \[ \varphi\left( \lambda \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} \right) = \obar{\lambda} \begin{pmatrix} \obar{x_1} \\ \obar{x_2} \\ \obar{x_3} \end{pmatrix} = \obar{\lambda} \varphi\left( \lambda \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} \right). \]
+\end{exmp*}
+
+\begin{thm}
+ Seien $V, V'$ Vektorräume über Schiefkörpern $K$ bzw. $K'$ mt $\dim V = \dim V' \ge 3$. Sei $\varphi : V \to V'$ semilinear bezüglich eines Körperisomorphismus $\alpha: K \to K'$ und bijektiv, dann
+ \begin{enumerate}[a)]
+  \item $\obar{\varphi} : \proj(V) \to \proj(V')$ mit $\obar{\varphi}( [x] ) := [\varphi(x)]$ ist eine Kollineation\footnotemark, wenn $x, y$ linear unabhängig sind.
+  \item Falls $\varphi': V \to V'$ ebenfalls semilinear bezüglich $\alpha': K \to K'$ und bijektiv ist mit $\obar{\varphi}' = \obar{\varphi}$, dann gibt es genau ein $b \in K' \setminus \{ 0 \}$, sodass $\varphi'(x) = b \cdot \varphi(x)$ für alle $x \in K$ und $\alpha'(\lambda) = b \alpha(\lambda) b^{-1}$.
+ \end{enumerate}
+\end{thm}
+\footnotetext{Das heißt $\obar{\varphi}([x,y]) = [ \varphi(x), \varphi(y)]$.}
+
+\begin{proof}
+ \begin{enumerate}[a)]
+  \item $\obar{\varphi}$ ist wohldefiniert:
+   \[ \obar{\varphi}( [\lambda x] ) = [\alpha(\lambda) \varphi(x) ] = [\varphi(x)] \]
+   für $\lambda \in K \setminus \{0\}$.
+   \[ \begin{aligned}
+      \varphi(Kx + Ky )
+      &= \{ \varphi( \lambda x + \mu y) : \lambda, \mu \in K \} \\
+      &= \{ \alpha( \lambda ) \varphi(x) + \alpha( \mu ) \varphi(y) \} \\
+      &= K' \varphi(x)  + K' \varphi(y),
+      \end{aligned} \]
+   $\obar{\varphi}$ bildet also Geraden in $\proj(V)$ auf Geraden in $\proj(V')$ ab.
+  \item Eindeutigkeit bis auf Vielfache: $\eta := \varphi^{-1} \circ \varphi_ V \to V$ ist eine bijektive semilineare Abbildung, bei der jeder Vektor auf ein Vielfaches ($\ne 0$) abgebildet wird.
+  
+  Seien $x,y$ linear unabhängig. Dann folgt, dass es $\lambda_1, \lambda_2, \lambda_3 \in K \setminus \{ 0 \}$ gibt mit
+  \[ \eta(x) = \lambda_1 x, \quad \eta(y) = \lambda_2 y, \quad \eta(x+y) = \lambda_3 (x+y)  = \eta(x) + \eta(y) = \lambda_1 x + \lambda_2 y, \]
+  also $\lambda_1 = \lambda_2 = \lambda_3$. Damit ist der Faktor für linear unabhängige Vektoren derselbe. Somit haben wir für alle $x,y \in V$ denselben Faktor, das zu $x,y$ einen linear unabhängigen Vektor $z$ gibt. Der Faktor $b$ ist eindeutig bestimmt, da für $x \ne 0$ gilt
+  \[ \eta(x) = bx = b'x \qRq b = b'. \]
+  Also ist $\eta = b \cdot \id$ und damit folgt $\varphi' = b \cdot \varphi$.
+  
+  Ferner ist
+  \[ \varphi( \lambda x ) = \alpha'(\lambda) \varphi'(x) = \alpha'(\lambda) b \varphi(x) \]
+  und
+  \[ b \varphi(\lambda x) = b \alpha(\lambda) \varphi(x), \]
+  daraus folgt für $x \ne 0$
+  \[ \alpha'(\lambda) = b \alpha( \lambda ) b^{-1}. \qedhere \]
+ \end{enumerate}
+\end{proof}
+
+$\obar{\varphi}$ injektiv: Falls $[x] \ne [y]$, also $x$ und $y$ linear unabhängig, folgt wegen der Bijektivität und Semilinearität von $\varphi$, dass $\varphi(x)$ und $\varphi(y)$ linear unabhängig sind. Damit gilt $[\varphi(x)] \ne [\varphi(y)]$.
+
+\begin{rmrk*}
+ Falls $\varphi_1 : V \to V'$ semilinear bezüglich $\alpha_1$ und $\varphi_2: V' \to V''$ semilinear bezüglich $\alpha_2$ ist, dann ist $\varphi_2 \circ \varphi_1: V \to V''$ semilinear bezüglich $\alpha_2 \circ \alpha_1$.
+\end{rmrk*}
+
+\begin{thm}[2. Hauptsatz der projektiven Geometrie]
+ \textbf{Darstellung von Kollineationen durch semilineare Abbildungen.} \\
+ Seien $V, V'$ Vektorräume über Schiefkörpern $K$ bzw. $K'$ mit $3 \le \dim V = \dim V' < \infty$. Sei $\psi: \proj(V) \to \proj(V')$ eine Kollineation. Dann gibt es eine eindeutige bijektive Abbildung $\varphi: V \to V'$, die semilinear ist bezüglich eines Körperisomorphismus $\alpha: K \to K'$, sodass $\obar{\varphi} = \psi$,
+ \[ \obar{\varphi}([x]) = [\varphi(x)] = \psi( [x] ) \quad \forall [x] \in \proj(V). \]
+\end{thm}
+
+\subsection{Zentralkollineationen}
+\begin{defn*}
+ Eine Kollineation $\alpha: \proj \to \proj$ heißt eine \emph{Zentralkollineation}, falls es eine Hyperebene $H$ (\emph{Achse} von $\alpha$) gibt mit folgenden Eigenschaften:
+ \begin{enumerate}
+  \item Für alle $x \in H$ gilt $\alpha(x) = x$.
+  \item Jede Gerade $g$ durch $z$ wir auf sich selbst abgebildet, das heißt $\alpha(g) = g$.
+ \end{enumerate}
+\end{defn*}
+
+\begin{exmp*}[Zentralkollineation mit $z \notin H$]
+ $V = \tilde{V} \times K$, $\begin{pmatrix} x \\ a \end{pmatrix} \in V$. $x \in \tilde{V}$, $a \in K$, $K$ Schiefkörper. Sei $H = [\tilde{V} \times \{ 0 \}]$, $z = \left[ \begin{pmatrix} 0 \\ 1 \end{pmatrix} \right]$, $0 \in \tilde{V}$. 
+ 
+ Die Abbildung $\varphi : \tilde{V} \times K \to \tilde{V} \times K$ mit
+ \[ \varphi\left( \begin{pmatrix} x \\ a \end{pmatrix} \right) := \begin{pmatrix} \lambda x \\ a \end{pmatrix} \]
+ ist bijektiv und $\obar{\varphi}$ ist eine Zentralkollineation mit Achse $H$ und Zentrum $z$.
+\end{exmp*}
+
+\begin{exmp*}[Zentralkollineation mit $z \in H$]
+ Bezeichnungen wie oben. Sei $H = [\tilde{V} \times \{ 0 \}]$, $z = \left[ \begin{pmatrix} t \\ 0 \end{pmatrix} \right]$, $t \ne 0 \in \tilde{V}$.
+ 
+ Für $\lambda \in K \setminus \{ 0 \}$ beliebig gilt: Die Abbildung $\varphi: V \to V$ mit
+ \[ \varphi\left( \begin{pmatrix} x \\ a \end{pmatrix} \right) := \begin{pmatrix} x + \lambda at \\ a \end{pmatrix} \]
+ ist eine lineare, bijektive Abbildung und $[\varphi]$ ist eine Zentralkollineation mit Achse $H$ und Zentrum $z$.
+ 
+ $\varphi( (x, 0)^T ) = ( x, 0 )^T$. Sei $g$ eine Gerade durch $[ (x, 0)^T ]$. Sie ist von der Form $g = K(t,0)^T + K(x,1)^T$ und
+ \[ \obar{\varphi}(g) = \left[ K \begin{pmatrix} t \\ 0 \end{pmatrix} + K \begin{pmatrix} x+ \lambda t \\ 1 \end{pmatrix} \right] = \left[ K \begin{pmatrix} t \\ 0 \end{pmatrix} + K \begin{pmatrix} x \\ 1 \end{pmatrix} \right] = g. \]
+\end{exmp*}
+
+\textbf{Äquivalenz der Begriffe aus der linearen Algebra für $V$ und der Begriffe aus der projektiven Geometrie für $\proj(V)$.}
+Sei $V$ ein Vektorraum über einem Schiefkörper $K$ mit $\dim V \ge 3$. Für $M \subseteq V$ bezeichne $[M] := \{ [x] : x \in M \setminus\{ 0 \} \} \subseteq \proj(V)$. Es gilt
+\begin{enumerate}
+ \item $U \subseteq V$ ist ein linearer Unterraum $\Leftrightarrow$ $0 \in U$ und $[U]$ ist ein Unterraum von $\proj(V)$.
+ \item Für $M \subseteq V$ gilt $[ \operatorname{Lin} M ] = \angles{[M]}$, dabei ist $\operatorname{Lin} M$ die lineare Hülle von $M$ und $\angles{\cdot}$ ein Unterraum von $\proj(V)$.
+ \item $M \subseteq V$ ist linear unabhängig $\Leftrightarrow$ $0 \notin M$ und $[M]$ ist in $\proj(V)$ unabhängig.
+ \item $M \subseteq V$ ist eine Basis von $V$ $\Leftrightarrow$ $0 \notin M$, $[M]$ ist eine Basis von $\proj(V)$ und $[x] \ne [y]$ für alle $x,y \in M$ mit $x \ne y$.
+ \item $\dim V = \dim \proj(V) + 1$.
+\end{enumerate}
+
+\begin{proof}
+ Klar bzw. einfache Übung.
+\end{proof}
+
+\begin{rmrk*}
+ Sei $\proj$ ein projektiver Raum und $H \subseteq P$ eine Hyperebene und $g$ eine Gerade. Dann gilt entweder $(g) \subseteq H$ oder $g$ schneidet $H$ in genau einem Punkt.
+\end{rmrk*}
+
+\begin{proof}
+ Falls $(g) \nsubseteq H$ und $p \in (g) \setminus H$, dann ist nach 2.18
+ \[ \bigcup \{ (pq) : q \in H \} = \angles{H,p} = \proj, \]
+ da $H$ eine Hyperebene ist. 
+ 
+ Sei $r \in (g) \setminus \{p\}$, dann gibt es $q \in H$ mit $r \in (pq)$, also $g = pq$.
+\end{proof}
+
+\begin{defn*}
+ Eine Zentralkollineation mit dem Zentrum nicht auf der Achse heißt auch eine \emph{Homologie}. 
+ 
+ Eine Zentralkollineation mit dem Zentrum auf der Achse heißt auch eine \emph{Elation}.
+\end{defn*}
+
+\subsection{Eigenschaften von Zentralkollineationen}
+\begin{deno*}
+ $\Gamma(H,z)$ bezeichne die Menge der Zentralkollineationen mit Achse $H$ und Zentrum $z$.
+\end{deno*}
+
+\begin{lem}
+ $(\Gamma(H,z), \circ)$ ist eine Gruppe (eine Untergruppe der Kollineationen $\proj \to \proj$).
+\end{lem}
+
+\begin{proof}
+ $\id \in \Gamma$ klar. Ebenso $\alpha, \beta \in \Gamma \Rightarrow \beta \circ \alpha \in \Gamma$ klar. Wenn $\alpha \in \Gamma$, dann ist auch $\alpha^{-1} \in \Gamma$, denn für $p \in H$ folgt 
+ \[ p = \alpha^{-1} ( \alpha(p) ) \overset{p \in \text{Achse}}{=} \alpha^{-1}(p), \]
+ für eine Gerade $g$ durch $z$ gilt
+ \[ g = \alpha^{-1}( \alpha (g) ) = \alpha^{-1} (g). \qedhere \]
+\end{proof}
+
+\begin{lem}
+ Seien $\alpha \in \Gamma(H,z)$, $p \in P$ mit $p \ne z$, $p' = \alpha(p)$. Dann gilt für jeden Punkt $x$ mit $x \in H$, $x \notin (pz)$:
+ \[ x' := \alpha(x) = xz \cap p'f, \]
+ wobei $f = px \cap H$.
+\end{lem}
+
+\begin{proof}
+ Sei $x \in (xz)$, dann ist $\alpha(x) \in \alpha(xz) = xz$, da $z$ Zentrum. Sei $f := px \cap H$, also $\alpha(f) = f$, da $f \in H$, also 
+ \[ \alpha(x) \in \alpha( xf ) = \alpha( pf ) = \alpha(p) \alpha(f) = p'f. \]
+ Da $p \notin (xz)$, ist $f \notin (xz)$, also $xz \notin p'f$, also ist $\alpha(x) = xz \cap p'f$.
+\end{proof}
+
+\begin{folg}[Eindeutigkeit von Zentralkollineationen]
+ Sei $\alpha \in \Gamma(H,z)$ und $\alpha \ne \id$. $p \in \proj \setminus H$, $p \ne Z$. Dann gilt
+ \begin{enumerate}[a)]
+  \item $\alpha(p) \ne p$.
+  \item Für $\beta \in \Gamma(H,z)$ folgt aus $\beta(p) = \alpha(p)$, dass $\beta = \alpha$ ist.
+ \end{enumerate}
+\end{folg}
+
+\begin{proof}
+ \begin{enumerate}[a)]
+  \item Angenommen $p' = \alpha(p) = p$. Für $x \in \proj \setminus H$, $x \notin (pz)$ gilt nach 3.4
+  \[ \alpha(x) = zx \cap fp' = zx \cap fp = x, \]
+  wobei $f = px \cap H$. Für $x \in (pz)$ folgt mit Hilfe eines $p_0 \in \proj \setminus (H \cup (pz))$, wegen $\alpha( p_0 ) = p_0$ (gerade gezeigt), dass $\alpha(x) = x$ ist. Also $\alpha = \id$.
+  \item Klar mit 3.4, betrachte zunächst $\alpha(x) = \beta(x)$ für $x \notin (pz)$, damit folgt die Behauptung aber auch für $x \in (pz)$. \qedhere
+ \end{enumerate}
+\end{proof}
+
+\begin{thm}[Existenz von Zentralkollineationen]
+ Sei $\proj$ desarguessch, $H \subseteq P$ eine Hyperebene, $z, p, p'$ drei verschiedene kollineare Punkte mit $p, p' \notin H$.
+ 
+ Dann gibt es genau eine Zentralkollineation $\alpha: \proj \to \proj$ mit Achse $H$, Zentrum $z$ ($\alpha \in \Gamma(H,z)$) und $\alpha(p) = p'$.
+\end{thm}
+
+\begin{proof}
+ Die Eindeutigkeit folgt aus 3.6.
+ 
+ Die Existenz folgt aus einer Konstruktion nach Lemma 3.5, dafür ist zu zeigen, dass die konstruierte Abbildung eine Kollineation definiert, dafür braucht man den Satz von Desargues.
+\end{proof}
+
+\subsection{Darstellung von Kollineationen}
+Sei $V$ ein $K$-Vektorraum über einem Schiefkörper $K$. Bezeichnungen für einige Gruppen:
+\begin{itemize}
+ \item $GL(V) = \{ f: V \to V : f$ linear, bijektiv $\}$,
+ \item $\Gamma L(V) = \{ f: V \to V : f$ semilinear, bijektiv $\}$,
+ \item $P \Gamma L(V) = \{ \obar{f} : f \in \Gamma L(V) \} = \{ \obar{\varphi} : \proj(V) \to \proj(V) : \varphi$ Kollineation $\}$,
+ \item $PGL(V) = \{ \obar{f} : f \in GL(V) \}$.
+\end{itemize}
+
+\begin{defn*}
+ Eine Kollineation $\varphi: \proj(V) \to \proj(V)$ heißt \emph{projektiv}, falls $\varphi \in PGL(V)$, das heißt falls es $f \in GL(V)$ gibt mit $\obar{f} = \varphi$.
+\end{defn*}
+
+\begin{folg}
+ Eine Kollineation $\varphi \in P\Gamma L(V)$, die eine Gerade $g$ punktweise fest lässt, ist in $PGL(V)$.
+\end{folg}
+
+\begin{proof}
+ Sei $[x] \in (g)$, $f \in \Gamma L(V)$ mit $\obar{f} = \varphi$ und sei o.B.d.A. $f(x) = x$ (gegebenenfalls nach Multiplikation von $f$ mit $\tau \in K \setminus \{ 0 \}$). Sei $y$ linear unabhängig zu $x$ mit $[y] \in g$ und $\lambda \in K$.
+ 
+ Dann ist 
+ \[ [x + \lambda y] = \varphi ([x+\lambda y]) = [f(x+\lambda y)] = [ f(x) + f(\lambda y) ] = [x + f(\lambda y) ], \]
+ also gibt es $\mu \in K \setminus \{0\}$, sodass $x + f(\lambda y) = \mu( x + \lambda y)$, wegen $x,y$ linear unabhängig folgt $\mu = 1$ und damit
+ \[ f(\lambda y) = \lambda y = \alpha(y) f(y) = \alpha(\lambda) y, \]
+ also $\alpha = \id$.
+\end{proof}
+
+\subsection{Normalteiler}
+\textbf{Zur Erinnerung:}
+\begin{thm*}[Abbildungssatz]
+ Sei $f:A \to B$ eine Abbildung. Bezeichne $\sim_f$ die von $f$ induzierte Äquivalenzrelation auf $A$, das heißt $a_1 \sim_f a_2$ $:\Leftrightarrow$ $f(a_1) = f(a_2)$.
+ 
+ Dann gibt es genau eine injektive Abbildung $\obar{f}: A/\sim_f \to B$, sodass $f = \obar{f} \circ \operatorname{nat}$.
+\end{thm*}
+
+\begin{thm*}[Homomorphiesatz]
+ Seien $G,H$ Gruppen, $f:G \to H$ ein Gruppenhomomorphismus.
+ 
+ Dann ist $\ker f := \{ x \in G : f(x) = e \}$ ein Normalteiler.
+\end{thm*}
+
+Ein \emph{Normalteiler} ist eine Untergruppe $N \subseteq H$, sodass $gN = Ng$ für alle $g \in G$, wobei $gN := \{ g \cdot x : x \in N \}$.
+
+%%%%%%%%%%%%%%%%%%%
+
+Eine Menge $G$ heißt bezüglich einer auf ihr definierten binären Operation $\cdot$ eine \emph{Gruppe}, falls
+\[ \begin{aligned}
+    \forall a,b,c \in G &: a \cdot (b \cdot c ) = (a \cdot b ) \cdot c, \\
+    \exists e \in G \, \forall a \in G &: a \cdot e = e \cdot a, \\
+    \forall b \in G \, \exists b^{-1} \in G &: b \cdot b^{-1} = e.
+   \end{aligned} \]
+   
+Eine Teilmenge $U \subseteq G$ heißt bezüglich $\cdot$ \emph{Untergruppe}, falls das neutrale Element $e \in U$ und 
+\[ \begin{aligned}
+    \forall a,b \in U &: a \cdot b \in U, \\
+    \forall a \in U &: a^{-1} \in U.
+   \end{aligned} \]
+
+Eine Untergruppe $N \subseteq G$ heißt ein \emph{Normalteiler}, falls für alle $a \in G$ die Beziehung 
+\[ a^{-1} \cdot N \cdot a := \{ a^{-1} \cdot n \cdot a : n \in N \} = N \]
+gilt. Äquivalent: $aN = Na$.
+
+\textbf{Was nützt das?}
+Es sei $N \subseteq G$ ein Normalteiler. Man betrachte die Menge $G / N = \{ a N : a \in G \}$.
+
+\begin{rmrk*}
+Die Mengen der Form $aN \subseteq G$ bilden eine disjunkte Zerlegung\footnote{Die Linksnebenklassen $aU$ bilden übrigens (mit dem gleichen Beweis) auch für jede Untergruppe $U \subseteq G$ eine disjunkte Zerlegung von $G$.} von $G$, denn gilt für $a,b \in G$ die Beziehung $aN \cap bN \ne \emptyset$, so folgt für $g \in aN \cap bN$ und gewisse $n_1, n_2 \in N$, dass $a n_1 = b n_2 = g$. Nun ist für $x \in G$
+\[ x \in aN \qLRq a^{-1} x \in N \qLRq \underbrace{b^{-1} a}_{n_2 n_1^{-1} \in N} a^{-1} N \qLRq b^{-1} x \in N \qLRq x \in bN \]
+und gleichzeitig ist
+\[ \bigcup_{g \in G} g N = G, \]
+denn für alle $a \in G$ gilt $a \in aN$.
+\end{rmrk*}
+
+Für $a \in G$ sei $[a] := aN = Na$. Auf $G / N$ definieren wir eine Multiplikation durch $[a] \cdot [b] := [a \cdot b]$. Diese ist wohldefiniert, denn für $x \in [a]$, $y \in [b]$ folgt $xN = aN$, $yN = bN$, also $aN \cdot bN = a bN N = ab N$ und $aN \cdot bN = xN \cdot yN = xy N$, also $ab N = xy N$ und $[a \cdot b] = [x \cdot y]$.
+
+$G/N$ ist eine Gruppe, denn für $a,b \in G$ gilt
+\[ \begin{aligned}
+    ( [a] \cdot [b] ) \cdot [c] &= [a \cdot b ] \cdot [c] = [ (a \cdot b ) \cdot c ] \\
+    &= [ a \cdot (b  \cdot c ) ] = [a] \cdot [b \cdot c ] = [a] \cdot ( [b] \cdot [c] ),
+   \end{aligned} \]
+\[ [e] \cdot [a] = [e \cdot a ] = [ a ] = [a \cdot e] = [a] \cdot [e],\]
+\[ [a] \cdot [a^{-1}] = [a \cdot a^{-1}] = [e] = [a^{-1} \cdot a] = [a^{-1}] \cdot [a]. \]
+
+Es seien $H,G$ Gruppen. Eine Abbildung $\varphi: H \to G$ heißt \emph{Homomorphismus}, falls für alle $h_1, h_2 \in H$ gilt: $\varphi( h_1 \cdot h_2 ) = \varphi( h_1 ) \cdot \varphi(h_2)$, wobei $h_1 \cdot h_2$ eine Multiplikation in $H$ und $\varphi( h_1 ) \cdot \varphi(h_2)$ eine Multiplikation in $G$ sind.
+
+Es ist $\ker \varphi := \{ h \in H : \varphi(h) = e_G \}$ ($e_G$ ist das neutrale Element in $G$). $\ker \varphi$ ist ein Normalteiler, denn für $g \in G$, $x \in \ker \varphi$ ist
+\[ \varphi( g^{-1} x g ) = \varphi( g )^{-1} \cdot \underbrace{\varphi(x)}_{e_G} \cdot \varphi( g ) =  \varphi( g )^{-1} \cdot \varphi( g ) = e_G. \]
+Dabei haben wir benutzt, dass
+\[ \varphi( e_H ) \varphi( e_H ) = \varphi( e_H e_H ) = \varphi( e_H ) \qRq \varphi( e_H ) = e_G \]
+und
+\[ \varphi( g^{-1} ) \varphi( g ) = \varphi( g^{-1} g ) = \varphi( e_H ) = e_G \qRq \varphi( g^{-1} ) = \varphi( g)^{-1}. \]
+
+Es folgt damit $g^{-1} x g \in \ker \varphi$, das heißt $g^{-1} \ker \varphi g \subset \ker \varphi$ für alle $g \in G$, also auch $g^{-1} ( \ker \varphi ) g = \ker \varphi$. 
+
+Es seien $H, G, Q$ Gruppen. Es heißt
+\[ H \xrightarrow{\iota} G \xrightarrow{\pi} Q \]
+eine \emph{kurze exakte Sequenz}, falls $\iota: H \to G$ ein injektiver Homomorphismus, $\pi: G \to Q$ ein surjektiver Homomorphismus ist und $\operatorname{im} \iota = \ker \pi$.
+
+In diesem Fall ist $H$ als Gruppe isomorph zu $\iota(H) = \operatorname{im} \iota$. Weiterhin ist $\operatorname{im} \iota = \ker \pi $ ein Normalteiler\footnote{Das Bild eines Normalteilers unter einem Homomorphismus muss sonst kein Normalteiler sein.} von $G$. Also kann man $G / (\operatorname{im} \iota)$ betrachten und es gilt $Q \simeq G / \operatorname{im} \iota$. Dies folgt aus dem Homomorphiesatz.
+
+Sei umgekehrt $N \subseteq G$ ein Normalteiler, $\iota_N: N \hookrightarrow G$ die Inklusion und $pi_N: G \to G/N$ die Projektion $\pi_N(a) = [a]$, $a \in G$. Dann ist
+\[ N \overset{\iota_N}{\hookrightarrow} G \overset{\pi_N}{\hookrightarrow} G / N \]
+eine kurze exakte Sequenz.
+\begin{itemize}
+ \item $\iota_n$: injektiv $\checkmark$
+ \item $\pi_n$: surjektiv $\checkmark$, $[a] = \pi_N(a)$.
+ \item $\iota_N(N) = \operatorname{im} \iota_N = \ker \pi_N = [e_G] = N \subseteq G.$ $\checkmark$
+\end{itemize}
+
+\begin{thm*}[Homomorphiesatz für Gruppen]
+ Es sei $\varphi: G \to H$ ein Homomorphismus von Gruppen. Es sei $N \subseteq \ker \varphi$ ein Normalteiler von $G$. Dann existiert genau ein Homomorphismus $\tilde{\varphi}: G/N \to H$ derart, dass $\tilde{\varphi} \circ \pi_N = \varphi$ ist und es gilt: 
+ \begin{enumerate}
+  \item Falls $N = \ker \varphi$, so ist $\tilde{\varphi}$ injektiv.
+  \item Falls $\varphi(G) = H$, so ist auch $\tilde{\varphi}$ surjektiv.
+  \item Falls $N = \ker \varphi$ und $\varphi(G) = H$, so ist $\tilde{\varphi}$ ein Isomorphismus.
+ \end{enumerate}
+\end{thm*}
+
+\begin{proof}
+ Definiere $\tilde{\varphi} : G / N \to H$ durch $\tilde{\varphi}([a]) = \varphi(a)$. Das ist notwendig, da
+ \[ \underbrace{\tilde{\varphi} \circ \pi_N}_{=\varphi} (a) = \tilde{\varphi}( [a] ) = \varphi(a) \]
+ gelten muss. Dann ist $\tilde{\varphi}$ wohldefiniert.
+ $\varphi(a) = \varphi(b)$, falls $[a] = [b]$, $\varphi( a^{-1} b ) = e_H$, weil $a^{-1} b \in N \subseteq \ker \varphi$.
+\end{proof}
+
+\begin{thm}[Homomorphiesatz]
+ Sei $f: G  \to H$ ein Gruppenhomomorphismus. Dann gibt es genau einen Homomorphismus $\obar{f} : G / \ker f \to H$ mit $\obar{f} \circ \operatorname{nat} = f$. Ferner gilt dann für $\ubar{f}$, dass $\obar{f}$ injektiv ist. Folglich ist $G / \ker f \simeq \operatorname{im} f$.
+\end{thm}
+
+$U(n)$ unitäre Abbildung $f: \complex^n \to \complex^n$. $SU(n)$ spezielle unitäre Abbildungen $\{ f \in U(n) : \det f = 1 \}$.
+
+$\det : U(n) \to (\complex \setminus \{ 0 \}, \cdot )$ ist ein Gruppenhomomorphismus. $SU(n) = \ker \det$ ist also ein Normalteiler.
+
+Nach dem Homomorphiesatz ist $U(n) / SU(n) \simeq \im \det \simeq S^1 := \{ z \in \complex : |z| = 1 \}$.
+
+Für $S \in U(n)$ ist $| \det S | = 1$, denn $S S^* = E$, also 
+\[ \det( S S^* ) = 1 \qRq (\det S)(\det S^*) = (\det S)\obar{(\det S^*)} = |\det S |^2. \]
+
+\[ \det A = \det \begin{pmatrix} a \\ & 1 \\ & & \ddots \\ & & & 1 \end{pmatrix} = a \]
+und falls $|a| = 1$, so ist $\obar{a} = a^{-1}$, also $A \in U(n)$.
+
+1 bezeichne die Gruppe mit einem Element. Wir definieren die \emph{kurze exakte Sequenz}
+\[ 1 \to G_1 \xrightarrow{f_1} G_2 \xrightarrow{f_2} G_3 \to 1, \]
+wobei $f_1$ injektiv, $\im f_1 = \ker f_2$, $f_2$ surjektiv sind.
+
+\textbf{Bezeichnungen für einige Gruppen.}
+Sei $K$ ein Schiefkörper.
+\begin{itemize}
+ \item $\dot{K} := ( K \setminus \{ 0 \}, \cdot)$ ist die \emph{multiplikative Gruppe},
+ \item $Z := \{ a \in K : \forall x \in K : ax = xa \}$ ist das \emph{Zentrum} von $K$ (das ist ein Unterkörper),
+ \item $\dot{Z} := ( Z \setminus \{ 0 \}, \cdot)$,
+ \item $\operatorname{Aut}(K) := \{ f : K \to K : f$ ist ein Schiefkörperautomorphismus $\}$,
+ \item $\operatorname{In}(K) := \{ \mu \in \operatorname{Aut} (K) : \exists a \in \dot{K} : \mu(x) = a x a^{-1}$ für alle $x \in K \}$.
+\end{itemize}
+
+Sei $V$ ein $K$-Vektorraum mit $\dim V \ge 3$.
+
+Nach dem Satz über Darstellungen von Kollineationen durch semilineare Abbildungen und Determinanten von projektiven Kollineationen erhalten wir ein kommutatives Diagramm von Gruppen und Gruppenhomomorphismen mit kurzen exakten Zeilen und Spalten.
+
+Wann ist $a \cdot \id$ linear? Bedingung $a(\lambda x) := \lambda \cdot (a x)$, also $a \lambda = \lambda a$ für alle $\lambda \in K$.
+
+$\alpha$ sei der zu $f$ gehörige Körperautomorphismus.
+
+Ein Diagramm für Abbildungen und Mengen heißt kommutativ, wenn die Kompositionen der Abbildungen mit demselben Start- und Zielpunkt im Diagramm übereinstimmen.
