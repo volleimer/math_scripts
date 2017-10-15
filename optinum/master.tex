@@ -1,0 +1,182 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrartcl}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\usepackage[numbers]{../.tex/fancy_thm}
+
+\theoremstyle{plain}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\renewcommand{\thedefn}{\arabic{section}.\arabic{defn}}
+%\newtheorem{folg}[thm]{Folgerung} 
+%\newtheorem{rmrk}[thm]{Bemerkung} 
+%\newtheorem{deno}[thm]{Bezeichnungen}
+%\newtheorem{exmp}[thm]{Beispiel}
+%\newtheorem{aufg}[thm]{Aufgabe} 
+%\newtheorem{prgp}[thm]{} % Numbered paragraph
+
+%\newtheorem*{rmrk*}{Bemerkung}
+%\newtheorem*{exmp*}{Beispiel}
+%\newtheorem*{defn*}{Definition}
+%\newtheorem*{deno*}{Bezeichnungen}
+
+\numberwithin{equation}{section}
+
+\hypersetup{
+  pdftitle={OPTINUM},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+%opening
+\title{Vorlesung\\Optimierung und Numerik}
+\subtitle{Wintersemester 2017}
+\author{Vorlesung: Dr. rer. nat. Guntram Scheithauer\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+\section{Einleitung}
+
+\subsection{Aufgabenstellung und Grundbegriffe}
+Es seien $G \subset \real^n$ und $f: G \to \real$ gegeben. Optimierungsproblem:
+\begin{equation}
+  f(x) \to \min \quad \text{bei } x \in G.
+\end{equation}
+$f$ ... Zielfunktion \\
+$G$ ... Zulässiger Bereich \\
+$x \in G$ ... Zulässiger Punkt, zulässiges Element, zulässige Lösung
+
+$x^* \in G$  heißt \emph{potimal} oder \emph{optimale Lösung} oder
+\emph{Lösung}, falls
+\begin{equation}
+  f(x^*) \le f(x) \quad \text{für alle } x \in G.
+\end{equation}
+$f^* = f_{\min} := f(x^*)$ ... Optimalwert
+
+Falls $G = \real^n$, so heißt (1.1) \emph{freies} oder \emph{unrestringiertes}
+Optimierungsproblem (OP).
+
+(1.1) ist ein \emph{diskretes} OP, falls $G$ eine
+\emph{diskrete} Menge ist, zum Beispiel $G = \integer^n$.
+
+(1.1) ist ein \emph{stetiges} oder \emph{kontinuierliches} OP, falls alle
+Variablen ``stetig'' sind. Sonst gemischt-ganzzahliges Problem.
+
+(1.1) ist ein \emph{lineares} OP, falls $f(x) = c^T x$ und $G$ durch lineare
+Restklassen gegeben ist:
+\begin{equation}
+  G = \{ x \in \real^n : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J \},
+\end{equation}
+wobei $g_i, h_j$ für alle $i,j$ affin linear sind. In diesem Fall kann (1.1) als
+\[ c^T x \to \min \quad \text{bei } x \in G:= \{ x \in \real^n, Ax = a, Bx \le b
+  \} \]
+geschrieben werden.
+
+\begin{defn}
+  Betrachtet werden die beiden OP
+  \begin{align*}
+    f(x) &\to \min \quad \text{bei } x \in D \cap E, \tag{P} \\
+    g(x) &\to \min \quad \text{bei } x \in E. \tag{Q}
+  \end{align*}
+  (Q) heißt \emph{Relaxation} zu (P), falls $g(x) \le f(x)$ auf $D \cap E$. Der
+  Optimalwert von (Q) kann als (untere) Schranke bzw. Schrankenwert für (P)
+  bezeichnet werden.
+\end{defn}
+
+\begin{thm}
+  Sei $\obar{x}$ Lösung von (Q) und gelte $\obar{x} \in D$ sowie $f(\obar{x}) =
+  g(\obar{x})$. Dann ist $\obar{x}$ Lösung von (P).
+\end{thm}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{defn}
+  Seien (Q1) und (Q2) Relaxationen zu (P). (Q1) heißt \emph{stärker} (strenger)
+  als (Q2), wenn die Schranke von (Q1) größer oder gleich der Schranke von (Q2)
+  für \emph{jede} Instanz von (P) ist.
+\end{defn}
+
+\subsection{Beispiele zur kontinuierlichen Optimierung}
+\subsubsection{Transportoptimierung}
+Lineare Optimierung
+
+Es seien Erzeuger $i \in I := \{1, \ldots, n\}$ und Verbraucher $j \in J := \{1,
+\ldots, n\}$ gegeben. Weiterhin seien die Kosten $c_{ij}$ für den Transport
+\emph{einer} Einheit von $i$ nach $j$ sowie der Vorrat $a_i > 0$ und der
+Verbrauch $b_j > 0$ für alle $i \in I$ und $j \in J$ bekannt. Wie muss der
+Transport organisiert werden, damit die Gesamtkosten minimal sind?
+
+Variable $x_{ij} \ge 0$ ... Transportmenge von $i$ nach $j$.
+\[ \sum_{i \in I} \sum_{j \in J} c_{ij} \cdot x_{ij} \to \min \quad \text{bei }
+  \sum_{j \in J} x_{ij} = a_i, \quad i \in I. \]
+
+\subsubsection{Kürzeste euklidische Entfernung eines Punktes zu einer Menge}
+Nichtlineare Optimierung
+
+Gegeben sind ein Punkt $\tilde{x}$ und Menge $G \subset \real^n$ mit $\tilde{x}
+\notin G$.
+\[ f(x) := \rez{2} \| \tilde{x} - x \|_2^2 \to \min \quad \text{bei } x \in
+G. \]
+Falls $G$ konvex ist, dann ist es der Spezialfall der \emph{konvexen
+  Optimierung}.
+
+\subsubsection{Tschebyscheff-Approximation}
+Semi-infinite Optimierung
+
+Seien $f: \real \to \real$ und $S: \real^{n+1} \to \real$ stetig, zum Beispiel
+\[ S(y, x_1, \ldots, x_n) = \sum_{i=1}^n x_i s_i(y), \]
+wobei $s_i$ ein Ansatz ist für
+\[ \max_{y \in [a,b]} | f(y) - S(y, x_1, \ldots, x_n) | \to \min_{x \in
+    \real^n}. \]
+Umformulierung:
+\[ \tilde{f}(x,\lambda) := \lambda \to \min \quad \text{bei } - \lambda \le
+  f(y) - S(y, x_1, \ldots, x_n) \le \lambda \text{ für alle } y \in [a,b]. \]
+Das ist ein Beispiel mit endlich vielen Variablen und unendlich vielen
+Restriktionen.
+
+\subsection{Beispiele zur diskreten Optimierung}
+\subsubsection{Rucksackproblem}
+Gegeben sind ein Rucksack mit Volumen $b$, Teile mit Volumen $a_i$ und Bewertung
+$c_i$, $i \in I$.
+
+Voraussetzung: $a_i, c_i, b \in \integer_{>0}$, $0 < a_i \le b$ für alle $i \in
+I = \{1, \ldots, n\}$.
+
+\paragraph{0/1-Rucksackproblem}
+Entscheidungsvariable $x_i \in \{0,1\}$.
+\[ \sum_{i \in I} c_i x_i \to \max \quad \text{bei } \sum_{i \in I} a_i x_i \le
+  b, x_i \in B := \{0,1\}. \]
+Alternative Formulierung:
+\[ \sum_{i \in \tilde{I}} \to \max \quad \text{bei } \sum_{i \in \tilde{I}} a_i
+  \le b, \tilde{I} \subset I. \]
+
+\paragraph{Klassisches (Standard-)Rucksackproblem}
+\[ \sum_{i \in I} c_i x_i \to \max \quad \text{bei } \sum_{i \in I} a_i x_i \le
+  b, x_i \in \integer_+ \text{ für alle } i. \]
+Hier bezeichnet $x_i$ die Anzahl, wie oft Teil $i$ mitgenommen wird.
+
+\subsubsection{Das eindimensionale Zuschnittproblem}
+Cutting Stock Problem, CSP
+
+Aus möglichst wenig Ausgangsmaterial der Länge $L$ sind $b_i$ Teile der Länge
+$l_i$, $i \in I := \{ 1, \ldots, n \}$ zuzuschneiden.
+
+Zuschnittvariante $a_j = (a_{1j}, \ldots, a_{nj})^T \in \integer_+^n$ mit
+$\sum_{i \in I} l_i a_{ij} \le L$ für alle $j \in J$.
+\end{document}
