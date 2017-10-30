@@ -1,0 +1,403 @@
+\section{Grundlagen}
+\subsection{Existenz von Lösungen}
+Wir betrachten die Aufgabe
+\begin{equation}
+  f(x) \to \min \subjto x \in G,
+\end{equation}
+wobei folgende Voraussetzungen erfüllt seien:
+\begin{itemize}
+\item $G \subset X$ kompakt, $X$ Banachraum, zumeist $X = \real^n$,
+\item $G \ne \emptyset$, das heißt $G$ ist nicht leer,
+\item $f: G \to \real$ ist stetig.
+\end{itemize}
+
+\begin{thm}
+  Unter obigen Voraussetzungen existiert ein $\obar{x} \in G$ mit
+  \[ f^* := f( \obar{x} ) \le f(x) \quad \text{für alle } x \in G. \]
+\end{thm}
+
+\begin{proof}
+  Wir wählen eine Folge $\{f_k\}_{k \in \nat}\} \subset \real$ mit $f_k > f^*$
+  für alle $k \in \nat$ und
+  \[ \lim_{k \to \infty} f_k = f^* = \inf_{x \in G} f(x). \]
+  Entsprechend der Definition vom Infimum existiert für jedes $k$ ein
+  $x_k \in G$ mit $f(x_k) \le f_k$, $k \in \nat$. Wegen der Kompaktheit von $G$
+  besitzt die Folge $\{x_k\}$ eine in $G$ konvergente Teilfolge $\{ \tilde{x}_k \}
+  \subseteq \{ x_k \}$ mit
+  \[ \lim_{k \to \infty} \tilde{x}_k = \obar{x} \in G. \]
+  Die Stetigkeit von $f$ liefert
+  \[ \lim_{k \to \infty} f(\tilde{x}_k) = f(\obar{x}) = f^*. \qedhere \]
+\end{proof}
+
+\begin{rmrk}
+  Die Voraussetzung der Stetigkeit von $f$ kann abgeschwächt werden. $f$ muss
+  dann nur \emph{unterhalbstetig} (bzw. halbstetig nach unten) sein, das heißt
+  es gilt
+  \[ f( \obar{x} ) \le \lim_{x \to \obar{x}} f(x) \quad \text{für alle } x \in
+    G. \]
+\end{rmrk}
+
+\begin{exmp}
+  \begin{enumerate}[(1)]
+  \item Satz 2.1 ist anwendbar, $G$ kompakt, der Limes existiert:
+    \[ f(x_1, x_2) = 2 x_1 - 3 x_2 \to \min \subjto x_1^2 + x_2^2 \le 1. \]
+  \item Satz 2.1 nicht anwendbar, $G$ unbeschränkt, $f^* = - \infty$:
+    \[ f(x_1, x_2) = 2 x_1 - 3 x_2 \to \min \subjto x_1^2 + x_2^2 \ge 1. \]
+  \item Satz 2.1 nicht anwendbar, $G$ unbeschränkt, kein Minimum, $f^* = 0$:
+    \[ f(x_1, x_2) = \rez{x_1} \to \min \subjto x_2 \le \rez{x_1}, x_1 \ge 1,
+      x_2 \ge 0. \]
+  \item Satz 2.1 nicht anwendbar, $G$ unbeschränkt, Minimum existiert, $f^* =
+    -1$:
+    \[ f(x_1, x_2) = -\rez{x_1} \to \min \subjto x_2 \le \rez{x_1}, x_1 \ge 1,
+      x_2 \ge 0. \]
+  \end{enumerate}
+\end{exmp}
+
+\begin{defn}
+  $\obar{x}$ heißt \emph{lokale Lösung} von (2.1), falls $\obar{x} \in G$ gilt
+  und ein $\rho > 0$ existiert mit
+  \[ f( \obar{x} ) \le f(x) \quad \text{für alle } x \in G \cap
+    B_\rho(\obar{x}), \]
+  wobei $B_\rho(\obar{x}) := \{ x \in \real^n : \| x - \obar{x} \| < \rho \}$.
+\end{defn}
+
+\begin{rmrk}
+  Jede globale Lösung ist auch lokale Lösung. Die Umkehrung gilt im Allgemeinen
+  nicht.
+\end{rmrk}
+
+\begin{defn}
+  \begin{enumerate}[(1)]
+  \item $G \subset X$ ist \emph{konvex}, falls für alle $x,y \in G$ gilt:
+    \[ [x,y] := \{ x(\lambda) \in X: x(\lambda) = (1-\lambda)x + \lambda y = x +
+      \lambda(y-x), \lambda \in [0,1] \} \subset G. \]
+  \item Sei $G$ konvex. $f: G \to \real$ heißt \emph{konvex}, falls
+    \[ f( x + \lambda(y-x) ) \le f(x) + \lambda( f(y) - f(x) ) \]
+    für alle $x,y \in G$, $0 \le \lambda \le 1$ gilt.
+  \item Sei $G$ konvex, $f: G \to \real$ heißt \emph{streng konvex}, falls
+    \[ f( x + \lambda(y-x) ) < f(x) + \lambda( f(y) - f(x) ) \]
+    für alle $x,y \in G$, $0 < \lambda < 1$ gilt.
+  \end{enumerate}
+\end{defn}
+
+\begin{thm}
+  Sei $G \subset X$ eine konvexe Menge und $f: G \to \real$ eine konvexe
+  Funktion.
+  \begin{enumerate}[(1)]
+  \item Dann ist ein lokales Minimum gleichzeitig globale Lösung von (2.1).
+  \item Falls $f$ streng konvex ist, dann existiert höchstens eine Lösung.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Zu (1): Sei $\obar{x}$ ein lokales Minimum. Wir nehmen an, dass $\tilde{x}$
+  existiert $f(\tilde{x}) < f(\obar{x})$. Mit der Konvexität von $f$ folgt
+  \[ \begin{aligned}
+      f( x(\lambda) ) = f( \obar{x} + \lambda(\tilde{x} - \obar{x}) )
+      &\le f( \obar{x} ) + \lambda(f(\tilde{x}) - f(\obar{x})) \\
+      &= \underbrace{\lambda f( \tilde{x} )}
+    \end{aligned} \] %% Nicht fertig! TODO!
+  Widerspruch zur Optimalität von $\obar{x}$.
+
+  Zu (2): Die Annahme von zwei globalen Lösungen $x \ne y \in G$, das heißt
+  $f(x) = f(y) = f^*$, ergibt wegen
+  \[ f(x + \lambda(y-x)) < f(x) + \lambda( f(y) - f(x) ) = f(x) \]
+  einen Widerspruch zur Optimalität von $x$ und $y$.
+\end{proof}
+
+\begin{aus}
+  Sei $G$ gegeben durch
+  \[ G = \{ x \in \real^n : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J \}, \]
+  dann gilt: Falls alle $g_i$, $i \in I$, konvex sind und alle $h_j$, $j \in J$,
+  affin linear sind, dann ist $G$ konvex.
+\end{aus}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\subsection{Notwendige Optimalitätsbedingungen}
+\begin{defn}
+  Eine Menge $K \subset X$ heißt \emph{Kegel}, falls gilt:
+  \[ x \in K \qRq \lambda x \in K \text{ für alle } \lambda \ge 0. \]
+  Ein Kegel $K$ ist ein \emph{konvexer Kegel}, falls $K$ eine konvexe Menge ist
+  bzw. falls gilt:
+  \[ x,y \in K \qRq x + y \in K. \]
+  Der \emph{Kegel der zulässigen Richtungen} $Z{\obar{x}}$ (zu $\obar{x} \in G$)
+  ist definiert durch
+  \[ Z(\obar{x}) := \{ d \in X : \exists \obar{t} = \obar{t}(\obar{x},d) > 0,
+    \text{ sodass } \obar{x} + t \cdot d \in G \forall t \in [0,\obar{t}] \}. \]
+\end{defn}
+
+\begin{aus}[Notwendige Optimalitätsbedingung]
+  Ist $f$ stetig differenzierbar und $\obar{x}$ ein lokales Minimum, dann gilt:
+  \begin{equation}
+    \nabla f(\obar{x})^T d \ge 0 \text{ für alle } d \in Z(\obar{x}),
+  \end{equation}
+  Ist $G$ konvex, dann kann (2.2) wie folgt geschrieben werden:
+  \begin{equation}
+    \nabla f(\obar{x})^T d \ge 0 \text{ für alle } x \in G.
+  \end{equation}
+\end{aus}
+
+\begin{proof}
+  Wir betrachten die Hilfsfunktion $\chi(t) := f( \obar{x} + td)$. Für ein lokales
+  Minimum gilt dann
+  \[ \chi(t) \ge \chi(0) \text{ für alle } t \in [0,\obar{t}]
+    \qRq
+    \liminf_{t \to 0} \frac{\chi(t) - \chi(0)}{t} \ge 0 \]
+  und damit folgt die Gültigkeit von (2.2).
+
+  Für konvexe Mengen gilt speziell $x - \obar{x} \in Z(\obar{x})$ für alle $x
+  \in G$ und damit folgt (2.3).
+\end{proof}
+
+\begin{rmrk}
+  Ein Punkt, für den (2.2) erfüllt ist, heißt \emph{stationärer Punkt}.
+\end{rmrk}
+
+\begin{rmrk} %2.4
+  Bei der \emph{freien Minimierung}, das heißt $G = X$, ergibt sich wegen $Z(x)
+  = X$ für alle $x \in G$:
+  \[ \obar{x} \text{ ist lokale Lösung} \qRq \nabla f(\obar{x}) = 0. \]
+  Für konvexe Optimierungsprobleme gilt auch die Umkehrung.
+\end{rmrk}
+
+\begin{aus}[Hinreichendes Optimalitätskriterium 1. Ordnung]
+  Es seien $G \subset \real^n$ und $f: G \to \real$ konvex. Falls ein $\bar{x}
+  \in G$ existiert, welches der notwendigen Bedingung (2.3) genügt, dann ist
+  $\bar{x}$ ein globales Minimum von (2.1).
+\end{aus}
+
+\begin{proof}
+  Wenn $f$ konvex und stetig differenzierbar ist, so gilt (s. Übung)
+  \[ f(x) \ge f( \bar{x} ) + \nabla f( \bar{x} )^T (x - \bar{x}) \]
+  für alle $x \in G$.
+
+  Wegen (2.3) folgt unmittelbar die Optimalität und wegen Satz 2.2 die globale
+  Optimalität von $\bar{x}$.
+\end{proof}
+
+Im Fall polyedrischer Mengen $G \subset \real^n$ kann die notwendige
+Optimalitätsbedingung (2.2) präzisiert werden, da dann $Z(\bar{x})$ eine
+einfachere Struktur besitzt.
+
+\begin{defn} %2.4
+  $G \subset \real^n$ heißt \emph{polyedrisch}, falls eine Darstellung
+  \[ G = \{ x \in \real^n : Ax \le b \} \]
+  existiert, wobei $A \in \realmat{m}{n}$ und $b \in \real^m$. Hierbei gilt:
+  \[ Ax \le b \qLRq a^T x = \sum_{j=1}^n a_{ij} x_j \le b_i \text{ für alle } i
+    \in I = \{ 1, \ldots, m \}. \]
+  $a_i$ ist die $i$-te Zeile von $A$.
+\end{defn}
+
+\begin{rmrk} %2.5
+  $G$ ist konvex und abgeschlossen, aber im Allgemeinen nicht beschränkt.
+  Impliziert können Gleichungen enthalten sein.
+\end{rmrk}
+
+\begin{defn} %2.5
+  Für $x \in G$ ist \emph{Indexmenge der aktiven Restriktion} definiert durch
+  \[ I_0(x) := \{ i \in I : a_i^T x = b_i \}. \]
+  Aus $d \in Z(x)$ ergibt sich
+  \[ a_i^T (x + t d) \le b_i \qLRq t a_i^T  d \le b_i - a_i^T x \quad
+    \text{für alle} i \in I, \text{ für alle } t \in [0, \bar{t}] \]
+  und damit die Bedingung
+  \[ a_i^T d \le 0 \quad \text{für alle } i \in I_0(x). \]
+  Die \emph{inaktiven} Restriktionen ergeben keine weitere Einschränkung an
+  $Z(x)$. Somit ist die Größe $\bar{t}$ wohldefiniert und positiv:
+  \begin{equation} %2.4
+    \bar{t} := \min \left\{ \frac{b_i - a_i^T x}{a_i^T d} : i \in I(x,d)
+    \right\},
+  \end{equation}
+  wobei $I(x,d) := \{ i \in I: a_i^T d > 0 \}$. Damit kann $Z(x)$ für beliebige
+  $x \in G$ angegeben werden in der Form
+  \begin{equation} %2.5
+    d \in Z(x) \qLRq a_i^T d \le 0 \quad \text{für alle } i \in I_0(x).
+  \end{equation}
+\end{defn}
+
+\begin{rmrk} %2.6
+  Falls $I(x,d) = \emptyset$ gilt, so setzen wir $\bar{t} := \infty$.
+\end{rmrk}
+
+%%\[ f(x) \to \min \subjto  x \in G = \{ x \in \real^n : Ax \le b \}. \]
+%% $a_i \in \real^n$, $a_i^T =$ $i$-te Zeile von $A$, $I = \{1, \ldots, m\}$.
+\begin{flg} %2.6
+  Sei $G$ polyedrisch, das heißt $G = \{ x \in \real^n : Ax \le b\}$. Ist
+  $\obar{x}$ eine lokale Lösung von (2.1), so gilt
+  \begin{equation} %2.6
+    \nabla f( \obar{x} )^T d \ge 0 \quad \text{für alle } d \in \real^n
+  \end{equation}
+  mit $a_i^T d \le 0$ für alle $i \in I_0(\obar{x})$.
+
+  Ist $f$ zusätzlich konvex, dann impliziert (2.6) die globale Optimalität von
+  $\obar{x}$.
+\end{flg}
+
+\begin{defn}
+  Ein Kegel $K$ heißt \emph{polyedrisch}, wenn er sich in der Form
+  \begin{equation} %2.7
+    K = \{ x \in \real^n : x = \sum_{j=1}^m u_j \cdot a_j, u_j \ge 0, j = 1,
+    \ldots, m \}
+  \end{equation}
+  darstellen lässt, wobei die $a_j \in \real^n$ gegeben sind. Eine alternative
+  Darstellung ist
+  \begin{equation} %2.8
+    K = \{ x \in \real^n : b_j^T x \le 0, j = 1, \ldots, m \},
+  \end{equation}
+  wobei die $b_j$ bekannt sind.
+\end{defn}
+
+\begin{lem} %2.7
+  Polyedrische Kegel der Form (2.7) sind nichtleer, konvex und abgeschlossen.
+  Analoges gilt für (2.8).
+\end{lem}
+
+\begin{proof}
+  Grossmann/Terno
+\end{proof}
+
+\begin{exmp}[Orthoprojektion auf eine konvexe Menge]
+  Sei $G \subset \real^n$, $G \ne \emptyset$ konvex, abgeschlossen, $q \notin
+  G$,
+  \[ f(x) := \rez{2} \| x - \|_2^2 \to \min \subjto x \in G. \]
+  $f$ ist streng konvex. Dann sind die \emph{Niveaumengen}
+  \[ N_f(c) := \{ x \in \real^n : f(x) \le c \} \]
+  kompakt für $c \ge 0$. Nach Satz 2.2 folgt die Existenz einer eindeutigen
+  Lösung $\obar{x} \in G$, das heißt
+  \[ f( \obar{x} ) = \rez{2} \| \obar{x} - q \|_2^2 \le \| x - q \| \]
+  für alle $x \in G$ (globales Minimum).
+
+  Die Anwendung von (2.3) ergibt
+  \[ \nabla f( \obar{x} )^T (x-\obar{x}) = - (q-\obar{x})^T(x-\obar{x}) \ge 0
+    \quad \text{für alle } x \in G. \]
+
+  Spezialfall: Ist $G$ affin lineare Menge (z.B. Unterraum)
+  \[ \nabla(\obar{x})^T (x-\obar{x}) = - (q-\obar{x})^T(x-\obar{x}) = 0. \]
+  Ist $G$ ein Unterraum: $(q-\obar{x})^T x = 0$ bzw. $q-\obar{x} \perp x$ für
+  alle $x \in G$.
+
+  \paragraph{Geometrische Interpretation}
+  (für beliebiges, abgeschlossenes, konvexes $G$)
+  Mit $s := q - \obar{x}, \quad s_0 := s^T x^T$ gilt
+  \[ s^T x \le s_0 \quad \text{für alle } x \in G, \]
+  \emph{aber} $s^T q > s_0$.
+\end{exmp}
+
+\subsection{Lemma von Farkas}
+\begin{lem}[Farkas] %2.8
+  Es seien $A \in \realmat{m}{n}$ und $a \in \real^n$. Von den Systemen
+  \begin{align*}
+    Az &\le 0, & a^T z &> 0, \tag{1} \\
+    A^T u &= a, & u &\ge 0 \tag{2}
+  \end{align*}
+  ist \emph{genau} eines lösbar. Dabei sind $A z \le 0$ und $u > 0$
+  komponentenweise zu verstehen.
+\end{lem}
+
+\begin{proof}
+  Seien (1) und (2) gleichzeitig lösbar und $z,u$ die zugehörigen Lösungen. Dann
+  gilt
+  \[ 0 \ge u^T A z = (A^T u)^T z = a^T z > 0. \]
+  Widerspruch!
+
+  Wir zeigen noch: Die Unlösbarkeit von (1) impliziert die Lösbarkeit von (2).
+  Sei (1) nicht lösbar, das heißt
+  \[ a \notin K := \{ x = A^T u : u \in \real^m_+ \}. \]
+  Wir betrachten die Optimierungsaufgabe
+  \[ f(x) := \rez{2} \| a - x \|_2^2 = \rez{2} (a-x)^T (a-x) \to \min \subjto x
+    \in K. \]
+  Dann existiert eine (globale) Lsöung $\obar{x} \in K$ mit
+  \[ \nabla f(\obar{x})^T \obar{x} = 0 \tag{3}\]
+  und
+  \[ \nabla f(\obar{x})^T x \ge 0 \]
+  für alle $x \in K$.
+
+  Nun zeigen wir, dass $z := a - \obar{x}$ das System (1) löst. Es gilt
+  $\nabla f( \obar{x} ) = -z$ und damit
+  \[ 0 = \nabla f(\obar{x})^T \obar{x} = -(a-\obar{x})^T(\obar{x}-a+a)
+    \qRq a^T z = z^T z > 0. \]
+  Weiter gilt $\obar{x} \in K$ genau dann, wenn ein $u \in \real^m_+$ existiert
+  mit $\obar{x} = A^T u$. Aus (4) folgt
+  \[ -(a-\obar{x})^T A^T u \ge 0 \quad \text{für alle } u \in \real^m_+. \]
+  Also gilt
+  \[ (Ax)^T u \le 0 \text{ für alle } u \in \real^m_+ \qRq Ax \le 0. \qedhere \]
+\end{proof}
+
+Damit können die notwendigen Optimalitätskriterien für den Spezialfall affin
+linearer Ungleichungen insgesamt zu folgendem System zusammengefasst werden:
+\begin{equation} %2.9
+  \text{(KKT)} \left\{ \quad \begin{aligned}
+      \nabla f(x) + \sum_{i =1}^m u_i a_i = 0, & \\
+      u_i \ge 0, \quad a_i^T x \le b_i, & &i = 1, \ldots, m, \\
+      u^T(Ax - b) = 0, 
+    \end{aligned} \right.
+\end{equation}
+
+\begin{rmrk*}
+  \begin{enumerate}[(1)]
+  \item KKT steht für Karush-Kuhn-Tucker.
+  \item Die $u$-Variablen werden als \emph{Lagrange-Multiplikatoren} bezeichnet.
+  \item Gibt es neben den Ungleichungs- auch Gleichungsrestriktionen $a_i^T x =
+    b_i$, $i = m+1, \ldots, \obar{m}$ ($\obar{m} > m$), dann erhält man das
+    folgende KKT-System:
+    \begin{equation} %2.10
+      \text{(KKT)} \left\{ \quad \begin{aligned}
+          \nabla f(x) + \sum_{i =1}^m u_i a_i + \sum_{i=m+1}^{\obar{m}} u_i a_i =
+          0, & \\
+          u_i \ge 0, \quad a_i^T x - b_i \le 0, & &i = 1, \ldots, m, \\
+          u_i(a_i^T x - b_i) = 0, & &i = 1, \ldots, m, \\
+          a_i^T x - b_i = 0, & &i = m + 1, \ldots, \obar{m}.
+        \end{aligned} \right.
+    \end{equation}
+  \end{enumerate}
+\end{rmrk*}
+
+\subsection{KKT-Bedingungen für nichtlineare Optimierungsprobleme}
+Wir betrachten
+\begin{equation} %2.11
+  f(x) \to \min \subjto x \in G,
+\end{equation}
+wobei $G$ gegeben ist durch
+\[ G := \{ x \in \real^n : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J \} \]
+und alle Funktionen $f$, $g_i$, $h_j$  stetig differenzierbar sind.
+
+Falls $\obar{x} \in G$ ein lokales Minimum ist, dann ist zumindest das
+notwendige Optimalitätskriterium (2.2) erfüllt. Dies ist aber im Allgemeinen
+ungeeignet für eine praktische Nutzung, da $Z(\obar{x})$ im Allgemeinen nicht
+explizit beschreibbar ist.
+
+Daher ersetzt man die nichtlinearen Bedingungen durch deren
+\emph{Linearisierung} (Tangente, Tangentialebene).
+\[ \begin{aligned}
+    g_i(x) &\approx g_i(\obar{x}) + \nabla g_i(\obar{x})^T (x-\obar{x}),
+    & i \in I, \\
+    h_j(x) &\approx h_j(\obar{x}) + \nabla h_j(\obar{x})^T (x-\obar{x}),
+    & j \in J.
+  \end{aligned} \]
+
+Anstelle von $Z(\obar{x})$ wird der \emph{Linearisierungskegel}
+\[ L( \obar{x} ) := \{ d \in \real^n : \nabla g_i(\obar{x})^T d \ge 0, i \in
+  I_0(\obar{x}), \nabla h_j(\obar{x})^T d = 0, j \in J \} \]
+verwendet.
+
+\clearpage
+
+\begin{thm} %2.9
+  Seien $f,g_i$ ($i \in I$) stetig differenzierbar. ISt $\obar{x}$ (lokale)
+  Lösung von $f(x) \to  \min$ bei $x \in G$ und
+  \[ G = \{ x \in \real^n : g_i(x) \le 0, i \in I \} \]
+  und gilt zusätzlich die Regularitätsbedingung (constraint qualification)
+  \[ \tag{CQ} \operatorname{cl}(Z(\obar{x})) = \obar{Z(\obar{x})} =
+    L(\obar{x}), \]
+  dann ist (2.2) äquivalent zur Existenz einer Lösung von
+  \begin{equation} %2.12
+    \text{(KKT)} \left\{ \quad \begin{aligned} 
+        \nabla f(x) + \sum_{i =1}^m u_i \nabla g_i(\obar{x}) = 0, & \\
+        u_i \ge 0, \quad a_i^T x \le b_i, & &i \in I, \\
+        g_i(\obar{x}) \le 0, & &i \in I, \\
+        u_i g_i(x) = 0, & &i \in I.
+      \end{aligned} \qquad \right.
+  \end{equation}
+\end{thm}

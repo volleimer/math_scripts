@@ -9,21 +9,23 @@
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
-\usepackage[numbers]{../.tex/fancy_thm}
+\usepackage[numbers]{fancy_thm}
 
 \theoremstyle{plain}
+%\newtheorem{aus}[thm]{Aussage}
+%\newtheorem{flg}[thm]{Folgerung}
 
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
-\renewcommand{\thedefn}{\arabic{section}.\arabic{defn}}
-%\newtheorem{folg}[thm]{Folgerung} 
-%\newtheorem{rmrk}[thm]{Bemerkung} 
-%\newtheorem{deno}[thm]{Bezeichnungen}
-%\newtheorem{exmp}[thm]{Beispiel}
-%\newtheorem{aufg}[thm]{Aufgabe} 
-%\newtheorem{prgp}[thm]{} % Numbered paragraph
+\newtheorem{rmrk}{Bemerkung}
+\newtheorem{exmp}{Beispiel}
 
-%\newtheorem*{rmrk*}{Bemerkung}
+\numberwithin{rmrk}{section}
+\numberwithin{defn}{section}
+\numberwithin{exmp}{section}
+
+
+\newtheorem*{rmrk*}{Bemerkung}
 %\newtheorem*{exmp*}{Beispiel}
 %\newtheorem*{defn*}{Definition}
 %\newtheorem*{deno*}{Bezeichnungen}
@@ -49,134 +51,136 @@
 
 \clearpage
 
-\section{Einleitung}
+\input{01_einleitung}
 
-\subsection{Aufgabenstellung und Grundbegriffe}
-Es seien $G \subset \real^n$ und $f: G \to \real$ gegeben. Optimierungsproblem:
+\clearpage
+
+\input{02_grundlagen}
+
+\clearpage
+
+\section{Lineare Optimierung}
+Wir betrachten nun das Problem
 \begin{equation}
-  f(x) \to \min \quad \text{bei } x \in G.
+  z = c^T x \to \min \subjto x \in G := \{x \in \real^n : Ax = b, x \ge 0 \}
 \end{equation}
-$f$ ... Zielfunktion \\
-$G$ ... Zulässiger Bereich \\
-$x \in G$ ... Zulässiger Punkt, zulässiges Element, zulässige Lösung
+mit $A \in \realmat{m}{n}$, $b \in \real^m_+$. Außerdem seien $\rang(A) =
+\operatorname{rg}(A) = m$ und $m < n$.
 
-$x^* \in G$  heißt \emph{potimal} oder \emph{optimale Lösung} oder
-\emph{Lösung}, falls
+\begin{rmrk}
+  \begin{enumerate}[(1)]
+  \item $G$ ist polyedrisch.
+  \item Alle endlich-dimensionalen Optimierungsprobleme lassen sich in der
+    \emph{Standardform} (3.1) schreiben (Übung).
+  \end{enumerate}
+\end{rmrk}
+
+\subsection{Basislösungen und Ecken}
+Sei $I = \{1, \ldots, n \}$. Da $\rang(A) = m$gilt, existiert eine Indexmenge
+$I_B \subset I$ mit $|I_B| = m$ derart, dass die Spalten $A^i$, $i \in I_B$
+linear unabhängig sind. $I_B$ wird \emph{Basis-Indexmenge} genannt. Mit $I_N :=
+I \setminus I_B$ (Nichtbasis) definieren wir
+\[ A_B := (A^i)_{i \in I_B}, \qquad A_N := (A^i)_{i \in I_N}. \]
+Dann kann (3.1) geschrieben werden in der Form
 \begin{equation}
-  f(x^*) \le f(x) \quad \text{für alle } x \in G.
+  \begin{aligned}
+    z = c_B^T x_B + c_N^T x_N = \sum_{i \in I_B} c_i x_i + \sum_{i \in I_N} c_i
+    x_i \to \min \subjto \\
+    A_B x_B + A_N x_N = \sum_{i \in I_B} A^i x_i + \sum_{i \in I_N} A^i x_i = b, \\
+    x_B \ge 0, x_N \ge 0.
+  \end{aligned}
 \end{equation}
-$f^* = f_{\min} := f(x^*)$ ... Optimalwert
-
-Falls $G = \real^n$, so heißt (1.1) \emph{freies} oder \emph{unrestringiertes}
-Optimierungsproblem (OP).
-
-(1.1) ist ein \emph{diskretes} OP, falls $G$ eine
-\emph{diskrete} Menge ist, zum Beispiel $G = \integer^n$.
-
-(1.1) ist ein \emph{stetiges} oder \emph{kontinuierliches} OP, falls alle
-Variablen ``stetig'' sind. Sonst gemischt-ganzzahliges Problem.
-
-(1.1) ist ein \emph{lineares} OP, falls $f(x) = c^T x$ und $G$ durch lineare
-Restklassen gegeben ist:
+bzw. nach Auflösen nach $x_B$:
 \begin{equation}
-  G = \{ x \in \real^n : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J \},
+  \begin{aligned}
+    z = (c_N^T - c_B^T A_B^{-1} A_N) x_N + c_B^T A_B^{-1} b \to \min
+    \subjto \\
+    x_B = -A_B^{-1} A_N x_N + A_B^{-1} b, \\
+    x_N \ge 0, (x_B \ge 0).
+  \end{aligned}
 \end{equation}
-wobei $g_i, h_j$ für alle $i,j$ affin linear sind. In diesem Fall kann (1.1) als
-\[ c^T x \to \min \quad \text{bei } x \in G:= \{ x \in \real^n, Ax = a, Bx \le b
-  \} \]
-geschrieben werden.
+$x_B$ heißt \emph{Basisvariable} (``abhängige Variable''). $x_N$ heißt
+\emph{Nichtbasisvariable} (``unabhängige Variable'').
 
-\begin{defn}
-  Betrachtet werden die beiden OP
-  \begin{align*}
-    f(x) &\to \min \quad \text{bei } x \in D \cap E, \tag{P} \\
-    g(x) &\to \min \quad \text{bei } x \in E. \tag{Q}
-  \end{align*}
-  (Q) heißt \emph{Relaxation} zu (P), falls $g(x) \le f(x)$ auf $D \cap E$. Der
-  Optimalwert von (Q) kann als (untere) Schranke bzw. Schrankenwert für (P)
-  bezeichnet werden.
+\begin{defn} %3.1
+  Der Punkt (Vektor)
+  \[ x \leftrightarrow \pmat{ x_B \\ x_N } = \pmat{A_B^{-1} b \\ 0 } \]
+  heißt \emph{Basislösung} zu $I_B$. Gilt zusätzlich $A_b^{-1} b \ge 0$, dann
+  heißt $x$ \emph{zulässige Basislösung}.
 \end{defn}
 
-\begin{thm}
-  Sei $\obar{x}$ Lösung von (Q) und gelte $\obar{x} \in D$ sowie $f(\obar{x}) =
-  g(\obar{x})$. Dann ist $\obar{x}$ Lösung von (P).
+\begin{defn} %3.2
+  Ein Punkt $x \in G$ heißt \emph{Ecke} von $G$, falls aus $x = \rez{2}(x+y)$
+  mit $y,z \in G$ stets $x = y = z$ folgt.
+\end{defn}
+
+\clearpage
+
+\begin{thm} %3.1
+  Gilt $\rang(A) = m$, dann ist jede zulässige Basislösung eine Ecke von $G$.
+  Umgekehrt gibt es zu jeder Ecke von $G$ mindestens eine Basislösung.
 \end{thm}
 
+\begin{thm} %3.2
+  Sei $G \ne \emptyset$. Dann besitzt $G$
+  \begin{enumerate}[(1)]
+  \item mindestens eine Ecke,
+  \item höchstens endlich viele Ecken.
+  \end{enumerate}
+\end{thm}
+
+\begin{thm} %3.3
+  Ist (3.1) lösbar, dann gibt es eine Ecke von $G$, die (3.1) löst.
+\end{thm}
+
+\begin{aus}[Optimalitätskriterium] %3.4
+  Gilt für die Basislösung $x \leftrightarrow \pmat{x_B \\ x_N } =
+  \pmat{A_B^{-1} b \\ 0 }$ die Bedingung $A_B^{-1} b \ge 0$ und
+  \[ c_N^T - c_B^T A_B^{-1} A_N \ge 0, \]
+  das heißt
+  \[ c_i - (c_B^T A_B^{-1})A^i \ge 0, \quad i \in I_N, \]
+  dann ist $x$ Lösung von (3.1).
+\end{aus}
+
 \begin{proof}
-  Übung.
+  Sei $x$ zulässige Basislösung. Wir zeigen zunächst
+  \[ Z(x) \subseteq \{ d \in \real^n : Ad = 0, d_N \ge 0 \}. \]
+  Sei $d \in Z(x)$, dann existiert $\obar{t} \ge 0$ mit $0 \le t \le \obar{t}$
+  \[ A(x+td) = Ax + t \cdot Ad = b, \]
+  also gilt $Ad = 0$.
+
+  Wegen $x_N \ge 0$ ergibt sich aus $x + td \overset{!}{\ge} 0$ und $x_N \ge 0$
+  die Bedingung $d_N \ge 0$. Insbesondere gilt
+  \[ A_B d_B + A_N d_N = 0 \qRq d_B = - A_B^{-1} A_N d_N \text{ für alle } d
+    \in Z(x). \]
+  Damit folgt unter Berücksichtigung von (3.3)
+  \[ \nabla f(x)^T d = c^T d = ( c_N^T - c_B^T A_B^{-1} A_N) d_N \ge 0 \text{
+      für alle} d \in Z(x). \]
+  Also genügt $x$ den notwendigen Optimalitätsbedingungen (2.2). Wegen Aussage
+  2.2 folgt dann, dass $x$ Lösung von (3.1) ist.
 \end{proof}
 
-\begin{defn}
-  Seien (Q1) und (Q2) Relaxationen zu (P). (Q1) heißt \emph{stärker} (strenger)
-  als (Q2), wenn die Schranke von (Q1) größer oder gleich der Schranke von (Q2)
-  für \emph{jede} Instanz von (P) ist.
-\end{defn}
+\subsection{Das primale Simplexverfahren}
+Das primale Simplexverfahren durchläuft zwei Phasen, falls erforderlich. \\
+\emph{Phase 1} besteht in der Ermittlung einer ersten zulässigen Basislösung
+(Ecke), \\
+\emph{Phase 2} in der Bestimmung einer optimalen Ecke.
 
-\subsection{Beispiele zur kontinuierlichen Optimierung}
-\subsubsection{Transportoptimierung}
-Lineare Optimierung
+\subsubsection{Phase 2}
+Wir betrachten zunächst den Fall, dass eine erste zulässige  Basislösung bekannt
+sei. Zur Vereinfachung schreiben wir (3.3) in Form des \emph{Simplex-Tableaus}.
 
-Es seien Erzeuger $i \in I := \{1, \ldots, n\}$ und Verbraucher $j \in J := \{1,
-\ldots, n\}$ gegeben. Weiterhin seien die Kosten $c_{ij}$ für den Transport
-\emph{einer} Einheit von $i$ nach $j$ sowie der Vorrat $a_i > 0$ und der
-Verbrauch $b_j > 0$ für alle $i \in I$ und $j \in J$ bekannt. Wie muss der
-Transport organisiert werden, damit die Gesamtkosten minimal sind?
+\begin{tabular}{r|cc}
+  $\mathrm{ST}_0$ & $x_N$ & 1 \\
+  \hline
+  $x_B =$ & $P$ & $p$ \\
+  \hline
+  $z =$ & $q^T$ & $q_0$
+\end{tabular}
+mit $P = -A_B^{-1} A_N$, $p = A_B^{-1} b$, $q^T = c_N^T - c_B^T A_B^{-1} A_N$,
+$q_0 = c_B^T A_B^{-1} b$.
 
-Variable $x_{ij} \ge 0$ ... Transportmenge von $i$ nach $j$.
-\[ \sum_{i \in I} \sum_{j \in J} c_{ij} \cdot x_{ij} \to \min \quad \text{bei }
-  \sum_{j \in J} x_{ij} = a_i, \quad i \in I. \]
-
-\subsubsection{Kürzeste euklidische Entfernung eines Punktes zu einer Menge}
-Nichtlineare Optimierung
-
-Gegeben sind ein Punkt $\tilde{x}$ und Menge $G \subset \real^n$ mit $\tilde{x}
-\notin G$.
-\[ f(x) := \rez{2} \| \tilde{x} - x \|_2^2 \to \min \quad \text{bei } x \in
-G. \]
-Falls $G$ konvex ist, dann ist es der Spezialfall der \emph{konvexen
-  Optimierung}.
-
-\subsubsection{Tschebyscheff-Approximation}
-Semi-infinite Optimierung
-
-Seien $f: \real \to \real$ und $S: \real^{n+1} \to \real$ stetig, zum Beispiel
-\[ S(y, x_1, \ldots, x_n) = \sum_{i=1}^n x_i s_i(y), \]
-wobei $s_i$ ein Ansatz ist für
-\[ \max_{y \in [a,b]} | f(y) - S(y, x_1, \ldots, x_n) | \to \min_{x \in
-    \real^n}. \]
-Umformulierung:
-\[ \tilde{f}(x,\lambda) := \lambda \to \min \quad \text{bei } - \lambda \le
-  f(y) - S(y, x_1, \ldots, x_n) \le \lambda \text{ für alle } y \in [a,b]. \]
-Das ist ein Beispiel mit endlich vielen Variablen und unendlich vielen
-Restriktionen.
-
-\subsection{Beispiele zur diskreten Optimierung}
-\subsubsection{Rucksackproblem}
-Gegeben sind ein Rucksack mit Volumen $b$, Teile mit Volumen $a_i$ und Bewertung
-$c_i$, $i \in I$.
-
-Voraussetzung: $a_i, c_i, b \in \integer_{>0}$, $0 < a_i \le b$ für alle $i \in
-I = \{1, \ldots, n\}$.
-
-\paragraph{0/1-Rucksackproblem}
-Entscheidungsvariable $x_i \in \{0,1\}$.
-\[ \sum_{i \in I} c_i x_i \to \max \quad \text{bei } \sum_{i \in I} a_i x_i \le
-  b, x_i \in B := \{0,1\}. \]
-Alternative Formulierung:
-\[ \sum_{i \in \tilde{I}} \to \max \quad \text{bei } \sum_{i \in \tilde{I}} a_i
-  \le b, \tilde{I} \subset I. \]
-
-\paragraph{Klassisches (Standard-)Rucksackproblem}
-\[ \sum_{i \in I} c_i x_i \to \max \quad \text{bei } \sum_{i \in I} a_i x_i \le
-  b, x_i \in \integer_+ \text{ für alle } i. \]
-Hier bezeichnet $x_i$ die Anzahl, wie oft Teil $i$ mitgenommen wird.
-
-\subsubsection{Das eindimensionale Zuschnittproblem}
-Cutting Stock Problem, CSP
-
-Aus möglichst wenig Ausgangsmaterial der Länge $L$ sind $b_i$ Teile der Länge
-$l_i$, $i \in I := \{ 1, \ldots, n \}$ zuzuschneiden.
-
-Zuschnittvariante $a_j = (a_{1j}, \ldots, a_{nj})^T \in \integer_+^n$ mit
-$\sum_{i \in I} l_i a_{ij} \le L$ für alle $j \in J$.
+O.B.d.A. nehmen wir (zunächst) an, dass $x_B = (x_1, \ldots, x_m)^T$ und $x_N
+= (x_{m+1}, \ldots, x_n)^T$. Die zu $\mathrm{ST}_0$ gehörige Basislösung ist
+somit $x \leftrightarrow \pmat{x_B \\ x_N} = \pmat{p \\ 0}$.
 \end{document}
