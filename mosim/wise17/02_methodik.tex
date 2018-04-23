@@ -1,0 +1,344 @@
+\chapter{Methodik der mathematischen Modellierung}
+\section{Modellierungszyklus}
+Mathematische Modellierung ist ein iterativer Prozess.
+
+\begin{center}
+  \includegraphics{img/modellierung}
+\end{center}
+
+Beispiel Basketball-Freiwurf: Zweifaches Durchlaufen des Zyklus.
+
+Analyse des Anwendungsproblems: Beschränkung auf Wurftrajektorie,
+vereinfachende Annahmen, Flugbahn nach Abwurf festgelegt durch Bewegungsgleichungen.
+
+Modellbildung: Bewegungsgleichungen, geometrische Bedingungen an Flugbahn.
+
+Mathematisches Modell: Flugbahn
+\[ \pmat{x(t)\\y(t)}, \qquad \pmat{v_x(t)\\v_y(t)}. \]
+Optimierungsproblem (erstes Modell):
+\[ \vartheta_{\mathrm{opt}}^0 = \argmax_{\vartheta^0} e( \vartheta^0). \]
+
+Mathematische Analyse: Zielfunktional $e(\vartheta^0)$ ist nicht stetig
+differenzierbar $\rightsquigarrow$ Optimierung ohne Verwendung von Gradienten.
+
+Interpretation und Validierung: Vergleich mit experimentellen Daten.
+
+\section{Mathematisches Modell}
+\begin{defn*}
+  Ein \emph{mathematisches Modell} stellt formale Zusammenhänge zwischen
+  (physikalischen bzw. Modell-) Größen her. Eine solche Größe ist eine
+  quantitative Eigenschaft eines physikalischen Objektes, Zustands oder
+  Prozesses. Man unterscheidet zwischen Parametern und Variablen.
+
+  Aus der Analyse bzw. Simulation eines mathematischen Modells sollen
+  Erkenntnisse über das reale (physikalische) System gewonnen werden.
+\end{defn*}
+
+\subsubsection*{Parameter}
+\begin{itemize}
+\item Systemparameter (z.B. Korbhöhe beim Basketball-Freiwurf)
+\item Modellparameter (z.B. Schrittweite beim diskreten Modell)
+\end{itemize}
+
+\subsubsection*{(Zustands-) Variablen} (z.B. Trajektorie $\pmat{x(t)\\y(t)}$,
+$\pmat{v_x(t)\\v_y(t)}$) bei Berücksichtung der Drehung eines (starren) Körpers
+zusätzlich Rotation, beschrieben typischerweise durch Quaternionen)
+
+\subsubsection*{Mathematische Analyse eines Modells}
+\begin{itemize}
+\item Dimensionsanalyse und Skalierung
+\item Existenz und Eindeutigkeit einer Lösung
+\item Untersuchung von Sonderfällen
+\item Falls explizite Lösung angegeben werden kann: Validierung der numerischen
+  Lösung
+\item Vereinfachung, Linearisierung; Störungstheorie
+\item Untersuchung von qualitativen Eigenschaften, etwa asymptotisches Verhalten
+\item Sensitivitätsanalyse: Wie wirken sich Störungen von Parametern auf die
+  Lösung aus?
+\item Auswahl von numerischen Verfahren
+\end{itemize}
+
+\section{Dimensionsanalyse und Skalierung}
+Größe $X$, Dimension $[X]$, z.B:
+\[ [l] = \text{Länge}, \qquad [t] = \text{Zeit}, \qquad [v] =
+  \text{Geschwindigkeit} = \frac{\text{Länge}}{\text{Zeit}}. \]
+
+Iternationales Einheitensystem SI
+
+\subsubsection*{Basiseinheiten}
+\begin{center}
+  \begin{tabular}{l|c|c|c|c}
+    Dimensionsname & Größensymbol & Dimensionssymbol & Einheit & Zeichen \\
+    \hline
+    Länge & $l$ & $L$ & Meter & \si{\m} \\
+    Masse & $m$ & $M$ & Kilogramm & \si{\kg} \\
+    Zeit  & $t$ & $T$ & Sekunde & \si{\s} \\
+    Stromstärke & $I$ & $I$ & Ampere & \si{\ampere} \\
+    Temperatur & $T$ & $\Theta$ & Kelven & \si{\kelvin} \\
+    Stoffmenge & $n$ & $N$ & Mol & \si{\mol} \\
+    Lichtstärke & $Ir$ & $J$ & Candela & \si{\candela}
+  \end{tabular}
+\end{center}
+
+Abgeleitete Größen und Einheiten, zum Beispiel:
+\begin{center}
+  \begin{tabular}{l|c|c|c|c}
+    Geschwindigkeit & $v$ & $\frac{L}{T}$
+    & $\frac{\text{Meter}}{\text{Sekunde}}$ & \si{\m \per \s} \\
+    Kraft & $F$ & $M \cdot \frac{L}{T^2}$
+    & Newton & $\si{\newton} = \si{\kg \m \per \s \squared}$ \\
+    Energie/Arbeit & $E$ & $M \cdot \frac{L^2}{T^2}$
+    & Joule & $\si{\joule} = \si{\newton \m} = \si{\kg \m \squared \per \second \squared}$ \\
+    Leistung & $P$ & $M \cdot \frac{L^2}{T^3}$
+    & Watt & $\si{\joule \per \s} = \si{\kg \m \squared \per \second \cubed}$ \\
+    Elektrische Leistung & $Q$ & $J \cdot T$
+    & Couloumb & $\si{\coulomb} = \si{\ampere \s}$
+  \end{tabular}
+\end{center}
+
+Grundlegende Eigenschaften und Regeln:
+\begin{itemize}
+\item Multiplikation, Potenzieren, Division von dimensionsbehafteten Größen
+  überträgt sich auf Dimensionen.
+
+  Beispiel: \\
+  Volumen eines Kubus
+  \[ V = (\text{Kantenlänge } a)^3, \qquad [V] = L^3. \]
+  Geschwindigkeit
+  \[ \left[ \diff{}{t} x(t) \right] = \left[ \lim_{\Delta t \to 0} \frac{x(t +
+        \Delta t) - x(t)}{\Delta t} \right] = \frac{L}{T}. \]
+  Beschleunigung
+  \[ \left[ \frac{\diffop^2}{\diffop t^2} x(t) \right] = \frac{L}{T^2}. \]
+\item Nur Größen gleicher Dimension dürfen addiert, subtrahiert und verglichen
+  werden.
+
+  Beispiel: Zweites Newtonsches Gesetz, ``Kraft $=$ zeitliche Änderung des
+  Impulses''
+  \[ F = \diff{}{t} p(t), \qquad p = m \cdot v, \]
+  \[ [ F ] = \frac{[p]}{[t]} = \frac{M \cdot L/T}{T} = M \cdot \frac{L}{T^2}. \]
+\item Argumente von Funktionen\footnote{%
+    Ausnahme: Monome. Das sind Polynome, die nur aus einem Glied bestehen. Ein
+    Monom ist ein Produkt, bestehend aus einem Koeffizienten und einer Potenz
+    einer Variablen.}%
+  müssen dimensionslos sein. Zum Beispiel ist $\exp(x)$ mit $[x] = L$
+  \emph{nicht} zulässig, da
+  \[ \exp(x) = 1 + x + \rez{2} x^2 + \rez{6} x^3 + \ldots, \]
+  das ergibt keinen Sinn. Zulässig ist aber
+  \[ \exp( k \cdot x ) \qquad \text{mit} \qquad [k] = \rez{L}, [x] = L. \]
+  Dann ist $k \cdot x$ wieder dimensionslos.
+  \[ F(t) = F_0 \cdot \sin (\omega t), \quad [t] = T, \quad [\omega] =
+    \rez{T}. \]
+\end{itemize}
+
+\section{Entdimensionalisierung}
+Beobachtung:  Mathematische Aussagen über ein mathematisches (physikalisches)
+Modell können nicht von der Wahl der Einheiten der jeweiligen Größen abhängen.
+$\rightsquigarrow$ Transformation auf eine dimensionslose Form.
+
+Beispiel: senkrechter Wurf, Gravitationskraft auf einen geworfenen Ball.
+Gravitationsgesetz: 
+\[ F = \gamma \frac{ m_1 m_2 }{ r^2 }. \]
+$\gamma = \SI{6.674e-3}{\m \cubed \per \kg \per \s \squared}$ ...
+Gravitationskonstante. $[\gamma] = \frac{L^3}{MT^2}$.
+
+Berücksichtige den Erdradius $R$:
+\[ F = - \gamma \frac{ m \cdot m_E }{ (x(t) + R)^2 } \]
+Anwendung des zweiten Newtonschen Gesetzes:
+\begin{align*}
+  \diff{}{t} \underbrace{m \dot{x}(t)}_{\text{Impuls}} &= F \\
+  m \ddot{x}(t) &= - \gamma \frac{ m \cdot m_E }{ (x(t) + R)^2 }
+\end{align*}
+Speziell für die Erde:
+\[ R = \SI{6371}{\km}, \qquad m_E = \SI{5.9722e24}{\kg}, \qquad g = \frac{\gamma
+    \cdot m_E}{R^2} = \SI{9.81}{\m \per \second \squared} \]
+Einsetzen:
+\[ \ddot{x}(t) = -g \frac{R^2}{(x(t) + R)^2} \]
+
+Anfangsbedingungen $x(0) = 0$, $\dot{x}(0) = \bar{v}$.
+
+\subsubsection*{Entdimensionalisierung}
+Referenzlänge $\ell_0$, $[\ell_0] = L$ \\
+Referenzzeit $\tau_0$, $[\tau_0] = T$ \\
+Neue dimensionslose Variablen:
+\[ \hat{x} = \frac{x}{\ell_0}, \qquad \hat{t} = \frac{t}{\tau_0} \qRq
+  \hat{x}(\hat{t}) = \rez{\ell_0} x ( \tau_0 \hat{t} ). \]
+Also folgt
+\[ \diff{}{\hat{t}} \hat{x}(\hat{t})
+  = \frac{\tau_0}{\ell_0} \dot{x}(\tau_0 \hat{t}), \qquad
+  \frac{\diffop^2}{\diffop \hat{t}^2} \hat{x}(\hat{t}) = \frac{\tau_0^2}{\ell_0}
+  \ddot{x}( \tau_0 \hat{t}). \]
+Einsetzen:
+\[ \frac{\diffop^2}{\diffop \hat{t}^2} \hat{x}(\hat{t}) =
+  - \frac{\tau_0^2}{\ell_0} g \rez{\left( \frac{\ell_0}{R} \hat{x}(\hat{t}) + 1
+    \right)^2}. \]
+Anfangsbedingungen $\hat{x}(0) = 0$, $\diff{}{\hat{t}}\hat{x}(0) =
+\frac{\tau_0}{\ell_0} \bar{v}$.
+
+Wir bezeichnen:
+\[ \Pi_1 := \frac{\tau_0^2}{\ell_0} g, \qquad
+  \Pi_2 := \frac{\ell_0}{R}, \qquad
+  \Pi_3 := \frac{\tau_0}{\ell_0} \bar{v}. \]
+$\Pi_1$, $\Pi_2$ und $\Pi_3$ sind drei Gruppen von Parametern. Wir können
+$\ell_0$ und $\tau_0$ so wählen, dass zwei der drei $\Pi$-Terme gleich 1 sind.
+
+Beobachtung: Für realistische Wurfhöhe $h \ll R$ gilt $\Pi_2 \ll 1$
+\[ \left. \begin{aligned}
+      \Pi_1 &= 1: & \ell_0 &= g \cdot \tau_0^2 \\
+      \Pi_2 &= 1: & \ell_0 &= \bar{v} \tau_0
+    \end{aligned}
+  \right\} \quad \tau_0 = \frac{\bar{v}}{g}, \quad \ell_0 =
+  \frac{\bar{v}^2}{g}. \]
+Also gilt
+\[ \Pi_3 = \frac{\bar{v}}{gR} =: \eps. \]
+Einsetzen:
+\[ \frac{\diffop^2}{\diffop \hat{t}^2} \hat{x}(\hat{t}) = - \rez{(\eps
+    \hat{x}(\hat{t}) + 1)^2} \]
+mit $\hat{x}(0) = 0$, $\diff{}{\hat{t}} \hat{x}(0) = 1$.
+
+Die näherungsweise Lösung für $\eps = 0$ ist
+\[ \frac{\diffop^2}{\diffop \hat{t}^2} \hat{x}(\hat{t}) \approx -1, \]
+das heißt wir erhalten die ``übliche'' Bewegungsgleichung
+\[ \ddot{x}(t) = - g. \]
+
+\subsubsection*{Systematisches Vorgehen}
+Zur Bestimmung der Referenzgrößen in komplizierteren Systemen ist es
+nicht immer möglich, wie oben intuitiv die richtigen Größen zu bestimmen. Formal
+geht man daher wie folgt vor:
+\[ \ddot{x}(t) = - g \frac{R^2}{(x(t) + R)^2}, \]
+Anfangsbedingungen $x(0) = 0$, $\dot{x}(0) = \bar{v}$.
+
+\begin{enumerate}
+\item Unabhängige Dimensionen: Länge $L$, Zeit $T$.
+\item Variablen und Parameter: \\
+  Variablen: $x$, $[x] = L$; $t$, $[t] = T$.
+  Parameter: $\bar{v}$ ($LT^{-1}$), $g$ ($LT^{-2}$), $R$ ($L$).
+\item Dimensionslose Größen:
+  Ansatz
+  \[ \left[ \bar{v}^{\alpha_1} \cdot g^{\alpha_2} \cdot R^{\alpha_3} \right] =
+    1. \]
+  Also
+  \[ \left( \frac{L}{T} \right)^{\alpha_1} \cdot
+    \left( \frac{L}{T^2} \right)^{\alpha_2} \cdot
+    L^{\alpha_3} = 1 \qRq L^{\alpha_1 + \alpha_2 + \alpha_3} \cdot T^{- \alpha_1
+      - 2 \alpha_2} = 1. \]
+  Ausgedrückt als lineares Gleichungssystem
+  \begin{center}
+  \begin{tabular}{l|ccc}
+    & $\bar{v}$ & $g$ & $R$ \\
+    \hline
+    L & 1 & 1 & 1 \\
+    T & -1 & -2 & 0
+  \end{tabular}
+  $\Rightarrow$
+  $S = \pmat{ 1 & 1 & 1 \\ -1 & -2 & 0}$.
+  \end{center}
+  \[ S \alpha = \pmat{ 1 & 1 & 1 \\ -1 & -2 & 0} \pmat{ \alpha_1 \\ \alpha_2 \\
+      \alpha_3} = \pmat{0\\0} \]
+  Allerdings gilt $\dim \ker S = 3 - 2 = 1$,
+  \[ \ker S = \spn \left\{ \pmat{ 2 \\ -1 \\ -1} \right \}. \]
+
+  $\bar{v}^2 g^{-1} R^{-1} =: \eps$ ist dimensionslos (i.A. können mehrere
+  ``entdimensionalisierte'' Parameter auftreten).
+\item Referenzgrößen:
+  \[ \hat{x} = \frac{x}{\ell_0}, \qquad \hat{t} = \frac{t}{\tau_0}. \]
+  Ansatz:
+  \[ \ell_0 = \bar{v}^{\alpha_1} g^{\alpha_2} R^{\alpha_3}, \]
+  Gleichheit der Dimensionen erfordert
+  \[ S \alpha = \pmat{1 \\ 0} \qRq \alpha = c \cdot \pmat{2 \\ -1 \\ -1} +
+    \pmat{0 \\ 0 \\ 1} \]
+  (Lösung nicht eindeutig!). Also folgt
+  \[ \ell_0 = R \cdot \eps^c, \]
+  im Beispiel oben galt $c = 1$, also $\ell_0 = \frac{\bar{v}^2}{g}$.
+
+  Analog für die Referenzzeit:
+  \[ \tau_0 = \bar{v}^{\alpha_1} g^{\alpha_2} R^{\alpha_3}, \qquad S \alpha =
+    \pmat{0 \\ 1}. \]
+  Also folgt
+  \[ \alpha = c' \pmat{2 \\ -1 \\ -1} + \pmat{1 \\ -1 \\ 0 } \]
+  und damit $\tau_0 = \frac{\bar{v}}{g} \eps^{c'}$, im Beispiel oben $c' = 0$,
+  $\tau_0 = \frac{\bar{v}}{g}$.
+\item Aufstellen der entdimensionalisierten Modellgleichung (selbe Rechnung wie
+  oben)
+  \[ \ddot{\hat{x}}( \hat{t} ) = -\rez{(\eps \hat{x}(\hat{t}) + 1)^2}, \qquad
+    \hat{x}(0) = 0, \qquad \dot{\hat{x}}(0) = 1. \]
+\end{enumerate}
+
+\begin{rmrk*}
+  Für die Wahl $\ell_0 = R$ und $\tau_0 = \frac{\bar{v}}{g}$ erhält man
+  \[ \ddot{\hat{x}}(\hat{t}) = - \eps \rez{(\hat{x}(\hat{t}) + 1)^2}, \qquad
+    \hat{x}(0) = 0, \qquad \dot{\hat{x}}(0) = \eps. \]
+  Das ist mathematisch korrekt, aber wir erhalten keine Näherungslösung für
+  $\eps \approx 0$.
+\end{rmrk*}
+
+Mit dem obigen Verfahren haben wir die Anzahl der freien Parameter von drei
+(Gravitationskonstante, Erdradius, Erdmasse) auf eins ($\eps$) reduziert. Im
+Allgemeinen lässt sich immer die Anzahl der Parameter um die Anzahl der
+vorhandenen Dimensionen (hier Länge, Zeit) reduzieren.
+
+\begin{thm}[Buckinghamsches $\Pi$-Theorem]
+  Gegeben sei ein mathematisches Modell mit $k$ Variablen $x_1, \ldots, x_k$ und
+  $l$ Parametern $x_{k+1}, \ldots, x_{k+l}$, in dem $m$ unabhängige Dimensionen
+  vorkommen. Dann können $k + l - m$ dimensionslose Größen $q_1, \ldots,
+  q_{k+l-m}$ als Produkte und Quotienten von $x_1, \ldots, x_{k+l}$ definiert
+  werden und jede skalare Modellgleichung $f(x_1, \ldots, x_{k+l}) = 0$ kann auf
+  eine Relation $\hat{f}( q_1, \ldots, q_{k+l-m} ) = 0$ reduziert werden.
+\end{thm}
+
+Für unser Beispiel: $m = 2$
+\begin{align*}
+  f( x, t, \bar{v}, g, R) = 0 \qquad
+  &\left\{ \begin{aligned}
+      \ddot{x}(t) = -g \frac{R^2}{(x(t) + R)^2} \\
+      x(0) = 0, \dot{x}(0) = \bar{v}
+    \end{aligned}
+  \right. \\ 
+  \rightsquigarrow \qquad
+  f( \hat{x}, \hat{t}, \eps) = 0 \qquad
+  &\left\{ \begin{aligned}
+      \ddot{\hat{x}}(\hat{t}) = - \rez{(\eps \hat{x}(\hat{t}) + 1)^2} \\
+      \hat{x}(0) = 0, \dot{\hat{x}}(0) = 1
+    \end{aligned}
+  \right.
+\end{align*}
+
+Konsequenz: Aussagen über das Modell, ohne Modellgleichungen zu kennen!
+
+Beispiel Pendel. Schwingungsdauer $t_{sd}$?
+
+Vorwissen/Intuition: Für kleine Auslenkungen ($\vartheta \ll 1$) sollte $t_{sd}$
+nicht von den Anfangsbedingungen abhängen (Auslenkung, Geschwindigkeit). Es
+sollte eine Relation zwischen $t_{sd}$ und den Parametern $l$, $m$ und $g$ der
+Form
+\[ f( t_{sd}, g, m, l ) = 0 \]
+existieren. Also haben wir $m=3$ unabhängige Dimensionen $T, L, M$.
+
+Buckinghamsches $\Pi$-Theorem $\rightsquigarrow$ Reduktion auf $\hat{f}(q) = 0$
+mit der dimensionlosen Größe
+\[ q = t_{sd}^{\alpha_1} \cdot l^{\alpha_2} \cdot m^{\alpha_3} \cdot
+  g^{\alpha_4} \]
+Dimensionsanalyse:
+\begin{center}
+  \begin{tabular}{r|cccc}
+    & $t_{sd}$ & $l$ & $m$ & $g$ \\
+    \hline
+    $T$ & 1 & 0 & 0 & -2 \\
+    $L$ & 0 & 1 & 0 & 1 \\
+    $M$ & 0 & 0 & 1 & 0
+  \end{tabular}
+\end{center}
+$q$ muss dimensionslos sein, also:
+\[ S\alpha = 0 \qRq \alpha = c \pmat{1 \\ -1/2 \\ 0 \\ 1/2 } \]
+und damit
+\[ q = t_{sd} l^{-1/2} m^0 g^{1/2}, \qquad t_{sd} = q \sqrt{\frac{l}{g}}. \]
+Die Schwingungsdauer ist unabhängig von $m$! Diese Aussage ist ohne Kenntnis der
+genauen Systemgleichungen möglich.
+
+Insbesondere ändert eine Skalierung $l \to s \cdot l$, $g \to s \cdot g$ die
+Schwingungsdauer nicht.
+
+Bemerkung: Die tatsächliche Lösung ist $t_{sd} = 2 \pi \sqrt{l/g}$.
+
+%%% Local Variables:
+%%% TeX-master: "master"
+%%% End:

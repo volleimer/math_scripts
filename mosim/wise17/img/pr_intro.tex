@@ -1,0 +1,56 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{0mm}
+\pagestyle{empty}
+
+% Drawing a graph
+% Author: Stefan Kottwitz
+% https://www.packtpub.com/hardware-and-creative/latex-cookbook
+
+\usepackage{tkz-graph}
+%\GraphInit[]
+\SetVertexNormal[Shape = circle,
+LineWidth = 1pt,
+FillColor = blue!50]
+\tikzset{
+  %LabelStyle/.style = { rectangle, rounded corners, draw,
+  %                      minimum width = 2em, fill = yellow!50,
+  %                      text = red, font = \bfseries },
+  VertexStyle/.append style = { inner sep=5pt,
+                                font = \bfseries},
+  EdgeStyle/.append style = {->} }
+
+\begin{document}
+\begin{tikzpicture}[rotate=45]
+  \SetGraphUnit{2}
+  \Vertices{circle}{2,1,3,4}
+
+  \Edge(1)(2)
+  \Edge(1)(3)
+  \Edge(2)(3)
+  \Edge(2)(4)
+  \Edge(4)(3)
+  \tikzset{EdgeStyle/.append style = {bend left = 15}}
+  \Edge(1)(4)
+  \Edge(4)(1)
+  
+%  \EA(B){C}
+%  \Edge(A)(B)
+%  \Edge(B)(C)
+%  \Edge(C)(B)
+%  \Edge(B)(A)
+%  \tikzset{EdgeStyle/.append style = {bend left = 50}}
+%  \Edge(A)(C)
+%  \Edge(C)(A)
+\end{tikzpicture}
+\end{document}
+
+\end{document}

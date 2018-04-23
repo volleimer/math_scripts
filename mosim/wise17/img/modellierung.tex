@@ -1,0 +1,62 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{0mm}
+\pagestyle{empty}
+
+\begin{document}
+\tikzstyle{blk} = [
+  draw, fill=blue!20, text width=10em, 
+  text centered, minimum height=2.5em,
+  rounded corners ]
+\tikzstyle{root_blk} = [
+  draw, fill=blue!20, text width=10em, 
+  text centered, minimum height=2.5em,
+  minimum width = 12.5em,
+  rounded corners ]
+\tikzstyle{txtabove} = [
+  above, text centered, font=\scriptsize,
+  text width=6em ]
+\tikzstyle{txtright} = [
+  right, text centered, font=\scriptsize,
+  text width=6em ]
+\tikzstyle{txtleft} = [
+  left, text centered, font=\scriptsize,
+  text width=6em ]
+  
+\def\blockdist{5}
+\def\rowdist{2.0}
+\def\edgedist{2.5}
+
+\begin{tikzpicture}
+  \node (root) [root_blk] {Anwendungsproblem};
+  \path (root)+(1.5*\blockdist,0) node (1) [blk] {%
+    Modellierungsziel;\\Teilproblem,\\Vereinfachte Darst.%
+  };
+  \path (1)+(0,-\rowdist) node (2) [blk] {Mathematisches Modell};
+  \path (2)+(0,-\rowdist) node (3) [blk] {%
+    Eigenschaften,\\Lösungsstrategie%
+  };
+  \path (3)+(-1.5*\blockdist,0) node (4) [blk] {%
+    Simulationsergebnisse,\\Auswertung%
+  };
+  \path (4)+(0,\rowdist) node (5) [blk] {Bewertung\\der Resultate};
+
+  \draw [->] (root.east) -- node [txtabove] {Analyse des Anwendungsproblems} (1.west);
+  \draw [->] (1.south) -- node [txtright] {Modellbildung} (2.north);
+  \draw [->] (2.south) -- node [txtright] {Mathematische Analyse} (3.north);
+  \draw [->] (3.west) -- node [txtabove] {Berechnung und Simulation} (4.east);
+
+  \draw [->] (4.north) -- node [txtleft] {Interpretation, Validierung} (5.south);
+  \draw [->] (5.north) -- node [txtleft] {Ziel noch nicht erreicht?} (root.south);
+  
+\end{tikzpicture}
+
+\end{document}

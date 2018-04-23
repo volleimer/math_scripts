@@ -1,0 +1,687 @@
+\chapter{Diskretisierung partieller Differentialgleichungen}
+Partielle Differentialgleichungen (PDE) treten in fast allen quantitativen
+Naturwissenschaften auf.
+
+\section{Exemplarische Beispiele partieller Differentialgleichungen}
+\subsubsection*{Beispiel 1: Stationäres elliptisches Problem}
+$u(x) \in \real^d$, $s \in \Omega \subseteq \real^m$ Ortsvariable (oft $m = 2,
+3$).
+
+An $\partial \Omega$ werden Daten vorgegeben, etwa
+\[ u |_{\partial \Omega} = 0, \qquad \pdiff{u}{n} = 0, \qquad \ldots \]
+
+Anwendung: Form einer Seifenblase
+
+Gegeben sei die Höhe des Drahtes als Funktion $\varphi: \partial \Omega \to
+\real$.
+
+Gesucht ist die Höhe $u: \Omega \to \real$ der Seifenblase.
+
+Physikalisches Prinzip der Seifenblasenhaut: Minimierung der Oberfläche
+\[ J := \int_\Omega \sqrt{1 + (\partial_{x_1} u)^2 + (\partial_{x_2} u)^2}
+  \diffop^2 x \to \min. \]
+
+%% Hopp
+
+Plateau'sches Problem:
+\[ \left\{ \quad \begin{aligned}
+      &J \to \min \\
+      &\text{Randbedingung } u|_{\partial \Omega} = \varphi
+    \end{aligned}
+  \right.
+\]
+
+Bei kleinen Gradienten:
+\[ \sqrt{ 1 + (\partial_{x_1} u)^2 + (\partial_{x_2} u)^2}
+  \approx
+  1 + \rez{2} ((\partial_{x_1} u)^2 + (\partial_{x_2} u)^2). \]
+Damit lässt sich das Problem vereinfachen:
+\[ \left\{ \quad \begin{aligned}
+      &J := \rez{2} \int_\Omega (\partial_{x_1} u)^2 + (\partial_{x_2} u)^2
+      \diffop x \to \min \\
+      &u|_{\partial \Omega} = \varphi
+    \end{aligned}
+  \right.
+\]
+Mit der Euler-Lagrange-Gleichung der Variationsrechnung erhält man
+\[ \left\{ \quad \begin{aligned}
+      &\partial_{x_1} u)^2 + (\partial_{x_2} u)^2 = 0 \\
+      &u|_{\partial \Omega} = \varphi
+    \end{aligned}
+  \right.
+\]
+Schreibweise: $\Delta u = 0$.
+
+\subsubsection*{Beispiel 2: Hyperbolische Kontinuitätsgleichung}
+\begin{itemize}
+\item $\rho(x,t) \in \real$: Dichte
+\item $u(x,t) \in \real^2$: Geschwindigkeitsfeld
+\end{itemize}
+
+Massenerhaltung:
+\begin{align*}
+  \pdiff{}{t} \int_V \rho \diffop^3 x
+  &= - \int_{\partial V} \rho( u \cdot n ) \diffop^2 S, \\
+  \begin{aligned}
+    &\text{Zeitliche Änderung} \\
+    &\text{der Masse in $V$}
+  \end{aligned}
+  &= \begin{aligned}
+    &\text{Flüssigkeit, die in das Volumen} \\
+    &\text{hinein bzw. herausströmt}
+  \end{aligned}
+\end{align*}
+
+Gauß:
+\[ \int_{\partial V} \rho(u \cdot n) \diffop^2 S
+  = \int_V \nabla \cdot (\rho u) \diffop^3 x. \]
+Weil $V$ beliebig ist:
+\[ \pdiff{}{t} \rho + \nabla \cdot (\rho u) = 0. \]
+Das ist die Kontinuitätsgleichung für die Dichte.
+
+``hyperbolisch'': Orts- und Zeitableitung haben dieselbe Ordnung, hier 1.
+
+\subsubsection*{Beispiel 3: Parabolische Wärmeleitungsgleichung}
+$u(x,t) \in \real^d$, $x \in \real^d$, $d = 1,2,3$.
+\[ \partial_t u = k \Delta u \]
+mit dem Laplace-Operator $\Delta u = \sum_{i=1}^d \partial_{x_i}^2 u$.
+
+Cauchy-Problem (Anfangs- und/oder Randbedingungen vorgegeben):
+\[ u(x, t = 0) = u_0(x) \]
+
+Fundamentallösung (in 1D):
+\[ u(x,t) = \rez{\sqrt{4\pi k t}} \int_{-\infty}^\infty
+  e^{-\frac{(x-y)^2}{4 k t}} u_0(y) \diffop y. \]
+
+\subsubsection*{Bemerkungen}
+\begin{enumerate}[(a)]
+\item Beispiele 1, 2 und 3 sind \emph{lineare} PDEs, das heißt sie sind linear
+  in der gesuchten Lösung, zum Beispiel:
+  \[ \Delta( \alpha u(x,t) + v(x,t) )
+    = \alpha \cdot \Delta u(x,t) + \Delta v(x,t). \]
+  Die Navier-Stokes-Impulsgleichung ist eine nichtlineare PDE
+  \[ \rho \left( \partial_t u_i + \sum_{j=1}^3 u_j \partial_{x_j} u_i \right)
+    + \partial_{x_i} P = \ldots \]
+  Der Term $u_j \partial_{x_j} u_i$ ist quadratisch in $u(x,t)$ das heißt
+  \[ u(x,t) \to \alpha u(x,t), \qquad
+    \sum_{j=1}^3 u_j \partial_{x_j} u_i \to \alpha^2
+    \sum_{j=1}^3 u_j \partial_{x_j} u_i. \]
+\item Die Typeneinteilnug (elliptisch, hyperbolisch, parabolisch usw.) bestimmt
+  die Art der Zusatzdaten (Anfangs- oder Randwerte), die das Problem
+  \emph{wohlgestellt}\footnote{%
+    Das heißt die Lösung ist stetig bezüglich der Anfangs- bzw. Randwerte.
+  } machen.
+\end{enumerate}
+
+\section{Typische Schritte der numerischen Lösung}
+\begin{enumerate}
+\item Geometrieaquisition
+\item Diskretisierung (Gitter und numerische Methode)
+\item Gleichungssystem aufstellen
+\item Gleichungssystem lösen
+\item Lösung bewerten (Fehlerabschätzung)
+\item Visualisierung
+\end{enumerate}
+Adaptive Systeme kehren automatisiert von Schritt 5 wieder zu Schritt 2 zurück.
+
+\section{Disketrisierungsprinzipien} %% 6.3
+\begin{itemize}
+\item Finite Differenzen: Verallgemeinerungen des Differentialquotienten
+  \[ \frac{f(x+h) - f(x)}{h} \]
+  auf höhere Dimensionen bzw. Ordnungen
+\item Finite Volumen: Anwendung vor allem auf Erhaltungsgleichungen
+  \[ \int_V \text{Ausdruck } 1 = \int_V \text{Ausdruck } 2 \]
+  für alle Volumen $V$ in $\Omega$
+
+  Idee: Ersetze ``alle $V$'' durch ausgewählte, endlich viele Testvolumen $E_j$,
+  wobei
+  \[ \Omega = E_1 \hat{\cup} E_2 \hat{\cup} \cdots \hat{\cup} E_N, \]
+  wobei $\hat{\cup}$ die disjunkte Vereinigung ist.
+\item Finite Elemente
+  Variationsformulierung $\rightsquigarrow$ PDE
+  \[ u \in X : J(u) \overset{!}{=} \min_{v \in X} J(v) \]
+  $X$: Funktionenraum (zum Beispiel alle stetig differenzierbaren Funktionen auf
+  $\Omega$).
+
+  Wähle endlich-dimensionalen Unterraum $X_h \subset X$ und betrachte
+  \[ u_h \in X_h : J(u_h) \overset{!}{=} \min_{v_h \in X_h} J(v_h). \]
+  Für $J$ quadratisch ist das äquivalent zum linearen Gleichungssystem
+  \[ L_h u_h = f_h. \]
+
+  Speziell für Finite Elemente: $X_h$ ist der Raum der stückweisen Polynome in
+  $\Omega$, $\Omega$ wird zerlegt (Triangulierung), in 2D Zerlegung in Dreiecke.
+\end{itemize}
+
+\section{Finite Differenzen}
+Idee:
+\begin{enumerate}[a)]
+\item Diskretisiere $\Omega$ durch (uniformes) Gitter mit Gitterkonstante $h$.
+  Notation: $\Omega_h$.
+\item Approximiere Differentialoperatoren durch Differenzenquotienten.
+\end{enumerate}
+
+Differentialoperatoren: Zum Beispiel symmetrische Differenzen für $u(x,y)$:
+\[ \partial_x u =
+  \underbrace{\frac{u(x+h,y) - u(x-h,y)}{2h}}_{=: \partial_{h,x} u} + O(h^2)
+  \quad \text{für } u \in C^3, \]
+\[ \partial_x^2 u = \frac{u(x+h,y) - 2 u(x,y) + u(x - h,y)}{h^2} + O(h^2)
+  \quad \text{für } u \in C^4. \]
+Ableitung nach $y$ analog.
+\begin{align*}
+  - \Delta u &= -(\partial_x^2 u + \partial_y^2 u) \\
+             &= \frac{4 u(x,y) - u(x+h,y) - u(x-h,y) - x(x,y+h) - u(x,y-h)}
+               {h^2} + O(h^2) \\
+             &\text{für } u \in C^4.
+\end{align*}
+Der diskrete Laplace-Operate $- \Delta_h u$ wird als \emph{Fünf-Punkte-Stern}
+bezeichnet.
+
+Abgekürzte Notation in gittereingebetteter Matrix-Schreibweise:
+\begin{align*}
+  - \Delta_h
+  &= \rez{h^2}
+    \begin{bmatrix}
+      0 & -1 & 0 \\
+      -1 & 4 & -1 \\
+      0 & -1 & 0
+    \end{bmatrix}, \\
+  \partial_{h,x}
+  &= \rez{2 h}
+    \begin{bmatrix}
+      0 & 0 & 0 \\
+      -1 & 0 & 1 \\
+      0 & 0 & 0
+    \end{bmatrix} =
+              \begin{bmatrix}
+                -1 & 0 & 1
+              \end{bmatrix}, \\
+  \partial_{h,x}
+  &= \rez{2 h}
+    \begin{bmatrix}
+      1 \\ 0 \\ -1
+    \end{bmatrix}.
+\end{align*}
+
+\subsection{Modellproblem Poisson-Gleichung}
+Modell für elliptisches Randwertproblem
+\[ \text{Poisson-Gleichung } \left\{
+    \begin{aligned}
+      - \Delta u &= f & \text{auf } \Omega \subset \real^d \text{ Gebiet} \\
+      u|_{\partial \Omega} &= 0 & \text{Homogene Dirichlet'sche Randbedingung}
+    \end{aligned}
+  \right. \]
+$\Omega$ sei zum Beispiel das Einheitsquadrat $[0,1]^2$ für $d = 2$.
+
+Wir diskretisieren $\Omega$ mit der Gitterkonstante $h = \rez{n}$, $n \in \nat$.
+Für $n = 5$ erhalten wir ein $6 \times 6$-Gitter
+\[ \Omega_h =
+  \big\{ (x,y) \in \Omega : x = ih, y = jh; i,j \in \{0,1,2,3,4,5\} \big\}. \]
+Die Randpunkte von $\Omega_h$ werden in $\Gamma_h$ zusammen gefasst.
+
+Die diskrete Lösung
+\[ u_h : \Omega_h \setminus \Gamma_h \to \real \]
+ist nur auf den inneren Punkten definiert wegen der Randbedingung $u|_{\partial
+  \Omega} = 0$. Das heißt $u_h$ ist ein Vektor der Dimension $(n-1)^2$.
+
+Die diskretisierte rechte Seite ist
+\[ f_h := f|_{\Omega_h \setminus \Gamma_h}. \]
+
+Die Diskretisierung mit Fünf-Punkte-Stern-Operator führt zu einem linearen
+Gleichungssystem
+\[ L_h u_h = f_h. \]
+Wie sieht die Matrix $L_h$ aus? Das hängt von der Nummerierung der Gitterpunkte
+ab. Typischerweise wählt man eine lexikographische Nummerierung der inneren
+Punkte:
+\[ \begin{bmatrix}
+    & & & \cdots & (n-1)^2 \\
+    \vdots & \vdots & \vdots &  & \vdots \\
+    n & n+1 & n+2 & \cdots & 2(n-1) \\
+    1 & 2 & 3 & \cdots & n-1
+  \end{bmatrix}, \qquad
+  u_h = \pmat{
+    u(h,h) \\ u(2h,h) \\ \vdots \\
+    u((n-1)h,h) \\ u(h,2h) \\ \vdots \\
+    u( (n-1)h, (n-1)h) }
+\]
+Damit ergibt sich
+\[ L_h = \rez{h^2}
+  \begin{pmatrix}
+    4 & -1 & 0 & \cdots & -1 & 0 & \cdots \\
+    -1 & 4 & -1 & & \cdots & -1 & 0 & \cdots \\
+    0 & -1 & 4 & -1 & & \cdots & -1 & 0 & \cdots \\
+    & & & \ddots & \ddots & & \ddots \\
+    & & & & 4 & 0 & & -1 \\
+    -1 & & & & 0 & 4 & -1 & & -1 \\
+    & -1 & & & & -1 & 4 & -1 & & -1 \\
+    & & \ddots & & & & \ddots & \ddots & \ddots \\
+  \end{pmatrix}
+\]
+Die Hauptdiagonale ist überall 4. Auf den $-1$-Nebendiagonalen gibt es wegen der
+Randpunkte einige Null-Einträge. Insgesamt hat $L_h$ eine pentadiagonale
+Struktur und ist dünn besetzt.
+
+Das Aufstellen von $L_h$ mittels Python erfolgt mit dieser Idee: Nutze die
+Faktorisierung bezüglich $x$- und $y$-Richtung aus.
+\[ -\Delta_h = \rez{h^2}
+  \begin{bmatrix}
+    0 & -1 & 0 \\
+    -1 & 4 & -1 \\
+    0 & -1 & 0
+  \end{bmatrix}
+  = \underbrace{
+    \rez{h^2}
+    \begin{bmatrix}
+      -1 & 2 & -1
+    \end{bmatrix}}_{(-\partial_{h,x}^2) \otimes I_y} +
+  \underbrace{
+    \rez{h^2}
+    \begin{bmatrix}
+      -1 \\ 2 \\ -1
+    \end{bmatrix}}_{I_x \otimes (-\partial_{h,y}^2)}
+\]
+mit dem Kronecker-produkt $\otimes$ (numpy.kron) und $I_x$, $I_y$ $(n-1) \times
+(n-1)$-Einheitsmatrix.
+
+1. Zeile von $L_h$:
+\[ \rez{h^2} ( 4u(h,h) - u(2h,h) - u(h,2h)), \]
+2. Zeile von $L_h$:
+\[ \rez{h^2} ( 4u(2h,h) - 3(3h,h)- u(h,h)  u(2h,2h). \]
+
+\paragraph{Aufstellen von $L_h$ mittels Python}
+Idee: Nutze Faktorisierung bezüglich $x$- und $y$-Richtung aus.
+\[ -\Delta_h = \rez{h^2}
+  \begin{bmatrix}
+    & -1 \\
+    -1 & 4 & -1 \\
+    & -1
+  \end{bmatrix}
+  = \rez{h^2} \begin{bmatrix} -1 & 2 & -1 \end{bmatrix}
+  + \rez{h^2} \begin{bmatrix} -1 \\ 2 \\ -1 \end{bmatrix}
+\]
+Man schreibt
+\begin{align*}
+  \rez{h^2} \begin{bmatrix} -1 & 2 & -1 \end{bmatrix}
+  &=: -\partial_{h,x}^2 \otimes I_y), \\
+  \rez{h^2} \begin{bmatrix} -1 \\ 2 \\ -1 \end{bmatrix}
+  &=: -\partial_{h,y}^2 \otimes I_x.
+\end{align*}
+
+  
+Eindimensionaler Fall:
+\[ - \partial_{h,x}^2 = \rez{h^2}
+  \begin{bmatrix} -1 & 2 & -1 \end{bmatrix} =
+  \begin{pmatrix}
+    2 & -1 & 0 & 0 & \cdots & 0 \\
+    -1 & 2 & -1 & 0 & \cdots & 0\\
+    & -1 & 2 & -1 & \cdots & 0 \\
+    & & \ddots & \ddots & \ddots \\
+    & & & -1 & 2 & -1 \\
+    & & & & -1 & 2
+  \end{pmatrix} \]
+\[ - \partial_{h,x}^2 = \rez{h^2}
+  \begin{bmatrix} -1 \\ 2 \\ -1 \end{bmatrix} =
+  \text{Gleiche Matrix wie oben.}\]
+
+\subsection{Lösbarkeit des linearen Gleichungssystems
+  $L_h u_h = f_h$}
+%% 6.4.2
+
+Elliptische Probleme allgemein: symmetrisch, positiv definit (alle Eigenwerte
+$>0$).
+
+Die Konditionszahl von $L_h$ ist
+\[ \kappa(L_h) = \| L_h^{-1} \| \cdot \| L_h = O(h^{-2}). \]
+Die iterative Lösung des Gleichungssystems, zum Beispiel mittels CG-Verfahren
+(conjugate gradients), benötigt $\sim \sqrt{\kappa(L_h)} = O(h^{-1})$
+Iterationen. Das ist sehr aufwendig für kleine $h$. Als Ausweg verwendet man
+\emph{Mehrgitterverfahren} (multigrid methods), eine Hierarchie von
+gröberen/feineren Gittern.
+
+\section{Finite Volumen} %% 6.5
+Erhaltungsprinzip
+\[ \int_V \text{Ausdruck 1} = \int_V \text{Ausdruck 2} \quad
+  \text{für alle Volumen $V$ in $\Omega$} \]
+Beispiel Masseerhaltung:
+\[ \partial_t \int_V \rho \diffop^3 x = \int_V \nabla \cdot (\rho \vec{u})
+  \diffop^3 x. \]
+
+Idee:
+\begin{enumerate}
+\item Ersetze ``alle $V$'' durch ausgewählte, endlich viele Testvolumen $E_i$,
+  wobei
+  \[ \Omega = \dot\bigcup_{i=1}^n E_n \]
+  mit der disjunkten Vereinigung $\dot\cup$.
+
+  Für jedes Teilvolumen speichert man Freiheitsgrade ab:
+  \begin{enumerate}[(a)]
+  \item all-center (ein Freiheitsgrad in der Mitte jedes Volumens)
+  \item all-edge (ein Freiheitsgrad in der Mitte jeder Kante)
+  \item all-vertex (ein Freiheitsgrad an jedem Eckpunkt)
+  \end{enumerate}
+\item Integriere die Differentialgleichung über $E_j$, wende den Gauß'schen Satz
+  an  und approximiere, zum Beispiel
+  \[ - \Delta u = f \qRq
+    - \int_{E_j} \Delta u \diffop x = \int_{E_j} f \diffop x \]
+  Gauß angewendet auf $\nabla u$:
+  \[ \Delta u = \nabla \cdot( \nabla u ) = ( \partial_x^2 + \partial_y^2 +
+    \partial_z^2) u. \]
+  Also erhalten wir
+  \[ - \int_{E_j} \Delta u \cdot \vec{n} \diffop S =
+    \int_{E_j} f \diffop x. \]
+  Benutze Freiheitsgrade, um $\nabla u \cdot \vec{n}$ durch Differenzen zu
+  approximieren. 
+\end{enumerate}
+
+\subsection{Modellproblem: Poisson-Gleichung} %% 6.5.1
+Teile die Ebene in Quadrate auf und wähle eine all-center
+%% Grid 5 x 5, Seitenlänge h = 1/n
+%% BIld
+
+Ersetze Normalenableitung  $\nabla u \cdot \vec{n}$ durch 1. Differenzen
+zwischen Zellmittelpunkten:
+\[ \int_{E_j} f \diffop x = - \int_{\partial E_j} \partial_{h,\vec{u}} u_h
+  \diffop S = - \int_{\Gamma_1 \cup \Gamma_2 \cup \Gamma_3 \cup \Gamma_4}
+  \partial_{h,\vec{u}} u_h \diffop S \tag{$*$}. \]
+Die Integrale über die einzelnen Seiten sind
+\begin{align*}
+  \int_{\Gamma_1} \partial_{h,\vec{u}} \diffop x
+  &= h \cdot \frac{u(x_j + h, y_j) - u(x_j, y_j)}{h}, \\
+  \int_{\Gamma_2} \partial_{h,\vec{u}} \diffop x
+  &= h \cdot \frac{u(x_j, y_j + h) - u(x_j, y_j)}{h}, \\
+  \int_{\Gamma_3} \partial_{h,\vec{u}} \diffop x
+  &= h \cdot \frac{u(x_j - h, y_j) - u(x_j, y_j)}{h}, \\
+  \int_{\Gamma_4} \partial_{h,\vec{u}} \diffop x
+  &= h \cdot \frac{u(x_j, y_j - h) - u(x_j, y_j)}{h}.
+\end{align*}
+Der Faktor $h$ kommt daher, dass die Länge des Integrationspfads $\Gamma_1$
+genau die Seitenlänge ist.
+
+Eingesetzt in ($*$), teile durch $\rez{h^2}$:
+\[ \rez{h^2} \int_{E_j} f \diffop x =
+  \underbrace{
+    \begin{aligned}
+      \rez{h^2} \Big( 4 u(x_j,y_j)
+      &- u(x_j+h,y_j) - u(x_j-h,y_j) \\
+      &- u(x_j,y_j+h) - u(x_j,y_j-h) \Big) 
+    \end{aligned}
+  }_{
+    -\Delta_h u } \]
+
+Beobachtung: Wir erhalten die gleiche Matrix $L_h$ wei bei finiten Differenzen,
+aber die rechte Seite ist
+\[ f(x_j,y_j) = \oint_{E_j} f \diffop x := \frac{\int_{E_j} f \diffop
+    x}{\int_{E_j} \diffop x} \]
+%% Average int!
+Integraler Mittelwert.
+
+\subsection{Hyperbolische Erhaltungsgleichungen in 1D} %% 6.5.2
+Allgemeine Formulierung:
+\[ \left\{ \quad \begin{aligned}
+      &\partial_t u (x,t) + \partial_x f(u(x,t)) = 0 \\
+      &u(x,0) = u_0(x)
+    \end{aligned} \right. \tag{$\circ$} \]
+Gesucht ist $u(x,t)$, also haben wir dieselbe Situation wie Massenerhaltung in
+D.
+\[
+  \begin{array}{cccccc}
+    \partial_t \rho & + & \nabla & \cdot & (\rho u) & = 0 \\
+    \updownarrow & & \updownarrow & & \updownarrow \\
+    u & & \partial_x & & f(u(x,t))
+  \end{array} \]
+
+Einfachster Fall: Lineare Konvektionsgleichung
+\[ f(u) = a \cdot u, \quad a \text{ konstant}. \]
+Entsprechende Differentialgleichung:
+\[ \left\{ \quad \begin{aligned}
+      &\partial_t u (x,t) + a \partial_x u(x,t) = 0 \\
+      &u(x,0) = u_0(x)
+    \end{aligned} \right. \]
+Für differenzierbares $u$ ist die Lösung:
+\[ u(x,t) = u_0(x-at), \]
+die Anfangsverteilung verschiebt sich mit Geschwindigkeit $a$ in Richtung des
+Vorzeichens von $a$.
+
+\subsubsection*{Beispiel: Reibungsfreie Burgensgleichung}
+\[ f(u) = \rez{2} u^2 \qRq \partial_x f(u(x,t)) = u(x,t) \partial_x u(x,t). \]
+Trick: Betrachte Lösungen der gewöhnlichen Differentialgleichung für $z(t)$:
+\[ z'(t) = u(z(t),t), \tag{$*$} \]
+sogenannte \emph{Charakteristiken}.
+\begin{align*}
+  \diff{}{t} u(z(t),t) 
+  &= \partial_t u(z(t),t) + \partial_x u(z(t),t) z'(t) \\
+  &= \partial_t u(z(t),t) + \underbrace{u(z(t),t) \partial_x u(z(t))}_{
+    \partial_x f(u(z(t),t))
+    } = 0
+\end{align*}
+gemäß der Differentialgleichung ($\circ$). Also ist $u(z(t),t)$ zeitlich
+konstant, insbesondere ist nach ($*$) auch $z'(t)$ konstant. Damit folgt
+\[ z(t) = z_0 + t \cdot u(z(t),t) = z_0 + t \cdot u( z_0, 0 ). \]
+
+Also ist $z(t)$ abhängig von der Anfangsverteilung von $u$. Das führt dazu, dass
+die Verteilung von $u$ umso schneller transportiert wird, je größer $u(z_0)$
+ist. Es entstehen \emph{Schockwellen} (Stoßwellen, shock waves) mit senkrechtem
+Abfall auf einer Seite.
+
+Problem aus numerischer Sicht: Die Lösung $u(x,t)$ entwickelt eine Unstetigkeit
+durch diese Schockwelle. Dann ist die Beschreibung mittels Differenzenquotienten
+nicht mehr sinnvoll. Deswegen wurde für solche Anwendungen eine eigene
+numerische Lösungstheorie entwickelt, siehe zum Beispiel Randall LeVoque:
+Numerical Methods for Conservation Laws.
+
+\section{Finite Elemente} %% 6.6
+\subsection{Formulierung als Variationsgleichung}
+Idee: Schreibe PDE als Variationsgleichung um.
+
+\subsubsection*{Beispiel 1}
+Poisson-Gleichung auf dem Gebiet $\Omega \in \real^d$, $d=2,3$:
+\[
+  \left\{
+    \begin{aligned}
+      - \Delta u &= g, &\text{in } \Omega, \\
+      u |_{\partial \Omega} &= 0
+    \end{aligned}
+  \right. \]
+Nun betrachtet man $V := $ Menge aller stetig differenzierbaren
+Funktionen\footnote{%
+  Das ist der sogenannte Sobolev-Raum $H_0^1(\Omega)$.}
+$v$ auf $\Omega$ ($v: \Omega \to \real$ stetig differenzierbar) mit
+$v|_{\partial \Omega} = 0$. Multipliziere die PDE mit beliebigem $v \in V$
+(``Testfunktion'') und wende den Gauß'schen Integralsatz an:
+\[ - \int_\Omega (\Delta u) \cdot v \diffop x
+  = \int_\Omega g \cdot v \diffop x
+  \quad \text{für alle } v \in V. \]
+Gauß angewendet auf $(\nabla u) v$ liefert
+\[ - \int_\Omega (\Delta u) \cdot v \diffop x
+  = \int_\Omega (\nabla u) \cdot (\nabla v) \diffop x
+  - \underbrace{\int_{\partial \Omega} v \cdot \nabla u \cdot \vec{n} \diffop
+    S}_{=0}.
+\]
+Der zweite Term ist $=0$, weil wir $v|_{\partial \Omega} = 0$ voraussetzen. Also
+gilt
+\[ \underbrace{\int_\Omega \nabla u \cdot \nabla v \diffop x}_{=: a(u,v)}
+  = \underbrace{\int_\Omega g \cdot v \diffop x}_{=: f(x)}
+  \quad \text{für alle } v \in V. \]
+Also: Bestimme $u \in V$, so dass
+\[ a(u,v) = f(v) \quad \text{für alle } v \in V, \]
+das ist die ``Variationsgleichung'' mit der ``Testfunktion'' $v$.
+
+\begin{rmrk*}
+  Die Randbedingung $u |_{\partial \Omega} = 0$ wurde direkt in $V$
+  ``eingebaut''.
+\end{rmrk*}
+
+\subsubsection*{Beispiel 2}
+\[ \left\{
+    \begin{aligned}
+      - \Delta u + \vec{w} \cdot \nabla u &= g &\text{in } \Omega, \\
+      \pdiff{u}{n} &= 0 &\text{auf } \textcolor{red}{\partial \Omega}
+    \end{aligned}
+  \right. \]
+$\pdiff{u}{n}$ bezeichnet die Ableitung in Normalenrichtung:
+\[ \pdiff{u}{n} = \nabla u \cdot \vec{n}. \]
+Diese Randbedingung wird als \emph{Neumann'sche Randbedingung} bezeichnet.
+
+Definiere $V :=$ Menge aller stetig differenzierbaren Funktionen auf $\Omega$.
+Im Unterschied zu Beispiel 1 wird nun \emph{nicht} $v|_{\partial \Omega} = 0$
+gefordert.
+
+Multipliziere wieder die PDE mit $v \in V$ und wende den Gauß'schen Integralsatz
+an:
+\[ - \int_\Omega (\Delta u) \cdot v \diffop x
+  + \int_\Omega (\vec{w} \cdot \nabla u) v \diffop x
+  = \int_\Omega g v \diffop x. \]
+Gauß angewendet auf $(\nabla u) v$ liefert wieder
+\[ - \int_\Omega (\Delta u) \cdot v \diffop x
+  = \int_\Omega \nabla u \cdot \nabla v \diffop x
+  - \underbrace{\int_{\partial \Omega} v \nabla u \cdot \vec{n} \diffop S}_{=0},
+\]
+wobei diesmal der zweite Term aufgrund der Neumann'schen Randbedingung wegfällt.
+Also folgt
+\[ \underbrace{\int_\Omega \nabla u \cdot \nabla v
+    + (\vec{w} \cdot \nabla u) v \diffop x}_{=: a(u,v)} =
+  \underbrace{\int_\Omega g v \diffop x}_{=: f(v)}. \]
+Bestimme nun $u \in V$, so dass
+\[ a(u,v) = f(v) \quad \text{für alle } v \in V. \]
+
+\subsection{Abstrakte Variationsgleichung: Mathematische Grundlagen}
+``Zutaten''
+\begin{itemize}
+\item $V$: Funktionenraum, zum Beispiel differenzierbare Funktionen auf $\Omega$
+  oder (typischerweise für finite Elemente) Sobolev-Raum $H^1(\Omega)$.
+\item $a(u,v)$: Bilinearform auf $V$, das heißt $a : V \times V \to \real$ ist
+  linear in $u$ und $v$.
+  \[ a(u, \gamma v_1 + v_2) = \gamma a(u,v_1) + a(u,v_2), \]
+  \[ a(\gamma u_1 + u_2, v) = \gamma a(u_1,v) + a(u_2,v). \]
+
+  Beispiel:
+  \[ a(u,v) = \int_\Omega \nabla u \cdot \nabla v \diffop x. \]
+\item $f$: Linearform auf $V$, das heißt $f : V \to \real$ ist linear.
+
+  Beispiel:
+  \[ f(v) = \int_\Omega g \cdot v \diffop x \]
+  mit fest gewählter Funktion $g$.
+\item Problemstellung: Gesucht ist $u \in V$, so dass
+  \[ a(u,v) = f(v) \quad \text{für alle } v \in V. \]  
+\end{itemize}
+
+\subsubsection*{Mathematische Grundlage}
+\begin{thm}[Satz von Lax-Milgram]
+  Sei $V$ ein Hilbertraum, $a$ eine Bilinearform auf $V$, die
+  \begin{enumerate}[a)]
+  \item koerziv ist, das heißt es existiert $c_1 > 0$, so dass
+    \[ a(v,v) \ge c_1 \| v \|^2
+      \quad \text{für alle } v \in V, \]
+  \item stetig ist, das heißt es existiert $c_2 > 0$, so dass
+    \[ |a(u,v)| \le c_2 \|u\| \cdot \| v \|
+      \quad \text{für alle } u, v \in V \]
+  \end{enumerate}
+  sowie $f$ eine stetig Linearform, das heißt es existiert $c > 0$, so dass
+  \[ |f(v)| \le c \|v\|
+    \quad \text{für alle } v \in V. \]
+  Dann existiert eine eindeutige Lösung $u \in V$ von
+  \[ a(u,v) = f(v) \quad \text{für alle } v \in V. \]  
+\end{thm}
+
+\begin{rmrk*}
+  Die Sobolev-Räume  $H^1(\Omega)$ und $H_0^1(\Omega)$ ($u|_{\partial \Omega} =
+  0$) sind Hilberträume, also ist der Satz direkt anwendbar.
+\end{rmrk*}
+
+\subsection{Diskretisierung} %% 6.6.3
+Idee: Wähle einen endlich-dimensionalen Teilraum $V_h \in V$, zum Beispiel die
+stückweise linearen Funktionen auf der Triangulierung von $\Omega$ und bestimme
+$u_h \in V_h$, so dass
+\[ a(u_h, v_h) = f(v_h) \quad \text{für alle } v_h \in V_h. \]
+Das heißt, die Testfunktionen $v_h$ werden aus dem Teilraum $V_h$ anstelle von
+$V$ gewählt.
+
+Vorteil: Viele Eigenschaften der kontinuierlichen Formulierung (typisch $V =
+H_0^1(\Omega)$) lassen sich direkt auf die Diskretisierung übertragen,
+insbesondere der Satz von Lax-Milgram (angewendet auf $V_h$).
+
+Anforderung an die Triangulierung von $\Omega$: Es dürfen keine Ecken auf den
+Kanten anderer Dreiecke liegen.
+
+Berechnung von $u_h$: Gegeben Basis $\varphi_1, \varphi_2, \ldots, \varphi_n$
+von $V_h$ kann man $u_h$ eindeutig darstellen als
+\[ u_h = \sum_{i=1}^n u_i \varphi_i. \]
+Weil $(\varphi_i)_{i=1}^n$ eine Basis ist, gilt
+\begin{align*}
+  a( u_h, v_h )
+  &= f(v_h) \quad \text{für alle } v_h \in V_h 
+    \quad \Leftrightarrow \\
+  a( u_h, \varphi_j )
+  &= f( \varphi_j ) \quad \text{für } j = 1,\ldots,n.
+\end{align*}
+Einsetzen von $u_h = \sum_{i=1}^n u_i \varphi_i$:
+\[ \sum_{i=1}^n u_i
+  \underbrace{a(\varphi_i, \varphi_j)}_{=: a_{ji}}
+  = f(\varphi_j) \forall j = 1,
+  \ldots, n. \]
+$\Leftrightarrow$ Lineares Gleichungssystem
+\[ A_h \pmat{u_1 \\ u_2 \\ \vdots \\ u_n} =
+  \pmat{f(\varphi_1) \\ f(\varphi_2) \\ \vdots \\ f(\varphi_n)} \]
+mit $A_h = (a_{ij})_{i,j=1}^n$.
+
+Überlegung: $A_h$ sollte dünn besetzt sein, um das Gleichungssystem für große
+$n$ (effizient) lösen zu können. Also wähle die Basisfunktionen $\varphi_j$ so,
+dass sie jeweils nur in einem kleinen Teilgebiet von $\Omega$ von 0 verschieden
+sind.
+\[ \Rightarrow \quad a( \varphi_i, \varphi_j ) = 0, \quad \text{falls die
+    Teilgebiete von $\varphi_i$ und $\varphi_j$ disjunkt sind.}\]
+
+%% Bild
+
+Basis von $V_h$: stückweise lineare Funktionen $\varphi_j$, die im zentralen
+Knoten 1 sind und auf allen anderen Knoten 0.
+\[ \varphi_j \in V_h, \quad \varphi_j (x_j) = 1, \quad \varphi_j(x_k) = 0 \quad
+  \text{für alle} k \ne j. \]
+Bezeichnung: Lagrange/Courant-Basis
+
+\begin{rmrk*}
+  \begin{itemize}
+  \item Vorteil der Formulierung mittels Sobolev-Räumen: Es gilt $\varphi_j \in
+    H^1(\Omega)$, da die $\varphi_j$ stückweise stetig differenzierbar, aber
+    $\varphi_j \notin C^1(\Omega)$.
+  \item In Anwendungen werden auch häufig Basisfunktionen mit höherem
+    Polynomgrad verwendet. Die Lagrange-Basis mit stückweise linearen Funktionen
+    hat den Polynomgrad 1.
+  \end{itemize}
+\end{rmrk*}
+
+\section{Diskussion der drei Disketrisierungsprinzipien} %% 6.7
+\begin{footnotesize}
+\begin{tabular}{p{4.5em}|p{9em}|p{4em}|p{4.5em}|p{5em}|p{12em}}
+  & PDE-Typ
+  & Konv.-ordnung
+  & Geometrie von $\Omega$
+  & Struktur\-erhaltung
+  & Sonstiges
+  \\
+  \hline
+  Finite Differenzen
+  & universell
+  & hoch
+  & starr achsenparallel
+  & nur äquidistant
+  & sehr einfach realisierbar für simple Probleme
+  \\
+  \hline
+  Finite Volumen
+  & Erhaltungsprinzip oder Divergenzform
+  & niedrig
+  & äußerst flexibel
+  & eingebaut
+  & 
+  \\
+  \hline
+  Finite Elemente
+  & Variationsprinzip (Variationsgleichung)
+  & hoch
+  & sehr flexibel
+  & eingebaut
+  & Implementierung sehr aufwändig selbst für einfache Probleme,
+    Software z.B. AMDiS, DUNE
+  \\
+\end{tabular}
+\end{footnotesize}

@@ -1,0 +1,208 @@
+\chapter{Modellierungsbeispiel: Basketball-Freiwurf}
+Trefferquote:
+\begin{itemize}
+\item Dirk Nowitzki: 89 \%
+\item Shaquille O'Neal: 54,4 \%
+\end{itemize}
+Fragestellung (noch unpräzise): ``Beste Art einen Freiwurf zu werfen?''
+
+Anwendungsproblem: ``Wie sollte ein Basketballspieler einer bestimmten Größe
+beim Freiwurf den Ball werfen, damit eine größtmögliche Abweichung beim Abwurf
+noch zu einem Treffer führt?''
+
+\section{Erstes Modell: Der beste Abwurfwinkel}
+\subsection{Analyse des Anwendungsproblems}
+Beobachtung: Nach Verlassen der Wurfhand wird die Flugbahn lediglich durch
+physikalische Gesetzmäßigkeiten (Bewegungsgleichungen) bestimmt.
+\begin{itemize}
+\item Abwurfposition, Anfangsgeschwindigkeit und -richtung, Drehimpuls
+\item Luftwiderstand
+\item Verschiedene Arten, ins Netz zu gehen
+\end{itemize}
+$\rightsquigarrow$ ``exakte'' Beschreibung sehr aufwendig bzw. kompliziert.
+
+Vereinfachte Annahmen:
+\begin{enumerate}
+\item Nur ``nearly nothing but net''-Würfe, entweder direkt ins Netz oder Ball
+  trifft Hinterkante des Rings und geht dann ins Netz.
+\item Vernachlässigung des Luftwiderstands.
+\item Vernachlässigung des Spins.
+\item Kein seitlicher Fehler beim Abwurf (2D-Betrachtung statt 3D).
+\item Kein Fehler in der Abwurfgeschwindigkeit (zunächst nur Winkel
+  untersuchen).
+\item Idealer Wurf geht durch das Zentrum des Rings (legt ``ideale''
+  Geschwindigkeit fest).
+\end{enumerate}
+
+Präzisierte Problemstellung: Mit welchem Abwurfwinkel sollte ein Spieler den
+Ball werfen, sodass eine größtmögliche Abweichung vom Winkel immer noch zu einem
+Treffer führt?
+
+\subsection{Herleitung eines (ersten) mathematischen Modells}
+\subsubsection*{Systemparameter}
+(hier Geometrie)
+
+Relevante Maße: (Regelwerk NBA) Foot [\si{ft}], bzw. Inch [\si{in}]
+(\SI{1}{in} $=$ \SI{2.54}{\cm}, \SI{1}{ft} $=$ \SI{12}{in} $=$ \SI{0.3048}{\m})
+\[ l = \SI{13.5}{ft} = \SI{4.1148}{\m}, \qquad h = \SI{10}{ft} - \frac{5}{4}
+  \cdot h_P, \qquad g = \SI{9.807}{\m \per \second \squared}. \]
+$h_p$ ... Spielergröße
+
+\subsubsection*{Variablen zur Zustandsbeschreibung}
+(Mittelpunkt des Balls)
+
+Ort:
+\[ s(t) = \pmat{x(t) \\ y(t)} \in \real^2  \]
+wegen Annahme 4.
+
+Geschwindigkeit: $v(t)$ \\
+Newtonsche Bewegungsgleichungen (Flugbahn)
+\begin{align*}
+  v_x(t) &= v_x^0 = \mathrm{const}. \\
+  \dot{v}_y(t) &= \diff{}{t} v_y(t) = -g \\
+  v_y(t) &= v_y^0 - g \cdot t
+\end{align*}
+
+Abwurfwinkel: $\vartheta^0$
+\[ \pmat{ v_x^0 \\ v_y^0 } = \pmat{ v^0 \cdot \cos \vartheta^0 \\ v^0 \cdot \sin
+    \vartheta^0 } \]
+$v^0$: Betrag der Abwurfgeschwindigkeit.
+
+Idealer Wurf durch Zentrum des Rings zum Zeitpunkt $T$:
+\[ s(t) = \int_0^t v(\obar{t}) \diffop \obar{t} = \pmat{ v_x^0 t \\ v_y^0 t -
+    \rez{2} g t^2 }, \qquad t \ge 0. \]
+Forderung:
+\begin{align*}
+  l &\overset{!}{=} x(T) = v^0 \cdot \cos (\vartheta^0) \cdot T \\
+  h &\overset{!}{=} y(T) = v^0 \cdot \sin (\vartheta^0) \cdot T - \rez{2} g T^2
+      \tag{$\circ$}
+\end{align*}
+Die erste Gleichung nach $T$ umstellen, in die zweite einsetzen:
+\[  l \cdot \tan(\vartheta^0) - h = \rez{2} g \left( \frac{l}{ v^0
+      \cos(\vartheta^0)} \right)^2 \]
+und damit folgt
+\[  v^0 = \frac{l}{\cos(\vartheta^0)} \sqrt{\frac{g}{2(l \tan(\vartheta^0) -
+      h)}}. \]
+Eine physikalische Lösung existiert nur für $(l \tan(\vartheta^0) - h) > 0$,
+also muss
+\[ \arctan \left( \frac{h}{l} \right) < \vartheta^0 < \frac{\pi}{2} \]
+gelten.
+
+\subsubsection*{Erlaubte Abweichung vom Abwurfwinkel?}
+(bei festgehaltenem $v^0$)
+
+$\tilde{T}$ Zeitpunkt des Erreichens der Höhe $h$, Abwurfwinkel $\vartheta$.
+\begin{align*}
+  x(\tilde{T}) \tan \vartheta - h
+  &= \rez{2} g \left( \frac{x(\tilde{T})}{v^0 \cos \vartheta} \right)^2 \\
+  &= \frac{(v^0 \cos \vartheta)^2}{g} \left(
+    \tan \vartheta + \sqrt{
+    (\tan \vartheta)^2 - \frac{2gh}{(v^0 \cos \vartheta)^2}
+    }\right).
+\end{align*}
+Anmerkung: Auflösen von ($\circ$) liefert
+\[ \tilde{T} = \rez{g} \left(
+    v_y^0 + \sqrt{(v_y^0)^2 - 2gh}
+  \right) \]
+
+\subsubsection*{Rekapitulation}
+Bewegungsgleichung:
+\[ \pmat{ \ddot{x} \\ \ddot{y} } = \pmat{0 \\ -g } \]
+Randbedingung:
+\[ \pmat{ x(0) \\ y(0) } = \pmat{ 0 \\ 0 }, \quad \pmat{x(t) \\ y(T)}
+  = \pmat{l \\ h}. \]
+Flugzeit $T$ ist freier Parameter.
+
+Bedingung für ``Ball geht ins Netz'':
+\begin{enumerate}
+\item Wurf darf nicht zu lang sein:
+  \[ x(\tilde{T}) + R_b \le l + R_r, \]
+  $R_b $ ... Radius des Balls, $R_r$ ... Radius des Korbrings.
+\item Wurf darf nicht zu kurz sein
+  \[ x(\tilde{T}) - R_b \le l - R_r. \]
+\item Ball darf Vorderseite des Rings nicht berühren:
+  \[ a(t) := \left\| \pmat{x(t) \\ y(t)} - \pmat{l - R_r \\ h} \right\|_2 > R_b. \]
+  Anmerkung: Es reicht, das Zeitintervall $[t_0, \tilde{T}]$ mit $t_0 =
+  \rez{v_x}(l - R_r - R_b)$ zu überprüfen.
+\end{enumerate}
+
+$\vartheta_{\min}$, $\vartheta_{\max}$: Kleinster bzw. größter Winkel, bei dem
+der Ball gerade noch in den Korb geht (gegen Referenzwinkel $\vartheta^0$).
+\[ e( \vartheta^0 ) := \min \{ v_{\max} - \vartheta^0, \vartheta^0 -
+  \vartheta_{\min} \}. \]
+Zielfunktional (soll maximiert werden):
+\[ \vartheta_{\mathrm{opt}}^0 = \argmax_{\vartheta^0} e( \vartheta^0). \]
+
+Zur Implementierung und Simulation siehe die Python-Beispiele im Netz:\\
+\url{https://tu-dresden.de/mn/math/wir/mendl/studium/courses/mosim_2017_wise}
+
+Bis jetzt: Sehr viele Annahmen, um ein relativ einfach zu lösendes Modell zu
+erhalten (insbesondere Annahme 5: kein Fehler in der Abwurfgeschwindigkeit).
+
+\section{Zweites Modell: beste Wurfbahn}
+\subsubsection*{Beste Wurfbahn}
+Annahmen 1, 2, 3 und 4 wie bisher, aber jetzt ohne Annahmen 5 und 6. Variiere
+das Tupel $(v^0, \vartheta^0)$ (anstatt $v^0$ fest zu halten).
+
+Problemformulierung: ``Bestimme diejenige Wurfbahn (festgelegt durch $(v^0,
+\vartheta^0)$), die die größtmögliche Abweichung erlaubt, sodass der Ball immer
+noch in den Korb geht.''
+
+\subsection{Analyse des Anwendungsproblems}
+Zu gegebenem $\vartheta^0$ bestimme:
+\[ v^0_{\text{front}}, v^0_{\text{back}}, \]
+$v^0_{\text{front}}$ ... Ball berührt Korbring vorne (und geht ins Netz), \\
+$v^0_{\text{back}}$ ... Ball berührt Korbring hinten (und geht ins Netz).
+
+\subsubsection*{Berechnung von $v^0_{\text{back}}$}
+Wir definieren $\bar{T}$ als den Zeitpunkt, zu dem gilt:
+\[ x(\bar{T}) = l + R_r - R_b, \qquad y(\bar{T}) = h. \]
+Nach analoger Rechnung wie zuvor (mit $x(\bar{T}$ statt $l$) erhalten wir
+\[ v^0_{\text{back}} = \frac{l+R_r-R_b}{\cos \vartheta^0}
+  \sqrt{\frac{g}{2 ((l + R_r - R_b) \tan \vartheta^0 - h)}}. \]
+
+\subsubsection*{Berechnung von $v^0_{\text{front}}$}
+Betrachte $a(t)$: Abstand des Ballmittelpunkts von der Vorderseite des Rings
+\[ a_{\min} = \min_{t \in [0, \bar{T}]} \{ a(t) \}, \qquad v^0_{\text{front}}
+  := \argmin_{v^0} | a_{\min}(v^0, \vartheta^0) - R_b |. \]
+Ball berührt Vorderseite, falls Zielfunktion den Minimalwert 0 erreicht.
+
+Nebenbedingung: $x(\bar{T}) \ge l - R_r$ (Ball fliegt über Vorderseite hinweg).
+
+Berücksichtung der Nebenbedingung im Zielfunktional? Idee: Addiere sie als
+``Strafterm'' hinzu.
+\[ v^0_{\text{front}}
+  := \argmin_{v^0} | a_{\min}(v^0, \vartheta^0) - R_b | + \max \{ 0, l - R_r -
+  x(\bar{T})\}. \]
+Der Strafterm verschwindet, falls die Nebenbedingung erfüllt wird.
+
+\subsection{Mathematisches Modell: Mehrzieloptimierung}
+Relative Abweichungen (sonst nicht vergleichbar)
+\[ \begin{aligned}
+    e_\vartheta(v^0, \vartheta^0) &:= \min \left(
+      \frac{\vartheta_{\max}(\vartheta^0) - \vartheta^0}{\vartheta^0},
+      \frac{\vartheta^0 - \vartheta_{\min}(\vartheta^0)}{\vartheta^0}
+    \right) \\
+    e_v(v^0, \vartheta^0) &:= \min \left(
+      \frac{v_{\text{back}}(v^0) - v^0}{v^0},
+      \frac{v^0 - v_{\text{front}}(v^0)}{v^0}
+    \right)
+  \end{aligned} \]
+
+Visualisierung ergibt: Erlaubte Abweichung im Winkel ist größer ($\sim 10
+\%$) als erlaubte Abweichung in Geschwindigkeit ($\sim 1 \%$).
+
+Wie sollen $e_\vartheta$ und $e_v$ gleichzeitig optimiert werden?
+``Mehrzieloptimierung''
+\[ e( v^0, \vartheta^0 ) := \min \{ e_\vartheta(v^0, \vartheta^0), w \cdot
+  e_v(v^0, \vartheta^0) \} \]
+mit Gewichtungsfaktor $w$.
+
+Mathematisches Optimierungsproblem:
+\[ (v^0_{\text{opt}}, \vartheta^0_{\text{opt}}) = \argmax_{(v^0, \vartheta^0)}
+  e(v^0, \vartheta^0). \]
+
+\subsubsection*{Auswertung und Interpretation}
+Für \SI{2.13}{\m} Spielergröße, $w = 5$:
+\[ v^0_{\text{opt}} = \SI{6.7}{\m \per \s}, \qquad \vartheta^0_{\text{opt}} =
+  \ang{52.5}. \]

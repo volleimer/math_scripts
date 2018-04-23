@@ -1,0 +1,195 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Draw colored frames around theorems, lemmas, propositions 
+% and corollaries.
+%
+% Numbering can be activated by the options
+% [numbers]     ... All theorems share one counter
+% [sep_numbers] ... Separate counters
+%
+% Additional parameter:
+% [with_chapter] ... Add chapter to thm counter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[framemethod=TikZ,footnoteinside=false]{mdframed}
+
+\newcommand{\incthm}{}
+\newcommand{\inclem}{}
+\newcommand{\inckor}{}
+\newcommand{\incprp}{}
+
+\newcommand{\thmtitle}{Satz}
+\newcommand{\lemtitle}{Lemma}
+\newcommand{\kortitle}{Korollar}
+\newcommand{\prptitle}{Proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Options for numbering
+
+% Shared counter for all types
+\DeclareOption{numbers}{%
+\newcounter{thm}[section] \setcounter{thm}{0}
+
+\renewcommand{\thethm}{\arabic{section}.\arabic{thm}}
+\newcommand{\thelem}{\thethm}
+\newcommand{\thekor}{\thethm}
+\newcommand{\theprp}{\thethm}
+
+\renewcommand{\incthm}{\refstepcounter{thm}}
+\renewcommand{\inclem}{\refstepcounter{thm}}
+\renewcommand{\inckor}{\refstepcounter{thm}}
+\renewcommand{\incprp}{\refstepcounter{thm}}
+
+\renewcommand{\thmtitle}{Satz~\thethm}
+\renewcommand{\lemtitle}{Lemma~\thelem}
+\renewcommand{\kortitle}{Korollar~\thekor}
+\renewcommand{\prptitle}{Proposition~\theprp}
+}
+
+
+% Individual counters
+\DeclareOption{sep_numbers}{%
+\newcounter{thm}[section] \setcounter{thm}{0}
+\newcounter{lem}[section] \setcounter{lem}{0}
+\newcounter{kor}[section] \setcounter{kor}{0}
+\newcounter{prp}[section] \setcounter{prp}{0}
+
+\renewcommand{\thethm}{\arabic{section}.\arabic{thm}}
+\renewcommand{\thelem}{\arabic{section}.\arabic{lem}}
+\renewcommand{\thekor}{\arabic{section}.\arabic{kor}}
+\renewcommand{\theprp}{\arabic{section}.\arabic{prp}}
+
+\renewcommand{\incthm}{\refstepcounter{thm}}
+\renewcommand{\inclem}{\refstepcounter{lem}}
+\renewcommand{\inckor}{\refstepcounter{kor}}
+\renewcommand{\incprp}{\refstepcounter{prp}}
+
+\renewcommand{\thmtitle}{Satz~\thethm}
+\renewcommand{\lemtitle}{Lemma~\thelem}
+\renewcommand{\kortitle}{Korollar~\thekor}
+\renewcommand{\prptitle}{Proposition~\theprp}
+}
+
+% Add chapter number to thm counter
+\DeclareOption{with_chapter}{%
+\renewcommand{\thethm}{\arabic{chapter}.\arabic{section}.\arabic{thm}}
+}
+
+\DeclareOption{numbers_per_chapter}{%
+\newcounter{thm}[chapter] \setcounter{thm}{0}
+
+\renewcommand{\thethm}{\arabic{chapter}.\arabic{thm}}
+\newcommand{\thelem}{\thethm}
+\newcommand{\thekor}{\thethm}
+\newcommand{\theprp}{\thethm}
+
+\renewcommand{\incthm}{\refstepcounter{thm}}
+\renewcommand{\inclem}{\refstepcounter{thm}}
+\renewcommand{\inckor}{\refstepcounter{thm}}
+\renewcommand{\incprp}{\refstepcounter{thm}}
+
+\renewcommand{\thmtitle}{Satz~\thethm}
+\renewcommand{\lemtitle}{Lemma~\thelem}
+\renewcommand{\kortitle}{Korollar~\thekor}
+\renewcommand{\prptitle}{Proposition~\theprp}
+}
+
+\ProcessOptions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Satz
+\newenvironment{thm}[1][]{%
+\incthm%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut \thmtitle};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut \thmtitle:~#1};}}%
+}%
+\mdfsetup{innertopmargin=0pt,linecolor=blue!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax \itshape%
+
+}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lemma
+\newenvironment{lem}[1][]{%
+\inclem%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=green!20]
+{\strut \lemtitle};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=green!20]
+{\strut \lemtitle:~#1};}}%
+}%
+\mdfsetup{innertopmargin=0pt,linecolor=green!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax \itshape%
+
+}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Proposition
+\newenvironment{prp}[1][]{%
+\incprp%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=red!20]
+{\strut \prptitle};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=red!20]
+{\strut \prptitle:~#1};}}%
+}%
+\mdfsetup{innertopmargin=0pt,linecolor=red!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax\itshape%
+
+}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korollar
+\newenvironment{kor}[1][]{%
+\inckor%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=red!20]
+{\strut \kortitle};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=red!20]
+{\strut \kortitle:~#1};}}%
+}%
+\mdfsetup{innertopmargin=0pt,linecolor=red!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax\itshape%
+
+}{\end{mdframed}}

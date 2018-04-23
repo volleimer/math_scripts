@@ -1,0 +1,713 @@
+\chapter{Informationssuche im Web: Google's PageRank}
+Google: 1998 gegründet von Sergey Brin und Larry Page (Googol: $10^{100}$)
+
+Schwierigkeiten bei der Websuche:
+\begin{itemize}
+\item Sehr große \emph{Anzahl} von Webseiten (\num{1.3e9} Seiten; Stand Dezember
+  2017),
+\item nicht sortiert (nach Themenkomplexen),
+\item Web-Suche soll für Laien zugänglich sein (``Intention'' der Suche
+  erkennen, Tippfehler ausbessern etc.).
+\end{itemize}
+
+\section{Grobes Modell einer Suchmaschine}
+\begin{enumerate}
+\item Suche im ``Index'': Die Suchmaschine generiert aus dem internen
+  \emph{Index} (Datenbank) eine unsortierte Trefferliste aller für die
+  Suchanfrage relevanten Webseiten (Suchbegriff erscheint auf Webseite).
+\item Ranking: Die Trefferliste wird nach Ranking-Faktoren sortiert und
+  ausgegeben.
+\end{enumerate}
+
+Suchmaschinen ``durchforsten'' das Internet mittels ``Web-Crawlern''
+(automatisierte Surfer, ``robots''), die Webseiten herunterladen.
+
+Anschließend parsen sie den Inhalt, zum Beispiel nach der Häufigkeit bestimmter
+Wörter oder der Linkstruktur (Verweise auf andere Webseiten). Die Ergebnisse
+werden indiziert und in einer Datenbank gespeichert.
+
+\subsection*{Ranking-Faktoren}
+\begin{itemize}
+\item Kriterien: Relevanz für die Suchanfrage, inhaltliche Qualität.
+\item Anfrageabhängige Faktoren: zum Beispiel Häufigkeit des Suchbegriffs auf
+  der Seite.
+\item Anfrageunabhängige Faktoren: zum Beispiel ``Popularität'' einer Seite,
+  ``Klickhäu\-fig\-keit'' oder Verlinkung mit anderen Seiten.
+
+  Vorteil: Diese Faktoren können schon vor der Suchanfrage berechnet werden.
+\end{itemize}
+
+\emph{Entscheidende Neuerung in Google's Page-Rank-Algorithmus}: Ausnutzung der
+Link\-struk\-tur des Internets.
+  
+\section{Von der Link-Struktur zum PageRank}
+Idee: ``Eine Webseite ist umso wichtiger, je mehr andere wichtige Seiten darauf
+verweisen.''
+
+Modellbeispiel:
+\begin{center}
+  \begin{minipage}{5cm}
+    \includegraphics{img/pr_intro}
+  \end{minipage}
+  \begin{minipage}{9cm}
+    \begin{itemize}
+    \item $n = 4$ Webseiten $S_i$,
+    \item $|S_j|$: Anzahl der ausgehenden Links, $|S_1| = 3$, $|S_2| = 2$, usw.
+    \item $B_J$: Menge der auf $S_j$ verweisenden Seiten (``back links''), $B_1
+      = \{ S_3, S_4 \}$, $B_2 = \{S_1\}$, usw.
+    \end{itemize}
+  \end{minipage}
+\end{center}
+$r_j$: Zu bestimmendes Ranking einer Webseite (``Page Rank'')
+\[ r_i = \sum_{S_j \in B_i} \frac{r_j}{|S_j|}, \quad i = 1, \ldots, n. \]
+
+$\Rightarrow$ Indizierung und Speicherung in Datenbank
+
+Selbstreferenziell, Struktur $A \cdot \vec{r} = \vec{r}$.
+
+\subsection*{Matrix-Vektor-Notation}
+Hyperlink-Matrix $H \in \realmat{n}{n}$. Einträge:
+\[ h_{ij} = \begin{cases}
+    \rez{|S_i|}, & S_i \in B_j\footnotemark\\
+    0, & \text{sonst.}
+  \end{cases}
+\]
+\footnotetext{$S_i$ besitzt einen Link auf $S_j$.}
+
+Für den PageRank-Vektor gilt
+\[ \vec{r}^\top = \vec{r}^\top \cdot H
+  \quad \text{bzw.} \quad
+  H^\top \cdot \vec{r} = \vec{r},
+\]
+das heißt $\vec{r}$ ist ein Eigenvektor von $H^\top$ zum Eigenwert 1.
+
+Im Modellbeispiel:
+\[ H = \begin{pmatrix}
+    0 & \rez{3} & \rez{3} & \rez{3} \\
+    0 & 0 & \rez{2} & \rez{3} \\
+    1 & 0 & 0 & 0 \\
+    \rez{3} & 0 & \rez{3} & 0
+  \end{pmatrix}
+\]
+
+Linkseigenvektor zum Eigenwert 1:
+\[ \vec{r}^\top = (\num{.387}, \num{.129}, \num{.290}, \num{.194}). \]
+Alle Einträge sind $\ge 0$, sie können als ``rank'' interpretiert werden. Somit
+ist das Ranking der Webseiten:
+\[ S_1, S_3, S_4, S_2. \]
+Zum Vergleich betrachte das ``naive'' Ranking anhand der Anzahl der eingehenden
+Links:
+\[ S_3, (S_1, S_4), S_2. \]
+
+Besitzt $H$ stets einen (eindeutigen) Eigenvektor zum Eigenwert 1? Nein!
+
+\subsubsection*{Beispiel für die Nichtexistenz}
+\begin{center}
+  \begin{minipage}{5cm}
+    \includegraphics{img/pr_nonexist}
+  \end{minipage}
+  \begin{minipage}{9cm}
+    $S_3$ hat keine ausgehenden Links.
+    \[ H = \begin{pmatrix}
+        0 & \rez{2} & \rez{2} \\
+        \rez{2} & 0 & \rez{2} \\
+        0 & 0 & 0
+      \end{pmatrix}
+    \]
+    Spektrum: $\sigma(H) = \{ \rez{2}, -\rez{2}, 0 \}$. Also ist 1 kein Eigenwert
+    von $H$.
+  \end{minipage}
+\end{center}
+
+\subsubsection*{Beispiel für die Uneindeutigkeit}
+\begin{center}
+  \begin{minipage}{5cm}
+    \includegraphics{img/pr_nonunique}
+  \end{minipage}
+  \begin{minipage}{9cm}
+    Isolierte Inseln
+    \[ H = \begin{pmatrix}
+        0 & 1 & 0 & 0 \\
+        1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 \\
+        0 & 0 & 1 & 0 
+      \end{pmatrix}
+    \]
+    $\sigma(H) = \{1, 1, -1, -1\}$. Es gibt also mehrere Eigenvektoren zum
+    Eigenwert 1.
+  \end{minipage}
+\end{center}
+
+\section{Diskrete Markov-Ketten}
+\begin{itemize}
+\item Zustandsraum $Z = \{ 1, 2, \ldots, n \}$. \\
+  Zum Beispiel Wetter: $Z = \{ 1, 2 \} =: \{$ ``Sonne'', ``Regen'' $\}$.
+\item $X_k$: Zufallsvariable mit Werten in $Z$, für diskrete Zeitpunkte $k = 0, 1,
+  \ldots$ \\
+  Beispiel $X_5 = 2$: ``Es regnet am fünften Tag''.
+\end{itemize}
+
+\subsubsection*{Notation}
+\begin{itemize}
+\item $\pi_i^k = \pP( X_k = i)$: Wahrscheinlichkeit, dass $X_k$ den Zustand $i$
+  annimmt. \\
+  Zum Beispiel $\pi_2^5$: Wahrscheinlichkeit, dass es am fünften Tag regnet.
+  \[ \pi_i^k \ge 0, \qquad \sum_{i \in Z} \pi^k = 1. \]
+\item Der Vektor $\pi^k$ heißt \emph{Zustandsverteilung} zum Zeitpunkt $k$.
+\end{itemize}
+
+\subsubsection*{Markov-Eigenschaft}
+Wahrscheinlichkeitsverteilung zum Zeitpunkt $k+1$ hängt nur von der
+Wahrscheinlichkeitsverteilung am Zeitpunkt $k$ ab:
+\[ \pP( X_{k+1} = i_{k+1} | X_k = i_k, X_{k-1} = i_{k-1}, \ldots, X_1 = i_1)
+  = \pP( X_{k+1} = i_{k+1} | X_k = i_k ). \]
+$p_{ij}$: Übergangswahrscheinlichkeit von Zustand $i$ nach $j$ in einem
+Zeitschritt,
+\[ p_{ij} = \pP( X_{k+1} = j | X_k = i ) \ge 0. \]
+Diese Größe ist unabhängig von $k$ wegen der zeitlichen Translationsinvarianz.
+Somit:
+\begin{align*}
+  \pi_j^{k+1}
+  &= \pP (X_{k+1} = j) \\
+  &= \sum_{i \in Z} \underbrace{\pP(X_{k+1} = j | X_k = i)}_{=p_{ij}} \cdot
+    \underbrace{\pP(X_k = i)}_{= \pi_i^k} \\
+  &= \sum_{i \in Z} \pi_i^k p_{ij}.
+\end{align*}
+Matrix-Vektor-Notation:
+\[ \pi^{k-1} = P^\top \pi^k, \qquad P := (p_{ij}). \]
+$P$ ist eine \emph{Rekursionsmatrix}, es gilt
+\[ \pi^{k+1} = P^\top \pi^k = P^\top P^\top \pi^{k-1} = \cdots = (P^\top)^{k+1}
+  \pi^0. \]
+Außerdem ist $P$ eine \emph{stochastische Matrix}:
+\[ p_{ij} \ge 0, \qquad \sum_{j \in Z} p_{ij} = 1 \text{ für alle } i. \]
+Begründung:
+\begin{align*}
+  \sum_{j \in Z} p_{ij}
+  &= \sum_{j \in Z} \pP( X_{k+1} = j | X_k = i ) \\
+  &= \pP( X_{k+1} \in Z | X_k = i ) = 1.
+\end{align*}
+Eine Zustandsverteilung $\pi$ heißt \emph{stationär} bzw.
+\emph{Gleichgewichtsverteilung}, falls
+\[ P^\top \pi = \pi, \]
+das heißt $\pi$ ist Eigenvektor von $P^\top$ zum Eigenwert 1 und ein Fixpunkt
+der Iterationsvorschrift
+\[ \pi^{k+1} = P^\top \pi^k. \]
+
+\subsubsection*{Bedingungen an $P$, sodass
+  $\lim_{n \to \infty} (P^\top)^{k+1} \pi^0$ existiert?}
+$P$ ist eine stochastische Matrix, also gilt mit $e = (1, 1, \ldots, 1)^\top$
+\[ P \cdot e = e, \]
+das heißt $P$ besitzt einen Eigenvektor zum Eigenwert 1. Wegen
+\[ \sigma( P^\top ) = \sigma( P ) \]
+mit $\sigma =$ Menge der Eigenwerte\footnote{%
+  Das kann man zum Beispiel mit dem charakteristischen Polynom beweisen.
+} ist 1 auch ein Eigenwert von $P^\top$.
+
+\textbf{Spektralradius:}
+\[ \rho( P ) := \max\{ | \lambda | : \lambda \in \sigma(P) \}. \]
+Es gilt
+\[ 1 \le \rho(P) \le \| P \|_{\infty}, \]
+wobei
+\[ \| P \|_{\infty} = \max_{i \in Z} \sum_{j \in Z} p_{ij} = 1 \]
+nach Definition. Also gilt
+\[ \rho( P ) = \rho( P^\top ) = 1. \]
+Somit ist 1 der dominante Eigenwert, aber es ist a priori nicht klar, ob ein
+zugehöriger Eigenvektor mit Einträgen $\ge 0$ existiert.
+
+Eine hinreichende Bedingung ist durch den folgenden Satz gegeben:
+\begin{thm}[Perron-Frobenius]
+  Sei $A \in \realmat{n}{n}$ eine Matrix mit strikt positiven
+  Einträgen\footnotemark, dann gilt:
+  \begin{enumerate}[a)]
+  \item $A$ hat einen strikt dominanten positiven Eigenwert $\lambda_1 > 0$, den
+    sogenannten \emph{Perron-Eigenwert}.
+  \item Es gibt einen Eigenvektor\footnotemark $v_1$ zu $\lambda_1$ 
+    mit strikt positiven Einträgen.
+  \item Der Perron-Eigenwert ist algebraisch einfach\footnotemark.
+  \item Außer $v_1$ gibt es keine weiteren Eigenvektoren\footnotemark von $A$
+    mit ausschließlich nicht-negativen Einträgen.
+  \end{enumerate}
+\end{thm}
+\addtocounter{footnote}{-3}
+\footnotetext{Das heißt $a_{ij} > 0$ für alle $i$, $j$.}
+\addtocounter{footnote}{1}
+\footnotetext{$A v_1 = \lambda_1 v_1$.}
+\addtocounter{footnote}{1}
+\footnotetext{Also ist der Eigenraum eindimensional.}
+\addtocounter{footnote}{1}
+\footnotetext{Bis auf skalare Vielfache von $v_1$.}
+
+Damit folgt: Falls die stochastische Matrix $P$ zusätzlich $p_{ij} > 0$ für alle
+$i$, $j$ erfüllt, dann hat sie den Perron-Eigenwert $\lambda_1 = 1$ und es
+existiert eine eindeutige stationäre Verteilung $\pi$.
+
+Außerdem konvergiert die Iterationsvorschrift
+\[ \pi^{k+1} = P^\top \pi^k \]
+für beliebiges $\pi^0$ gegen $\pi$:
+\[ \pi  = \lim_{k \to \infty} \pi^k. \]
+
+Begründung:
+\begin{thm}
+  Es sei $\lambda_1$ ein algebraisch einfacher, strikt dominanter Eigenwert
+  einer Matrix $A \in \complex^{n \times n}$ mit zugehörigem Eigenvektor $v_1$
+  und Linkseigenvektor\footnotemark $w_1$ mit
+  \[ w_1^\top v_1 = 1. \]
+  Dann gilt für den Iterationsprozess
+  \[ z^{k+1} = A z^k, \qquad k = 0, 1, 2, \ldots \]
+  dass
+  \[ \lim_{k \to \infty} \frac{z^k}{\lambda_1^k} = (w_1^\top \cdot z^0) v_1. \]
+\end{thm}
+\footnotetext{Also $w_1^top A = \lambda_1 w^\top$ bzw.
+  $A^\top w_1 = \lambda_1 w_1$.}
+
+\begin{proof}
+  Der Beweis wird für diagonalisierbares $A$ geführt. Der Satz gilt auch
+  anderenfalls, dann muss man die Jordan'sche Normalform verwenden.
+
+  Seien $v_1, \ldots, v_n$ eine Basis aus Eigenvektoren mit zugehörigen (nicht
+  notwendigerweise verschiedenen) Eigenwerten $\lambda_1, \ldots, \lambda_n$.
+
+  Schreibe den Anfangszustand $z^0$ als Linearkombination
+  \[ z^0 = \alpha_1 v_1 + \ldots + \alpha_n v_n, \]
+  dann gilt
+  \begin{align*}
+    z^k &= A z^{k-1} = A^2 z^{k-2} = \cdots = A^k z^0 \\
+        &= \sum_{i=1}^n \alpha_i \underbrace{A^k v_i}_{\lambda_i^k v_i},
+  \end{align*}
+  somit
+  \[ \frac{z^k}{\lambda_1^k} = \sum_{i=1}^n \alpha_i
+    \frac{\lambda_i^k}{\lambda_1^k} v_i
+    \xrightarrow{k \to \infty}
+    \alpha_1 v_1, \]
+  weil
+  \[ \frac{\lambda_i^k}{\lambda_1^k} \xrightarrow{k \to \infty}
+    \begin{cases}
+      1, & i = 1, \\
+      0, & i > 1, 
+    \end{cases}
+  \]
+  aufgrund der strikten Dominanz von $\lambda_1$.
+
+  Außerdem
+  \begin{align*}
+    w_1^\top A v_i &= w_1^\top (\lambda_i v_i) = \lambda_i w_i^\top v_i, \\
+    w_1^\top A v_i &= (w_1^\top A) v_i = (\lambda_1 w_1^\top) v_i 
+  \end{align*}
+  und damit
+  \[ (\lambda_i - \lambda_1) w_1^\top v_i = 0. \]
+  Wegen $\lambda_i \ne \lambda_1$ für alle $i > 1$ folgt also
+  \[ w_1^\top v_i = 0 \quad \text{für alle } i > 1 \]
+  und damit
+  \[ w_1^\top z^0 = \alpha_1 \underbrace{w_1^\top v_1}_{= 1} = \alpha_1.
+    \qedhere \]
+\end{proof}
+
+Anwendung des Satzes auf die stochastische Matrix $P^\top$ mit $p_{ij} > 0$ für
+alle $i$, $j$:
+\[ \lambda_1 = 1, \quad v_1 = \pi\footnotemark, \quad
+  w_1 = e = \pmat{1 \\ \vdots \\ 1}, \]
+denn $e^\top \pi = \sum_{i \in Z} \pi = 1$ nach Definition. Somit gilt für
+beliebige Anfangsverteilungen $\pi^0$:
+\[ \lim_{k \to \infty} \pi^k = \underbrace{e^\top \pi^0}_{=1} \pi. \]
+
+\section{Stochastische Interpretation (Zufallssurfer)}
+\textbf{Idee:} PageRank ist proportional zur durchschnittlichen Verweildauer
+eines Zufallssurfers auf einer Webseite.
+\begin{itemize}
+\item Zustandsraum $Z$: Menge aller Webseiten,
+\item Zufallsvariable $X_k$: $k$-te besuchte Webseite des Zufallssurfers.
+\end{itemize}
+
+\textbf{Annahmen:} Der Zufallssurfer ist gedächtnislos, das heißt sein Verhalten
+hängt nur von der aktuell besuchten Webseite ab (entspricht der
+Markov-Eigenschaft). Der Zufallssurfer bewegt sich zur nächsten Seite, indem er
+\begin{enumerate}[a)]
+\item zufällig (gleichverteilt) einen der Links auf der aktuellen Seite
+  verwendet (falls Links vorhanden sind)
+\item zufällig (gleichverteilt) auf eine beliebige Webseite springt (falls
+  keine Links auf der aktuellen Seite vorhanden sind)
+\end{enumerate}
+
+Damit ergibt sich die Übergangswahrscheinlichkeit
+\[ q_{ij} = \pP( X_{k+1} = S_j | X_k = S_j ) =
+  \begin{cases}
+    \rez{|S_j|}, & S_i \text{ besitzt einen Link auf } S_j, \\
+    \rez{n}, & S_i \text{ besitzt keine Links,} \\
+    0, & \text{sonst.}
+  \end{cases}
+\]
+Matrixschreibweise:
+\[ Q = H + \rez{n} \cdot d e^\top \]
+mit
+\[ e = \pmat{1 \\ \vdots \\ 1}, \qquad d
+  \in \real^n, \quad
+  d_i = \begin{cases}
+    1, & S_i \text{ besitzt keine Links,} \\
+    0, & \text{sonst.}
+  \end{cases}
+\]
+$Q = (q_{ij})$ ist sehr ähnlich zur Hyperlink-Matrix $H$ (außer, wenn keine
+Links vorhanden sind). Der Term $\rez{n} d e^\top$ ersetzt Nullzeilen in $H$
+durch $(\rez{n}, \rez{n}, \ldots, \rez{n})$.
+
+$Q$ ist eine stochastische Matrix, es gilt $q_{ij} \ge 0$ und für alle $i$ ist
+$\sum_{j \in Z} q_{ij} = 1$.
+
+\textbf{Wunsch:} Die Vektoriteration
+\[ \pi^{k+1} = Q^\top \pi^k \]
+soll gegen die stationäre Grenzverteilung $\pi$ konvergieren, also
+\[ \pi = \lim_{k \to \infty} \pi^k, \qquad Q^\top \pi = \pi \]
+mit $\pi_i \ge 0$, $\sum_{i=1}^n \pi_i = 1$. Das impliziert
+\[ \pi_i = \lim_{l \to \infty} \rez{l} \sum_{k=0}^{l-1} \pi_i^k, \]
+wobei $\rez{l} \sum_{k=0}^{l-1} \pi_i^k$ die durchschnittliche
+Aufenthaltswahrscheinlichkeit nach $l$ Schritten ist.
+
+\emph{Aber:} $\lim \pi^k$ existiert im Allgemeinen gar nicht. Siehe zum Beispiel
+Übungsaufgabe 16(c).
+
+\emph{Erinnerung:} Voraussetzung im Satz von Perron-Frobenius war, dass alle
+Matrixeinträge strikt positiv sind.
+
+\textbf{Idee:} (Brin, Page) Modifiziere den Zufallssurfer, sodass er mit einer
+kleinen Wahrscheinlichkeit auf eine beliebige Webseite springen kann
+(``Teleportation'').
+
+Damit bewegt sich der ``Google''-Zufallssurfer zur nächsten Webseite, indem er
+mit Wahrscheinlichkeit $\alpha$ ($0 < \alpha < 1$)
+\begin{enumerate}[a)]
+\item zufällig (gleichverteilt) einen der Links auf der aktuellen Seite
+  verwendet (falls Links vorhanden sind)
+\item zufällig (gleichverteilt) auf eine beliebige Webseite springt (falls
+  keine Links auf der aktuellen Seite vorhanden sind)
+\end{enumerate}
+und mit Wahrscheinlichkeit $1 - \alpha$ zufällig mit dem
+Wahrscheinlichkeitsverteilungsvektor
+\[ v, \quad v_i > 0, \quad \sum_{i=1}^n v_i = 1 \]
+auf eine beliebige Webseite springt.
+
+1998 wurde $v = \rez{n} e$ mit $n$ der Gesamtzahl aller Webseiten verwendet.
+Heute ist die Struktur von $v$ ein Firmengeheimnis.
+
+\subsubsection*{Entsprechende Google-Übergangsmatrix}
+\[ G = \alpha Q + (1-\alpha) e v^\top \]
+Schreibweise:
+\[ ev^\top = \pmat{1 \\ \vdots \\ 1} (v_1, \ldots, v_n) =
+  \begin{pmatrix}
+    v_1 & \cdots & v_n \\
+    \vdots & & \vdots \\
+    v_1 & \cdots & v_n
+  \end{pmatrix}.
+\]
+$G$ ist wiederum eine stochastische Übergangsmatrix. Für die Einträge gilt
+$g_{ij} \ge 0$ (sogar $> 0$, da $v_i > 0$ für alle $i$) und
+\[ \sum_{j} g_{ij} = \alpha \sum_{j} g_{ij} + (1-\alpha) \sum_{j} v_j
+  = \alpha + (1-\alpha) = 1. \]
+Somit ist der Satz von Perron-Frobenius anwendbar. Der Perron-Eigenwert ist
+$\lambda_1 = 1$ und der entsprechende Eigenvektor $\pi$ ist die eindeutige
+Lösung von
+\[ G^\top \pi = \pi \quad \text{mit } \sum_{i} \pi_i = 1 \]
+und erfüllt $\pi_i > 0$ für alle $i$.
+
+\textbf{Interpretation:} $\pi_i$ ist die durchschnittliche Aufenthaltsdauer des
+Google-Zufallssurfers auf der Webseite $S_i$ und wird als PageRank verwendet.
+
+Außerdem: (siehe oben) Die Vektoriteration
+\[ \pi^{k+1} = G^\top \pi^k \]
+mit beliebiger Anfangsverteilung $\pi^0$  konvergiert gegen $\pi$:
+\[ \pi = \lim_{k \to \infty} \pi^k. \]
+
+\subsubsection*{Beispiel}
+\begin{center}
+  \begin{minipage}{8cm}
+    \includegraphics{img/pr_exmp}
+  \end{minipage}
+  \begin{minipage}{5cm}
+    Hyperlink-Matrix:
+    \[ H = \begin{pmatrix}
+        0 & 0 & 1 & 0 & 0 & 0 \\
+        1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \rez{2} & \rez{2} \\[.3em]
+        0 & 0 & \rez{3} & \rez{3} & 0 & \rez{3} \\[.3em]
+        0 & 0 & 0 & 1 & 0 & 0
+      \end{pmatrix}
+    \]
+  \end{minipage}
+\end{center}
+Es gibt keine ``hängenden Knoten'', jede Seite besitzt mindestens einen Link.
+Somit gilt
+\[ Q = H. \]
+
+Google-Matrix für $\alpha = \frac{4}{5}$ und $v = \rez{6} e$:
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{align*}
+  G &= \frac{4}{5} Q + \rez{5} \cdot \rez{6} e e^\top \\
+    &= \begin{pmatrix}
+      \rez{30} & \rez{30} & \frac{5}{6} & \rez{30} & \rez{30} & \rez{30} \\
+      \frac{5}{6} & \rez{30} & \rez{30} & \rez{30} & \rez{30} & \rez{30} \\
+      \rez{30} & \frac{5}{6} & \rez{30} & \rez{30} & \rez{30} & \rez{30} \\
+      \rez{30} & \rez{30} & \rez{30} & \rez{30} & \frac{13}{30} & \frac{13}{30} \\
+      \rez{30} & \rez{30} & \frac{3}{10} & \frac{3}{10} & \rez{30} & \rez{30} \\
+      \rez{30} & \rez{30} & \rez{30} & \frac{5}{6} & \rez{30} & \rez{30}
+    \end{pmatrix}
+\end{align*}
+\endgroup
+PageRank-Vektor $G^\top \pi = \pi$:
+\[ \pi = (\num{.2001}, \num{.2085}, \num{.2189},
+  \num{.1557}, \num{.0956}, \num{.1211} )^\top. \]
+Damit ist das Ranking der Webseiten:
+\[ 3, 2, 1, 4, 6, 5. \]
+
+Zum Vergleich: Für $\alpha = 1$, also $G = H$, erhalten wir
+\[ \pi = \left( \rez{3}, \rez{3}, \rez{3}, 0, 0, 0 \right)^\top. \]
+Also hätten die Seiten 4, 5 und 6 den PageRank 0.
+
+\section{Berechnung des PageRank-Vektors}
+Erste Idee: Löse
+\[ G^\top \pi = \pi, \qquad
+  e^\top \pi = 1 \]
+direkt. Also
+\begin{align*}
+  (\alpha Q + (1-\alpha) ev^\top)^\top \pi &= \pi \\
+  \alpha Q^\top \pi + (1-\alpha) v \underbrace{e^\top \pi}_{=1} &= \pi \\
+  (I - \alpha Q^\top) \pi &= (1-\alpha) v.
+\end{align*}
+Das ist ein lineares Gleichungssystem für $\pi$. Man benötigt für eine dünn
+besetzte Matrix $Q$ eine Rechenzeit von $O(n^2)$, also ist das Verfahren nicht
+durchführbar für $n \approx 10^9$ Webseiten.
+
+Stattdessen: Führe die Vektoriteration
+\[ \pi^{k+1} = G^\top \pi^k, \qquad k = 0, 1, 2, \ldots \]
+mit $\pi^0 = \rez{n} e$ aus.
+
+Um das explizite Aufstellen der Matrix $G$ zu vermeiden, können wir $G^\top
+\pi^k$ auswerten:
+\begin{align*}
+  G^\top \pi^k
+  &= (\alpha Q^\top + (1-\alpha)ve^\top) \pi^k \\
+  &= \alpha Q^\top \pi^k + (1-\alpha) ve^\top \pi^k \\
+  &= \alpha H^\top \pi^k + \alpha \rez{n} e(d^\top \pi^k) + (1-\alpha) v,
+\end{align*}
+wobei $d^\top \pi^k$ ein Skalarprodukt ist.
+
+Somit muss nur das Matrix-Vektorprodukt $H^\top \pi^k$ mit der dünn besetzten
+Hyperlink-Matrix $H$ berechnet werden, die Kosten sind $O(n)$.
+
+In der Praxis (laut Brin, Page) benötigt man 50 bis 100 Iterationen. Die
+Berechnung von $\pi$ dauert einige Tage.
+
+\subsubsection*{Konvergenzgeschwindigkeit der Vektoriteration}
+Die Konvergenz hängt vom Verhältnis der betragsmäßig größten Eigenwerte
+$\lambda_1$ und $\lambda_2$ ab:
+\[ \| \pi^k - \pi \|_1 \le c \left( \frac{|\lambda_2|}{|\lambda_1|} \right)^k \]
+mit einer von $k$ unabhängigen Konstante $c$.
+
+Für die Google-Matrix gilt $\lambda_1 = 1$ und laut Perron-Frobenius ist
+$\lambda_1$ strikt dominant, das heißt $|\lambda_2| < |\lambda_1|$.
+
+Frage: Um wie viel ``kleiner'' ist $|\lambda_2|$?
+
+\emph{Behauptung:} Alle anderen Eigenwerte $\lambda \ne 1$ erfüllen
+\[ |\lambda| \le \alpha. \]
+
+\begin{proof}
+  Sei $u$ ein Eigenvektor von $G^\top$ zum Eigenwert $\lambda$, also
+  \[ G^\top u = \lambda u. \]
+  Dann gilt
+  \[ e^\top( G^\top u ) = \lambda e^\top u \]
+  sowie
+  \[ (e^\top G^\top)u = (Ge)^\top u = e^\top u. \]
+  Also bilden wir die Differenz
+  \[ 0 = (\lambda - 1) e^\top u \qRq e^\top 0, \]
+  weil $\lambda \ne 1$. Damit folgt
+  \[ G^\top u = \alpha Q^\top u + (1-\alpha) v \underbrace{e^\top u}_{=0}
+    = \alpha Q^\top u \]
+  und es gilt
+  \[ \lambda u = \alpha Q^\top u
+    \quad \text{bzw.} \quad
+    Q^\top u = \frac{\lambda}{\alpha} u.
+  \]
+  Also ist $\frac{\lambda}{\alpha}$ ein Eigenwert von $Q^\top$ und es folgt
+  \[ \left| \frac{\lambda}{\alpha} \right| \le \rho(Q) = 1. \qedhere \]
+\end{proof}
+Begründung für den Spektralradius $\rho(Q) = 1$: $Q$ ist eine stochastische
+Matrix, das heißt sie besitzt den Eigenwert 1 wegen $Qe = e$ und damit
+\[ 1 \le \rho(Q) \le \|Q\|_\infty = \max_i \sum_j |q_{ij}| = 1. \]
+
+\subsubsection*{Herleitung der Konstante $c$}
+\[ \| \pi^k - \pi \|_1 \le
+  \alpha^k \| \pi^0 - \pi \|_1 \le
+  \alpha^k (\|\pi^0\|_1 + \|\pi\|_1) = 
+  2 \alpha^k, \]
+also ist $c = 2$.
+
+Die Konvergenzgeschwindigkeit ist exponentiell in $k$. Für eine Genauigkeit von
+$d$ Dezimalstellen muss
+\[ 2 \alpha^k \overset{!}{\le} 10^{-d} \]
+gelten. Bilden des Logarithmus und Auflösen nach $k$ liefert
+\begin{align*}
+  \log 2 + k \cdot \log \alpha
+  &\le - d \cdot \log 10 \\
+  k
+  &\ge - \frac{d \cdot \log 10 + \log 2}{\log \alpha}
+\end{align*}
+wegen $\log \alpha < 0$.
+
+\subsubsection*{Beispiel}
+$d = 5$ Stellen:
+\begin{center}
+  \begin{tabular}{r|cccccc}
+    $\alpha$ & \num{.5} & \num{.75} & \num{.8} & \num{.85} & \num{.9} & \num{.99} \\
+    $k$ & 18 & 43 & 55 & 76 & 116 & 1215
+  \end{tabular}
+\end{center}
+Die Anzahl der benötigten Iterationen wächst sehr schnell für $\alpha \to 1$.
+Eine kleine Teleportationswahrscheinlichkeit $(1-\alpha)$ repräsentiert aber die
+tatsächliche Link-Struktur besser.
+
+Google 1998: $\alpha = \num{.85}$, ca. 50 Iterationen.
+\[ 2 \cdot \num{.85}^{50} = \num{.00059}\ldots, \]
+also nur etwa drei Stellen Genauigkeit.
+
+Aber: Nur die Rangfolge ist interessant, neben dem PageRank werden noch weitere
+inhaltsbasierte Kriterien zum Sortieren der Suchergebnisse verwendet. Es muss
+also keine sehr hohe Genauigkeit bei der Berechnung des PageRank-Vektors $\pi$
+erreicht werden.
+
+\section{Sensitivitätsanalyse des PageRank-Vektors}
+\subsubsection*{Sensitivität bezüglich $\alpha$}
+Betrachte die Google-Matrix $G$ und den entsprechenden PageRank-Vektor als
+Funktion von $\alpha$. Man kann zeigen: $\pi(\alpha)$ ist eine differenzierbare
+Funktion und
+\[ \left\| \diff{\pi(\alpha)}{\alpha} \right\|_1 \le \frac{2}{1-\alpha}. \]
+Somit reagiert $\pi(\alpha)$ nicht allzu sensitiv auf Änderungen von $\alpha$,
+so lange $\alpha$ nicht zu nahe bei 1 liegt.
+
+Andererseits ist die Abschätzung für $\alpha \to 1$ nicht aussagekräftig, da
+dann $\frac{2}{1-\alpha} \to \infty$. Es stellt sich aber heraus, dass
+$\pi(\alpha)$ in der Tat sehr empfindlich bezüglich Änderungen von $\alpha$ ist.
+
+\subsubsection*{Sensitivität bezüglich $H$}
+Hier betrachten wir der Einfachheit halber nur das Hinzufügen oder Entfernen von
+Links zwischen bestehenden Webseiten\footnote{Das heißt, die Einträge von $H$
+  ändern sich.}, nicht aber das Hinzufügen oder Entfernen von Webseiten an sich.
+
+Fasse den PageRank-Vekor als Funktion von $H$ auf, $\pi(H)$. Ziel ist die
+Ableitung von $\pi$ bezüglich eines Matrix-Eintrags $h_{ij}$:
+\[ \diff{\pi}{h_{ij}}. \]
+Ausgangspunkt:
+\[ G^\top \pi = \pi, \qquad e^\top \pi = \sum_{i=1}^n \pi_i = 1. \]
+Einsetzen von $G = \alpha Q + (1-\alpha) ev^\top$:
+\begin{align*}
+  (I - \alpha Q^\top) \pi
+  &= (1-\alpha) v \\
+  \pi
+  &= (1-\alpha) (I - \alpha Q^\top)^{-1} v.
+\end{align*}
+
+\subsubsection*{Allgemein: Ableitung einer inversen Matrix}
+Sei $A(t) \in \realmat{n}{n}$ eine stetig differenzierbare, matrixwertige
+Funktion von $t$ und sei $A(t)$ invertierbar für alle $t \in \real$. Ziel ist,
+$\diff{}{t} A(t)^{-1}$ zu ermitteln.
+\begin{align*}
+  0
+  &= \diff{}{t} I = \diff{}{t} (A(t) A(t)^{-1} ) \\
+  &= \left( \diff{}{t} A(t) \right) A(t)^{-1} + A(t) \diff{}{t} A(t)^{-1}
+\end{align*}
+nach der Produktregel. Also
+\[ \diff{}{t} A(t)^{-1} = - A(t)^{-1} \left( \diff{}{t} A(t) \right)
+  A(t)^{-1}. \]
+
+\subsubsection*{Ableitung von $\pi(H)$}
+Hier ist $t = h_{ij}$, es gilt
+\[ A(h_{ij}) = I - \alpha Q^\top
+  = I - \alpha \left( H^\top + \rez{n} ed^\top \right). \]
+Also ist
+\[ \diff{}{h_{ij}} A(h_{ij}) = - \alpha
+  \begin{pmatrix}
+    0 & 0 & \cdots \\
+    0 & \cdots \\
+    & \cdots & 1 & 0 \\
+    & & \cdots & 0 \\
+  \end{pmatrix}
+  = - \alpha \hat{e}_j \hat{e}_i^\top
+\]
+mit
+\[ \hat{e}_i = (\underbrace{0, \cdots, 0}_{i-1 \text{ mal}},
+  1, 0, \cdots, 0)^\top. \]
+
+Damit folgt
+\begin{align*}
+  \diff{\pi}{h_{ij}}
+  &= -(1-\alpha) A(h_{ij})^{-1} \left( \diff{}{h_{ij}} A(h_{ij}) \right)
+    A(h_{ij})^{-1} v \\
+  &= (1-\alpha) (I - \alpha Q^\top)^{-1} (\alpha \hat{e}_j \hat{e}_i^\top)
+    (I - \alpha Q^\top)^{-1} v \\
+  \intertext{Beachte $(1-\alpha)(I-\alpha Q^\top) v = \pi$:}
+  &= \alpha (I - \alpha Q^\top)^{-1} \hat{e}_j
+    \underbrace{\hat{e}_i^\top \pi}_{= \pi_i} \\
+  &= \alpha \pi_i (I - \alpha Q^\top)^{-1} \hat{e}_j
+\end{align*}
+
+Die Matrix-Vektor-Multiplikation $(I - \alpha Q^\top)^{-1} \hat{e}_j$ ergibt die
+$j$-te Spalte von $(I-\alpha Q^\top)^{-1}$.
+
+Erinnerung:
+\[ h_{ij} = \begin{cases}
+    \rez{|S_i|}, & S_i \text{ besitzt Link auf } S_i, \\
+    0, & \text{sonst.}
+  \end{cases}
+\]
+
+\subsubsection*{Interpretation}
+$\pi$ ist umso sensitiver bezüglich Einfügen oder Entfernen eines Links von
+$S_i$ nach $S_j$, je größer $\pi_i$ ist.
+
+Wegen $\rho(Q^\top) = 1$ ist $I - \alpha Q^\top$ fast singulär für $\alpha \to
+1$, die Einträge von $(I - \alpha Q^\top)^{-1}$ divergieren für $\alpha \to 1$.
+
+Somit ist $\pi$ sehr sensitiv bezüglich Link-Änderung für $\alpha \to 1$ (auch,
+falls $\pi_i$ klein ist).
+
+\section{Ausblick: Verfeinerung und Verbesserung der Google-Suche}
+Google 20 Jahre nach Gründung
+
+\subsubsection*{1. Analyse der Suchanfrage}
+Sprachmodell zum ``Verstehen'' der Suchanfrage:
+\[ \text{``How to } \underbrace{\text{change}}_{= \text{ replace}} \text{ a
+    light bulb''} \]
+und Kategorisierung der Suchanfrage: Spezifische Anfrage?
+
+\subsubsection*{2. Abgleich des Suchbegriffs: Suche im ``Index''}
+Bei Webseiten, die den Suchbegriff enthalten, wird zusätzlich berücksichtigt, wo
+auf der Seite der Begriff vorkommt (im Titel, Haupttext?).
+
+Das wirkt sich auf die Relevanz für die Suchanfrage aus. Zum Beispiel Begriff
+``Hunde'' sollte Seiten mit Bildern von Hunden, verschiedenen Hunderassen
+liefern, nicht nur das Wort ``Hunde'' auf der Webseite.
+
+\subsubsection*{3. Ranking}
+Neben dem PageRank gibt es mittlerweile viele andere Faktoren:
+\begin{itemize}
+\item Aktualität des Inhalts einer Webseite
+\item Nutzerfreundlichkeit der Seite
+\item Präferenz anderer Benutzer (welche aufgeführten Seiten werden von anderen
+  Nutzern bevorzugt?)
+\item Erkennung von Spam-Seiten (künstliche PageRank-Optimierung)
+\end{itemize}
+
+\subsubsection*{4. Kontextbezug}
+``Personalisierte Suchergebnisse'' basierend auf Standort, Land
+\[ \text{``football''} \quad
+  \begin{cases}
+    \text{American Football} \\
+    \text{Fußball}
+  \end{cases}
+\]
+Frühere Suchanfragen (``Barcelona vs. Arsenal'' $\rightsquigarrow$
+fußballinteressiert) beeinflussen nachfolgende Suchen (``Barcelona'' liefert
+Fußballverein statt der Stadt)
+
+\subsubsection*{5. Zusammenstellung der Ergebnisse}
+Ausgewogenheit zwischen eng definierten oder breit gefassten Themen

@@ -1,0 +1,129 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+%\setcounter{secnumdepth}{0}
+ 
+\usepackage{settings}
+
+\usepackage{mathpkgs}
+\usepackage{mathcmds}
+
+\usepackage[]{fancy_thm}
+
+\usepackage{siunitx}
+\sisetup{locale = DE}
+
+\theoremstyle{plain}
+
+\theoremstyle{definition}
+%\newtheorem{defn}{Definition}
+%\newtheorem{folg}[thm]{Folgerung} 
+%\newtheorem{rmrk}[thm]{Bemerkung} 
+%\newtheorem{deno}[thm]{Bezeichnungen}
+%\newtheorem{exmp}[thm]{Beispiel}
+%\newtheorem{aufg}[thm]{Aufgabe} 
+%\newtheorem{prgp}[thm]{} % Numbered paragraph
+
+\newtheorem*{rmrk*}{Bemerkung}
+%\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{defn*}{Definition}
+%\newtheorem*{deno*}{Bezeichnungen}
+
+\DeclareMathOperator{\MB}{MB}
+\DeclareMathOperator{\BGK}{BGK}
+
+\hypersetup{
+  pdftitle={MOSIM},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+%opening
+\title{Vorlesung\\MoSim - Modellierung und Simulation}
+\subtitle{Wintersemester 2017}
+\author{Vorlesung: Jun.-Prof. Dr. Christian Mendl\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Einführung Modellierung und Simulation}
+Siehe Folien:
+
+\url{https://tu-dresden.de/mn/math/wir/mendl/ressourcen/dateien/mosim_2017_wise/mosim_2017_intro_slides.pdf}
+
+\input{01_freiwurf}
+
+\clearpage
+
+\input{02_methodik}
+
+\clearpage
+
+\input{03_lbm}
+
+\input{04_pagerank}
+
+\input{05_pde}
+
+\chapter*{Zusammenfassung}
+\addcontentsline{toc}{chapter}{Zusammenfassung}
+\begin{itemize}
+\item Kapitel 1: Einführung
+\item Kapitel 2: Basketball-Freiwurf
+  \begin{itemize}
+  \item Wie komme ich ausgehend von einer unpräzisen Fragestellung ``Beste Art den
+    Freiwurf zu werfen'' auf ein mathematisches Modell?
+  \item   Analyse (Beschreibung durch physikalische Bewegungsgleichungen),
+    Vereinfachungen
+  \item Präzisierung: Möglichst große Toleranz
+  \item Herleitung eines Modells: Wurfbahn, Systemparameter (zum Beispiel
+    Korbhöhe), 
+  \item Zustandsvariablen (Trajektorie $\pmat{x(t) \\ y(t)}$)
+  \item Implementierung und Simulation
+  \item Auswertung und Interpretation
+  \end{itemize}
+\item Kapitel 3: Methodik der mathematischen Modellierung
+  \begin{itemize}
+  \item Modellierungszyklus allgemein
+  \item Dimensionsanalyse und Skalierung: Größe $X$, Dimension $[X]$, zum
+    Beispiel $[l]$ Länge, Einheit Meter
+  \item Eigenschaften und Rechenregeln
+    \[ e^x = \sum_{n=0}^\infty \rez{n!} x^n, \qRq \text{$x$ muss dimensionslos
+        sein.} \]
+  \item Entdimensionalsierung, Buckingham'sches $\Pi$-Theorem
+  \end{itemize}
+\item Kapitel 4: Lattice-Boltzmann-Methode
+  \begin{itemize}
+  \item Verteilungsfunktion $f(\vec{x}, \vec{p}, t)$
+  \item Boltzmann-Gleichung
+    \[ \partial_t f + \frac{\vec{p}}{m} \cdot \partial_{\vec{x}} f
+      + \vec{F}_{\text{ext}} \cdot \partial_{\vec{p}} f = C[f] \]
+  \item Kollisionsinvarianten $\varphi(\vec{p}) = 1, \vec{p},
+    \frac{|\vec{p}|^2}{2m}$
+    \[ \int_{\real^3} \varphi(\vec{p}) \cdot C[f] \diffop^3 p = 0. \]
+  \item H-Theorem $\rightsquigarrow$ Maxwell-Boltzmann-Verteilung
+  \item Kontinuitätsgleichungen: Prinzip der Herleitung
+  \item Euler-, Navier-Stokes-Gleichungen: Interpretation der Terme
+  \item Lattice-Boltzmann-Methode
+  \item Image Inpainting
+  \end{itemize}
+\item Kapitel 5: Googles PageRank
+  \begin{itemize}
+  \item Link-Struktur: Hyperlink-Matrix
+  \item Markov-Ketten
+  \item Stochastische Interpretation als Zufalls-Surfer
+  \item Vektoriteration zur Berechnung des PageRank-Vektors
+  \end{itemize}
+\item Kapitel 6: Partielle Differentialgleichungen
+  \begin{itemize}
+  \item Finite Differenzen, Volumen, Elemente
+  \end{itemize}
+\end{itemize}
+
+
+\end{document} 
