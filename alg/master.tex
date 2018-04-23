@@ -1,0 +1,446 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\renewcommand{\thesection}{\arabic{section}} 
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+
+\usepackage[numbers,with_chapter]{../.tex/fancy_thm}
+
+\swapnumbers
+\theoremstyle{plain}
+%\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem*{prp*}{Proposition}    
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} 
+\newtheorem{folg}[thm]{Folgerung} 
+\newtheorem{rmrk}[thm]{Bemerkung} 
+\newtheorem{deno}[thm]{Bezeichnungen}
+\newtheorem{exmp}[thm]{Beispiel} 
+\newtheorem{prgp}[thm]{} % Numbered paragraph
+
+\newtheorem*{rmrk*}{Bemerkung}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{defn*}{Definition}
+
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\Grad}{Grad}
+\newcommand{\gzz}{\mathbb{Z}}
+
+\numberwithin{equation}{chapter}
+\numberwithin{thm}{chapter}
+
+\hypersetup{
+  pdftitle={ALGZTH},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+\title{Vorlesung\\Algebra und Zahlentheorie}
+\subtitle{Sommersemester 2018}
+\author{Vorlesung: Prof. Thom\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+VL-Termine: 12.04.(Do), 13.04.(Fr), 20.04.(Fr), 26.04.(Do), 27.04.(Fr),
+03.05.(Do), 11.05.(Fr), 17.05.(Do)
+
+\chapter*{Motivation}
+\[ p(t) = t^n + a_1 t^{n-1} + \ldots + a_n, \]
+wobei $a_1, \ldots, a_n \in \integer$. Zum Beispiel:
+\[ p(t) = t^3 + t + 1. \]
+
+\begin{itemize}
+\item Kann man $p$ lösen? Wo?
+\item Wie kann man die Lösungen beschreiben?
+\item Wie hängen verschiedene Lösungen miteinander zusammen?
+\end{itemize}
+
+\begin{exmp*}
+  \[ p(t) = t^2 + at + b, \qquad a,b \in \integer. \]
+  Lösung:
+  \[ t_\pm = - \frac{a}{2} \pm \sqrt{\frac{a^2}{4} - b}. \]
+  Es gilt $\frac{a^2}{4} - b \in \rat$.
+\end{exmp*}
+
+Fakt: Alle Polynome bis Grad 4 können durch Ausdrücke ``mit Wurzeln'' gelöst
+werden. Dies gilt \emph{nicht mehr} ab Grad 5!
+
+Die Galois-Theory beantwortet diese Fragen.
+
+\subsubsection*{Fragen}
+1. Würfelverdoppelung: Ist es möglich, aus einem Würfel mit Kantenlänge 1
+einen Würfel mit dem doppelten Volumen zu konstruieren?
+
+Genauer: Kann man eine Strecke mit Länge $\sqrt[3]{2}$ mit Zirkel und Lineal
+konstruieren?
+
+Galois-Theorie: Nein!
+
+2. Quadratur des Kreises: Kann man ein Quadrat konstruieren (mit Zirkel und
+Lineal), welches den gleichen Flächeninhalt wie ein gegebener Kreis hat?
+
+Galois-Theorie: Nein!
+
+3. Winkeldreiteilung: Kann man einen Winkel mit Zirkel und Lineal in drei gleich
+große Winkel teilen?
+
+Galois-Theorie: Nein!
+
+Literatur:
+\begin{itemize}
+\item J.S. Milne: Fields and Galois Theory.
+\end{itemize}
+
+\chapter{Grundlegende Definitionen und Resultate}
+\begin{defn}
+  Ein \emph{Ring} ist eine Menge $R$ mit Verknüpfungen $+: R \times R \to
+  R$, $\cdot: R \times R \to R$, so dass
+  \begin{enumerate}[a)]
+  \item $(R,+)$ ist eine abelsche Gruppe.
+  \item $\cdot$ ist assoziativ und es existiert $1_R \in R$ mit
+    \[ 1_R \cdot a = a \cdot 1_R = a. \]
+  \item Es gilt ein Distributivgesetz:
+    \[ (a+b) \cdot c = a \cdot c + b \cdot c, \qquad
+      a \cdot (b+c) = a \cdot b + a \cdot c. \]
+  \end{enumerate}
+  Notation: $ab = a \cdot b$, $1 = 1_R$.
+
+  $S \subseteq R$ heißt \emph{Teilring} (Unterring) von $R$, falls $1_R \in S$
+  und $S$ unter $+$ und $\cdot$ abgeschlossen ist. Ebenso soll $a \in S$
+  implizieren $-a \in S$. Dann ist $S$ selbst ein Ring.
+
+  Seien $R$, $R'$ Ringe. Eine Abbildung $\alpha: R \to R'$ heißt
+  \emph{Ringhomomorphismus}, wenn gilt:
+  \[ \alpha( a+b ) = \alpha(a) + \alpha(b), \qquad
+    \alpha( ab ) = \alpha(a) \alpha(b). \]
+  und $\alpha( 1_R ) = 1_{R'}$.
+
+  Wenn $\alpha: R \to R'$ ein Ringhomomorphismus ist, dann setzen wir
+  \[ \ker(\alpha) := \{ a \in R : \alpha(a) = 0_{R'} \}, \]
+  wobei $0_{R'}$ das neutrale Element von $(R',+)$ ist.
+
+  $R$ heißt \emph{kommutativ}, falls $ab = ba$ für alle $a, b \in R$.
+
+  $R$ heißt \emph{Integritätsbereich}, wenn $ab = 0$ nur gilt, wenn $a = 0$ oder
+  $b = 0$. Ist $R$ Integritätsbereich, so folgt
+  \[ ab = ac, \quad a \ne 0 \qRq b = c \]
+  und
+  \[ a(b-c) = 0 \qRq b -c = 0 \qRq b = c. \]
+
+  Beispiel:
+  \begin{itemize}
+  \item $(\rkr{p}, +, \cdot)$ ist Integritätsbereich, wenn $p$ eine Primzahl
+    ist.
+  \item $(\rkr{4}, +, \cdot)$, $[2] \cdot [2] = 0$, kein Integritätsbereich.
+  \end{itemize}
+  
+  Eine Teilmenge $I \subseteq R$ heißt \emph{Ideal} in $R$, falls
+  \begin{itemize}
+  \item $a,b \in I$ $\Rightarrow$ $a + b \in I$,
+  \item $0 \in I$,
+  \item $a \in I$, $b \in R$ $\Rightarrow$ $ab \in I$ und $ba \in I$.
+  \end{itemize}
+
+  Wenn $a_1, \ldots, a_n \in R$ dann bezeichnen wir das von $a_1, \ldots, a_n$
+  erzeugte Ideal mit $(a_1, \ldots, a_n)$.
+
+  Beispiel: Wenn $R$ kommutativ $a \in R$, dann gilt:
+  \[ (a) = a \cdot R := \{ ab | b \in R \}. \]
+
+  Ein Ideal $I \subseteq R$ heißt \emph{maximal}, falls $I \ne R$ und für jedes
+  Ideal $J \subseteq R$ gilt:
+  \[ I \subset J \qRq J = R. \]
+
+  Ein Ideal $I \subseteq R$ ist \emph{prim}, falls für alle $a,b \in R$ gilt:
+  \[ ab \in I \qRq a \in I \quad \text{oder} \quad b \in I. \]
+
+  Beispiel: $R = \integer$, $I = (m) = m \integer$ ist prim genau dann, wenn $m$
+  oder $-m$ eine Primzahl ist oder $m = 0$.
+
+  Beobachtung: $(0) \subset R$ ist Primideal $\Leftrightarrow$ $R$ ist
+  Integritätsbereich. 
+
+  Ein \emph{Körper} ist ein kommutativer Ring, so dass gilt
+  \[ a \ne 0 \qRq \exists b \in R : ab = 1. \]
+  Wir schreiben $b := a^{-1}$
+
+  Frage: Kann ein Körper Nullteiler haben? Nein!
+  \[ ab = 0, a \ne 0 \qRq \exists a^{-1} \in R : b = a^{-1} a b = a^{-1} 0 =
+    0. \]
+  Also ist ein Körper nullteilerfrei.
+
+  Ein \emph{Teilkörper} ist ein Teilring, der unter Inversen abgeschlossen ist.
+\end{defn}
+
+\begin{lem}
+  Sei $R$ ein kommutativer Ring mit $0 \ne 1$. Dann ist $R$ ein Körper genau
+  dann, wenn die einzigen Ideale in $R$ $(0)$ und $R$ sind.
+\end{lem}
+
+\begin{proof}
+  ``$\Rightarrow$'': Sei $R$ ein Körper $I \subset R$ ein Ideal, $I \ne (0)$.
+  Dann existiert $a \in I$, $a \ne 0$. Weil $R$ ein Körper ist, existiert auch
+  $a^{-1} \in R$. Dann gilt:
+  \[ b = \underbrace{b a^{-1}}_{\in R} \underbrace{a}_{\in I} \in I \]
+  für alle $b \in R$. Also ist $I = R$.
+
+  ``$\Leftarrow$'': Angenommen, $(0)$ und $R$ sind die einzigen Ideale. Aus $(a)
+  = R$ folgt, dass $b \in R$ existiert, so dass $ab = 1_R$.
+\end{proof}
+
+\begin{exmp}
+  $\rat$, $\real$, $\complex$, $\mathbb{F}_p := \rkr(p)$ ($p$ prim) sind Körper.
+\end{exmp}
+
+\section*{Die Charakteristik eines Körpers}
+
+Man prüft leicht, dass $\alpha: \integer \to F$, wobei $F$ ein Körper ist,
+\[ \alpha(m) = 1_F + 1_F + \ldots + 1_F =: m \cdot 1_F, \]
+einen Ringhomomorphismus definiert.
+
+Dann ist $\ker(\alpha)$ ein Ideal in $\integer$. Warum?
+\[ m', m \in \ker(\alpha) \qRq -m, m + m' \in \ker(\alpha). \]
+Für $m \in \ker(\alpha)$ und $n \in \integer$ gilt $mn \in \ker(\alpha)$,
+\[ \alpha( mn ) = \alpha(m) \alpha(n) = 0 \alpha(n) = 0. \]
+
+Es gilt: $\ker(\alpha) = (p)$, wobei $p$ eine Primzahl ist oder $p = 0$.
+
+Weil $\integer$ Hauptidealring ist, gilt $\ker(\alpha) = (m)$ mit $m \in
+\integer$. Falls $m = ab$, dann gilt
+\[ 0 = \alpha(m) = \alpha(ab) = \alpha(a) \alpha(b)
+  \qRq \alpha(a) = 0 \quad \text{oder} \quad \alpha(b) = 0. \]
+Also muss $\alpha(a) \in \ker(\alpha)$ oder $\alpha(b) \in \ker(\alpha)$ sein.
+Damit ist $\ker(\alpha)$ ein Primideal und $m$ ist prim.
+
+Falls $\ker(\alpha) = (0)$, dann heißt $F$ von \emph{Charakteristik} 0. Falls
+$\ker(\alpha) = p$, dann heißt $F$ von \emph{Charakteristik} $p$.
+
+Beobachtung: Falls $F$ Charakteristik $p$ hat, so enthält $F$ den Körper
+$\mathbb{F}_p$ als Teilkörper. Falls die Charakteristik 0 ist, so enthält $F$
+den Körper $\rat$ als Teilkörper.
+\[ \alpha' : \rat \to F, \quad
+  \alpha' \left( \frac{p}{q} \right)
+  = \frac{\alpha(p)}{\alpha(q)}. \]
+
+\begin{exmp*}
+  $\ch(\rat) = \ch(\complex) = 0$, $\ch(\mathbb{F}_p) = p$.
+\end{exmp*}
+
+Wir nennen $\mathbb{F}_2, \mathbb{F}_3, \mathbb{F}_5, \ldots, \rat$ die
+\emph{Primkörper}.
+
+\begin{rmrk}
+  Für jeden Körper $K$ der Charakteristik $p \ne 0$ definiert die Abbildung
+  $F(a) = a^p$ einen Homomorphismus $F: K \to K$. $F$ heißt
+  \emph{Frobenius-Homomorphismus}.
+\end{rmrk}
+
+Warum ist $F$ Homomorphismus?
+\begin{align*}
+  F(ab) &= (ab)^p = a^p b^p = F(a) F(b), \\
+  F(a+b) &= (a+b)^p = a^p + \binom{p1} a^{p-1} b + \binom{p}{2} a^{p-2} b^2
+           + \ldots + \binom{p}{p-1} ab^{p-1} + b^p \\
+        &= a^p + b^p = F(a) + F(b)
+\end{align*}
+$p | \binom{p}{k}$ für $0 < k < p$.
+
+Es gilt $F(1) = 1^p = 1$. $\ker(F)$ ist Ideal in $K$, also gilt
+\[ \ker(F) = (0) \qRq F \text{ injektiv}. \]
+
+Seien $K$, $K'$ Körper und $\alpha : K \to K'$ ein Homomorphismus. Dann heißt
+$\alpha$ \emph{Endomorphismus}, falls $K = K'$.
+
+$\alpha$ heißt \emph{Isomorphismus}, falls $\alpha$ bijektiv ist ($\alpha^{-1}$
+ist dann auch ein Isomorphismus).
+
+Die Abbildung $\alpha$ heißt \emph{Automorphismus}, falls $\alpha$ Isomorphismus
+und Endomorphismus ist.
+
+Beobachtung: Falls $K$ ein endlicher Körper ist und $\ch(K) = p$, dann ist $F: K
+\to K$ ein Automorphismus.
+
+\section*{Rückblick auf Polynome}
+Sei $F$ ein Körper. $F[X]$ ist der Polynomring in $X$ mit Koeffizienten in $F$,
+ein Vektorraum mit Basis $1, X, X^2, \ldots$
+\[ \left( \sum_i a_i X^i \right) \cdot \left( \sum_j b_j X^j \right)
+  = \sum_k \left( \sum_{i+j=k} a_i b_j \right) X^k. \]
+
+Beobachtung: Sei $R$ ein Ring, der F als Teilring enthält und sei $r \in R$.
+Dann gibt es einen eindeutigen Homomorphismus $\alpha : F[X] \to R$ mit
+$\alpha(a) = a$ für alle $a \in F$ und $\alpha(X) = r$.
+\[ \alpha \left( \sum_i a_i X^i \right) = \sum_i a_i r^i. \]
+
+\subsubsection*{Divisionsalgorithmus nach Euklid}
+Seien $f,g \in F[X]$, $g \ne 0$. Dann existiert $q \in F[X]$, $r \in F[X]$ mit 
+$\Grad(r) < \Grad(g)$ und $f = g \cdot q + r$
+
+Mit diesen Eigenschaften sind $q$ und $r$ eindeutig definiert.
+ 
+Beispiel: $f \in F[X]$, $a \in F$. $g(X) = X - a$. Division mit Rest liefert $q
+\in F[X]$, $r = c \in F$,
+\[ f(X) = (X-a) q(X) + c. \]
+Falls $f(a)= 0$ für $a \in F$, dann gilt $c = 0$.
+
+Falls $a$ Nullstelle von $f$ (also $f(a)=0$) ist, dann teilt $(X-a)$ das Polynom
+$f$. Daraus kann man ableiten, dass $f$ höchstens $\Grad(f)$ Nullstellen haben
+kann.
+
+\subsubsection{Euklidischer Algorithmus zur Bestimmung des größten gemeinsamen
+  Teiler zweier Polynome}
+Seien $f, g \in F[X]$. Der Euklidische Algorithmus konstruiert Polynome $a, b
+\in F[X]$ mit $\Grad(a) < \Grad(g)$, $\Grad(b) < \Grad(f)$ und $af + bg =
+\ggT(f,g)$.
+
+Vorgehen: Ohne Einschränkung $\Grad(f) \ge \Grad(g)$.
+\begin{align*}
+  f &= q_0 g + r_0 & \Grad(r_0) &< \Grad(g) \\
+  g &= q_1 r_0 + r_1 & \Grad(r_1) &< \Grad(r_0) \\
+  r_0 &= q_1 r_1 + r_2 & \Grad(r_2) &< \Grad(r_1) \\
+  &\vdots
+\end{align*}
+Nach höchstens $\Grad(g) =: n$ Schritten ist $r_{n+1} = 0$ und dann gilt $r_{n-1}
+= q_{n+1} r_n$.
+Dann gilt: $r_n$ teilt $r_{n-1}$ und wegen $r_{n-2} = q_n r_{n-1} + r_n$ folgt
+dann $r_n | r_{n-2}$, $r_n | r_{n-3}$, $\ldots$, $r_n | g$, $r_n | f$.
+\[ r_n = r_{n-2} - q_n r_{n-1} = r_{n-2} - q_n( r_{n-3} - q_{n-1} r_{n_2} =
+  \ldots = af + bg. \]
+Jedes Ideal in $F[X]$  ist von der Form $(f)$ für ein eindeutig bestimmtes,
+\emph{normiertes} Polynom $f \in F[X]$,
+\[ f(X) = X^n  + a_1 X^{n-1} + \ldots + a_n \]
+oder $(0)$.
+
+Wenn $I \subseteq F[X]$ ein Ideal ist, dann gitl $I = (f)$, wenn $f$
+kleinstmöglichen Grad hat und $f$ normiert ist.
+
+\begin{proof} $(f) \subseteq I$ klar. Sei $h \in I$, $h = qf + r$, $\Grad(r) <
+  \Grad(f)$, dann folgt $r = h - qf \in I$ $\Rightarrow$ $r = 0$.
+\end{proof}
+
+\subsubsection*{Faktorisierung von Polynomen}
+\begin{defn*}
+  Sei $F$ ein Körper, $f \in F[X]$. Dann heißt $f$ \emph{irreduzibel}, falls $f$
+  kein Produkt von Polynomen kleineren Grades (in $F[X]$) ist.
+\end{defn*}
+
+\begin{exmp*}
+  \[ f(X) = X^2 - 2 \in \rat[X] \]
+  ist irreduzibel, aber
+  \[ f(X) = X^2 - 2 = (X - \sqrt{2})(X + \sqrt{2}) \in \real[X].\]
+\end{exmp*}
+
+\begin{prp*}
+  Sei $q(X) = a_m X^m + a_{m-1} X^{m-1} + \ldots + a_0 \in \rat[X]$ mit $a_0,
+  \ldots, a_m \in \integer$. Sei $r = \frac{c}{d} \in \rat$ eine Nullstelle von
+  $q$ und gelte $\ggT(c,d) = 1$. Dann gilt $c|a_0$ und $d | a_m$.
+\end{prp*}
+
+\begin{proof}
+  \[ q(r) = 0 \qRq
+    a_m c^m + \underbrace{a_{m-1} c^{m-1} d + \ldots + a_1 c d^{m-1} a_0
+      d^m}_{\text{durch $d$ teilbar}} = 0, \]
+  also $d | a_m$. Analog folgt $c | a_0$.
+\end{proof}
+
+\begin{exmp*}
+  \[ f(X) = X^3 - 3X - 1 \in \rat[X] \]
+  ist irreduzibel. Die Proposition impliziert, dass die einzigen möglichen
+  Nullstellen in $\rat$ $\pm 1$ sind, aber $f( \pm 1 ) \ne 0$. $f$ ist also
+  irreduzibel, weil für jede Faktorisierung $f = gh$ mit $\Grad(g) < 3$ und
+  $\Grad(h) < 3$ ein Faktor Grad 1 haben müsste. Dann gäbe es aber eine
+  Nullstelle von $f$ in $\rat$.
+\end{exmp*}
+
+\subsubsection*{Eisensteins Kriterium}
+  Sei $f(X) = a_m X^m + a_{m-1} X^{m-1} + \ldots + a_0$ mit $a_0, \ldots, a_m
+  \in \integer$. Angenommen, es gibt eine Primzahl $p$ mit
+  \begin{enumerate}
+  \item $p \nmid a_m$,
+  \item $p | a_0, a_1, \ldots, a_{m-1}$,
+  \item $p^2 \nmid a_0$.
+  \end{enumerate}
+  Dann ist $f \in \rat[X]$ irreduzibel.
+
+\begin{rmrk*}
+  Sei $f \in \rat[X]$ normiert. Dann gibt es immer $\alpha_1, \ldots, \alpha_n \in
+  \complex$, sodass
+  \[ f(X) = (X-\alpha_1) \cdot \ldots \cdot (X-\alpha_n). \]
+\end{rmrk*}
+
+\subsubsection*{Faktorisierung von Polynomen}
+Sei $F$ ein Körper, $F[X]$ der Polynomring mit Koeffizienten in $F$. $f \in
+F[X]$ ist \emph{irreduzibel}, wenn \emph{kein} $g,h \in F[X]$ existiert, so dass
+\[ f = gh, \qquad \Grad(g) < \Grad(f), \qquad \Grad(h) < \Grad(f). \]
+Mit anderen Worten: $f$ hat keine nicht triviale Faktorisierung in $F[X]$.
+
+\begin{lem}[Gauss]
+  Sei $f \in \integer[X]$ und $f$ besitze eine nicht triviale Faktorisierung in
+  $\rat[X]$, dann besitzt es auch eine nicht triviale Faktorisierung in
+  $\integer[X]$. 
+\end{lem}
+
+\begin{proof}
+  Sei $f \in \integer[X]$ und $g,h \in \rat[X]$. Es existieren $m,n \in \integer
+  \setminus \{0\}$, so dass  $m \cdot g, n \cdot h \in \integer[X]$. Dann gilt
+  \[ m \cdot n \cdot f = (m \cdot g)(n \cdot h). \]
+  Das ist eine nicht triviale Faktorisierung.
+
+  Sei $p$ ein Primfaktor von $mn$. Dann betrachten wir $\bar{g}, \bar{h} \in
+  (\rkr{p})[X]$, welche entstehen, indem man die Koeffizienten von $mg$ und $nh$
+  modulo $f$ reduziert. Es gilt dann
+  \[ \bar{g} \cdot \bar{h} = 0 \qquad \text{in } (\rkr{p})[X]. \]
+
+  Ein Polynomring in einem Körper ist ein Integritätsbereich, das heißt $\bar{g}
+  = 0$ oder $\bar{h} = 0$. O.B.d.A. sei $\bar{g} = 0$ in $(\rkr{p})[X]$, das
+  heißt jeder Koeffizient von $mg$ war durch $p$ teilbar. Also ist $\frac{m}{p}
+  g \in \integer[X]$. Es gilt
+  \[ \frac{mn}{p} f = \left( \frac{m}{p} \right) \cdot g \cdot (nh). \]
+
+  Iterieren dieses Prozesses liefert $f = g' h'$ mit $g', h' \in \integer[X]$.
+\end{proof}
+
+\begin{kor}
+  Sei $f \in \integer[X]$ normiert und sei $g \in \rat[X]$ ein normierter Faktor
+  von $f$. Dann ist $g \in \gzz[X]$ und $\frac{f}{g} \in \gzz[X]$.
+\end{kor}
+
+\begin{proof}
+  Es gilt $f = gh$ in $\rat[[X]]$ und $g$ ist normiert. Dann ist auch $h$
+  normiert. Seien $m, n$ kleinstmöglich mit $mg, nh \in \gzz[X]$. Wenn $p | mn$
+  gilt, dann miuss $p$ schon Teiler von \emph{allen} Koeffizienten von $mg$ oder
+  $nh$ sein (siehe Beweis zum Lemma) von Gauß). O.B.d.A. teile $p$ die
+  Koeffizienten von $mg$. Dann ist
+  \[ \left( \frac{m}{p} \right) g \in \gzz[X]. \]
+  Weil $g$ normiert, der Führungskoeffizient also 1 war, folgt $p | m$. Das
+  heißt
+  \[ \frac{m}{p} \in \gzz, \quad \left( \frac{m}{p} \right) g \in \gzz[X]. \]
+  Widerspruch! Also existiert kein solches $p$ und damit gilt $m = n = 1$ (oder
+  $-1$).
+\end{proof}
+
+\subsubsection*{Kriterien für Irreduzibilität}
+\begin{dis}[Eisenstein-Kriterium]
+  Sei
+  \[ f(X) = a_m X^m + a_{m-1} X^{m-1} + \cdots + a_0, \quad a_i \in \integer. \]
+  Angenommen, es existiert eine Primzahl $p$, so dass
+  \begin{enumerate}[a)]
+  \item $p \nmid a_m$,
+  \item $p | a_{m-1}, \ldots, a_0$,
+  \item $p^2 \nmid a_0$,
+  \end{enumerate}
+\end{dis}
+\end{document}
