@@ -9,11 +9,12 @@
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
-\usepackage[numbers,with_chapter]{../.tex/fancy_thm}
+\usepackage[numbers,with_chapter]{fancy_thm}
 
 \swapnumbers
 \theoremstyle{plain}
-%\newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+% \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem*{thm*}{Satz}
 %\newtheorem{lem}[thm]{Lemma}    
 
 \theoremstyle{definition}
@@ -22,7 +23,7 @@
 \newtheorem{rmrk}[thm]{Bemerkung} 
 \newtheorem{deno}[thm]{Bezeichnungen}
 \newtheorem{exmp}[thm]{Beispiel}
-\newtheorem{aufg}[thm]{Aufgabe} 
+%\newtheorem{aufg}[thm]{Aufgabe} 
 \newtheorem{prgp}[thm]{} % Numbered paragraph
 
 \newtheorem*{rmrk*}{Bemerkung}
@@ -51,7 +52,7 @@
 
 \clearpage
 
-\input{000_org}
+%%\input{000_org}
 
 \chapter{Grundbegriffe}
 
@@ -59,71 +60,126 @@
 
 \clearpage
 
+\addtocounter{section}{1}
 %%\section{Aufgaben}
 %%Siehe \verb+Aufgaben-1-2.pdf+
-\input{102_aufg}
 
-\clearpage
+%%\input{102_aufg}
+
+%% \clearpage
 
 \input{103_z_var}
 
 \clearpage
 
-%\section{Aufgaben}
-%Siehe \verb+Aufgaben-1-4.pdf+.
-\input{104_aufg}
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-1-4.pdf+.
+%%\input{104_aufg}
 
-\clearpage
+%%\clearpage
 
 \input{105_unabh}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-1-6-Teil-1.pdf+ und \verb+Aufgaben-1-6-Teil-2.pdf+.
+\clearpage
+
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-1-6-Teil-1.pdf+ und \verb+Aufgaben-1-6-Teil-2.pdf+.
+%%\input{106_aufg}
+
+%% \clearpage
 
 \input{107_num}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-1-8.pdf+.
+\clearpage
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-1-9.pdf+.
+\addtocounter{section}{2}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-1-8.pdf+.
+
+%%\input{108_aufg}
+
+%%\clearpage
+
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-1-9.pdf+.
+
+%%\input{109_aufg}
+
+%%\clearpage
 
 \input{110_bedingte_w}
+
+%%\clearpage
+
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-1-11.pdf+.
 
 \chapter{Gesetze}
 \input{201_gesetze}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-2-Teil-1.pdf+ und \verb+Aufgaben-2-2-Teil-2.pdf+.
+\clearpage
+
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-2-2-Teil-1.pdf+ und \verb+Aufgaben-2-2-Teil-2.pdf+.
+
+%%\clearpage
 
 \input{203_ungleichungen}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-4.pdf+
+\clearpage
+
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-2-4.pdf+
+
+%%\clearpage
 
 \input{205_konvergenz}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-6.pdf+
+\clearpage
+
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-2-6.pdf+
+
+%%\clearpage
 
 \input{207_grosse_zahlen}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-8.pdf+
+\clearpage
+
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-2-8.pdf+
+
+%%\clearpage
 
 \input{209_gliwenko}
 
+\clearpage
+
 \input{210_bed_erwartung}
 
-\section{Aufgaben}
-Siehe \verb+Aufgaben-2-11.pdf+.
+\clearpage
+
+\addtocounter{section}{1}
+%%\section{Aufgaben}
+%%Siehe \verb+Aufgaben-2-11.pdf+.
+
+%%\clearpage
 
 \input{212_martingale}
 
+\clearpage
+
 \input{213_char_funktion}
 
-\addtocounter{section}{2}
+\clearpage
 
+\addtocounter{section}{2}
 \input{216_grenzwertsatz}
 
 \end{document}

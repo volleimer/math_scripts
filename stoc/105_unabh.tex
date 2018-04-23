@@ -31,18 +31,18 @@
 \begin{proof}
   Aus MINT ist bekannt, dass die Beziehungen
   \begin{align*}
-    \mu_Y &= \mu_{X_1} \times \cdots \times \mu_{X_n},
-    \tag{1} \\
+    \mu_Y
+    &= \mu_{X_1} \times \cdots \times \mu_{X_n},
+      \tag{1} \\
     \mu_Y( B_1 \times \cdots \times B_n)
-          &= \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n),
-    \tag{2} \\
+    &= \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n),
+      \tag{2} \\
     \intertext{für beliebige $B_j \in \borel(\real)$,}
     \mu_Y( B_1 \times \cdots \times B_n)
-          &= \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n),
-    \tag{3} \\
-    \intertext{für beliebige $B_j$ der Form $B_j = (-\infty, t_j)$}
+    &= \mu_{X_1}(B_1) \cdots \mu_{X_n}(B_n),
+      \tag{3}
   \end{align*}
-  äquivalent sind.
+  für beliebige $B_j$ der Form $B_j = (-\infty, t_j)$ äquivalent sind.
   
   Da $\pP[ (X_1, \ldots, X_n) \in B_1 \times \cdots \times B_n] = \pP[X_1 \in
   B_1, \ldots, X_n \in B_n]$ und
@@ -108,6 +108,8 @@
       \intf^1(\mu \ast \nu). \]
   \end{enumerate}
 \end{rmrk}
+
+\clearpage
 
 \begin{thm}
   Sind $X$ und $Y$ unabhängige $d$-dimensionale Zufallsgrößen, so gilt
@@ -235,7 +237,7 @@ Das folgt aus 1.5.6 und 1.5.5.iv.
   Hinweise: Setze ($\ast$) fort.
 
   Analog: Dichte von $X/Y$, falls $Y \ne 0$ fast sicher:
-  \[ p(x) = \int_{-\infty}^\infty |y| \cdot g(y) \cdot f(x \cdot y) \diffop
+  \[ q(x) = \int_{-\infty}^\infty |y| \cdot g(y) \cdot f(x \cdot y) \diffop
     y. \]
 \end{prgp}
 
