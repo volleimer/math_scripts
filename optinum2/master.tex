@@ -1,0 +1,657 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+ \setcounter{secnumdepth}{3}
+ 
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\usepackage{stackengine}
+\newcommand\groupequation[1]{%
+  \setbox0=\hbox{$\displaystyle#1$}%
+  \setbox2=\hbox{\,(\theequation)}%
+  \stackengine{0pt}{\copy0}{%
+    \makebox[\linewidth]{\hfill$\left.\rule{0pt}{\ht0}\right\}$\kern\wd2}}
+    {O}{c}{F}{T}{L}
+}
+
+\usepackage[]{../.tex/fancy_thm}
+
+\theoremstyle{plain}
+\newtheorem*{thm*}{Satz}
+%\newtheorem{flg}[thm]{Folgerung}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{prgp}{}
+\newtheorem{rmrk}{Bemerkung}
+\newtheorem{exmp}{Beispiel}
+
+\numberwithin{rmrk}{chapter}
+\numberwithin{defn}{chapter}
+\numberwithin{exmp}{chapter}
+
+\numberwithin{prgp}{subsection}
+
+%\numberwithin{thm}{chapter}
+
+\newtheorem*{rmrk*}{Bemerkung}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{defn*}{Definition}
+%\newtheorem*{deno*}{Bezeichnungen}
+
+\numberwithin{equation}{chapter}
+
+\hypersetup{
+  pdftitle={OPTINUM},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+\DeclareMathOperator*{\KA}{KA}
+\DeclareMathOperator*{\FT}{FT}
+\DeclareMathOperator*{\GP}{GP}
+
+\setcounter{secnumdepth}{1}
+
+%opening
+\title{%
+  Vorlesung\\
+  Optimierung und Numerik - Teil 2\\
+  Numerik gewöhnlicher Differentialgleichungen}
+\subtitle{Sommersemester 2018}
+\author{Vorlesung: Prof. Dr. Oliver Sander\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+\chapter{Einführung}
+\section{Gewöhnliche Differentialgleichungen}
+Gewöhnliche Differentialgleichungen (GDGL) bzw. ordinary differential
+equations (ODE) suchen Funktionen $x : [t_0, t_1] \to \real^d$, die die
+Bedingung 
+\[ x' = f(t,x) \]
+erfüllen, wobei $(t,x) \in \real \times \real^d$ und $f: \Omega \to \real^d$,
+$\Omega \subseteq \real \times \real^d$.
+\begin{itemize}
+\item $x$ heißt Zustandsvektor.
+\item $t$ heißt ``Zeit''.
+\item $x \in \real^d$ heißt Zustandsraum.
+\item $(t,x) \in \real \times \real^d$ heißt erweiterter Zustandsraum.
+\end{itemize}
+
+\subsection{Beispiele für gewöhnliche Differentialgleichungen}
+\begin{itemize}
+\item Skalare lineare Gleichung: Finde $x : \real \to \real$, so dass
+  \[ x' = -k x, \qquad k \in \real. \]
+\item Vektorwertige lineare Gleichung
+  \[ x' = Ax, \qquad A \in \realmat{d}{d}. \]
+\end{itemize}
+Beide Gleichungen sind \emph{autonom}, das heißt die rechte Seite $f$ hängt
+nicht explizit von $t$ ab.
+
+\subsection{Beispiel für höhere Ableitungen}
+Betrachte
+\[ x'' = kx. \]
+Einführen einer zusätzlichen Größe $v := x'$. Dann erhalten wir
+\[ x' = v, \qquad v' = kx. \]
+Eine ODE mit höheren Ableitungen lässt sich immer in ein System von Gleichungen
+erster Ordnung umformen.
+
+\subsection{Lösbarkeit}
+Betrachte wieder das Beispiel
+\[ x' = -kx. \]
+Diese Gleichung wird durch $x(t) = c e^{-kt}$ für alle $c \in \real$ gelöst.
+
+Zusätzlich wird noch ein Anfangswert $x(t_0) = x_0$ benötigt, um eine eindeutige
+Lösung zu erhalten. Dann bezeichnet man die Aufgabe als
+\emph{Anfangswertproblem} (AWP) bzw. \emph{initial value problem} (IVP).
+
+Es gibt aber auch AWP mit mehr als einer Lösung. Zum Beispiel
+\[ x' = \sqrt{|x|}, \qquad x(0) = 0. \]
+Die Funktion $x \equiv 0$ ist eine Lösung.
+
+Sei $c > 0$ und definiere
+\[ \tilde{x}(t) = \begin{cases}
+    0, &\text{für } 0 \le t \le c, \\
+    \rez{4}(t-c)^2, & \text{für } c < t.
+  \end{cases}
+\]
+Dann ist auch $\tilde{x}$ Lösung für alle $c > 0$.
+
+$f(t,x) = \sqrt{|x|}$ ist \emph{nicht lokal Lipschitz-stetig}.
+
+\begin{thm}[Picard-Lindelöf]
+  Das Anfangswertproblem
+  \[ x' = f(t,x), \qquad x(t_0) = x_0\]
+  hat eine eindeutige, wenn $f$ stetig und bezüglich $x$ lokal Lipschitz-stetig
+  ist.
+\end{thm}
+
+\subsection{Evolution und Phasenfluss}
+Sei $(t_0, x_0) \in \Omega$. Sei $J(t_0, x_0)$ das größte Intervall, auf dem die
+Lösung von $x' = f(t,x)$, $x(t_0) = x_0$ existiert und eindeutig ist.
+
+Gegeben $x_0$ und $t_0$, was ist $x(t)$?
+
+\begin{defn*}
+  Für alle $t_0$, $t \in J(x_0, t_0)$ heißt
+  \[ \Phi^{t,t_0} : x_0 \mapsto x(t) \]
+  \emph{Evolution} der Differentialgleichung:
+  \[ \Phi^{t,t_0} x_0 = x(t). \]
+\end{defn*}
+
+\section{Prinzip der Numerik von DGLn}
+\emph{Konstruiere Näherungslösungen für Anfangswertprobleme.}
+
+Betrachte das Intervall $[t_0, T]$. Unterteile es durch $n+1$ Zeitpunkte
+\[ t_0 < t_1 < t_2 < \ldots, t_n = T. \]
+\begin{itemize}
+\item Die Menge der Zeitpunkte heißt \emph{Gitter} $\Delta$.
+\item Die \emph{Schrittweite} ist $\tau_j := t_{j+1} - t_j$.
+\item Maximale Schrittweite: $\tau_\Delta := \max_{j} \tau_j$.
+\end{itemize}
+Gesucht ist nun eine Gitterfunktion $x_\Delta : \Delta \to \real^d$, die $x :
+[t_0, T] \to \real^d$ möglichst gut approximiert.
+
+\subsection{Explizites Euler-Verfahren}
+Beginne bei $x_0 = x(t_0)$. In diesem Punkt ist auch $x'(t_0) = f(t_0, x_0)$
+bekannt. Bestimme $x_\Delta(t_1)$ mit
+\[ x_\Delta(t_1) := x_0 + (t_1 - t_0) \cdot f(t_0, x_0). \]
+Da $f$ für alle $(t,x)$ definiert ist, kann man nun von $x_\Delta(t_1)$ aus
+den nächsten Wert ermitteln. Das Verfahren ist also:
+\begin{enumerate}
+\item $x_\Delta(t_0) = x_0$,
+\item $x_\Delta(t_{j+1}) = x_\Delta( t_j ) + \tau_j f(t_j, x_\Delta(t_j))$.
+\end{enumerate}
+
+Notation:
+\[ x_\Delta(t_{j+1}) = \Psi^{t_{j+1},t_j} x_\Delta(t_j) \]
+
+\subsection{Runge-Kutta-Verfahren}
+``Höhere Genauigkeit bei weniger Arbeit''
+\begin{enumerate}
+\item $k_i = f(t + c_i \tau, x + \tau \sum_{j=1}^{i-1} a_{ij} k_j)$ für alle $i =
+  1, \ldots, s$.
+\item $\Psi^{t+\tau, t} x = x + \tau \sum_{i=1}^s b_i k_i$.
+\end{enumerate}
+Die $k_i \in real^d$ heißen \emph{Stufen} des Verfahrens. Die Koeffizienten
+$c_1, \ldots, c_s$, $b_1, \ldots, b_s$ und $a_{ij}$ für $i = 1, \ldots, s$, $j =
+1, \ldots, i-1$ bestimmen das konkrete Verfahren.
+
+Butcher-Schema:
+\[ \begin{array}{r|c}
+    c^\top & (a_{ij}) \\
+    \hline
+    & b
+  \end{array}
+\]
+
+Klassisches Verfahren:
+\[
+  \begin{array}{r|cccc}
+    0 \\
+    \rez{2} & \rez{2} \\
+    \rez{2} & 0 & \rez{2} \\
+    1 & 0 & 0 & 1 \\
+    \hline
+    & 1/6 & 1/3 & 1/3 & 1/6
+  \end{array}
+\]
+
+\subsection{Konsistenz und Konvergenz}
+AWP 
+\[ x' = f(t,x), \qquad x(t_0) = x_0 \]
+Numerische  Verfahren, zum Beispiel Euler
+\[ x_\Delta(t_{k+1}) = x_\Delta(t_k) + \tau f(t_k, x_\Delta(t_k)) \]
+
+\begin{defn*}
+  Sei $(t,x) \in \Omega$. Die Differenz
+  \[ \eps(t,x,\tau) = \Phi^{t+\tau,t} x - \Psi^{t+\tau,t}x\]
+  heißt \emph{Konsistenzfehler} von $\Psi$.
+\end{defn*}
+
+\begin{defn*}
+  Eine diskrete Evolution $\Psi$ heißt \emph{konsistent}, falls
+  \begin{enumerate}
+  \item $\Psi^{t+0,t} x = x = \Phi^{t+0,t} = x$,
+  \item $\diff{}{\tau} \Psi^{t+\tau,t} x \big|_{\tau=0} = \diff{}{\tau}
+    \Phi^{t+\tau,t} x \big|_{\tau=0} = x' = f(t,x)$.
+  \end{enumerate}
+\end{defn*}
+Beispiel: Explizites Euler-Verfahren:
+\[ \Psi^{t+0,t} x = x + 0 f(t,x) = x \]
+Bedingung 1 erfüllt.
+
+\begin{defn*}
+  Eine diskrete Evolution $\Psi$ hat \emph{Konsistenzordnung} $p \in \nat_0$,
+  wenn ein $c > 0$ unabhängig von $x,t$ existiert, so dass
+  \[ \eps(t,x,\tau) \le c \tau^{p+1}. \]
+  Das heißt, die ersten $p+1$ Terme der Taylorentwicklung von $\eps$
+  verschwinden.
+\end{defn*}
+
+Konvergenz ist eine globale Eigenschaft
+\begin{defn*}
+  Die Funktion
+  \[ \eps_\Delta : \Delta \to \real^d, \qquad \eps_\Delta = x(t) -
+    x_\Delta(t) \]
+  heißt \emph{Gitterfehler}. Die Norm
+  \[ \| \eps_\Delta \|_\infty := \max_{t \in \Delta} |\eps_\Delta(t)| \]
+  heißt \emph{Diskretisierungsfehler}.
+\end{defn*}
+
+\begin{defn*}
+  Zu jedem Gitter $\Delta$ auf $[t_0,T]$ sei eine Gitterfunktion $x_\Delta$
+  gegeben. Die Familie dieser $x_\Delta$ konvergiert \emph{mit Ordnung} $p$
+  gegen $x \in C^1([t_0,T])$, falls ein $c > 0$ existiert mit
+  \[ \| \eps_\Delta \|_\infty \le c \tau_\Delta^p \]
+  für alle $\tau_\Delta$ klein genug.
+\end{defn*}
+
+\begin{thm}
+  Gegeben sei eine diskrete Evolution $\Psi^{t+\tau,t}$ mit
+  \begin{itemize}
+  \item $\Psi$ ist lokal Lipschitz-stetig in $x$.
+  \item $\Psi$ ist konsistent mit Ordnung $p$.
+  \end{itemize}
+  Dann konvergiert die zugehörige Folge von Gitterfunktionen mit Ordnung $p$
+  gegen die Lösung des AWPs.
+\end{thm}
+
+\subsection{Steife Probleme}
+Betrachte das AWP
+\[ x: \real \to \real, \qquad
+  x' = \lambda x, \qquad
+  x(0) = 1. \]
+Lösung: $x(t) = e^{\lambda t}$.
+
+Bei der diskreten Lösung mit dem expliziten Euler-Verfahren passieren keine
+Überraschungen, falls $\lambda \ge 0$. Falls aber $\lambda < 0$, dann 
+produziert das Verfahren nur dann qualitativ richtige Ergebnisse, falls $\tau <
+\rez{|\lambda|}$. 
+
+Für $\lambda < 0$ und $\tau \ge \rez{|\lambda|}$ wird das Verfahren instabil.
+
+Nachrechnen:
+\[ x_\Delta(t_{k+1}) =: x_{k+1} = x_k + \tau f(t,x_k)
+  = x_k + \tau \lambda x_k = (1+ \tau \lambda)^{k+1} x_0. \]
+1. Fall: $\lambda > 0$.
+\begin{itemize}
+\item $x(t) = e^{\lambda t}$ ist monoton steigend in $t$.
+\item $x_\Delta$ ist monoton steigend in $k = \frac{t}{\tau}$, da $1+\tau
+  \lambda$ > 1.
+\end{itemize}
+
+2. Fall : $\lambda < 0$.
+\begin{itemize}
+\item $x(t) = e^{\lambda t}$ ist monoton fallend in $t$ und positiv.
+\item $x_\Delta$ ist monoton fallend und positiv nur dann, wenn $0 < 1 + \tau
+  \lambda < 1$ gilt. Das ist genau dann der Fall, wenn $\tau \le
+  \rez{|\lambda|}$. 
+\end{itemize}
+
+Falls $\lambda < 0$ und $\tau \ge \rez{|\lambda|}$, dann oszilliert die diskrete
+Lösung, da $(1+ \tau \lambda)^{k+1}$ dann eine Potenz einer negativen Zahl ist.
+Weil aber noch $|(1+ \tau \lambda)^{k+1}| < 1$ gilt, ist die Lösung trotzdem
+beschränkt.
+
+Falls $\lambda < 0$ und $\tau \ge \frac{2}{|\lambda|}$, dann ist die
+oszillierende diskrete Lösung zusätzlich noch unbeschränkt.
+
+Wir hatten die Konvergenzordnung so definiert: Das explizite Euler-Verfahren
+konvergiert mit Ordnung 1, also
+\[ \| \eps_\Delta \|_\infty \le c \tau_\Delta \]
+\emph{für alle $\tau_\Delta$ klein genug.}
+
+Die Aussage gilt also nur asymptotisch. Für zu große $\tau_\Delta$ können
+``Überraschungen'' auftreten.
+
+Betrachtet man ein AWP
+\[ x: \real \to \real^d, \qquad
+  x' = Ax, \qquad
+  A \in \real^{d \times d}, \]
+so können solche Probleme auftreten, sobald ein Eigenwert von $A$ negativ ist.
+Dann muss man entweder Verfahren einsetzen, die in dieser Vorlesung behandelt
+werden. Oder man muss die Schrittweite extrem klein wählen. Das ist ein in der
+Praxis verbreitetes Problem.
+
+Angenommen, wir erhalten für ein festes $\tau$ eine gute Approximation der
+Lösung. Für einen leicht gestörten\footnote{%
+  Der Ausdruck $\delta x_0$ bedeutet nicht $\delta \cdot x_0$, sondern ist als
+  $\delta_{x_0}$ zu verstehen.
+} Anfangswert $x_0 + \delta x_0$ erwarten wir eine gute Approximation der
+gestörten Lösung. 
+
+\begin{defn*}
+  Die \emph{intervallweise Kondition} eines Anfangswertproblems
+  \[ x' = f(t,x), \qquad x(t_0) = x_0, \qquad t \in [t_0, T], \]
+  ist die kleinste Zahl $\kappa[t_0, T]$, für die
+  \[ \| \delta x \|_\infty \le \kappa[t_0, T] \cdot \| \delta x_0 \| \]
+  gilt, wobei $\delta x$ die ``Störung'' der Lösung des Systems ist. Das
+  ungestörte System hat die Lösung $x$, das gestörte die Lösung $x + \delta x$.
+\end{defn*}
+
+\begin{defn*}
+  Die diskrete Kondition eines Zeitschrittverfahrens ist die kleinste Zahl
+  $\kappa_\Delta$, so dass
+  \[ \| \delta x_\Delta \|_\infty \le \kappa_\Delta \cdot \| \delta x_0 \|. \]
+\end{defn*}
+
+Wenn ein Verfahren für Startwerte $x_0$ und kleine Störungen $x_0 + \delta x_0$
+vernünftige Lösungen liefert, dann muss
+\[ \kappa_\Delta \approx \kappa[t_0,T] \]
+sein.
+
+Umgekehrt gilt: Wenn $\kappa_\Delta \gg \kappa[t_0,T]$, dann ist das Verfahren
+unbrauchbar.
+
+Beachte: Für jedes konvergente Zeitschrittverfahren gilt
+\[ \kappa_\Delta \xrightarrow{\tau \to 0} \kappa[t_0,T]. \]
+Falls also $\kappa_\Delta \gg \kappa[t_0,T]$ ist, aber das Verfahren konvergent,
+dann ist der Zeitschritt $\tau$ zu groß.
+
+\begin{defn*}
+  Ein Anfangswertproblem heißt \emph{steif} bezüglich eines
+  Zeitschrittverfahrens, wenn
+  \[ \kappa_\Delta \approx \kappa[t_0,T] \]
+  erst für ``sehr kleine'' Zeitschritte gilt.
+\end{defn*}
+
+\begin{exmp*}
+  Betrachte wieder
+  \[ x' = \lambda x, \qquad x(0) = 1. \]
+  Etwas allgemeiner:
+  \[ x' = \lambda (x-g) + g', \qquad x(0) = g(0) \]
+  für eine gegebene Funktion $g$. Die Lösung dieser Aufgabe ist $x = g$.
+
+  Störung des Anfangswerts $x(0) = g(0) + \delta$. Die Lösung wird zu
+  \[ x(t) + \delta x(t) = g(t) + \delta e^{\lambda t}. \]
+
+  Wie verhält sich die Störung $\delta e^{\lambda t}$?
+  \begin{enumerate}
+  \item $\lambda > 0$: Die Störung wächst exponentiell mit der Zeit.
+  \item $\lambda = 0$: Die Störung ist konstant, $\delta e^{\lambda t} =
+    \delta$ für alle $t$.
+  \item $\lambda < 0$: Für große $t$ wird die Störung ``von alleine'' immer
+    kleiner.
+  \end{enumerate}
+
+  Jetzt wieder $x' = \lambda x$ bzw. $g(t) = e^{\lambda t}$. Die Kondition ist
+  die kleinste Zahl $\kappa[0,T]$, so dass
+  \[ \| \delta e^{\lambda t} \|_\infty \le \kappa[0,T] \cdot \| \delta \|. \]
+  Also ist
+  \[ \kappa[0,T] = \begin{cases}
+      e^{\lambda T}, &\text{falls } \lambda \ge 0, \\
+      1, &\text{falls } \lambda < 0.
+    \end{cases}
+  \]
+  Im Gegensatz zum vorherigen Beispiel mit dem Euler-Verfahren ergibt sich also,
+  dass das Problem ``schwieriger'' ist, wenn $\lambda > 0$ gilt. Die Steifheit
+  wird aber über das Verhältnis der intervallweisen und diskreten Kondition
+  definiert.
+
+  Die diskrete Kondition für das Euler-Verfahren
+  \[ x_\Delta(t_{j+1}) = x_\Delta(t_j) + \tau \lambda x_\Delta(t_j)
+    = (1 + \tau \lambda)^{j+1} x_0 \]
+  ist die kleinste Zahl $\kappa_\Delta$, so dass
+  \[ \| \delta x_\Delta \| \le \kappa_\Delta \| \delta \|. \]
+  Es gilt
+  \[ \delta x_\Delta(t_j) = (1 + \tau \lambda)^j \delta, \]
+  also ist
+  \[ \max_{1 \le j \le n} |(1+\tau \lambda)^j \delta | \le \kappa_\Delta \|
+    \delta \|. \]
+  Damit ist
+  \[ \kappa_\Delta = \begin{cases}
+      (1+\tau \lambda)^n, &\text{falls } \lambda > 0, \\
+      (1+\tau \lambda), &\text{falls } \lambda \le 0.
+    \end{cases}
+  \]
+  Fall 1: $\lambda > 0$, dann gilt
+  \[ \kappa_\Delta = (1 + \tau \lambda)^n \le (e^{\lambda \tau})^n = e^{\lambda
+      \tau n } = e^{\lambda T} = \kappa[0,T]. \]
+  Das Problem ist also \emph{nicht steif}.
+
+  Fall 2: $\lambda \le 0$, dann ist
+  \[ \kappa_\Delta = \max_{1 \le j \le n} \underbrace{|1 - \tau
+      |\lambda||^j}_{\le 1, \text{ falls } \tau \le 2/|\lambda|}, \]
+  also gibt es wieder zwei Möglichkeiten.
+
+  Fall 2a: $\tau \le \frac{2}{|\lambda|}$, dann ist $\kappa_\Delta \approx 1$.
+  Also ist das Problem wieder \emph{nicht} steif.
+
+  Fall 2b: $\tau > \frac{2}{|\lambda|}$, dann ist $\kappa_\Delta \gg 1$. Das
+  Anfangswertproblem ist also \emph{steif}.  
+\end{exmp*}
+
+Beachte: Die \emph{Kondition auf $[t_0, \infty]$} eines Anfangswertproblems wird
+auch ``Stabilität'' genannt.
+
+\begin{defn*}
+  Sei $(t_0,x_0)$ so, dass $\Phi^{t,t_0}x_0$ für alle $t \ge t_0$ existiert. Die
+  Lösung des Anfangswertproblems heißt
+  \begin{enumerate}
+  \item \emph{instabil}, falls 2. oder 3. nicht gelten.
+  \item \emph{Lyapunov-stabil}, falls zu jedem $\eps > 0$ ein $\delta > 0$
+    existiert, sodass 
+    \[ \| \Phi^{t,t_0} x - \Phi^{t,t_0} x_0 \| < \eps \]
+    für alle $t \ge t_0$ und $\| x - x_0 \| < \delta$.
+  \item \emph{asymptotisch stabil}, falls es zusätzlich ein $\delta_0$ gibt,
+    sodass
+    \[ \lim_{t \to \infty} \| \Phi^{t,t_0} x - \Phi^{t,t_0} x_0 \| = 0, \]
+    wenn $\| x - x_0 \| \le \delta_0$.
+  \end{enumerate}
+\end{defn*}
+
+\begin{rmrk*}
+  Diese Begriffe stammen aus dem Themenkomplex dynamischer Systeme.
+\end{rmrk*}
+
+Ein Verfahren, das für steife Probleme besser geeignet ist, das \emph{implizite
+  Euler-Verfahren}.
+Explizites Euler-Verfahren:
+\[ x_{k+1} = x_k + \tau f(t_k, x_k). \]
+Implizites Euler-Verfahren:
+\[ x_{k+1} = x_k + \tau f(t_{k+1}, x_{k+1}). \]
+Implizit bedeutet, $x_{k+1}$ kann nur durch Lösung eines Gleichungssystems
+bestimmt werden.
+
+Behauptung: Das implizite Euler-Verfahren funktioniert für steife Gleichungen.
+\[ x' = \lambda x, \qquad x(0) = 1, \qquad \lambda < 0. \]
+Verfahren:
+\[ x_{k+1} = x_k + \tau f(t_{k+1}, x_{k+1}) = x_k + \tau \lambda x_{k+1}. \]
+Also ist
+\[ x_{k+1} = \frac{x_k}{(1-\tau \lambda)}
+  = \left( \rez{1-\tau \lambda} \right)^{k+1} x_0
+  = \left( \rez{1 + \tau |\lambda|} \right)^{k+1} x_0. \]
+Das Verfahren liefert also für beliebig große Zeitschritte zumindest immer eine
+monoton fallende Funktion.
+
+\section{Stabilität von Einschrittverfahren}
+Das explizite Euler-Verfahren wird für die lineare Gleichung
+\[ x' = \lambda x, \qquad x(t_0) = 0 \]
+mit $\lambda \in \real$, $\lambda < 0$, instabil, wenn $\tau$ zu groß ist. Wir
+verallgemeinern dies jetzt und betrachten lineare, homogene, autonome Systeme
+\[ x' = Ax, \qquad x(0) = x_0 \in \complex^d, \qquad A \in \compmat{d}{d}.
+  \tag{$\circ$} \]
+
+\begin{thm} %% 6.1
+  Die Lösung des AWPs ($\circ$)  ist
+  \[ x(t) = e^{tA} x_0, \]
+  wobei
+  \[ e^{tA} = \sum_{k=0}^\infty \frac{(tA)^k}{k!}. \]
+  Diese Reihe konvergiert gleichmäßig auf jedem kompakten Zeitintervall.
+\end{thm}
+
+Sind diese Lösungen stabil? Stabilität heißt: Störungen im Startwert führen auf
+beschränkte Störungen in der Lösung (für $t \to \infty$).
+
+Für lineare Gleichungen der Form
+\[ x' = Ax, \qquad x(0) = x_0 + \delta x_0, \]
+ist die Lösung
+\[ x_\delta(t) = \exp( tA )(x_0 + \delta x_0), \]
+das heißt die Störung löst das AWP
+\[ x' = Ax, \qquad x(0) = \delta x_0. \]
+
+\begin{lem} %% 6.1
+  Die Lösung $x$ eines linearen, homogenen AWPs ist genau dann stabil, wenn
+  \[ \sup_{t \ge 0} \| x(t) \| < \infty. \]
+  Sie ist asymptotisch stabil, falls
+  \[ \| x(t) \| \xrightarrow{t \to \infty} 0. \]
+\end{lem}
+
+Erinnerung: Die Lösung von $x' = \lambda x$ mit $x(0) = x_0 \in \real$ ist genau dann
+stabil, wenn $\lambda \le 0$ ist und asymptotisch stabil, wenn $\lambda < 0$.
+Verallgemeinerung:
+\begin{thm} %% 6.2
+  Die Lösung des AWPs ($\circ$) ist genau dann stabil, wenn
+  \begin{enumerate}
+  \item der Realteil aller Eigenwerte von $A$ nicht positiv ist und
+  \item falls $\lambda$ ein Eigenwert von $A$ mit $\Re(\lambda) = 0$ ist, so hat
+    $\lambda$ die gleiche algebraische wie geometrische Vielfachheit.
+  \end{enumerate}
+  Die Lösung ist asymptotisch stabil, falls $\Re(\lambda) < 0$ für alle
+  Eigenwerte von $A$ ist.
+\end{thm}
+
+Wunsch: Die von einem numerischen Verfahren erzeugte Folge $x_k$ soll diese
+Stabilitätseigenschaften erben.
+
+Beim expliziten Euler-Verfahren
+\[ x_{k+1} = \Psi^\tau x_k + \tau A x_k = (I + \tau A) x_k \]
+war dies nicht der Fall, beim impliziten Euler-Verfahren
+\[ x_{k+1} = \Psi^\tau x_k = (I - \tau A)^{-1} x_k \]
+jedoch schon.
+
+Verallgemeinerte Verfahren
+
+Betrachte Verfahren der Form
+\[ x_{k+1} = \Psi^\tau x_k = R(\tau A) x_k, \]
+mit Polynomen $P, Q$ so, dass
+\[ R(\tau A) = \frac{P(\tau A)}{Q(\tau A)}. \]
+Dann berechnet sich $x_{k+1}$ als Lösung des linearen Gleichungssystems
+\[ Q(\tau A) x_{k+1} = Q(\tau A) \Psi^\tau x_k = P(\tau A) x_k. \]
+
+Die rationale Funktion $R$ werde als Approximation des Flusses $\Phi^t = e^{tA}$
+verwendet. $R$ heißt \emph{Stabilitätsfunktion} und wird sowohl als Funktion $R
+\compmat{d}{d} \to \compmat{d}{d}$ als auch als $R: \complex \to \complex$
+aufgefasst.
+
+\begin{defn*}
+  Die \emph{Konsistenzordnung} einer durch die rationale Funktion $R$ gegebenen
+  Approximation der Exponentialfunktion ist die größte Zahl $p$, so dass
+  \[ R(z) = e^z + O(z^{p+1}) \]
+  für $z \to 0$ in $\complex$.
+\end{defn*}
+
+\begin{lem} %% 6.2
+  Die Flüsse \emph{aller} expliziten RK-Verfahren für lineare Gleichungen sind
+  Polynome in $\tau A$, also
+  \[ \Psi^\tau x = P(\tau A) x. \]
+\end{lem}
+
+\begin{proof}
+  Wir zeigen, dass für jedes $i \le s$ der Ausdruck $\tau k_i$ mit $k_i$ aus der
+  Berechnungsvorschrift des RK-Verfahrens ein formales Polynom in $\tau A$ ist.
+  Dann folgt die Behauptung aus
+  \[ \Psi^\tau x = x + \tau \sum_{i=1}^s b_i k_i = (\tau A)^0 x + \sum_{i=1}^s
+    b_i \tau k_i. \]
+
+  Beweis per vollständiger Induktion für explizite RK-Verfahren angewendet auf
+  $x ' = Ax$:
+  \[ k_i = A \left( x  + \tau \sum_{j=1}^{i-1} a_{ij} k_j \right). \]
+  
+  $\tau k_1 = (\tau A) x$ ist ein Polynom in $\tau A$.
+
+  Seien $\tau k_i$ Polynome in $\tau A$, dann ist
+  \begin{align*}
+    \tau k_i &= \tau A + \tau^2 \sum_{j=1}^{i-1} a_{ij} k_j \\
+             &= \tau A + \tau \sum_{j=1}^{i-1} a_{ij} \tau k_j
+  \end{align*}
+  ebenfalls ein Polynom in $\tau A$.
+\end{proof}
+
+Wann sind nun solche Verfahren stabil? Vorab ein theoretischer Einschub.
+
+\subsection{Spektren rationaler Funktionen von Matrizen} %% 6.2.1
+Stabilitätseigenschaften linearer Systeme werden häufig über Eigenwerte
+ausgedrückt. Wie sehen die Eigenwerte unserer Verfahrensmatrix
+\[ B := R( \tau A ) \]
+aus?
+
+Damit $R( \tilde{A} ) = \frac{P(\tilde{A})}{Q(\tilde{A})}$ wohldefiniert ist,
+muss $Q(A)$ invertierbar sein. $Q(A)$ darf also nicht den Eigenwert 0 haben. Es
+gibt eine entsprechende Bedingung für rationale Funktionen in $\complex$.
+
+\begin{lem} %% 6.3
+  Eine rationale Funktion $r: z \mapsto \frac{p(z)}{q(z)}$ ist genau dort nicht
+  definiert (bzw. hat eine Polstelle), wo $q(z) = 0$ ist.
+\end{lem}
+
+Die Verallgemeinerung dazu lautet:
+\begin{thm} %% 6.3
+  Für eine Matrix $\tilde{A} \in \compmat{d}{d}$ ist $R(\tilde{A})$ genau dann
+  definiert, wenn \emph{kein} Eigenwert von $\tilde{A}$ ein Pol von $R$ ist.
+\end{thm}
+
+Der Zusammenhang zwischen den Eigenwerten von $\tilde{A}$ und den Eigenwerten
+von $R(\tilde{A})$ ist sogar noch viel enger:
+\begin{thm} %% 6.4
+  Sei $\sigma(\tilde{A})$ das Spektrum von $\tilde{A}$. Dann ist
+  \[ \sigma( R(\tilde{A}) ) = R( \sigma(\tilde{A}) ). \]
+\end{thm}
+
+\subsection{Wann sind Einschrittverfahren stabil?} %% 6.2.2
+\begin{thm}
+  Die lineare Iteration $x_{k+1} = B x_k$ mit $B \in \compmat{d}{d}$ ist genau
+  dann stabil, wenn
+  \begin{enumerate}
+  \item $| \lambda | \le 1$ für alle $\lambda \in \sigma(B)$ und
+  \item falls für $\lambda \in \sigma(B)$ gilt $| \lambda | = 1$, so hat $\lambda$
+    die gleiche algebraische wie geometrische Vielfachheit.
+  \end{enumerate}
+  Die Iteration ist asymptotisch stabil, falls $|\lambda| < 1$ für alle $\lambda
+  \in \sigma(B)$ gilt.
+\end{thm}
+
+Einschub: Der Spektralradius von $B$ ist
+\[ \rho(B) = \max_{\lambda \in \sigma(B)} | \lambda. \]
+Ein Verfahren obiger Form sei stabil. Dann gilt für $B = R(\tau A)$, dass
+$\rho(R(\tau A)) \le 1$. Dabei gilt
+\[ \rho( R(\tau A)) = \max_{\lambda \in \sigma(A)} |R(\tau \lambda)|. \]
+
+\begin{defn*}
+  Die Menge
+  \[ S = \{ z \in \complex : |R(z)| \le 1 \} \]
+  heißt \emph{Stabilitätsgebiet} von $R$.
+\end{defn*}
+
+Damit ein Verfahren stabil ist, muss $(\tau \lambda) \in S$ für alle $\lambda
+\in \sigma(A)$ sein. Im Falle der skalaren Gleichung $x' = \lambda x$ mit
+$\lambda \in \real$, $\lambda < 0$ und dem expliziten Euler-Verfahren führt dies
+auf die Schrittweitenbegrenzung $\tau \le \frac{2}{|\lambda|}$.
+
+Die grafische Darstellung der Stabilitätsgebiete expliziter RK-Verfahren findet
+man in Deufelhardt/Bornemann S. 238.
+
+\begin{lem} %% 6.4
+  Für jede konsistente, rationale Approximation $R$ der Exponentialfunktion gilt
+  \[ 0 \in \partial S(R). \]
+\end{lem}
+
+Also: Die Lösung $x(t) = e^{tA} x_0$ ist stabil, wenn alle Eigenwerte von $A$ in
+der negativen komplexen Halbebene (mit Rand) liegen.
+
+Ein numerisches Verfahren $\Psi^\tau = R(\tau A)$ ist stabil, wenn alle
+Eigenwerte von $\tau A$ im Stabilitätsgebiet $S$ liegen (plus Zusatzbedingung am
+Rand).
+\end{document}
