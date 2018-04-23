@@ -11,8 +11,6 @@
 \renewcommand{\div}{\operatorname{div}}
 \newcommand{\rot}{\operatorname{rot}}
 
-\newcommand{\GL}{\mathrm{GL}\,}
-
 \newcommand{\id}{\mathrm{id}\,}
 \newcommand{\im}{\mathrm{im}\,}
 
@@ -22,6 +20,8 @@
 \newcommand{\rang}{\mathrm{rang}\,}
 \newcommand{\chr}{\mathrm{char}\,}
 \newcommand{\diag}{\mathrm{diag}\,}
+
+\newcommand{\rg}{\operatorname{rg}}
 
 \newcommand{\diffop}{\mathrm{d}}
 \newcommand{\diff}[2]{\frac{\diffop #1}{\diffop #2}}
@@ -86,6 +86,9 @@
 
 \newcommand{\ind}{\mathbbm{1}}
 
+%\newcommand{\Exp}{\operatorname{Exp}}
+\DeclareMathOperator*{\Exp}{Exp}
+
 %% Wahrscheinlichkeitstheorie
 \newcommand{\pE}{\mathbb{E}}
 \newcommand{\pP}{\mathbb{P}}
@@ -94,6 +97,8 @@
 \newcommand{\var}{\operatorname{var}}
 \newcommand{\cov}{\operatorname{cov}}
 \newcommand{\corr}{\operatorname{corr}}
+
+\newcommand{\ndist}{\mathcal{N}}
 
 %% Dinge für Geometrie
 % Skalarprodukt
@@ -128,6 +133,7 @@
 \newcommand{\ord}{\operatorname{ord}}
 
 \newcommand{\LC}{\operatorname{LC}}
+\newcommand{\GL}{\operatorname{GL}}
 
 \newcommand{\rkr}[1]{\integer / #1 \integer}
 
@@ -136,3 +142,9 @@
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+\DeclareMathOperator*{\ST}{ST}
+\DeclareMathOperator*{\MSE}{MSE}
+\DeclareMathOperator*{\D}{D}
+
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}

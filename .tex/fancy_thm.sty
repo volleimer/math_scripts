@@ -73,6 +73,25 @@
 \renewcommand{\thethm}{\arabic{chapter}.\arabic{section}.\arabic{thm}}
 }
 
+\DeclareOption{numbers_per_chapter}{%
+\newcounter{thm}[chapter] \setcounter{thm}{0}
+
+\renewcommand{\thethm}{\arabic{chapter}.\arabic{thm}}
+\newcommand{\thelem}{\thethm}
+\newcommand{\thekor}{\thethm}
+\newcommand{\theprp}{\thethm}
+
+\renewcommand{\incthm}{\refstepcounter{thm}}
+\renewcommand{\inclem}{\refstepcounter{thm}}
+\renewcommand{\inckor}{\refstepcounter{thm}}
+\renewcommand{\incprp}{\refstepcounter{thm}}
+
+\renewcommand{\thmtitle}{Satz~\thethm}
+\renewcommand{\lemtitle}{Lemma~\thelem}
+\renewcommand{\kortitle}{Korollar~\thekor}
+\renewcommand{\prptitle}{Proposition~\theprp}
+}
+
 \ProcessOptions
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
