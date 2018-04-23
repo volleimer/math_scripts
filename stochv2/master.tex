@@ -1,0 +1,615 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\usepackage[numbers,with_chapter]{fancy_thm}
+
+\swapnumbers
+\theoremstyle{plain}
+% \newtheorem{thm}{Satz}[section] % reset theorem numbering for each chapter
+\newtheorem*{thm*}{Satz}
+%\newtheorem{lem}[thm]{Lemma}    
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} 
+\newtheorem{folg}[thm]{Folgerung} 
+\newtheorem{rmrk}[thm]{Bemerkung} 
+\newtheorem{deno}[thm]{Bezeichnungen}
+\newtheorem{exmp}[thm]{Beispiel}
+%\newtheorem{aufg}[thm]{Aufgabe} 
+\newtheorem{prgp}[thm]{} % Numbered paragraph
+
+\newtheorem*{rmrk*}{Bemerkung}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{deno*}{Bezeichnung}
+\newtheorem*{denos*}{Bezeichnungen}
+
+\numberwithin{equation}{section}
+
+\hypersetup{
+  pdftitle={Stochastik},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+%opening
+\title{%
+  Vorlesung\\
+  Stochastik Vertiefung\\
+  Stationäre Prozesse
+}
+\subtitle{Sommersemester 2018}
+\author{Vorlesung: Prof. Dr. Zoltán Sasvári\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+%%\input{000_org}
+\section*{Organisatorisches}
+Aufgaben:\\
+\url{http://www.math.tu-dresden.de/~sasvari/Download/StatProz/}
+
+Prüfungsvorleistung: Vorrechnen von zwei Aufgaben in der Übung (evtl. auch
+abgeben). 
+
+Klausur für beide Teile des Moduls STOCHV: 110 Minuten
+
+Teil Stationäre Prozesse: Formulierung von Definitionen, Sätzen; Beweise,
+Aufgaben ähnlich zu den Übungsaufgaben.
+
+Übung: Nico Uhlig
+
+\subsection*{Literatur}
+\begin{itemize}
+\item H. Bauer: Wahrscheinlichkeitstheorie und Grundzüge der Maßtheorie
+\item A. Rényi: Wahrscheinlichkeitsrechnung
+\item K. D. Schmidt: Maß und Wahrscheinlichkeit
+\end{itemize}
+
+\chapter{Einleitung}
+\section{Bezeichnungen}
+\begin{prgp}
+  Grundlegende Bezeichnungen:
+  
+  \begin{tabular}{lcl}
+    $\nat$ & = & $\{1,2,3, \ldots\}$ \\
+    $\nat_0$ & = & $\{0,1,2, \ldots\}$ \\
+    $\integer$ & = & $\{ 0, \pm 1, \pm 2, \ldots \}$ \\
+    $\rat$ & & rationale Zahlen \\
+    $\real$ & & reelle Zahlen \\
+    $\complex$ & & komplexe Zahlen \\
+    $x_+$ & = & $\max(0,x)$, $x \in \real$ \\
+    $\ind_A$ & & Indikatorfunktion der Menge $A$ \\
+    $\delta_x$ & & Einpunkt- oder Dirac-Maß, das in $x$ konzentriert ist \\
+    $\delta_{x,y}$ & & Kronecker'sche Delta-Funktion \\
+    $\tilde{f}(x)$ & = & $\obar{f(-x)}$ \\
+    $\pE(X)$ & & Erwartungswert der Zufallsgröße bzw. des Zufallsvektors $X$ \\
+    $\intf_p(\real^d)$ & & Menge der komplexwertigen Lebesgue-messbaren
+                           Funktionen $f$ auf $\real^d$, \\
+           & & für die $|f|^p$ Lebesgue-integrierbar ist \\
+    $\intf_p(\integer^d)$ & & Menge der komplexwertigen Funktionen $f$
+                              auf $\integer^d$, \\
+           & & die bezüglich des Zählmaßes integrierbar sind. \\
+    $\| \cdot \|_p$ & & $L_p$-Norm \\
+    $L_p(\real^d)$ & & $L_p$-Raum bezüglich des Lebesgue-Maßes auf $\real^d$ \\
+    $L_p(\integer^d)$ & & $L_p$-Raum bezüglich des Zählmaßes auf $\integer^d$
+  \end{tabular}
+\end{prgp}
+
+\begin{prgp}[Mehrdimensionale Bezeichnungen]
+  Ist $x \in \real^d$ ($\complex^d$, $\nat_0^d$ usw.), so bezeichnet $x_i$ ($1
+  \le i \le d$) die $i$-te Koordinate von $x$ und wir schreiben $x$ als $x =
+  (x_1, \ldots, x_d)$. In Ausdrücken, wo Matrix-Operationen\footnote{%
+    Zum Beispiel $Ax$ mit der Matrix $A$}
+  vorkommen, betrachten wir $x$ als Spalten-Vektor. Das Nullelement von
+  $\real^d$ wird auch mit 0 bezeichnet.
+
+  Sei $x \in \real^d$ oder $\complex^d$ und $\alpha \in \nat_0^d$. Dann
+  schreiben wir
+  \begin{align*}
+    x^\alpha
+    &= x_1^{\alpha_1} \cdot x_1^{\alpha_2} \cdot \ldots \cdot x_d^{\alpha_d}, \\
+    \| x \|
+    &= \sqrt{|x_1|^2 + \ldots + |x_d|^2}, \\
+    |\alpha|
+    &= \alpha_1 + \ldots + \alpha_d, \\
+    \alpha!
+    &= \alpha_1! \cdot \ldots \cdot \alpha_d!, \\
+    \binom{\alpha}{\beta}
+    &= \frac{\alpha!}{(\alpha-\beta)! \beta!}
+      = \binom{\alpha_1}{\beta_1} \cdot \ldots \cdot
+      \binom{\alpha_d}{\beta_d}, \qquad \beta \le \alpha, \\
+    D^\alpha
+    &= \frac{\partial^{|\alpha|}}
+      {\partial x_1^{\alpha_1} \cdot \ldots \cdot \partial x_d^{\alpha_d}}.
+  \end{align*}
+  Wenn $\alpha = (0, \ldots, 0)$, dann ist $x^\alpha := 1$.
+\end{prgp}
+
+\begin{rmrk*}
+  Es gilt
+  \[ D^\alpha D^\beta g = D^{\alpha + \beta} g, \]
+  wobei $g$ eine beliebige reell- oder komplexwertige Funktion auf $\real^d$
+  ist, für die die partiellen Ableitungen $D^{\alpha + \beta} g$ existieren.
+
+  Es gilt $D^\alpha g = g$, wenn $\alpha = (0, \ldots, 0)$.
+
+  Sei $\beta = (\beta_1, \ldots, \beta_d)$ ein anderes $d$-Tupel von
+  nichtnegativen ganzen Zahlen. Wir schreiben $\beta \le \alpha$, wenn $\beta_j
+  \le \alpha_j$ für alle $j$.
+
+  Mit $\diffop x$, $\diffop \lambda(x)$ oder $\diffop \lambda_d(x)$ bezeichnen
+  wir die Integration bezüglich des Lebesgue'schen Maßes $\lambda = \lambda_d$
+  auf $\real^d$ und $(x,y)$ ist das Skalarprodukt von $x, y \in \real^d$ oder
+  $\complex^d$.
+\end{rmrk*}
+
+\section{Historische Bemerkungen}
+Geschichte:
+\begin{itemize}
+\item Albert Einstein (1914), stochastische Beschreibung von Molekülbewegungen
+\item Älteste Zeitreihe: Zählung der Sonnenflecken, Maxima treten in regelmäßigen
+\item Abständen auf, aber es gibt zufällige Abweichungen.
+\item Khinchin (1934)
+\end{itemize}
+Zusammenfassung von L. Cohen: The History of Noise, IEEE Signal Proc. Mag.,
+2005.
+
+\chapter{Zufällige Felder zweiter Ordnung}
+In diesem Abschnitt:
+\begin{itemize}
+\item $V \ne \emptyset$ ist eine beliebige nichtleere Menge.
+\item $(\Omega, \mA, \pP)$ ist ein Wahrscheinlichkeitsraum.
+\end{itemize}
+
+\section{Zufallsfelder}
+\begin{defn}
+  Ein (reelles) \emph{Zufallsfeld} $Z$ auf $V$ ist eine Abbildung, die jedem
+  Element $t \in V$ eine Zufallsgröße $Z(t)$ auf $\Omega$ zuordnet.
+
+  Sind die Zufallsgrößen komplexwertig, dann heißt auch $Z$ komplexes
+  Zufallsfeld.
+\end{defn}
+
+\begin{rmrk*}
+  \begin{itemize}
+  \item Anstelle von $Z(t)$ wird auch $Z_t$ geschrieben.
+  \item Das Feld $Z$ wird auch mit $\{ Z_t \}$ oder $\{ Z_t : t \in V \}$ oder
+    $\{ Z_t \}_{t \in V}$ bezeichnet.
+  \item $V = \real, [0, \infty),[0,1]$: zeitstetiger stochastischer Prozess.
+  \item $V = \nat, \nat_0$: zeitdiskreter stochastischer Prozess,
+    \emph{Zeitreihe}.
+  \item Die Funktionen $t \to Z_t(\omega)$ heißen \emph{Realisierungen} des
+    Feldes.
+  \end{itemize}
+\end{rmrk*}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item Sind $X_j$, $j \in \nat_0$, beliebige Zufallsgrößen (auf $\Omega$), so
+    sind
+    \[ \{X_j, j \in \nat_0\} \quad \text{und} \quad S_n = \sum_{j=0}^n X_j,
+      \quad n \in \nat_0 \]
+    Zeitreihen.
+  \item Seien $a$ und $\varphi$ Zufallsgrößen und $u \in \real$. Dann ist
+    \[ X_t = a \cdot \cos (ut + \varphi), \qquad t \in \real \]
+    ein stochastischer Prozess auf $\real$, die \emph{harmonische Schwingung}
+    mit zufälligen Parametern; Amplitude und Phase sind zufällig, die Frequenz
+    ist gegeben.
+  \end{enumerate}
+
+  Allgemeiner:
+  \[ X_t(\omega) = \sum_{j=1}^n a_j(\omega) \cdot
+    \cos(u_j t + \varphi_j(\omega)), \qquad t \in \real. \]
+  
+  Viele Prozesse in Anwendungen lassen sich so modellieren. Die Menge $\{ u_1,
+  \ldots, u_n \}$ heißt \emph{Spektrum} von $X$.
+
+  Wichtige Aufgabe: Näherungsweise Bestimmung des Spektrums mit Hilfe von
+  endlich vielen Beobachtungen $X_{t_1}(\omega), \ldots, X_{t_n}(\omega)$.
+
+  Oft ist es vorteilhaft, komplexwertige Schwingungen zu betrachten:
+  \[ Z_t = \sum_{j=1}^n c_j \cdot e^{i u_j t}, \qquad t \in \real. \]
+  Hier ist $c_j$ eine komplexe Zufallsgröße. Wir schreiben $c_j$ in der Form
+  \[ c_j = | c_j | \cdot e^{i \varphi_j}, \]
+  wobei $\varphi_j$ eine reelle Zufallsgröße ist. Dann gilt
+  \[ Z_t = \sum_{j=1}^n |c_j| \cdot e^{i(u_j t + \varphi_j)} \]
+  und 
+  \begin{align*}
+    \Re Z_t &= \sum_{j=1}^n |c_j| \cdot \cos (u_j t + \varphi_j) \\
+    \Im Z_t &= \sum_{j=1}^n |c_j| \cdot \sin (u_j t + \varphi_j)
+  \end{align*}
+\end{exmp}
+
+\begin{defn}
+  Ein komplexes \emph{Zufallsfeld zweiter Ordnung} $Z$ auf $V$ ist eine
+  Abbildung $Z: V \to \intf_2(\Omega,\mA,\pP)$.
+
+  Wird $\intf_2$ durch $\intf_2^r$ ersetzt, so heißt $Z$ ein \emph{reelles
+    Zufallsfeld zweiter Ordnung}.
+\end{defn}
+
+In beiden Fällen bezeichnet $(\cdot, \cdot)$ das Skalarprodukt
+\[ (X,Y) = \int_{\Omega} X \cdot \obar{Y} \diffop \pP = \pE(X \cdot \obar{Y}). \]
+Speziell: $\pE(X) = (X,\ind)$
+
+Weiterhin gilt:
+\[ (X,Y) = (\ind, \obar{X} \cdot Y) = (X \cdot \obar{Y}, \ind). \]
+$\| \cdot \|$ bezeichnet die Norm
+\[ \| X \| := \sqrt{(X,X)}. \]
+Damit können wir eine Metrik definieren:
+\[ d(X,Y) := \| X - Y \|. \]
+Cauchy-Schwartz:
+\[ |\pE(X \cdot Y)| \le \| X \| \cdot \| Y \|. \]
+Orthogonalität:
+\[ X \perp Y \quad :\Leftrightarrow \quad (X,Y) = \pE(X \cdot \obar{Y}) = 0.\]
+Zwei Zufallsgrößen mit Erwartungswert 0 sind genau dann unkorreliert, wenn sie
+orthogonal sind.
+
+Wir werden ein Zufallsfeld $Z$ zweiter Ordnung auch als eine Abbildung $Z : V
+\to L_2(\Omega, \mA, \pP)$ oder $Z : V \to L^r_2(\Omega, \mA, \pP)$ betrachten.
+In diesem Fall ist $Z_t$ keine Zufallsgröße, sondern eine Äquivalenzklasse von
+Zufallsgrößen.
+
+Vorteil dieser Betrachtung: $L_2$ und $L_2^r$ sind Hilberträume.
+
+Vorsicht: Zum Beispiel ist $Z_t(\omega)$ kein sinnvoller Ausdruck, aber
+\[ (Z_t, Z_s) = \int_\Omega Z_t \cdot \obar{Z}_s \diffop \pP, \]
+da $\int X \diffop \pP = \int Y \diffop \pP$, wenn $X = Y$ fast sicher.
+
+Ausnahme: $Z_t(\omega)$ kann doch sinnvoll sein.
+\[ \pP(A) = 0  \qRq A = \emptyset \tag{$*$} \]
+gilt genau dann, wenn $\Omega = \{ \omega_1, \omega_2, \ldots \}$ höchstens
+abzählbar viele Elemente hat und $\pP(\omega_j) > 0$ für alle $j$. Das heißt,
+aus ($*$) folgt $\pP(\omega) > 0$ für alle $\omega \in \Omega$ und damit auch,
+dass $\Omega$ höchstens abzählbar unendlich ist, weil
+\[ \Omega = \bigcup_n
+  \underbrace{%
+    \left\{ \omega : \pP(\{\omega\}) \ge \rez{n} \right\}
+  }_{%
+    \text{Höchstens $n$ Elemente}
+  }.
+\]
+
+\begin{deno*}
+  Sei $Z$ ein Feld auf $V$ mit Werten in $L_2(\Omega,\mA,\pP)$ oder in
+  $\intf(\Omega,\mA,\pP)$. Mit $H(Z)$ bzw. $\mathcal{H}(Z)$ bezeichnen wir die
+  abgeschlossene lineare Hülle (bezüglich $\| \cdot \|$) der ``Vektoren'' $Z_t$,
+  $t \in V$:
+  \[ H(Z) = \left\{
+      \sum_{j=1}^n c_j Z_{t_j} : c_j \in \complex, t_j \in V, n \in \nat
+    \right\}^-. \]
+  Sie besteht also aus allen Zufallsgrößen, die man durch endliche
+  Linearkombinationen erzeugen kann. $\mathcal{H}(Z)$ analog.
+
+  Im reellen Fall schreibt man $H^r(Z)$, $\mathcal{H}^r(Z)$.
+
+  $H(Z)$ und $H_2^r(Z)$ sind Hilberträume.
+\end{deno*}
+
+\begin{exmp}
+  \begin{enumerate}[(a)]
+  \item Sei $X \in L_2(\pP)$ und $f: V \to \complex$ beliebig. Dann ist
+    \[ Z(t) = f(t) \cdot X, \quad t \in V \]
+    ein Feld zweiter Ordnung. Weiterhin gilt:
+    \[ H(Z) = \complex \cdot X. \]
+    Falls $f \equiv 0$, dann ist $H(Z) = \{0\}$.
+
+    \emph{Allgemeiner:} Seien $X_n \in L_2(\pP)$, $n \in \nat$, unkorreliert mit
+    $\pE(X_n) = 0$ und Varianz 1, das heißt $\| X_n \| = 1$. Dann ist $\{X_1,
+    X_2, \ldots \}$ ein \emph{orthonormiertes System}\footnote{%
+      Das heißt $(X_i, X_j) = 0$ für $i \ne j$ und $(X_j, X_j) = 1$.
+    } im Hilbertraum $L_2(\pP)$.
+
+    Weiterhin seien $f_n : V \to \complex$ so, dass
+    \[ \sum_{n=1}^\infty |f_n(t)|^2 < \infty. \]
+    Dann ist
+    \[ Z(t) = \sum_{n=1}^\infty f_n(t) \cdot X_n \]
+    ein Feld zweiter Ordnung.
+  \item Umkehrung von (a). Spezialfall: $L_2(\pP)$ separabel\footnote{%
+      Ein metrischer Raum $M$ heißt \emph{separabel}, wenn eine abzählbare
+      Teilmenge $N = \{m_1, m_2, \ldots \} \subset M$ existiert mit $\obar{N} =
+      M$. Zum Beispiel ist $\real^d$ separabel, $N = \rat^d$.
+    }. Dann existiert eine abzählbare orthonormale Basis
+    $\{ e_1, e_2, \ldots \}$. Dann gilt:
+    \[ Z(t) = \sum_{n=1}^\infty f_n(t) \cdot e_n, \quad t \in V, \]
+    wobei $f_n(t) = (Z_t, e_n)$. Weiterhin ist
+    \[ \| Z(t) \|^2 = \sum_{n=1}^\infty | f_n(t) |^2. \]
+  \end{enumerate}
+\end{exmp}
+
+Bemerkung:
+Sei $e_1, e_2, \ldots \in \mathcal{H}$ Hilbert-Raum ein orthonormiertes
+System.
+\[ \sum_{j=1}^\infty c_j e_j := \lim_{n \to \infty} \sum_{j=1}^n c_j e_j, \]
+falls der Grenzwert existiert.
+
+$\lim_n x_n$ existiert $\Leftrightarrow$ $\{ x_n\}$ ist eine Cauchy-Folge in
+beliebigen metrischen Räumen.
+\[ x_n = \sum_{j=1}^n c_j \cdot e_j \]
+ist eine Cauchy-Folge, wenn
+\[ \| x_n - x_m \| \xrightarrow{n,m \to \infty} 0. \]
+Sei zum Beispiel $m \ge n$, dann ist
+\[ x_n - x_m = \sum_{j=n}^m c_j e_j. \]
+Also folgt
+\[ \| x_n - x_m \|^2 = \sum_{j=n}^m |c_j|^2 \xrightarrow{m,n \to \infty}
+  0 \]
+$\Leftrightarrow$ $\sum_{j=1}^\infty |c_j|^2 < \infty$.
+
+Wiederholung:
+Feld 2. Ordnung ist eine Abb. $V \to \intf^2(\pP)$ bzw. $L^2(\pP)$.
+
+Das Skalarprodukt $(X,Y) := \pE( X \cdot \obar{Y})$ ist für beide Varianten
+sinnvoll. Es ist positiv semidefinit:
+\[ (X,X) \ge 0, \]
+für $L^2(\pP)$ sogar
+positiv definit:
+\[ (X,X) > 0 \qquad \text{für} \qquad X \ne 0. \]
+
+Bekannt aus der Maßtheorie: Wenn $X \ge 0$ und $\int X \diffop \pP = 0$, dann
+ist $X = 0$ fast sicher.
+
+\begin{defn}
+  Seien $X$ und $Y$ Felder 2. Ordnung auf $V$ mit dem selben $\pW$-Raum
+  $(\Omega, \mA, \pP)$. Gilt $(X(t),Y(s)) = 0$ für alle $t,s \in V$, so heißen
+  $X$ und $Y$ orthogonal: $X \perp Y$.
+
+  Zum Beispiel $X(t)$, $Y(s)$ unabhängig und $\pE(X(t)) = \pE(Y(s)) = 0$, dann
+  \[ (X(t),Y(s)) = \pE(X(t) \obar{Y(s)}) = \pE(X(t)) \pE(\obar{Y(s)}) = 0. \]
+\end{defn}
+
+\begin{defn}
+  Sei $Z$ ein Zufallsfeld auf $V$ und $t_1, \ldots, t_n \in V$. Dann ist $(Z_{t_1},
+  \ldots, Z_{t_n})$ ein Zufallsvektor und besitzt eine Verteilung. Verteilungen
+  dieser Form heißen \emph{endlichdimensionale Verteilungen} von $Z$.
+
+  Ist $Z$ reell oder komplex und sind alle endlichdimensionalen Verteilungen
+  Gauß'sch, so nennt man auch $Z$ \emph{Gauß'sch}.
+
+  Simples Beispiel: $V = \{1\}$, $Z_1$ beliebige normalverteilte Zufallsgröße.
+  Oder $V = \{1, 2, \ldots\} = \nat$, $Z_1, Z_2, \ldots$ Gauß'sch und
+  unabhängig. Dann ist die Verteilung von $(Z_1, \ldots, Z_n)$ das Produkt der
+  Verteilungen der $Z_j$.
+\end{defn}
+
+\section*{Wiederholung/Ergänzung: Orthogonalität}
+\addcontentsline{toc}{section}{Wiederholung/Ergänzung: Orthogonalität}
+Sei $X$ ein linearer Raum, $(\cdot, \cdot)$ das Skalarprodukt. $x,y \in X$
+heißen \emph{orthogonal}, wenn
+\[ (x,y) = 0. \]
+Schreibweise $x \perp y$.
+
+Satz von Pythagoras: Für $x \perp y$ gilt
+\[ \| x + y \|^2 = \| x \|^2 + \| y \|^2. \]
+
+\begin{proof}
+  \[ \|x+y\|^2 = (x+y,x+y) = \ldots \qedhere \]
+\end{proof}
+
+Parallelogrammidentität:
+\[ \|x+y\|^2 + \|x-y\|^2 = 2(\|x\|^2 + \|y\|^2). \]
+
+Sei $x \in X$, $A,B \subset X$. $x$ ist \emph{orthogonal} zu $A$, $x \perp A$,
+wenn $x \perp a$ für alle $a \in A$. $A$ ist \emph{orthogonal} zu $B$, $A \perp
+B$, wenn $a \perp b$ für alle $a \in A$, $b \in B$.
+
+Das \emph{orthogonale Komplement} von $A$ ist
+\[ A^\perp := \{ x \in X : x \perp A \}. \]
+
+\renewcommand{\thethm}{O.\arabic{thm}}
+\setcounter{thm}{0}
+\begin{aufg} %% O.1
+  \begin{enumerate}
+  \item $A^\perp$ ist ein abgeschlossener Teilraum von $X$.
+  \item $\{ 0 \}^\perp = X$ und $X^\perp = \{ 0 \}$.
+  \item Aus $A \subset B$ folgt $B^\perp \subset A^\perp$.
+  \item $A^\perp = (\obar{A})^\perp$ (Abschluss) und $A^\perp = L(A)^\perp =
+    (\obar{L(A)})^\perp$ (lineare Hülle).
+  \end{enumerate}
+\end{aufg}
+
+$M \subset X$ heißt \emph{total}, wenn die lineare Hülle $L(M)$ dicht in $X$
+ist:
+\[ \obar{L(M)} = X. \]
+
+Beispiel: $X = \real^n$, $M := \{e_1, \ldots, e_n\}$ eine Basis, dann ist
+$L(M) = \real^n$.
+
+\begin{thm}[Approximationssatz] %% O.2
+  Sei $X$ ein Hilbertraum, $A$ eine abgeschlossene konvexe Teilmenge von $X$.
+  Dann gibt es zu jedem $x \in X$ genau eine beste Approximation in $A$, das
+  heißt es gibt genau ein $y \in A$ mit
+  \[ \| x - y \| = d(x,A) := \inf \{ \| x - z \| : z \in A \}. \]
+\end{thm}
+
+\begin{proof}
+  Nach der Definition von $d(A,x)$ gibt es eine Folge $\{y_n\}$ aus $A$ mit
+  \[ \| x - y_n \| \xrightarrow{n \to \infty} d(x,A). \]
+  Wir zeigen: $\{y_n\}$ ist eine Cauchy-Folge.
+
+  Parallelogrammidentität $x \to x - y_n$ und $y \to x - y_n$.
+  \begin{align*}
+    \| y_n - y_m \|^2
+    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big) - \| 2x - (y_n + y_m) \|^2 \\
+    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big)
+      - 4 \left\| x - \frac{y_n+y_m}{2} \right\|^2 \\
+    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big)
+      - 4 d(x,A)^2 \xrightarrow{n,m \to \infty} 0. \\
+  \end{align*}
+  Es gilt $\frac{y_n+y_m}{2} \in A$ wegen der Konvexität von $A$.
+
+  Also ist $\{y_n\}$ eine Cauchy-Folge und damit existiert ein $y \in A$ mit
+  $y_n \to y$ und
+  \[ \| x - y \| = \lim_{n \to \infty} \| x - y_n \| = d(x,A). \]
+  Damit ist die Existenz bewiesen.
+
+  Es fehlt noch die Eindeutigkeit: Angenommen, für $y_1$ und $y_2$ gilt
+  \[ \| x - y_1 \| = \| x - y_2 \| = d(x,A), \qquad y_1 \ne y_2. \]
+
+  Oder: Der erste Teil des Beweises zeigt: $y_1, y_2, y_1, y_2, \ldots$ ist eine
+  Cauchy-Folge $\Rightarrow$ $y_1 = y_2$.
+\end{proof}
+
+\begin{thm}[Projektionssatz] % O.3
+  Sei $X$ ein Hilbertraum, $M$ ein abgeschlossener Teilraum. Dann gilt:
+  \begin{enumerate}[a)]
+  \item Jedes $x \in X$ lässt sich eindeutig in der Form $x = y + z$ schreiben
+    mit $y \in M$ und $z \in M^\perp$. $y$ heißt die \emph{orthogonale
+      Projektion} von $x$ auf $M$.
+  \item $(M^\perp)^\perp = M$.
+  \end{enumerate}
+\end{thm}
+
+\begin{aufg} % O.4
+  Sei $X$ ein Hilbertraum und $A \subset X$.
+  \begin{enumerate}[a)]
+  \item $(A^\perp)^\perp = \obar{L(A)}$.
+  \item $A^\perp = \{0\}$ $\Leftrightarrow$ $\obar{L(A)} = X$.
+  \end{enumerate}
+\end{aufg}
+
+\begin{proof}[Beweis zu Satz O.3]
+  Existenz: Wir wählen für $y$ die beste Approximation von $x$ in $M$. Definiere
+  $z := x - y$.
+
+  Noch zu zeigen: $z \in M^\perp$, das heißt $(z,w) = 0$ für alle $w \in M$.
+  O.B.d.A. $w \ne 0$. Es gilt $y + aw \in M$ für alle $a \in K$ ($=\complex$
+  oder $\real$).
+  \begin{align*}
+    d(x,M)^2
+    &\le \| x - (y+aw) \|^2 = \| z - aw \|^2 \\
+    &= \underbrace{\| z \|^2}_{=d(x,M)^2} - 2 \Re( a(z,w) + |a|^2 \|w\|^2 )
+  \end{align*}
+  für alle $a \in K$. Mit $a = \| w \|^{-2} (w,z)$ folgt
+  \[ 0 \le -2 \frac{|(z,w)|^2}{\|w\|^2} + \frac{|(z,w)|^2}{\|w\|^2}
+    = - \frac{|(z,w)|^2}{\|w\|^2}. \]
+  Also muss $(z,w) = 0$ sein.
+
+  Eindeutigkeit: Gilt auch $x = y' + z'$ mit $y' \in M$, $z' \in M^\perp$, so
+  gilt $y - y' \in M$ und $z - z' \in M^\perp$. Wegen
+  \[ y + z = y' + z' \]
+  gilt
+  \[ y - y' = z' - z \in M \cap M^\perp = \{ 0 \}. \]
+  Also gilt $y = y'$ und $z = z'$.
+\end{proof}
+
+\begin{denos*}
+  Seien $M_1$, $M_2$ Teilräume von $X$ mit $M_1 \cap M_2 = \{ 0 \}$.
+  \[ M_1 + M_2 = \{ y_1 + y_2 : y_1 \in M_1, y_2 \in M_2 \} \]
+  ist die sogenannte \emph{direkte Summe} $M_1 + M_2$ (das heißt, jedes Element
+  aus $M_1 + M_2$ hat \emph{genau eine} Darstellung der Form $y_1 + y_2$, $y_j
+  \in M_j$).
+  Sind $M_1$ und $M_2$ orthogonal, so gilt $M_1 \cap M_2 = \{0\}$. In diesem
+  Fall schreibt man $M_1 \oplus M_2$, die \emph{orthogonale Summe}.
+
+  Man schreibt auch $M_1 = M \ominus M_2$, das heißt $M_1$ ist das
+  \emph{orthogonale Komplement} von $M_2$ bezüglich $M$.
+
+  Spezialfall: $Y^\perp = X \ominus Y$.
+\end{denos*}
+
+\clearpage
+
+\begin{thm}
+  Sei $X$ ein Hilbertraum.
+  \begin{enumerate}[a)]
+  \item Sind $M_1$ und $M_2$ orthogonale Teilräume, so ist $M_1 \oplus M_2$
+    genau dann abgeschlossen, wenn $M_1$ und $M_2$ abgeschlossen sind.
+  \item Sind $M_1$ und $M$ abgeschlossene Teilräume mit $M_1 \subset M$, so
+    existiert ein abgeschlossener Teilraum $M_2 \subset M$ mit $M = M_1 \oplus
+    M_2$. 
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  a) folgt aus der Tatsache, dass $\{ y_{1,n} + y_{2,n} \}_{n=1}^\infty$ mit
+  $y_{j,n} \in M_J$ genau dann eine Cauchy-Folge ist, wenn
+  $\{y_{j,n}\}_{n=1}^\infty$ Cauchy-Folgen sind.
+
+  b) O.B.d.A. $M = X$. $M_2 = M_1^\perp$ hat die gewünschte Eigenschaft.
+\end{proof}
+
+\begin{exmp}
+  Ist $X = L^2(a,b)$, $a < c < b$, so gilt
+  \[ L^2(a,b) = L^2(a,c) \oplus L^2(c,b), \]
+  da
+  \[ f = f \cdot \ind_{[a,c]} + f \cdot \ind_{[c,b]} \]
+  und
+  \[ \int_a^b f \cdot \ind_{[a,c]} \cdot f \cdot \ind_{[c,b]} \diffop \lambda =
+    0. \]
+\end{exmp}
+
+\begin{exmp}
+  In $X = L^2(-a,a)$ seien
+  \[ L_g^2(-a,a) := \{ f \in L^2(-a,a) :
+    f(x) = f(-x) \text{ fast überall} \} \]
+  und
+  \[ L_g^2(-a,a) = \{ f \in L^2(-a,a) :
+    f(x) = -f(-x) \text{ fast überall} \}. \]
+  Dann gilt
+  \[ L^2(-a,a) = L^2_g(-a,a) \oplus L^2_u(-a,a), \]
+  denn
+  \[ f(x) = f_g + f_u = \frac{f(x) + f(-x)}{2} + \frac{f(x) - f(-x)}{2} \]
+  und
+  \[ \int_{-a}^a f_g \cdot \obar{f_u} \diffop \lambda = 0, \]
+  weil $f_g \cdot \obar{f_u}$ ungerade ist.
+\end{exmp}
+
+Eine Familie $M = \{ e_\alpha : \alpha \in A \}$ in einem Hilbertraum heißt ein
+\emph{Orthonormalsystem}, wenn $e_\alpha \perp e_\beta$ für $\alpha \ne \beta$
+und $\| e_\alpha \| = 1$. Ein totales Orthonormalsystem heißt
+\emph{Orthonormalbasis}.
+
+\clearpage
+
+\begin{thm}
+  \begin{enumerate}[a)]
+  \item Jedes Orthonormalsystem ist linear unabhängig.
+  \item Jede Orthonormalbasis ist ein maximales Orthonormalsystem.
+  \item Im Hilbertraum ist jedes maximale Orthonormalsystem eine
+    Orthonormalbasis.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Aufgabe.
+\end{proof}
+
+\begin{exmp}
+  In $\ell^2(\nat)$, $\ell^2(\integer)$. Orthonormalbasis:
+  \[ \{ e_n \}_{n=1}^\infty; \qquad e_n(n) = 1; \quad e_n(m) = 0, \quad n \ne
+    m. \]
+  Zu zeigen: $(x,e_n) = 0$ für alle $n$ $\Rightarrow$ $x = 0$.
+\end{exmp}
+
+\begin{aufg}
+  Sei $X = L^2(0,1)$.
+  \begin{enumerate}[a)]
+  \item $M = \{e_n : n \in \integer \}$, wobei $e_n(x) = e^{2 \pi i n x}$, $x
+    \in [0,1]$.
+
+    Zu zeigen: $M$ ist Orthonormalbasis.
+  \item $c_n(x) = \sqrt{2} \cos (2 \pi n x)$, $s_n(x) = \sqrt{2} \cos (2 \pi n
+    x)$.
+
+    Zu zeigen: $\{ c_n : n \in \nat_0 \} \cup \{ s_n : n \in \nat \}$ ist
+    Orthonormalbasis.
+  \end{enumerate}
+\end{aufg}
+
+Hinweis: Satz von Weierstraß für trig. Polynomräume.
+
+\end{document}
