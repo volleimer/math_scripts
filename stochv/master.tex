@@ -1,0 +1,393 @@
+\documentclass[
+ a4paper,
+ 12pt,
+ parskip=half
+ ]{scrreprt}
+
+\usepackage{../.tex/settings}
+
+\usepackage{../.tex/mathpkgs}
+\usepackage{../.tex/mathcmds}
+
+\usepackage[numbers_per_chapter]{../.tex/fancy_thm}
+
+\usepackage{siunitx}
+\sisetup{locale = DE}
+
+\theoremstyle{plain}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{folg}[thm]{Folgerung}
+\newtheorem{rmrk}[thm]{Bemerkung}
+%\newtheorem{deno}[thm]{Bezeichnungen}
+\newtheorem{exmp}[thm]{Beispiel}
+%\peripherynewtheorem{aufg}[thm]{Aufgabe} 
+%\newtheorem{prgp}[thm]{} % Numbered paragraph
+
+\newtheorem*{rmrk*}{Bemerkung}
+%\newtheorem*{exmp*}{Beispiel}
+%\newtheorem*{defn*}{Definition}
+%\newtheorem*{deno*}{Bezeichnungen}
+
+\numberwithin{equation}{chapter}
+
+\hypersetup{
+  pdftitle={STOCHV},
+  pdfauthor={Jonas Hippold},
+  hidelinks
+}
+
+%opening
+\title{Vorlesung\\Vertiefung Stochastik - Statistik}
+\subtitle{Wintersemester 2017}
+\author{Vorlesung: Anita Behme\\Mitschrift: Jonas Hippold}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+\input{01_einleitung}
+
+\input{02_deskriptiv}
+
+\input{03_parametrisch}
+
+\input{04_tests}
+
+\chapter{Einfache lineare Regression}\label{ch:regression}
+Sei $(X,Y) = ((X_1, Y_1), \ldots, (X_n,Y_n))$ eine bivariate Zufallsstichprobe
+mit Realisierungen $((x_1,y_1), \ldots, (x_n, y_n))$.
+
+R-Beispiel: Es gilt offenbar
+\[ y_i = a + b x_i + \eps_i \]
+bzw. allgemein
+\[ y_i = f(x_i) + \eps_i. \]
+
+Derartige Beziehungen nennt man \emph{Regressionen}.
+
+\emph{Regressionsanalyse}: Finde eine Funktion $f$, so dass ein möglichst großer
+Anteil der Variabilität der Daten durch $f$ erklärt werden kann und nur wenig
+Variabilität auf die Fehler zurück zu führen ist.
+
+Bei der Suche nach $f$ beginnt man meist mit einer linearen Funktion, das heißt
+man legt eine \emph{Ausgleichsgerade} durch die Punktwolke.
+
+Wir betrachten daher das \emph{Standardmodell der einfachen linearen
+  Regression}. Es gelte
+\begin{equation}
+  y_i = a + b x_i + \eps_i, \quad i = 1, \ldots, n
+\end{equation}
+mit
+\begin{itemize}
+\item $Y_1, \ldots, Y_n$ beobachtbare, reelle Zufallsvariablen,
+\item $x_1, \ldots, x_n$ deterministische Werte oder Realisierungen reeller
+  Zufallsvariablen $X_i$,
+\item $\eps_1, \ldots, \eps_n$ Fehlervariablen, das heißt i.i.d.
+  Zufallsvariablen mit $\pE[\eps_i] = 0$ und $\var(\eps_i) = \sigma^2$
+  (unbekannt),
+\item $a,b$ unbekannte Parameter in $\real$.
+\end{itemize}
+
+Die Parameter $a$, $b$ und $\sigma^2$ sind aus den Daten zu schätzen.
+
+\begin{rmrk}
+  \begin{itemize}
+  \item Sind die $x_i$ Realisierungen reeller Zufallsvariablen, zum Beispiel,
+    weil $X$ und $Y$ zwei statistische Merkmale sind, die an den Einheiten $i$
+    erhoben werden, so spricht man von einem Regressionsmodell mit
+    \emph{stochastischem Regressor}. In diesem Fall sind die angegebenen
+    Eigenschaften im obigen Modell nur unter der Bedingung $X_i = x_i$ gültig
+    (also zum Beispiel $\pE[\eps_i | X_i = x_i] = 0$).
+  \item Die Voraussetzung $\var(\eps_i) = \sigma^2$ (geg. $X_i = x_i$) heißt
+    \emph{Homoskedastizität}. Für heteroskedastische Fehler (das heißt $\var
+    (\eps_i)=\sigma_i^2$) sind die folgenden Methoden der linearen Regression
+    nur modifiziert anwendbar.
+  \item Aus (5.1) folgt für die Beobachtungsgrößen: Es gilt (gegeben $X_i =
+    x_i$)
+    \[ \pE[Y_i] = a + b x_i, \qquad \var(Y_i) = \sigma^2 \]
+    und die $Y_i$ sind unabhängig.
+
+    Insbesondere gilt für $\eps_i \sim \ndist(0,\sigma^2)$: $Y_i \sim \ndist( a
+    + b x_i, \sigma^2)$.
+  \end{itemize}
+\end{rmrk}
+
+\section{Punktschätzung}
+Offensichtlich ist eine zentrale Aufgabe der linearen Regression das Finden von
+Punktschätzern für die Parameter $a$, $b$, $\sigma^2$.
+\[ (\hat{a}, \hat{b}) = \argmin_{(a,b)} \sum_{i=1}^n (Y_i - a - b x_i )^2 =:
+  \argmin_{(a,b)} f(a,b). \]
+Die Funktion $f$ besitzt partielle Ableitungen
+\begin{align*}
+  \pdiff{}{a} f(a,b) &= - 2 \sum_{i=1}^n (Y_i - a - b x_i), \\
+  \pdiff{}{b} f(a,b) &= - 2 \sum_{i=1}^n  x_i (Y_i - a - b x_i). \\
+\end{align*}
+Setze die Ableitungen null, das heißt
+\begin{equation}
+ 0 = \sum_{i=1}^n Y_i - n \hat{a} - \hat{b} \sum_{i=1}^n x_i = n \bar{Y} -
+ \sum_{i=1}^n \hat{Y}_i,
+\end{equation}
+wobei $\hat{Y}_i = \hat{a} + \hat{b} x_i$ der Schätzer für $Y_i$ ist.
+
+Aus der ersten Gleichung folgt
+\[ \hat{a} = \bar{Y} - \hat{b} \bar{X}. \]
+Setzen wir diesen Wert in die zweite Gleichung ein, erhalten wir
+\begin{align*}
+ 0 &= \sum_{i=1}^n x_i Y_i - (\bar{Y} - \hat{b} \bar{X}) \sum_{i=1}^n x_i -
+     \hat{b} \sum_{i=1}^n x_i^2 \\
+   &= \rez{n} \sum_{i=1}^n x_i Y_i
+     - \bar{Y} \bar{X} + \hat{b} (\bar{X}^2 - \obar{X^2}) \\
+  \hat{b} &= \frac{\rez{n} \sum_{i=1}^n x_i Y_i - \bar{Y} \bar{X}}
+            {\bar{X}^2 - \obar{X^2}}
+            = \frac{\tilde{s}^2_{XY}}{\tilde{s}^2_X},
+\end{align*}
+wobei
+\[ \tilde{s}^2_{XY}
+  := \rez{n} \sum_{i=1}^n (x_i - \bar{X})(Y_i - \bar{Y}),  \qquad
+  \tilde{s}^2_X := \rez{n} \sum_{i=1}^n (x_i - \bar{X})^2. \]
+Damit gilt $\hat{Y}_i = \hat{a} + \hat{b} x_i$, $f(x) = \hat{a} + \hat{b} x_i$,
+die Ausgleichsgerade.
+
+Die Differenzen
+\[ \hat{\eps_i} = Y_i - \hat{Y}_i \]
+bezeichnet man als \emph{Residuen}. Nun lässt sich $\sigma^2$ schätzen als
+\[ \hat{\sigma}^2 = \rez{n-2} \sum_{i=1}^n \hat{\eps}_i^2. \]
+
+\begin{prp}
+  Im einfachen linearen Regressionsmodell sind
+  \[ \hat{b} = \frac{{s_{XY}}}{s_X}, \quad \hat{a} = \bar{Y} - \hat{b} \bar{x},
+    \quad \hat{\sigma}^2 = \rez{n-2} \sum_{i=1}^n \hat{\eps}_i^2 \]
+  erwartungstreu. Falls
+  \begin{equation}
+    \lim_{n \to \infty} \sum_{i=1}^n (x_i - \bar{x})^2 = \infty,
+  \end{equation}
+  so sind $\hat{a}$, $\hat{b}$ schwach konsistent.
+\end{prp}
+
+\begin{proof}
+  Folgende Beziehungen lassen sich elementar nachrechnen:
+  \[ \pE \hat{a} = a, \quad \pE \hat{b} = b, \quad \pE \hat{\sigma}^2 =
+    \sigma^2 \]
+  sowie
+  \begin{equation}
+  \var(\hat{a}) = \sigma^2 \frac{\sum x_i^2}{n \sum(x_i - \bar{x})^2} =:
+    \sigma_a^2, \quad
+    \var(\hat{b}) = \frac{\sigma^2}{\sum(x_i - \bar{x})^2} =: \sigma_b^2.
+  \end{equation}
+  Damit gilt Erwartungstreue. Mit Lemma 3.6 folgt die schwache Konsistenz von
+  $\hat{a}$ und $\hat{b}$.
+\end{proof}
+
+\begin{thm}[Satz von Gauss-Markov]
+  Die Schätzer $\hat{a}$, $\hat{b}$ sind die besten\footnotemark linearen,
+  unverzerrten Schätzer für $a$, $b$ im Standardmodell der linearen Regression.
+
+  Gilt zusätzlich die Normalverteilungsannahme, so sind $\hat{a}$, $\hat{b}$
+  UMVUE, das heißt, es gibt keine unverzerrten Schätzer mit kleinerer Varianz.
+\end{thm}
+\footnotetext{Das heißt, es gibt keinen linearen, unverzerrten Schätzer mit
+  geringerer Varianz.}
+
+Ziel: Bewerte die Güte des erhaltenen Regressionsmodells
+\begin{itemize}
+\item Plotte $\hat{\eps}_i$ über $i$ bzw. über $x_i$. Sie sollten klein und
+  symmetrisch sein sowie keinen Trend aufweisen.
+\item Standardfehler für $\hat{a}$ und $\hat{b}$:
+  \begin{align*}
+  \[ \mathrm{SE}(\hat{a}) &= \sqrt{\MSE\hat{a}}
+    = \sqrt{\hat{\sigma}^2 \frac{\sum x_i^2}{n \sum (x_i - \bar{x})^2}}, \\
+    \mathrm{SE} (\hat{b}) &= \sqrt{\MSE\hat{b}}
+    = \sqrt{\hat{\sigma}^2 \frac{1}{n \sum (x_i - \bar{x})^2}}
+  \end{align*}
+  nach Prop. 5.2.
+\item Streuungszerlegung
+\end{itemize}
+
+\clearpage
+
+\begin{lem}
+  Die \emph{Gesamtstreuung} (sum of squares total) der $y_i$
+  \[ \operatorname{SQT} = \sum_{i=1}^n (y_i - \bar{y})^2 \]
+  lässt sich in \emph{erklärte Streuung} (sum of squares explained)
+  \[ \operatorname{SQE} = \sum_{i=1}^n (\hat{y}_i - \bar{y})^2 \]
+  und \emph{Residualstreuung} (sum of squares residuals)
+  \[ \operatorname{SQR} = \sum_{i=1}^n (y_i - \hat{y}_i)^2 \]
+  zerlegen:
+  \[ \operatorname{SQT} = \operatorname{SQE} + \operatorname{SQR}. \]
+\end{lem}
+
+\begin{proof}
+  \begin{align*}
+    \operatorname{SQT}
+    &= \sum_{i=1}^n (y_i - \bar{y})^2 \\
+    &= \sum_{i=1}^n (y_i - \hat{y}_i + \hat{y}_i - \bar{y})^2 \\
+    &= \sum_{i=1}^n (y_i - \hat{y}_i)^2
+      + 2 \sum_{i=1}^n (y_i - \hat{y}_i)(\hat{y}_i-\bar{y})
+      + \sum_{i=1}^n (\hat{y}_i - \bar{y})^2 \\
+    &= \operatorname{SQR} + E + \operatorname{SQE}.
+  \end{align*}
+  Es gilt
+  \begin{align*}
+    \rez{2} E
+    &= \sum_{i=1}^n \hat{y}_i(y_i - \hat{y}_i) - \bar{y}
+      \underbrace{\sum_{i=1}^n (y_i - \hat{y}_i )}_{= 0 \text{ nach 5.2}} \\
+    &= \hat{a} \underbrace{\sum_{i=1}^n (y_i - \hat{y}_i)}_{=0}
+      + \hat{b} \sum x_i (y_i - \hat{a} - \hat{b} x_i) \\
+    &= \hat{b} \left(
+      \sum_{i=1}^n x_i y_i - \hat{a} \sum_{i=1}^n x_i
+      - \hat{b} \sum_{i=1}^n x_i^2    
+      \right) \\
+    &= \hat{b} \Big(
+      \underbrace{\sum x_i y_i - n \bar{x} \bar{y}}_{(n-1)s_{xy}^2} +
+      \underbrace{n \hat{b} \bar{x}^2 - \hat{b} \sum x_i^2}_{-(n-1)\hat{b} s_x^2}
+      \Big) \\
+    &= \hat{b} (n-1) (s_{XY}^2 - \hat{b} s_X^2)
+      = \hat{b} (n-1) (s_{XY}^2 - \frac{s_{XY}^2}{s_X^2} s_X^2) = 0. \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{defn}
+  Das \emph{Bestimmheitsmaß der Regressionsgeraden} ist definiert als
+  \[ R^2 := \frac{\operatorname{SQE}}{\operatorname{SQT}}. \]
+\end{defn}
+
+Interpretation:
+\begin{itemize}
+\item $R^2 = 1$: $\operatorname{SQR} = \sum \hat{\eps}_i = 0$, also perfekter
+  Fit.
+\item $R^2 = 0$: $\operatorname{SQR} = \operatorname{SQT}$, also $\hat{y}_i =
+  \bar{y}$ für alle $i$. Damit auch $\hat{b} = 0$, also $s_{XY}^2 = 0$ und $X$
+  und $Y$ unkorreliert.
+\item Faustregel: Es besteht ein linearer Zusammenhang, falls
+  \[ R^2 > \frac{16}{n+2} \]
+  für genügend großes $n$.
+\end{itemize}
+
+\begin{lem}
+  ES gilt
+  \[ R^2 = \rho_{XY}^2
+    = \left( \frac{s_{XY}^2}{\sqrt{s_X^2 s_Y^2}} \right)^2. \]
+  mit dem Bravais-Pearson-Korrelationskoeffizient $\rho_{XY}^2$.
+\end{lem}
+
+\begin{proof}
+  Es gilt
+  \[ \bar{\hat{y}} = \rez{n} \sum \hat{y}_i = \rez{n} \sum (\hat{a} + \hat{b}
+    x_i) = \hat{a} + \hat{b} \bar{x}
+    = (\bar{y}-\hat{b} \bar{x}) + \hat{b} \bar{x} = \bar{y}. \]
+  Damit
+  \begin{align*}
+    \sum (\hat{y}_i - \bar{y})^2
+    &= \sum (\hat{y}_i - \bar{\hat{y}} )^2
+      = \sum( \hat{a} + \hat{b} x_i - \hat{a} + \hat{b} \bar{x})^2
+      = \hat{b}^2 \sum (x_i - \bar{x})^2
+  \end{align*}
+  und damit
+  \[ R^2 = \frac{\sum( \hat{y}_i - \bar{y})^2}{\sum (y_i - \bar{y})^2}
+    = \frac{\hat{b}^2 \sum (x_i - \bar{x})^2}{\sum(y_i - \bar{y})^2}
+    = \frac{ \left(  \frac{s_{XY}^2}{s_X^2} \right)^2 s_X^2}{s_Y^2}
+    = \frac{(s_{XY}^2)^2}{s_X^2 s_Y^2} = \rho_{XY}^2. \qedhere
+  \]
+\end{proof}
+
+\section{Intervallschätzung}
+\begin{lem}
+  Unter der Normalverteilungsannahme $\eps_i \sim \ndist(0,\sigma^2)$ oder
+  äquivalent $Y_i \sim \ndist(a+b x_i, \sigma^2)$
+  gilt für die Schätzer $\hat{a}$ und $\hat{b}$ im Standardmodell der linearen
+  Regression
+  \[ \hat{b} \sim \ndist(b, \sigma_b^2), \qquad
+    \hat{a} \sim \ndist(a, \sigma_a^2) \]
+  mit $\sigma_a^2$ und $\sigma_b^2$ wie in (5.4).
+
+  Zudem gilt
+  \[ \frac{\hat{a} - a}{\hat{\sigma}_a} \sim t_{n-2}, \qquad
+    \frac{\hat{b} - b}{\hat{\sigma}_b} \sim t_{n-2}, \]
+  wobei
+  \[ \hat{\sigma}_a^2 = \hat{\sigma}^2 \frac{\sum x_i^2}{n \sum (x_i -
+      \bar{x})^2}, \qquad
+    \hat{\sigma}_b^2 = \hat{\sigma}^2 \frac{1}{n \sum (x_i -
+      \bar{x})^2}.
+  \]
+\end{lem}
+
+Beweis durch Nachrechnen.
+
+Damit folgen als $1-\alpha$-Konfidenzintervalle für $a$ und $b$ (unter der
+Normalverteilungsannahme):
+\[ \big[ \hat{a} - t_{n-2,1-\alpha/2} \cdot \hat{\sigma}_a,
+    \hat{a} + t_{n-2,1-\alpha/2} \cdot \hat{\sigma}_a \big], \quad
+ \big[ \hat{b} - t_{n-2,1-\alpha/2} \cdot \hat{\sigma}_b,
+ \hat{b} + t_{n-2,1-\alpha/2} \cdot \hat{\sigma}_b \big]. \]
+
+\begin{rmrk*}
+  \begin{itemize}
+  \item Für $n > 30$ lassen sich die Quantile der t-Verteilung durch
+    $\ndist(0,1)$-Quantile ersetzen.
+  \item Die Normalverteilungsannahme gilt oft nur approximativ oder gar nicht.
+    Die Aussage von Lemma 5.7 gelten näherungsweise, falls die
+    Konsistenzbedingung (5.3) erfüllt ist, egal wie die $\eps_i$ verteilt sind.
+  \end{itemize}
+\end{rmrk*}
+
+\section{Tests}
+Klassische Tests im Standardmodell der einfachen linearen Regression:
+\begin{mdframed}
+  \begin{align*}
+    H_0 &: a = a_0, & H_1 &: a \ne a_0, \\
+    H_0 &: a \ge a_0, & H_1 &: a < a_0, & T_{a_0}
+                      &:= \frac{\hat{a} - a_0}{\hat{\sigma}_a} \\
+    H_0 &: a \le a_0, & H_1 &: a > a_0, \\[1em]
+    H_0 &: b = b_0, & H_1 &: b \ne b_0, \\
+    H_0 &: b \ge b_0, & H_1 &: b < b_0, & T_{b_0}
+                      &:= \frac{\hat{b} - b_0}{\hat{\sigma}_b} \\
+    H_0 &: b \le b_0, & H_1 &: b > b_0.
+  \end{align*}
+  Verwerfe $H_0$ zum (approximativen)\footnotemark Niveau $\alpha$, falls
+  \[ |T_{a_0}| > t_{n-2, 1 - \alpha/2},
+    T_{a_0} < - t_{n-2, 1 - \alpha}
+    T_{a_0} > t_{n-2, 1 - \alpha}
+    |T_{b_0}| > t_{n-2, 1 - \alpha/2}
+    T_{b_0} < - t_{n-2, 1 - \alpha}
+    T_{b_0} > t_{n-2, 1 - \alpha}
+  \]
+\end{mdframed}
+\footnotetext{%
+  Falls die Normalverteilungsannahme nicht gilt, aber die Konsistenzbedingung.
+  Sonst ``approximativ'' streichen.
+}
+
+Speziell für $H_0 : b = 0$ ist die Teststatistik
+\[ F := (n-2) \frac{R^2}{1-R^2}, \]
+denn
+\begin{align*}
+  (n-2) \frac{R^2}{1-R^2}
+  &= (n-2) \left( \rez{R^2} - 1 \right)^{-1} \\
+  &= (n-2) \left( \frac{\operatorname{SQT} - \operatorname{SQE}}
+    {\operatorname{SQE}} \right)^{-1} \\
+  &= \frac{\operatorname{SQE}}{\operatorname{SQR} / (n-2)} \\
+  &= \frac{\sum (\hat{y}_i -\bar{y})^2}{\rez{n-2} \sum(y_i - \hat{y}_i)^2} \\
+  &= \frac{\hat{b}^2 \sum (x_i - \bar{x})^2}{\rez{n-2} \sum(y_i - \hat{y}_i)^2} \\
+  &= \frac{\hat{b}^2 \sum (x_i - \bar{x})^2}{\hat{\sigma}^2} \\
+  &= \left( \frac{\hat{b}}{\hat{\sigma}_b^2} \right) \\
+  &= T_{b_0 = 0)^2.
+\end{align*}
+
+Gilt die Normalverteilungsannahme, so folgt unter $H_0$
+\[ T_{b_0} \sim t_{n-2} \]
+und damit
+\[ F \sim F_{1,n-2} \]
+und es folgt als Test
+\begin{mdframed}
+  \[ H_0 : b = 0 \quad \text{gegen} \quad H_1 : b \ne 0 \]
+  Teststatistik:
+  \[ F = (n-2) \frac{R^2}{1-R^2}. \]
+  Verwerfe $H_0$ zum Niveau $\alpha$, falls
+  \[ F > F_{1,n-2,1-\alpha}. \]
+\end{mdframed}
+\end{document}

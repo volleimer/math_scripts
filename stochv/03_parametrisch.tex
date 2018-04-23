@@ -1,0 +1,1703 @@
+\chapter{Parametrische Statistik}
+\emph{$\pW$-Theorie:} Gegeben ist ein $\pW$-Raum mit gegebenen
+Zufallsvariablen/Verteilungen. \\
+\emph{Ziel:} Aussagen über ``Funktionen'' der Zufallsvariablen.
+
+\emph{Statistik:} Gegeben ist eine Stichprobe (einer Zufallsvariablen). \\
+\emph{Ziel:} Finde die Verteilung.
+
+Sei also $(x_1, \ldots, x_n)$ eine Realisierung der Zufallsstichprobe $(X_1,
+\ldots, X_n)$, wobei $X_1, \ldots, X_n$ i.i.d. mit Verteilung $F$ (unbekannt).
+
+\emph{Parametrische Statistik:} Wir gehen davon aus, dass $F$
+\emph{parametrisierbar} ist. Das heißt $F$ gehört zu einer vorgebenen
+parametrischen Familie $\{ F_\theta : \theta \in \Theta \}$ von
+Verteilungsfunktionen mit Parameter $\theta$. Dabei ist $\Theta$ der
+\emph{Parameterraum}, das heißt eine Borel-Teilmenge des $\real^n$, welche alle
+zulässigen Parameterwerte enthält. $\theta = (\theta_1, \ldots, \theta_n)$ ist
+der $n$-dimensionale \emph{Parametervektor} von $F_\theta$.
+
+Wir setzen voraus, dass die Parametrisierung $\theta \mapsto F_\theta$
+\emph{identifizierbar} ist, das heißt für $\theta \ne \tilde{\theta}$ gilt
+$F_\theta \ne F_{\tilde{\theta}}$.
+
+Die Wahl der Verteilungsfamilie erfolgt aufgrund von Vorüberlegungen wie zum
+Beispiel Erfahrungswerten, Methoden der deskriptiven Statistik,
+``Verteilungstests''.
+
+Als $\pW$-Raum $(\Omega, \mF, \pP)$, auf dem die Zufallsstichprobe definiert ist,
+können wir den \emph{kanonischen $\pW$-Raum} wählen:
+\[ \Omega = \real^\infty, \quad \mF = \borel( \real^\infty ) = \borel(\real)
+  \times \borel(\real) \times \cdots, \]
+\[ \pP( \{ \omega = (\omega_1, \omega_2, \ldots) \in \real^\infty: \omega_{i_1}
+  \le x_{i_1}, \ldots, \omega_{i_k} \le x_{i_k}\} ) = F_\theta(x_{i_1}) \cdot
+  \ldots \cdot F_\theta(x_{i_k}) \]
+für alle $k \in \nat$, $1 \le i_1 \le \ldots \le i_k$.
+
+Da $\pP$ von $\theta$ abhängt, schreibe auch $\pP_\theta$ bzw. $\pE_\theta$,
+$\var_\theta$, ...
+
+Gesucht ist nun ein \emph{Schätzer} $\hat{\theta}$ für den unbekannten
+Parameter(vektor) $\theta$, das heißt eine Abbildung
+\[ T: \real^n \to \real^m : (X_1, \ldots, X_n) \mapsto \hat{\theta}, \]
+welche die Zufallsstichprobe auf einen Zufallsparameter abbildet.
+
+Dabei ist $T$ Borel-messbar, $\hat{\theta}$ ist also eine Zufallsvariable bzw.
+ein Zufallsvektor.
+
+Üblicherweise wird zudem angenommen, dass
+\[ \pP( T(X_1, \ldots, X_n) \in \Theta ) = 1. \]
+
+Die konkrete Auswertung von $\hat{\theta}$ für die Realisierung $(x_1, \ldots,
+x_n)$, also $T(x_1, \ldots, x_n)$, wird als \emph{Schätzwert} bezeichnet.
+
+\section{Einige parametrische Verteilungsfamilien}
+\paragraph{Normalverteilung}
+mit Parametern ($\mu, \sigma^2$), $\mu \in \real$, $\sigma^2 > 0$ ist
+absolutstetig mit Dichte 
+\[ f_{(\mu,\sigma^2)} = \rez{\sqrt{2 \pi \sigma^2}} \exp \left( -
+    \frac{(x-\mu)^2}{2 \sigma^2} \right). \]
+Ist $X$ normalverteilt mit Parameter $(\mu,\sigma^2)$ (schreibe $X \sim N(\mu,
+\sigma^2$), so gelten
+\[ \pE[X] = \mu, \qquad \var(X) = \sigma^2. \]
+
+\paragraph{Chi-Quadrat-Verteilung}
+Sind $X_1, \ldots, X_k \sim N(0,1)$ i.i.d., so besitzt
+\[ X = X_1^2 + \ldots + X_k^2 \]
+eine \emph{$\chi^2$-Verteilung mit $k$ Freiheitsgraden} ($X \sim \chi_k^2$). Es
+gelten
+\[ \pE[X] = \pE[X_1] + \ldots + \pE[X_k] = k \]
+und
+\[ \begin{aligned}
+    \var(X)
+    &= \var(X_1^2 + \ldots + X_k^2) = \var(X_1^2) + \ldots + \var(X_k^2) \\
+    &= k \var(X_1^2) = k( \pE[X_1^4] - \pE[X_1^2]^2 ) \\
+    &= k \cdot (3-1) = 2k.
+  \end{aligned} \]
+Die Kovarianzen sind alle $=0$, weil die $X_i$ unabhängig sind.
+
+\paragraph{Exponentialverteilung}
+mit Parameter $\lambda > 0$ ist absolutstetig mit Dichte
+\[ f_{\lambda} (x) = \begin{cases}
+    \lambda e^{-\lambda x}, & x \ge 0, \\
+    0, & x < 0.
+  \end{cases} \]
+Für $X \sim \Exp(\lambda)$ gelten
+\[ \pE[X] = \lambda^{-1}, \qquad \var(X) = \lambda^{-2}. \]
+
+\paragraph{Gamma-Verteilung}
+mit Parametern $(\lambda, p)$, $\lambda > 0$, $p > 0$ ist durch die Dichte
+\[ f_{(\lambda, p)} (x) = \begin{cases}
+    \frac{\lambda^p x^{p-1}}{\Gamma(p)} e^{-\lambda x}, & x \ge 0, \\
+    0, & x < 0, 
+  \end{cases} \]
+definiert, wobei
+\[ \Gamma(p) = \int_0^\infty x^{p-1} e^{-x} \diffop x, \quad p > 0, \]
+die Gammafunktion ist.
+
+Ist $X$ Gamma-verteilt mit Parameter $(\lambda, p)$ ($X \sim \Gamma(\lambda,
+p)$), so berechnet sich die momenterzeugende Funktion von $X$ als
+\[ \begin{aligned}
+    m_X(u)
+    &= \pE[e^{uX}] \\
+    &= \int_0^\infty e^{ux} \frac{\lambda^p x^{p-1}}{\Gamma(p)} e^{-\lambda x}
+    \diffop x \\
+    &= \frac{\lambda^p}{\Gamma(p)} \int_0^\infty x^{p-1} e^{-(\lambda-u)x}
+    \diffop x \\
+    &= \frac{\lambda^p}{\Gamma(p)} \int_0^\infty \frac{y^{p-1}}{(\lambda-u)^{p-1}}
+    e^{-y} \diffop y \\
+    &= \frac{\lambda^p}{\Gamma(p)} \cdot \frac{\Gamma(p)}{(\lambda-u)^p} \\
+    &= \left( \frac{\lambda}{\lambda -u} \right)^2
+  \end{aligned}
+\]
+für $u < \lambda$. Damit
+\[ \pE[X^k] = m_X^{(k)}(0) = \cdots = \frac{p \cdot (p+1) \cdots
+    (p+k-1)}{\lambda^k}. \]
+Sind $X_1, \ldots, X_k$ unabhängig $\Exp(\lambda)$-verteilt, so ist
+\[ X_1 + \ldots + X_k \sim \Gamma(\lambda, k). \]
+In diesem Fall (für ganzzahliges $p$) spricht man auch von einer
+\emph{Erlang-Verteilung} ($\operatorname{Erl}(\lambda, k)$).
+
+Insbesondere gilt $\Gamma( \lambda, 1 ) = \Exp(\lambda)$. Ist $X \sim \chi^2_k$,
+so gilt $X \sim \Gamma( 1/2, k/2 )$.
+
+\paragraph{Student-Verteilung (t-Verteilung)}
+Sei
+\[ X := \frac{U}{\sqrt{V/r}}, \]
+mit $r \in \nat$, $U \sim N(0,1)$, $V \sim \chi^2_r$, $U$ und $V$ unabhängig.
+Dann ist $X$ Student-verteilt mit $r$ Freiheitsgraden ($X \sim t_r$).
+
+Die Dichte der $t$-Verteilung ergibt sich mittels Dichtetransformationssatz als
+\[ f_r(x) = \rez{\sqrt{r} B(r/2,1/2)} \left(1 + \frac{x^2}{r}
+  \right)^{(r+1)/2}, \]
+wobei
+\[ B(p,q) := \int_0^1 t^{p-1} (1-t)^{q-1} \diffop t, \qquad p,q > 0 \]
+die \emph{Betafunktion} ist.
+
+Für $r = 1$ ergibt sich die Cauchyverteilung, welche weder Erwartungswert noch
+Varianz besitzt.
+
+Für $X \sim t_r$, $r \ge 2$ gilt
+\[ \pE[X] = 0, \qquad \var(X) = \begin{cases}
+    \infty, & r = 2, \\
+  \frac{r}{r-2}, & r \ge 3. 
+\end{cases} \]
+
+\paragraph{Fisher-Snedecor-Verteilung (F-Verteilung)}
+Sei $X$ definiert durch
+\[ X := \frac{U/r}{V/s} \]
+für $r,s \in \nat$ und zwei unabhängige Zufallsvariablen $U \sim \chi_r^2$ und
+$V \sim \chi_s^2$, dann hat $X$ eine F-Verteilung mit $r,s$ Freiheitsgraden ($X
+\sim F_{r,s}$). Die Dichte von $X$ ist gegeben durch
+\[ f_{r,s}(x) = \begin{cases}
+    \frac {x^{r/2 - 1}}{B\left( \frac{r}{2}, \frac{s}{2} \right) (r/s)^{-r/2}
+      \left( 1 + \frac{r}{s} x \right)^{(r+s)/2}}, & x \ge 0, \\
+    0, & x < 0.
+  \end{cases}
+\]
+und die Momente (sofern existent) durch
+\[ \begin{aligned}
+    \pE[X] &= \frac{s}{s-2}, & s &\ge 3 \\
+    \var(X) &= \frac{2s^2 (r+s-2)}{r(s-4)(s-2)^2}, & s &\ge 5.
+  \end{aligned}
+\]
+
+\section{Eigenschaften von Schätzern}
+\begin{exmp}
+  Angenommen, es liegt eine Stichprobe $(X_1, \ldots, X_n)$ von i.i.d.
+  Zufallsvariablen mit Normalverteilung $N(\mu,\sigma^2)$ vor. Entsprechend dem
+  parametrischen Modell möchten wir $\theta = (\mu,\sigma^2)$ schätzen. Mögliche
+  Schätzer hierfür sind zum Beispiel
+  \begin{align*}
+    \hat{\mu}_1 &= T_1(X_1, \ldots, X_n) := \rez{n} \sum_{i=1}^n X_i \quad
+    \text{oder} \\
+    \hat{\mu}_2 &= T_2(X_1, \ldots, X_n) := X_1, \\
+    \hat{\sigma}^2_1 &= T_3(X_1, \ldots, X_n) := \rez{n-1} \sum_{i=1}^n \left( X_i - \rez{n} \sum_{j=1}^n X_j \right)^2 \quad
+                       \text{oder} \\
+    \hat{\sigma}^2_2 &= T_4(X_1, \ldots, X_n) := \rez{n} \sum_{i=1}^n \left( X_i - \rez{n} \sum_{j=1}^n X_j \right)^2.
+  \end{align*}
+  Wie können wir nun entscheiden, welcher von den je zwei Schätzern im obigen
+  Beispiel der ``Bessere'' ist? Welche Eigenschaften kann und soll ein ``guter''
+  Schätzer haben?
+\end{exmp}
+
+\subsection{Erwartungstreue}
+\begin{defn}
+  Ein Schätzer $\hat{\theta} = T(X_1, \ldots, X_n)$ für den Parameter $\theta$
+  ist \emph{erwartungstreu} (auch \emph{unverzerrt}, \emph{unbiased}), falls
+  \[ \pE_\theta[\hat{\theta}] = \theta, \quad \text{für alle } \theta \in \Theta. \]
+  Die \emph{Verzerrung} (der \emph{Bias}) für den Parameter $\theta$ heißt
+  \emph{asymptotisch erwartungstreu}, falls sein Bias für große Datenmenge
+  gegen 0 konvergiert, also
+  \[ \pE_\theta[T(X_1, \ldots, X_n)] \xrightarrow{n \to \infty} \theta. \]
+\end{defn}
+
+\begin{exmp}
+  Die Schätzer $\hat{\mu_1}$ und $\hat{\mu}_2$ in Beispiel 3.1 sind
+  erwartungstreu:
+  \[ \begin{aligned}
+      \pE_\theta[ T_1(X_1, \ldots, X_n) ]
+      &= \pE_\theta \left[ \rez{n} \sum_{i=1}^n X_i \right] \\
+      &= \rez{n} \sum_{i=1}^n \pE_\theta[X_i] = \mu, \\
+      \pE_\theta[ T_2(X_1, \ldots, X_n) ]
+      &= \pE_\theta[X_1] = \mu.
+    \end{aligned}
+  \]
+  $\hat{\sigma}^2_1$ ist ebenso erwartungstreu, $\hat{\sigma}^2_2$ ist nicht
+  erwartungstreu, aber asymptotisch erwartungstreu.
+
+  Beachte: Da an dieser Stelle die Eigenschaften der Normalverteilung nicht
+  eingehen (bis auf Existenz von Erwartungswert und Varianz), sind
+  $\hat{\mu}_1$, $\hat{\mu}_1$, $\hat{\sigma^2_1}$ und $\hat{\sigma^2_1}$
+  (asymptotisch) erwartungstreue Schätzer für den Erwartungswert/die Varianz
+  einer beliebigen Verteilung mit endlichem Erwartungswert/endlicher Varianz.
+\end{exmp}
+
+\subsection{Konsistenz}
+\begin{defn}
+  Ein Schätzer $\hat{\theta} = T(X_1, \ldots, X_n)$ für den Parameter $\theta$
+  ist \emph{konsistent} im \emph{quadratischen Mittel/schwachen Sinn/starken
+    Sinn},  falls
+  \[ T(X_1, \ldots, X_n) \xrightarrow{n \to \infty} \theta \]
+  in $L^2$/in Wahrscheinlichkeit/fast sicher, das heißt
+  \begin{itemize}
+  \item $\hat{\theta}$ ist $L^2$-konsistent: Für $\pE_\theta[\hat{\theta}^2] <
+    \infty$ gilt
+    \[ \hat{\theta} \xrightarrow{L^2} \theta \qLRq \pE_\theta|T(X_1, \ldots,
+      X_n) - \theta|^2 \xrightarrow{n \to \infty} 0, \quad \theta \in \Theta. \]
+  \item $\hat{\theta}$ ist (schwach) konsistent:
+    \[ \hat{\theta} \xrightarrow{\pP} \theta \qLRq \pP_\theta( |T(X_1, \ldots,
+      X_n ) - \theta | > \eps ) \xrightarrow{n \to \infty} 0, \quad \theta \in
+      \Theta. \]
+  \item $\hat{\theta}$ ist stark konsistent:
+    \[ \hat{\theta} \xrightarrow{n \to \infty, \text{ f. s.}} \theta \qLRq
+      \pP_\theta \left( \lim_{n \to \infty} T(X_1, \ldots,
+      X_n ) = \theta \right) = 1, \quad \theta \in
+      \Theta. \]
+  \end{itemize}
+  Entsprechend gilt
+  \[ L^2\text{-Konsistenz} \qRq \text{Schwache Konsistenz} \quad \Leftarrow \quad
+    \text{Starke Konsistenz}. \]
+\end{defn}
+
+\begin{exmp}
+  Seien $X_1, \ldots, X_n$ i.i.d. mit $\pE[X_i] = \mu$, $\var(X_i) = \sigma^2 <
+  \infty$. Dann gilt nach dem starken Gesetz der großen Zahlen
+  \[ \hat{\mu} := \bar{X} = \rez{n} \sum_{i=1}^n X_i \xrightarrow{\text{f.s.}}
+    \mu, \]
+  das heißt, das arithmetische Mittel ist ein stark konsistenter Schätzer für
+  den Erwartungswert der $X_i$.
+\end{exmp}
+
+\begin{lem}
+  Sei $\hat{\theta} = T(X_1, \ldots, X_n)$ ein erwartungstreuer Schätzer für den
+  Parameter $\theta$, so dass $\var( \hat{\theta} ) \xrightarrow{n \to \infty}
+  0$,  dann ist $\hat{\theta}$ schwach konsistent.
+\end{lem}
+
+\begin{proof}
+  Nach der Tschebyscheff-Ungleichung gilt
+  \[ \pP(|\hat{\theta} - \theta| \ge \eps) \le
+    \frac{\var(\hat{\theta})}{\eps^2}. \]
+  Mit der Erwartungstreue von $\hat{\theta}$ folgt die Behauptung.
+\end{proof}
+
+\begin{exmp}
+  Seien $X_1, \ldots, X_n$ i.i.d. Zufallsvariablen mit Normalverteilung
+  $N(\mu,\sigma^2)$ und definiere die Schätzer
+  \begin{align*}
+    \sigma^2_1
+    &:= \rez{n-1} \sum_{i=1}^n
+      \left( X_i - \rez{n} \sum_{i=1}^n X_j \right)^2 \\
+    \sigma^2_2
+    &:= \rez{n} \sum_{i=1}^n
+      \left( X_i - \rez{n} \sum_{i=1}^n X_j \right)^2 \\
+    \sigma^2_3
+    &:= \rez{n} \sum_{i=1}^n
+      \left( X_i - \mu \right)^2 \quad \text{($\mu$ bekannt)}.
+  \end{align*}
+  Dann sind $\sigma^2_1$, $\sigma^2_2$ und $\sigma^2_3$ schwach konsistent. Zum
+  Beispiel gilt für $\sigma^2_3$:
+  \begin{align*}
+    \var{\sigma^2_3}
+    &= \rez{n^2} \sum_{i=1}^n \var((X_i-\mu)^2) \\
+    &= \rez{n} \var((X_1 - \mu)^2) \xrightarrow{n \to \infty} 0.
+  \end{align*}
+  und die Behauptung folgt mittels des obigen Lemmas.
+  
+Für $\sigma^2_1$ lässt sich ebenfalls die Varianz berechnen und das Lemma
+anwenden (Übungsaufgabe); $\sigma^2_2 = \frac{n-1}{n} \sigma^2_1$ (nicht
+erwartungstreu) lässt sich auf $\sigma^2_1$ zurückführen.
+
+Beachte: Auch hier gingen die Eigenschaften der Normalverteilung (abgesehen von
+der Endlichkeit der Momente) nicht ein.
+\end{exmp}
+
+\subsection{Standardfehler und mittlere quadratische Abweichung}
+\begin{defn}
+  Die \emph{mittlere quadratische Abweichung} (\emph{mean squared error}) eines
+  Schätzers $\hat{\theta} = T(X_1, \ldots, X_n)$ für den Parameter $\theta$ ist
+  \[ \MSE(\hat{\theta}) = \pE_\theta| \hat{\theta} - \theta |^2. \]
+  Der \emph{Standardfehler} von $\hat{\theta}$ ist
+  \[ \sqrt{\var_\theta(\hat{\theta})}. \]
+
+  Beachte: Offenbar ist $\hat{\theta}$ konsistent im quadratischen Mittel genau
+  dann, wenn
+  \[ \MSE( \hat{\theta} ) \xrightarrow{n \to \infty} 0. \]
+\end{defn}
+
+\begin{lem}
+  Sei $\hat{\theta} = T(X_1, \ldots, X_n)$ ein Schätzer für den eindimensionalen
+  Parameter $\theta$, so dass $\pE[\hat{\theta}^2] < \infty$, $\theta \in
+  \Theta$. Dann gilt
+  \[ \MSE( \hat{\theta}) = \var_\theta(\hat{\theta}) +
+    \operatorname{Bias}_\theta^2(\hat{\theta}) \ge \var_\theta(\hat{\theta}). \]
+\end{lem}
+
+\begin{proof}
+  \begin{align*}
+    \MSE(\hat{\theta})
+    &= \pE_\theta|\hat{\theta}-\theta|^2 \\
+    &= \pE_\theta \left| \hat{\theta} - \pE_\theta[\hat{\theta}]
+      + \pE_\theta[\hat{\theta}] - \theta \right|^2 \\
+    &= \pE_\theta \left| \hat{\theta} - \pE_\theta[\hat{\theta}] \right|^2
+      + 2 \pE_\theta
+      \left[ \hat{\theta} - \pE_\theta[\hat{\theta}]\right]
+      \left[ \pE_\theta[\hat{\theta}] - \theta \right]
+      + \pE_\theta \left| \pE_\theta[\hat{\theta}] - \theta \right|^2 \\
+    &= \pE_\theta \left| \hat{\theta} - \pE_\theta[\hat{\theta}] \right|^2
+      + 0 + \left( \pE_\theta[\hat{\theta}] - \theta \right)^2 \\
+    &= \var_\theta(\hat{\theta}) + \operatorname{Bias}_\theta^2 (\theta).
+  \end{align*}
+  Die Ungleichung ist klar.
+\end{proof}
+
+Aus dem obigen Lemma wird ersichtlich, dass der Standardfehler nur in
+Kombination mit dem Bias ein sinnvolles Gütemaß für die Qualität eines Schätzers
+darstellt. Betrachtet man jedoch nur unverzerrte Schätzer, so genügt der
+Standardfehler als Kriterium. Entsprechend definiert man:
+
+\begin{defn}
+Sei $\hat{\theta} = T(X_1, \ldots, T_n)$ ein unverzerrter Schätzer für $\theta$,
+so dass 
+\[ \var_\theta \left( T(X_1, \ldots, T_n) \right) \le
+  \var_\theta \left( S(X_1, \ldots, X_n) \right) \]
+für alle unverzerrten Schätzer $S(X_1, \ldots, X_n)$ von $\theta$, dann ist
+$\hat{\theta}$ der \emph{UMVUE} (\emph{uniformly minimum variance unbiased
+  estimator}) für $\theta$.
+\end{defn}
+
+Unverzerrte Schätzer müssen jedoch im Allgemeinen nicht existieren.
+
+\clearpage
+
+\section{Eigenschaften bereits bekannter Statistiken}
+\subsection{Ordnungsstatistik}
+In Kapitel 2.2: Beschreibe Quantile einer Stichprobe. \\
+Modellebene: Entsprechende Definition der Ordnungsstatistik$(X_{(1)}, \ldots,
+X_{(n)})$ der Zufallsstichprobe $(X_1, \ldots, X_n)$.
+
+\begin{thm}
+  Die Verteilungsfunktion $F_{X_{(i)}}$ der Ordnungsstatistik $X_{(i)}$, $i = 1,
+  \ldots, n$ ist gegeben durch
+  \[ F_{X_{(i)}}(x) := \sum_{k=i}^n \binom{n}{k} F^k(x) (1-F(x))^{n-k}, \quad x
+    \in \real. \]
+  Insbesondere:
+  \begin{enumerate}
+  \item Sind alle $X_i$ disktret mit Wertebereich $E = \{ \ldots, a_{j-1}, a_j,
+    a_{j+1}, \ldots \}$ mit $a_j < a_{j+1}$, $j \in \nat$, dann gilt für die
+    Zähldichte von $X_{(i)}$
+    \[ \pP( X_{(i)} = a_j ) = \sum_{k=i}^n \binom{n}{k} \left(
+        F^k(a_j)(1-F(a_j))^{n-k} - F^k(a_{j-1})(1-F(a_{j-1}))^{n-k} \right), \]
+    wobei
+    \[ F(a_j) = \sum_{\substack{a_k \in E \\ k \le j}} \pP(X_i = a_k). \]
+  \item Sind die $X_i$ absolutstetig mit stückweise stetiger Dichtefunktion, so
+    ist auch $X_{(i)}$, $i = 1, \ldots, n$, absolutstetig verteilt mit Dichte
+    \[ f_{X_{(i)}}(x) = \frac{n!}{(i-1)!(n-1)!} f(x)
+      F^{i-1}(x)(1-F(x))^{n-1}. \]
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Für $x \in \real$ definiere
+  \[ Y := \sharp \{ i : X_i \le x \} = \sum_{i=1}^n \ind_{\{X_i \le x\}}. \]
+  Dann ist $Y \sim \operatorname{Bin}(n, F(x))$, da die $X-i$ i.i.d. mit
+  Verteilungsfunktion $F$ sind. Zudem
+  \[ F_{X_{(i)}}(x) = \pP( X_{(i)} \le x ) = \pP( Y \ge i ) \]
+  und damit folgt die Behauptung.
+
+  Für diskrete $X_i$ gilt weiter
+  \[ \pP( X_{(i)} = a_j ) = \pP( a_{j-1} < X_{(i)} \le a_j ) = F_{X_{(i)}}(a_j)
+    - F_{X_{(i)}}(a_{j-1}). \]
+
+  Für stetige $X_i$ folgt die Dichte durch Ableiten der Verteilungsfunktion.
+\end{proof}
+
+\subsection{Empirische Verteilungsfunktion}
+Nach Definition 2.5
+\[ \hat{F}_n(x) = \frac{ \sharp \{ X_i : X_i \le x \}}{n}. \]
+Betrachte nun $(x_1, \ldots, x_n)$ als Realisierung einer Zufallsstichprobe
+$(X_1, \ldots, X_n)$ mit $X_i$ i.i.d., $X_i \sim F$, so kann $\hat{F}_n(x)$ als
+Schätzer\footnote{Das ist eigentlich ein Beispiel für nichtparametrische
+  Statistik, soll aber trotzdem hier in der Einführung enthalten sein.} für $F$
+verwendet werden.
+
+\begin{thm}
+  Es gelten
+  \begin{enumerate}
+  \item $n \hat{F}_n(x) \sim \operatorname{Bin}(n, F(x))$.
+  \item $\hat{F}_n(x)$ ist ein erwartungstreuer, stark konsistenter Schätzer für
+    $F(x)$ mit
+    \[ \var \hat{F}_n(x) = \frac{F(x) (1 - F(x))}{n}. \]
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Zu 1: Es gilt
+  \begin{align*}
+    \hat{F}_n(x)
+    &= \rez{n} \sharp \{ X_i : X_i \le x\} \\
+    &= \rez{n} \sum_{i=1}^n \ind_{\{X_i \le x\}}
+  \end{align*}
+  mit $\ind_{\{X_i \le x\}} \sim \operatorname{Ber}(F(x))$. Damit folgt 1., da
+  die $X_i$ unabhängig sind.
+
+  Zu 2: Aus 1. folgt direkt für alle $x \in \real$
+  \begin{align*}
+    \pE[n \hat{F}_n(x) ] &= n F(x), \\
+    \var(n \hat{F}_n(x)) &= n F(x) (1-F(x)),
+  \end{align*}
+  woraus Erwartungstreue und die Varianz folgen.
+
+  Da zudem für $x \in \real$ fix die Zufallsvariablen
+  \[ Y_i := \ind_{\{X_i \le x \}}\]
+  i.i.d. sind, folgt nach dem starken Gesetz der großen Zahlen
+  \[ \hat{F}_n(x) = \rez{n} \sum_{i=1}^n Y_i \xrightarrow{\text{f.s.}} \pE[Y_i]
+    = F(x) \]
+  für alle $x \in \real$, also ist $\hat{F}_n(x)$ stark konsistent.
+\end{proof}
+
+\subsection{Empirische Momente}
+Aus Kapitel 2.2: Empirischer Erwartungswert, empirische Varianz als Lage- und
+Streuungsmaß einer Stichprobe. Auf der Modellebene:
+
+\begin{defn}
+  Seien $X_1, \ldots, X_n$ i.i.d. Zufallsvariablen, so dass $\pE|X_i|^r <
+  \infty$ für ein $r \in \nat$. Dann ist für $k = 1, \ldots, r$
+  \begin{equation}
+    \hat{\mu}_k := \rez{n} \sum_{i=1}^n X_i^k
+  \end{equation}
+  das \emph{k-te empirische Moment} der $X_i$.
+\end{defn}
+
+Die empirischen Momente können zur Schätzung der Momente der $X_i$ verwendet
+werden.
+
+\begin{thm}
+  Sei $(X_1, \ldots, X_n)$ eine Zufallsstichprobe von i.i.d. Zufallsvariablen
+  $X_i$ mit $\pE|X_i|^r < \infty$ für ein $r \in \nat$. Sei $\mu_k := \pE
+  X_i^k$, $k = 1, \ldots, r$. Dann ist $\hat{\mu}_k$ ein erwartungstreuer, stark
+  konsistenter Schätzer für $\mu_k$.
+\end{thm}
+
+\begin{proof}
+  Wegen
+  \begin{align*}
+    \pE[\hat{\mu}_k] = \pE\left[ \rez{n} \sum_{i=1}^n X_i^k \right]
+    = \rez{n} \sum_{i=1}^n \pE[X_i^k] = \pE[X_i^k] = \mu_k
+  \end{align*}
+  gilt die Erwartungstreue. Die starke Konsistenz folgt aus dem starken Gesetz
+  der großen Zahlen, denn danach gilt
+  \[ \rez{n} \sum_{i=1}^n X_i^k \xrightarrow{\text{f.s.}} \pE[X_i^k], \quad n
+    \to \infty. \qedhere \]
+\end{proof}
+
+\begin{kor}
+  Seien $(X_1, \ldots, X_n)$ i.i.d.
+  \begin{enumerate}
+  \item Gilt $\pE|X_i| < \infty$, so ist $\bar{X}$ ein erwartungstreuer, stark
+    konsistenter Schätzer für $\mu = \pE[X_i]$.
+  \item Gilt $\pE X_i^2 < \infty$, so ist $s^2 = \rez{n-1} \sum_{i=1}^n (X_i -
+    \bar{X})^2$ ein erwartungstreuer, stark konsistenter Schätzer für $\sigma^2
+    = \var X_i$.
+  \end{enumerate}
+\end{kor}
+
+\begin{proof}
+  \begin{enumerate}
+  \item Klar, da $\bar{X} = \hat{\mu}_1$.
+  \item Folgt aus dem Verschiebungssatz (Lemma \ref{lem:verschiebung}). \qedhere
+  \end{enumerate}
+\end{proof}
+
+\section{Methoden zur Konstruktion von Schätzern}
+Sei stets $(X_1, \ldots, X_n)$ eine Zufallsstichprobe von i.i.d.
+Zufallsvariablen mit Verteilungsfunktion $F \in \{ F_\theta, \theta \in \Theta
+\}$, $\Theta \subseteq \real^n$ mit identifizierbarer Parametrisierung.
+
+\emph{Gesucht:} Ein Schätzer $\hat{\theta} = T(X_1, \ldots, X_n)$ für $\theta
+\in \real^m$
+
+\subsection{Methode der kleinsten Quadrate}
+(Least squares estimation, LSE)
+
+\emph{Idee:} Minimiere die quadratischen Abweichungen zwischen den
+Beobachtungswerten und dem geschätzen Wert (oder einer Funktion davon).
+
+\begin{exmp}
+  Sei $\mu = \pE X_i$ der gesuchte Parameter. Dann ist der LSE für $\mu$ gerade
+  \[ \hat{\mu} = \argmin_{\mu \in \real} \sum_{i=1}^n (X_i - \mu)^2. \]
+  Zu minimieren ist also
+  \[ f(\mu) := \sum_{i=1}^n (X_i - \mu)^2 = \sum_{i=1}^n (X_i^2 - 2 \mu X_i +
+    \mu^2 ).\]
+  Da $f'(\mu) = -2 \sum_{i=1}^n X_i + 2 n \mu$ folgt, dass
+  \[ \mu_0 = \rez{n} \sum_{i=1}^n X_i \]
+  die einzige Extremalstelle von $f$ ist. Da zudem $f''(\mu) = 2n > 0$ handelt
+  es sich bei $\mu_0$ um ein Minimum.
+
+  Also ist
+  \[ \hat{\mu} := \mu_0 = \bar{X} \]
+  der LSE für $\mu$.
+\end{exmp}
+LSE verwendet man besonders oft in der Regressionsanalyse (siehe Kapitel
+\ref{ch:regression}).
+
+Anstelle der kleinsten Quadrate sind auch andere ``Verlustfunktionen'' wie zum
+Beispiel der absolute Abstand verwendbar.
+
+\subsection{Momentenmethode}
+(Method of Moments, MoM)
+
+\emph{Idee:} Im Allgemeinen charakterisiert die Folge $(\mu_k)_{k \in \nat}$ der
+Momente einer Verteilung die Verteilung nicht eindeutig (Momentenproblem).
+
+Innerhalb einer vorgegebenen Klasse von Verteilungen ist das Momentenproblem
+jedoch oft eindeutig lösbar. Zum Beispiel ist bei der Normalverteilung bereits
+Erwartungswert und Varianz ausreichend für eine eindeutige Zuordnung.
+
+Annahmen:
+\begin{itemize}
+\item Es existiert ein $r \ge n$, so dass $\pE_\theta |X_i|^r < \infty.$
+\item Für $k = 1, \ldots, r$ sind die Momente
+  \[ \pE_\theta [X_i^k] = g_k( \theta ) \]
+  als Funktionen vonn $\theta = (\theta_1, \ldots, \theta_m)$ gegeben.
+\end{itemize}
+
+Ansatz: Löse das Gleichungssystem
+\begin{equation} %% 3.2
+  \hat{\mu}_k = g_k( \theta ), \qquad k = 1, \ldots, r,
+\end{equation}
+wobei $\hat{\mu}_k = \rez{n} \sum_{i=1}^n X_i^k$ das $k$-te empirische Moment
+ist.
+
+\begin{defn} %%3.17
+  Ist (3.2) eindeutig lösbar, so heißt die Lösung $\hat{\theta} = T(X_1, \ldots,
+  X_n)$ der \emph{Momentenschätzer} von $\theta$.
+\end{defn}
+
+\begin{exmp} %%3.18
+  Es seien $X_i \sim N(\mu, \sigma^2)$ unabhängig mit unbekannten Parametern
+  $\theta:(\mu, \sigma^2)$. Dann gilt $\pE_\theta | X_i |^k < \infty$ für alle
+  $k \in \nat$.
+
+  Wir wählen $r$ so klein, wie möglich, um wenige Gleichungen lösen zu müssen,
+  aber groß genug um die unbekannten Parameter eindeutig festzulegen.
+
+  Da $\theta \in \real^2$ wähle $r = 2$ und
+  \begin{align*}
+    g_1( \mu, \sigma^2) &= \pE[X_1] = \mu, \\
+    g_2( \mu, \sigma^2) &= \pE[X_1^2] = \hat{\sigma}^2 + \hat{\mu}^2,
+  \end{align*}
+  so dass nach (3.2)
+  \[ \rez{n} \sum_{i=1}^n X_i = \hat{\mu} \quad \text{und} \quad \rez{n}
+    \sum_{i=1}^n X_i^2 = \sigma^2 + \mu^2 \]
+  zu lösen ist. Es folgt
+  \[ \begin{aligned}
+      \hat{\mu} &= \rez{n} \sum_{i=1}^n X_i = \bar{X}, \\
+      \hat{\sigma}^2 &= \rez{n} \sum_{i=1}^n X_i^2 - \hat{\mu}^2
+      \overset{\text{Lem. } (2.10)}{=} \rez{n} \sum_{i=1}^n (X_i - \bar{X})^2.
+    \end{aligned}
+  \]
+  Diese Schätzer sind aus den Beispielen 3.1 und 3.3 bekannt. Insbesondere ist
+  $\hat{\sigma}^2$ nicht erwartungstreu.
+\end{exmp}
+
+\begin{lem} %% 3.19
+  Falls die Funktion $g = (g_1, \ldots, g_r) : \Theta \to S \subset \real^r$
+  bijektiv ist und ihre Inverse $g^{-1}: S \to \real^m$ stetig ist, so ist der
+  Momentenschätzer $\hat{\theta}$ von $\theta$ stark konsistent.
+\end{lem}
+
+\begin{proof}
+  Es gilt
+  \[ \hat{\theta} = T(X_1, \ldots, X_n) = g^{-1}( \hat{\mu}_1, \ldots,
+    \hat{\mu}_r ) \xrightarrow{\text{f.s.}, n \to \infty} \theta, \]
+  da $g^{-1}$ stetig ist und nach Satz 3.14 gilt
+  \[ \hat{\mu}_k \xrightarrow{\text{f.s.}, n \to \infty} g_k(\theta) \]
+  für $k = 1, \ldots, r$.
+\end{proof}
+
+\begin{exmp}
+  Es seien $X_i \sim U[-\theta, \theta]$ unabhängig und gleichverteilt mit
+  unbekanntem Parameter $\theta > 0$. Insbesondere gilt $\pE_\theta |X_i|^k <
+  \infty$ für alle $k \in \nat$ und
+  \begin{align*}
+    g_1( \theta ) &= \pE_\theta[X_i] = 0 \\
+    g_2( \theta ) &= \pE_\theta[X_i^2]
+                    = \rez{2 \theta} \int_{\theta}^\theta x^2 \diffop x \\
+                  &= \rez{2 \theta} \left[ \frac{x^2}{3} \right]_{-\theta}^\theta \\
+                  &= \rez{6 \theta} (\theta^3 - (-\theta)^3) = \frac{\theta^2}{3}.
+  \end{align*}
+  Es folgt das Gleichungssystem
+  \[ \rez{n} \sum_{i=1}^n X_i = 0 \quad \text{und} \quad
+    \rez{n} \sum_{i=1}^n X_i^2 = \frac{\theta^2}{3}, \]
+  so dass
+  \[ \hat{\theta} = \sqrt{\frac{3}{4} \sum X_i^2}. \]
+  Es sind also in manchen Fällen $r > m$ Gleichungen in (3.2) nötig, um den
+  Momentenschätzer eindeutig zu bestimmen.
+\end{exmp}
+
+\subsection{Maximum-Likelihood-Methode}
+(Maximum-Likelihood estimation, MLE)
+
+\emph{Idee:} Wähle den gesuchten Parameter so, dass die Wahrscheinlichkeit der
+angenommenen Realisierung maximal ist.
+
+\emph{Annahmen:} Die Verteilungen der Familie $\{F_\theta, \theta \in \Theta \}$
+seien entweder alle diskret oder absolutstetig.
+
+\begin{defn} %% 3.21
+  \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+  \begin{enumerate}
+  \item Sind die Verteilungen $\{F_\theta, \theta \in \Theta \}$ absolutstetig
+    mit Dichten $\{ f_\theta, \theta \in \Theta \}$, so ist
+    \[ L( X_1, \ldots, X_n; \theta) := \prod_{i=1}^n f_\theta(x_i), \quad
+      \theta \in \Theta \]
+    die \emph{Likelihood-Funktion} der Stichprobe $(X_1, \ldots, X_n) \in
+    \real^n$.
+  \item Sind die Verteilungen $\{ F_\theta, \theta \in \Theta \}$ diskret mit
+    Zähldichten $\{ p_\theta, \theta \in \Theta \}$, $p_\theta(x) = \pP(X_i =
+    x)$, $x \in S = \operatorname{supp}\footnotemark (X_i)$, so ist
+    \[ L( X_1, \ldots, X_n; \theta) = \prod_{i=1}^n p_\theta(x_i), \quad \theta
+      \in \Theta \]
+    die \emph{Likelihood-Funktion} der Stichprobe $(X_1, \ldots, X_n) \in S^n$.
+    \footnotetext{%
+    $\operatorname{supp}$ ... support, Träger $= \{ x : p_\theta(x) > 0 \}$.}
+  \end{enumerate}
+  \renewcommand{\thefootnote}{\arabic{footnote}}
+\end{defn}
+
+\emph{Ansatz:} Wähle den Schätzer $\hat{\theta}$ so, dass die
+Likelihood-Funktion maximiert wird.
+
+\begin{defn} %% 3.22
+  Besitzt die Likelihood-Funktion $L(X_1, \ldots, X_n; \theta)$ ein eindeutiges
+  Maximum in $\hat{\theta} \in \Theta$, so heißt
+  \[ \hat{\theta} = T(X_1, \ldots, X_n ) = \argmax_{\theta \in \Theta} L(X_1,
+    \ldots, X_n; \theta ) \]
+  der \emph{Maximum-Likelihood-Schätzer} für $\theta$.
+
+  Da das Ableiten der Likelihood-Funktion häufig mühsam ist (Produktregel!)
+  betrachtet man stattdessen meist die \emph{$log$-Likelihood-Funktion}
+  \[ \begin{aligned}
+      l( X_1, \ldots, X_n; \theta )
+      &= \log L( X_1, \ldots, X_n; \theta ) \\
+      &= \begin{cases}
+        \sum_{i=1}^n \log f_\theta(x_i), &F_\theta \text{ absolutstetig,} \\
+        \sum_{i=1}^n \log p_\theta(x_i), &F_\theta \text{ diskret.}
+      \end{cases}
+    \end{aligned}
+  \]
+  Da der Logarithmus streng monoton wachsend ist, gilt
+  \[ \hat{\theta} = \argmax_{\theta \in \Theta} l(X_1, \ldots, X_n; \theta ) \]
+  und diese Maximalstelle ist in der Regel deutlich leichter zu berechnen.
+\end{defn}
+
+\begin{exmp} %% 3.23
+  Es seien $X_i \sim B(\theta)$ unabhängig mit $\theta \in [0,1]$ unbekannt, das
+  heißt
+  \[ p_\theta(x) = \theta^x (1-\theta)^{1-x}, \quad x \in [0,1].\]
+  Dann folgt
+  \[ L(X_1, \ldots, X_n; \theta) = \prod_{i=1}^n \theta^{x_i}(1-\theta)^{x_i}
+    = \theta^{\sum_{i=1}^n x_i} (1-\theta)^{n - \sum_{i=1}^n x_i}. \]
+  \begin{enumerate}[i)]
+  \item Falls $\bar{x} = 0$, so folgt
+    \[ L(X_1, \ldots, X_n; \theta) = (1-\theta)^n, \]
+    also
+    \[ \hat{\theta} = \argmax_{\theta \in \Theta} L(X_1, \ldots, X_n; \theta) =
+      0. \]
+  \item Falls $\bar{x} = 1$, so folgt
+    \[ L(X_1, \ldots, X_n; \theta) = \theta^n, \]
+    also
+    \[ \hat{\theta} = \argmax_{\theta \in \Theta} L(X_1, \ldots, X_n; \theta) =
+      1. \]
+  \item Für $\bar{x} \in (0,1)$ bilde die $log$-Likelihood-Funktion
+    \begin{align*}
+      l(X_1, \ldots, X_n; \theta)
+      &= n \bar{x} \log \theta + n (1-\bar{x}) \log (1-\theta) \\
+      \Rightarrow \quad \pdiff{}{\theta} l(X_1, \ldots, X_n; \theta)
+      &= \frac{n \bar{x}}{\theta} - \frac{n(1-x)}{1-\theta} \overset{!}{=} 0 \\
+      0
+      &= \bar{x}(1-\theta) - (1-\bar{x})\theta = \bar{x} - \theta.
+    \end{align*}
+    Also ist $\hat{\theta} = \bar{x}$ der einzige Kandidat für den MLE.
+    \[ \frac{\partial^2}{\partial \theta^2} l(X_1, \ldots, X_n; \theta)
+      = - \frac{n \bar{x}}{\theta^2} - \frac{n(1 - \bar{x})}{(1-\theta)^2} <
+      0. \]
+    Also liegt in $\bar{x}$ tatsächlich ein Maximum vor, $\hat{\theta} =
+    \bar{x}$ ist der MLE für $\theta$.
+  \end{enumerate}
+  Nun seien $X_i \sim U[0, \theta]$ unabhängig und $\theta > 0$ unbekannt. Dann
+  gilt
+  \begin{align*}
+    L(X_1, \ldots, X_n; \theta)
+    &= \prod_{i=1}^n f_\theta(x_i)
+      = \prod_{i=1}^n \rez{\theta} \ind_{\{ x_i \in [0,\theta]\}} \\
+    &= \begin{cases}
+      \theta^{-n}, &0 \le x_1, \ldots, x_n \le \theta, \\
+      0, &\text{sonst}
+    \end{cases} \\
+    &= \begin{cases}
+      \theta^{-n}, &\min \{x_1, \ldots, x_n \} \ge 0
+      \wedge \max \{ x_1, \ldots, x_n \}\le \theta, \\
+      0, &\text{sonst.}
+    \end{cases}
+  \end{align*}
+  Es folgt als Maximum-Likelihood-Schätzer
+  \[ \hat{\theta} = \argmax_{\theta \in \Theta} L(X_1, \ldots, X_n; \theta) =
+    X_{(n)} = \max \{ x_1, \ldots, x_n \}. \]
+\end{exmp}
+
+\emph{Beachte:}
+\begin{itemize}
+\item Maximum-Likelihood-Schätzer müssen im Allgemeinen nicht existieren.
+\item Eine explizite Formel für den ML-Schätzer existiert nur in Spezialfällen.
+  Oft werden daher numerische Verfahren zur Bestimmung des Schätzers angewandt
+  (zum Beispiel Newton-Raphson, Fisher Scoring, usw.).
+\end{itemize}
+
+\begin{thm} %% 3.24
+  Sei $m = 1$ und $\Theta$ ein offenes Intervall in $\real$. Sei $\{ F_\theta:
+  \theta \in \Theta \}$ eine Verteilungsfamilie, welche nur absolutstetige oder
+  diskrete Verteilungen beinhaltet und welche identifizierbar ist. Die
+  Likelihood-Funktion $L$ sei unimodal, das heißt für
+  \[ \hat{\theta} = \argmax_{\theta \in \Theta} L(X_1, \ldots, X_n; \theta) \]
+  gilt
+  \[ \left\{ \begin{aligned}
+        &L(X_1, \ldots, X_n; \theta) & &\text{ist steigend für alle } \theta
+        < \hat{\theta}, \\
+        &L(X_1, \ldots, X_n; \theta) & &\text{ist fallend für alle } \theta
+        > \hat{\theta}.
+      \end{aligned}
+    \right.
+  \]
+  Dann gilt
+  \[ \hat{\theta} = T(X_1, \ldots, X_n) \xrightarrow{\pP, n \to \infty}
+    \theta. \]
+\end{thm}
+
+\begin{defn} %% 3.25
+  Seien $\theta, \theta' \in \Theta$ und sei
+  \[ L(x; \theta) = \begin{cases}
+      f_\theta(x) &\text{im absolutstetigen Fall,} \\
+      p_\theta(x) &\text{im diskreten Fall}
+    \end{cases}
+  \]
+  die (Zähl-)dichte von $F_\theta$ bzw. $\pP_\theta$. Dann ist die
+  \emph{Kullbach-Leibler-Divergenz} $\D( \pP_\theta \| \pP_{\theta'} )$ von
+  $\pP_\theta$ und $\pP_{\theta'}$ definiert als
+  \[ \D( \pP_\theta \| \pP_{\theta'} ) := \pE_\theta [ \log L(X; \theta) ] -
+    \pE_\theta[ \log L(X; \theta' )]. \]
+  Insbesondere ergibt sich für zwei absolutstetige Verteilungen
+  \[ \D( \pP_\theta \| \pP_{\theta'} ) =
+    \begin{cases}
+      \int_\real \log \left( \frac{f_\theta(x)}{f_{\theta'}(x)} f_\theta(x)
+        \diffop x \right), &\pP_\theta( L(X; \theta') = 0 ) = 0, \\
+      \infty & \pP_\theta( L(X; \theta') = 0 ) > 0
+    \end{cases}
+  \]
+  und für zwei diskrete Verteilungen
+  \[ \D( \pP_\theta \| \pP_{\theta'} ) =
+    \begin{cases}
+      \sum_{x \in I} \log \left( \frac{p_\theta(x)}{p_{\theta'}(x)} p_\theta(x)
+        \diffop x \right), &\pP_\theta( L(X; \theta') = 0 ) = 0, \\
+      \infty & \pP_\theta( L(X; \theta') = 0 ) > 0.
+    \end{cases}
+  \]
+  Offenbar ist $\D( \pP_\theta \| \pP_{\theta'} )$ nicht symmetrisch, also keine
+  Metrik.
+\end{defn}
+
+\begin{lem} %% 3.26
+  Seien $\theta, \theta' \in \Theta$, dann gelten
+  \begin{enumerate}
+  \item $\D( \pP_\theta \| \pP_{\theta'} ) \ge 0$,
+  \item $\D( \pP_\theta \| \pP_{\theta'} ) = 0$ $\Rightarrow$ $\pP_\theta =
+    \pP_{\theta'}$, also $\theta = \theta'$.
+  \end{enumerate}
+\end{lem}
+
+\begin{proof}
+  Wir betrachten den absolutstetigen Fall, der diskrete läuft analog.
+
+  Zu 1.: Falls $\pP_\theta( L(X; \theta') = 0 ) > 0$, so ist nichts zu zeigen.
+  Sei also $\pP_\theta( L(X; \theta') = 0 ) = 0$. Setze
+  \[ g(x) := \begin{cases}
+      \frac{f_\theta(x)}{f_{\theta'}(x)}, & f_{\theta'}(x) \ne 0, \\
+      1, &\text{sonst.}
+    \end{cases}
+  \]
+  Dann gilt mit Wahrscheinlichkeit 1, dass
+  \[ L(x; \theta) = g(x) L( x; \theta' ). \]
+  Definiere $h(x) := 1 - x + x \log x$, $x > 0$. Dann ist $h$ konvex, denn
+  \begin{align*}
+    h'(x) &= -1 + \log x +1 = \log x, \\
+    h''(x) &= \rez{x} > 0.
+  \end{align*}
+  Zudem besitzt $h$ nur ein Minimum bei $x = 1$, welches auch die einzige
+  Nullstelle von $h$ ist. Es gilt also $h(x) \ge 0$. Sei $X$ Zufallsvariable mit
+  $X \sim F_{\theta'}$, also mit Dichte $f_{\theta'}$. Dann ist
+  \begin{align*}
+    0 &\le \pE_{\theta'}[ h(g(x)) ] \\
+      &= 1 - \pE_{\theta'}[g(x)] + \pE_{\theta'}[g(x) \log(g(x))] \\
+      &= 1- \int \frac{f_\theta(x)}{f_{\theta'}(x)} f_{\theta'} \diffop x +
+        \int \frac{f_\theta(x)}{f_{\theta'}(x)}
+        \log \left( \frac{f_\theta(x)}{f_{\theta'}(x)} \right)
+        f_{\theta'}(x) \diffop x \\
+      &= 1 - 1 + \int
+        \log \left( \frac{f_\theta(x)}{f_{\theta'}(x)} \right)
+        f_\theta(x)\diffop x \\
+      &= \D( \pP_\theta || \pP_{\theta'} ).
+  \end{align*}
+
+  Zu 2.: Falls $\D( \pP_\theta || \pP_{\theta'} ) = 0$, so folgt
+  \[ \pE_{\theta'}[ h(g(X))] = 0. \]
+  Da jedoch $h(g(X)) \ge 0$, muss also fast sicher $h(g(X)) = 0$ gelten. Damit
+  ist $g(X) = 1$ fast sicher und damit gilt entweder $f_\theta(x) =
+  f_{\theta'}(x)$ oder $f_{\theta'} = 0$. Also folgt $\pP_\theta = \pP_{\theta'}$.
+\end{proof}
+
+\begin{proof}[Beweis von Satz 3.24]
+  Zu zeigen: Für alle $\eps > 0$ gilt
+  \begin{equation}
+    \pP_\theta \left( | \hat{\theta} - \theta | > \eps \right)
+    \xrightarrow{n \to \infty} 0.
+  \end{equation}
+  Da die Familie $\{ F_\theta, \theta \in \Theta \}$ ist, gilt dann
+  \[ \D( \pP_\theta || \pP_{\theta \pm \eps} ) > \delta > 0 \]
+  nach Lemma 3.26.
+
+  Um (3.3) zu zeigen, genügt es, eine untere Schranke für $\pP(|\hat{\theta} -
+  \theta| \le \eps)$ zu finden, welche gegen 1 konvergiert.
+  \[ \begin{aligned}
+      \{ |\hat{\theta} - \theta| < \eps \}
+      &\supseteq \left\{
+        L(X_1, \ldots, X_n; \theta) > L(X_1, \ldots, X_n; \theta \pm \eps)
+      \right\} \\
+      &= \left\{
+        \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n; \theta \pm \eps)}
+        > 1
+      \right\} \\
+      &\supseteq \left\{
+        \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n; \theta \pm \eps)}
+        > e^{n \delta}
+      \right\} \\
+      &= \left\{
+        \rez{n} \log \left( 
+          \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n; \theta \pm \eps)}
+          > \delta
+         \right)
+      \right\} =: E_+ \cap E_-.
+    \end{aligned}
+  \]
+  Das erste ``$\supseteq$'' folgt aus der Unimodalität.
+
+  Es gilt also
+  \[ \begin{aligned}
+      \pP_\theta( |\hat{\theta} - \theta| < \eps )
+      &\ge \pP_\theta( E_+ \cap E_- ) \\
+      &= \pP_\theta( E_+ ) + \pP_\theta( E_- ) - \pP_\theta( E_+ \cup E_- ).
+    \end{aligned}
+  \]
+  Wenn
+  \begin{equation}
+    \lim_{n \to \infty} \pP_\theta( E_\pm ) = 1,
+  \end{equation}
+  dann gilt
+  \[ 1 = \lim_{n \to \infty} \pP_\theta( E_\pm ) \le
+    \lim_{n \to \infty} \pP_\theta( E_+ \cup E_- ) \le 1, \]
+  also
+  \[ \lim_{n \to \infty} \pP_\theta( E_+ \cup E_-) = 1 \]
+  so dass
+  \[ 1 \ge \lim_{n \to \infty} \pP_\theta( |\hat{\theta} - \theta| < \eps ) \ge
+    1 + 1 - 1 = 1 \]
+  und damit
+  \[ \lim_{n \to \infty} \pP_\theta( |\hat{\theta} - \theta| \le \eps) \ge
+    \lim_{n \to \infty} \pP_\theta( |\hat{\theta} - \theta < \eps ) = 1, \]
+  also die Behauptung (3.3).
+
+  Zeige (3.4): Wir nehmen an, dass $\{ F_\theta, \theta \in \Theta \}$ nur
+  absolutstetige Verteilungen enthält. Wir betrachten $\pP_\theta(E_+)$ mit
+  \[ E_+ = \left\{
+      \rez{n} \log \left(
+        \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n; \theta + \eps)} 
+      \right) > \delta
+    \right\}. \]
+  Setze
+  \[ g(x) := \begin{cases}
+      \frac{f_\theta(x)}{f_{\theta + \eps}(x)}, &f_{\theta + \eps}(x) > 0, \\
+      1, &\text{sonst.}
+    \end{cases}
+  \]
+  Wir machen eine Fallunterscheidung basierend auf $\D( \pP_\theta \|
+  \pP_{\theta + \eps})$,
+    \[ \D( \pP_\theta \| \pP_{\theta'} ) =
+    \begin{cases}
+      \int_\real \log \left( \frac{f_\theta(x)}{f_{\theta + \eps}(x)} f_\theta(x)
+        \diffop x \right), &\pP_\theta( L(X; \theta + \eps) = 0 ) = 0, \\
+      \infty & \pP_\theta( L(X; \theta + \eps) = 0 ) > 0
+    \end{cases}
+  \]
+
+  \begin{enumerate}
+  \item $\D( \pP_\theta \| \pP_{\theta + \eps}) < \infty$. Dann ist
+    \[ \pP_\theta( L(X; \theta + \eps) > 0) = 1. \]
+    Zudem ist
+    \[ \begin{aligned}
+        \rez{n} \log \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n;
+          \theta + \eps)}
+        &= \rez{n} \sum_{i=1}^n \log
+        \frac{L(X_i; \theta)}{L(X_i; \theta + \eps)} \\
+        &= \rez{n} \sum_{i=1}^n \log g(X_i) \\
+        &\xrightarrow{\text{f.s.}}
+        \pE_\theta[\log g(X_1)]
+      \end{aligned}
+    \]
+    nach dem starken Gesetz der großen Zahlen, denn
+    \[ \pE_\theta[ \log g(X_1)] = \int \log(g(x)) f_\theta(x) \diffop x =
+      \D( \pP_\theta \| \pP_{\theta + \eps}) < \infty. \]
+    Da $\D( \pP_\theta \| \pP_{\theta + \eps}) > \delta > 0$ folgt damit
+    \[ \pP_\theta (E_+) \xrightarrow{n \to \infty} 1. \]
+  \item $\D( \pP_\theta \| \pP_{\theta + \eps}) = 0$ und $\pP_\theta(L(X, \theta
+    + \eps) = 0) = 0$: Es gilt
+    \[ g(x) = \frac{f_\theta(x)}{f_{\theta + \eps}(x)} \quad \text{ fast
+        sicher.} \]
+    Wir nutzen ein Abschneideargument: Für $c > 0$ fix gilt
+    \[ \pE_\theta \left[
+        \log \left(
+          \min \{ g(X_1), c \}
+        \right)
+      \right] < \infty \]
+    und damit wie unter 1.:
+    \[ \rez{n} \sum_{i=1}^n \log \left(
+        \min \{ g(X_i), c \}
+      \right)
+      \xrightarrow{\text{f.s.}}
+      \pE_\theta \left[
+        \log \left(
+          \min \{ g(X_1), c \}
+        \right)
+      \right]
+      \xrightarrow{c \to \infty}
+      \D( \pP_\theta \| \pP_{\theta + \eps}).
+    \]
+    Da jedoch
+    \[ E_+ \supset \left\{
+        \rez{n} \sum_{i=1}^n \log
+        \left(
+          \min \{ g(X_1), c \}
+        \right)
+        > \delta
+      \right\}, \]
+    folgt
+    \[ \pP_\theta( E_+ ) \ge \pP
+      \left(
+        \left\{ \rez{n} \sum_{i=1}^n \log
+        \left(
+          \min \{ g(X_1), c \}
+        \right)
+        > \delta
+      \right\}
+    \right)
+    \xrightarrow{n \to \infty} 1.
+  \]
+\item $\D( \pP_\theta \| \pP_{\theta + \eps}) = \infty$ und $\pP_\theta(L(X, \theta
+  + \eps) = 0) = a > 0$: In diesem Fall gilt
+  \[ \begin{aligned}
+      &\phantom{=} \pP_\theta \left(
+        \rez{n} \log
+        \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n; \theta + \eps)}
+        \infty
+      \right) \\
+      &= 1 - \pP_\theta \left(
+        \rez{n} \log
+        \frac{L(X_1, \ldots, X_n; \theta)}{L(X_1, \ldots, X_n; \theta + \eps)}
+        < \infty
+      \right) \\
+      &= 1 - \pP_\theta \left(
+        \bigcap_{i=1}^n \{ L(X_i, \theta + \eps) > 0 \}
+      \right) \\
+      &= 1 - (1-a)^n \xrightarrow{n \to \infty} 1,
+    \end{aligned}
+  \]
+  also insbesondere $\pP_\theta(E_+) \xrightarrow{n \to \infty} 1$. \qedhere
+  \end{enumerate}
+\end{proof}
+
+\section{Intervallschätzung}
+\emph{Idee:} Beziehe die Präzision der Schätzung mit ein.
+
+\begin{defn}
+  Sei $\alpha \in (0,1)$ fix, dann liefern die Statistiken
+  \[ g_u = G_u(X_1, \ldots, X_n)
+    \quad \text{und} \quad
+    g_o = G_o(X_1, \ldots, X_n) \]
+  der Zufallsstichprobe $(X_1, \ldots, X_n)$ ein
+  \emph{$1-\alpha$-Konfidenzintervall} für den Parameter $\theta$, wenn
+  \[ \pP_\theta( g_u \le g_o ) \le 1
+    \quad \text{und} \quad
+    \pP_\theta( g_u \le \theta \le g_o ) = 1 - \alpha. \]
+  Für eine gegebene Realisierung $(X_1, \ldots, X_n) = (x_1, \ldots, x_n)$ ist
+  \[ [G_u(x_1, \ldots, x_n), G_o(x_1, \ldots, x_n)] \]
+  das \emph{realisierte $1-\alpha$-Konfidenzintervall} für $\theta$.
+\end{defn}
+
+\emph{Beachte:}
+\begin{itemize}
+\item $[g_u, g_o]$ ist ein zufälliges Intervall.
+\item \textbf{Nicht}: $\theta$ liegt mit Wahrscheinlichkeit $1-\alpha$ im
+  Konfidenzintervall, denn $\theta$ ist \emph{nicht} zufällig.
+\item Sondern: $\theta$ wird mit Wahrscheinlichkeit $1-\alpha$ vom
+  Konfidenzintervall überdeckt.
+\item Übliche Werte für die \emph{Irrtumswahrscheinlichkeit} sind
+  \[ \alpha = \num{0.1}, \quad
+    \alpha = \num{.05}, \quad
+    \alpha = \num{.01}. \]
+  Die resultierenden \emph{Überdeckungswahrscheinlichkeiten} sind
+  \[ 1 - \alpha = \num{.9} = 90 \%, \quad
+    1 - \alpha = \num{.95} = 95 \%, \quad 
+    1 - \alpha = \num{.99} = 99 \%. \]
+\item Das Konfidenzintervall wie oben definiert ist nicht eindeutig, da die
+  Irrtumswahrscheinlichkeit auf das Über- oder Unterschreiten des Intervalls
+  aufgeteilt wird. Daher betrachtet man meist \emph{symmetrische}
+  Konfidenzintervalle, bei denen
+  \[ \pP_\theta( \theta < g_u ) = \frac{\alpha}{2}
+    = \pP_\theta( \theta > g_o ) \]
+  gilt.
+
+  Bei \emph{einseitigen} Konfidenzintervallen wird eine Grenze auf $\pm \infty$
+  gesetzt, betrachte also $(-\infty, g_o]$ oder $[g_u,\infty)$. Es muss dann
+  \[ \pP_\theta( \theta \le g_o ) = 1-\alpha \quad \text{oder} \quad
+    \pP_\theta(\theta \ge g_u) = 1-\alpha \]
+  gelten.
+\end{itemize}
+
+\begin{exmp}
+  Sei $(X_1,\ldots,X_n)$ eine Zufallsstichprobe normalverteilter Daten mit $X_i
+  \sim \ndist(\mu, \sigma^2)$. Gesucht ist das Konfidenzintervall für den
+  unbekannten Parameter $\mu$.
+  
+  1. Fall: $\sigma^2$ ist bekannt. Verwende das arithmetische Mittel:
+  \[ \bar{X} = \rez{n} \sum_{i=1}^n X_i \sim \ndist\left(\mu,
+      \frac{\sigma^2}{n}\right). \]
+  \[ \Rightarrow \quad U := \frac{\bar{X}-\mu}{\sigma / \sqrt{n} }
+    \sim \ndist(0,1), \]
+  das heißt, die Verteilung von $U$ ist bekannt und unabhängig von $\mu$. Also
+  gilt
+  \[ \pP( -z_{1 - \frac{\alpha}{2}}) \le U \le z_{1 - \frac{\alpha}{2}}) = 1
+    - \alpha \]
+  mit $z_\alpha = \alpha$-Quantil der Standard-Normalverteilung. Damit
+  \[ \begin{aligned}
+      1-\alpha
+      &= \pP\left( - z_{1 - \frac{\alpha}{2}} <
+        \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \le z_{1 - \frac{\alpha}{2}}
+      \right) \\
+      &= \pP\left( - z_{1 - \frac{\alpha}{2}} \frac{\sigma}{\sqrt{n}} <
+        \bar{X}-\mu
+        \le z_{1 - \frac{\alpha}{2}} \frac{\sigma}{\sqrt{n}}
+      \right) \\
+      &= \pP \left( \bar{X} - z_{1 - \frac{\alpha}{2}} \frac{\sigma}{\sqrt{n}} \le
+        \mu < \bar{X} +
+        z_{1 - \frac{\alpha}{2}} \frac{\sigma}{\sqrt{n}}
+      \right).
+    \end{aligned}
+  \]
+  Also gilt:
+  \[ \left[ \bar{X} - z_{1 - \frac{\alpha}{2}} \frac{\sigma}{\sqrt{n}},
+      \bar{X} + z_{1 - \frac{\alpha}{2}} \frac{\sigma}{\sqrt{n}} \right] \]
+  ist ein $1-\alpha$-Konfidenzintervall für $\mu$.
+  \begin{itemize}
+  \item Das Konfidenzintervall ist symmetrisch um $\bar{X}$ (den
+    Punktschätzer).
+  \item Wächst $\alpha$, wird das Konfidenzintervall kleiner.
+  \item Wächst $n$, so wird das Intervall kleiner (also die Schätzung
+    präziser).
+  \end{itemize}
+  
+  2. Fall: $\sigma^2$ unbekannt. Verwende anstelle von $U = \frac{\bar{X} -
+    \mu}{\sigma / \sqrt{n}}$
+  \[ T := \frac{\bar{X} - \mu}{s/\sqrt{n}} = U \cdot \sqrt{
+      \frac{s^2}{\sigma^2}} = \frac{U}{\sqrt{V / (n-1)}}\]
+  mit der empirischen Varianz $s^2$ und
+  \[ V = \frac{(n-1)s^2}{\sigma^2} = \sum_{i=1}^n
+    \left( \frac{X_i - \bar{X}}{\sigma} \right)^2. \]
+  Schreibe $Z_i = \frac{X_i - \mu}{\sigma} \sim \ndist(0,1)$, so gilt
+  \[ V = \sum_{i=1}^n (Z_i - \bar{Z})^2 = \sum_{i=1}^n Z_i^2 - n \bar{Z}^2 \]
+  mit
+  \[ \bar{Z} = \rez{n} \sum_{i=1}^n Z_i = \rez{\sigma n}
+    \left( \sum_{i=1}^n (X_i - \mu) \right)
+    = \frac{n \bar{X} - n \mu}{n \sigma} = \rez{\sqrt{n}} U. \]
+  Setze nun
+  \[ Y = (Y_1, \ldots, Y_n)^\top = A(Z_1, \ldots, Z_n)^\top = A Z^\top \]
+  mit $A \in \realmat{n}{n}$ orthogonal, so dass
+  \[ Y_1 = \rez{n} \sum_{i=1}^n Z_i = \sqrt{n} \bar{Z} = U. \]
+  Dann sind $Y_1, \ldots, Y_n$ unabhängig mit $\ndist(0,1)$ und
+  \[ \sum_{i=1}^n Y_i^2 = Y Y^\top = (AZ)(AZ)^\top = ZZ^\top = \sum_{i=1}^n
+    Z_i^2. \]
+  Es folgt
+  \[ V = \sum_{i=1}^n Z_i^2 - n \bar{Z}^2 = \sum_{i=1}^n Y_i^2 - Y_1^2 =
+    \sum_{i=2}^n Y_i^2 \sim \chi_{n-1}^2 \]
+  und dass $V$ und $U$ unabhängig sind. Also ist $T$ t-verteilt mit $n-1$
+  Freiheitsgraden. Damit gilt
+  \[ \pP \left( -t_{n-1,1-\alpha/2} <
+      \frac{\bar{X}-\mu}{s/\sqrt{n}} \le
+      t_{n-1,1-\alpha/2} \right)
+    = 1 - \alpha \]
+  mit $t_{n-1,1-\alpha/2}$ dem $1-\alpha/2$-Quantil der t-Verteilung mit $n-1$
+  Freiheitsgraden. Als Konfidenzintervall für $\mu$ folgt (wie unter 1.):
+  \[ \left[ \bar{X} - t_{n-1,1-\alpha/2} \frac{s}{\sqrt{n}},
+      \bar{X} + t_{n-1,1-\alpha/2} \frac{s}{\sqrt{n}} \right]. \]
+  Quantilberechnung in R mit \verb+qt(.,n)+
+\end{exmp}
+
+\section{Asymptotische Normalität}
+\begin{defn}
+  Eine Folge von Schätzern $\hat{\theta}_n = T(X_1, \ldots, X_n) \in \real$ für
+  einen Parameter $\theta$ ist \emph{asymptotisch normalverteilt}, falls für
+  alle $\theta \in \Theta$ Folgen $\mu_n(\theta) \in \real$ und
+  $\sigma_n(\theta) > 0$ existieren, so dass
+  \[ \frac{\hat{\theta}_n - \mu_n(\theta)}{\sigma_n(\theta)} \xrightarrow{d} Z
+    \sim \ndist(0,1). \]
+\end{defn}
+
+\emph{Beachte:}
+\begin{itemize}
+  \item Meist gilt $\mu_n(\theta) = \pE_\theta[T(X_1, \ldots, X_n)]$ und
+    $\sigma_n^2(\theta) = \var_\theta(T(X_1, \ldots, X_n))$. Das muss aber nicht
+    der Fall sein.
+  \item Falls $\mu_n(\theta) = \pE_\theta[T(X_1, \ldots, X_n)]$ und
+    $\sigma_n^2(\theta) = \var_\theta(T(X_1, \ldots, X_n))$ gewählt werden kann
+    und $\lim_{n \to \infty} \sigma_n = 0$, so folgt aus der asymptotischen
+    Normalität auch asymptotische Erwartungstreue und schwache Konsistenz (Lemma
+    3.6).
+\end{itemize}
+
+\begin{exmp}
+  \begin{enumerate}[(i)]
+  \item Seien $X_1, \ldots, X_n$ i.i.d. Zufallsvariablen, so dass
+    $\pE_\theta|X|^{2k} < \infty$, dann ist das $k$-te empirische Moment (Def.
+    3.13) asymptotisch normalverteilt, dann nach dem zentralen Grenzwertsatz
+    gilt
+    \begin{align*}
+      \frac{\hat{\mu} - \pE_\theta[\hat{\mu}_k]}{\sqrt{\var (\hat{\mu}_k)}}
+      &= \frac{\rez{n} \sum_{i=1}^n X_i^k - \rez{n} \sum_{i=1}^n \pE[X_i]^k}
+      {\sqrt{\var \left( \rez{n} \sum_{i=1}^n X_i^k \right)}} \\
+      &= \frac{\hat{\mu}_k - \pE[X_1^k]}{\sqrt{\rez{n} \var{(X_1^k)}}} \\
+      &= \sqrt{n} \cdot \frac{\hat{\mu}_k - \pE_\theta(X_1^k)}{\sqrt{\var(X_1^k)}}
+        \to Z \sim \ndist(0,1)
+    \end{align*}
+  \item Die empirische Verteilungsfunktion $\hat{F}_n(x)$ (Def. 2.5) ist
+    asymptotisch normalverteilt. Aus Satz 3.12 ist bekannt, dass für alle $x \in
+    \real$
+    \[ \hat{F}_n(x) = \rez{n} \sum_{i=1}^n \ind_{\{X_i \le x\}}, \]
+    wobei die $Y_i = \ind_{\{X_i \le x\}} \sim \mathrm{Bernoulli}(F(x))$ i.i.d.
+    sind. Also folgt aus dem zentralen Grenzwertsatz (angewandt auf $Y_i$):
+    \[ \sqrt{n} \cdot \frac{\hat{F}_n(x) - F(x)}{\sqrt{F(x)(1-F(x))}}
+    \to Z \sim \ndist(0,1), \quad n \to \infty. \]
+  \end{enumerate}
+\end{exmp}
+
+\begin{rmrk}
+  Für asymptotisch normalverteilte Schätzer lassen sich \emph{asymptotische
+    Konfidenzintervalle} bestimmen: Sei $(X_1, \ldots, X_n)$ Zufallsstichprobe,
+  sodass $\pE[X_i] = \mu$, $\var(X_i) = \sigma^2 < \infty$. Dann folgt aus
+  Beispiel 3.30(i), dass $\bar{X}$ asymptotisch normalverteilt ist, es gilt also
+  \[ \sqrt{n} \frac{\bar{X} - \mu}{\sigma} \xrightarrow{d} Z \sim
+    \ndist(0,1). \]
+  Zudem gilt nach Korollar 3.15 starke Konsistenz von $s^2$, also
+  \[ s^2 \xrightarrow{\text{f.s.}} \sigma^2 \qRq
+    \frac{\sigma^2}{s} \xrightarrow{\text{f.s.}} 1, \quad
+    n \to \infty.
+  \]
+  Damit folgt nach dem Lemma von Slutzky
+  \[ \sqrt{n} \cdot \frac{\bar{X} - \mu}{s}
+    = \sqrt{n} \cdot \frac{\bar{X} - \mu}{\sigma} \cdot \frac{\sigma}{s}
+    \xrightarrow{d} Z \cdot 1 \sim \ndist(0,1) \]
+  und es folgt
+  \[ \pP \left( -z_{1-\alpha/2} \le
+      \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \le
+      z_{1-\alpha/2} \right) \to 1 - \alpha, \quad n \to \infty, \]
+  so dass
+  \[ \left[ \bar{X} - z_{1-\alpha/2} \frac{s}{\sqrt{n}},
+      \bar{X} + z_{1-\alpha/2} \frac{s}{\sqrt{n}} \right] \]
+  ein asymptotisches Konfidenzintervall für $\mu$ ist.
+\end{rmrk}
+
+\begin{lem}[Delta-Methode]
+  Sei $\hat{\theta}$ eine Folge von Schätzern, so dass
+  \[ \frac{\hat{\theta}_n - \mu}{\sigma_n} \xrightarrow{d}
+    Z \sim \ndist(0,1), \quad n \to \infty \]
+  wobei $\lim_{n \to \infty} \sigma_n = 0$.
+
+  Sei $g$ eine Funktion, welche in einer Umgebung von $\mu$ definiert ist und in
+  $\mu$ differenzierbar ist mit $g'(\mu) \ne 0$. Dann gilt:
+  \[ \frac{g(\hat{\theta}_n) - g(\mu)}{g'(\mu) \sigma_n}
+    \xrightarrow{d} Z \sim \ndist(0,1), \quad n \to \infty. \]
+\end{lem}
+
+\begin{proof}
+  Verwende eine Taylorentwicklung von $g$ um $\mu$:
+  \[ g(\hat{\theta}_n) = g(\mu) + (\hat{\theta}_n) g'(\mu) + R_n. \]
+  Also
+  \[ \frac{g(\hat{\theta}_n) - g(\mu)}{g'(\mu) \sigma_n} =
+    \underbrace{\frac{\hat{\theta}_n - \mu}{\sigma_n}}_{
+      \xrightarrow{d} Z \sim \ndist(0,1)}
+    + \frac{R_n}{g'(\mu) \sigma_n}. \]
+  da $R_n$ nur höhere Potenzen von $(\hat{\theta}_n - \mu)$ enthält, gilt
+  $\frac{R_n}{\sigma_n} \xrightarrow{d} 0$ und damit folgt die Behauptung.
+\end{proof}
+
+\begin{exmp}
+  Seien $X_i \sim U[-\theta, \theta]$ i.i.d. mit $\theta > 0$ unbekannt. Dann
+  ist nach Beispiel 3.30 der Momentenschätzer für $\theta$
+  \[ \theta_n = T(X_1, \ldots, X_n) = \sqrt{\frac{3}{n} \sum_{i=1}^n X_i^2}
+    = \sqrt{3 \hat{\mu}_2}, \]
+  wobei
+  \[ \frac{\mu_2 - \pE[\hat{\mu_2}]}{\sqrt{\var_\theta(\hat{\mu}_2)}}
+    \xrightarrow{d} Z \sim \ndist(0,1). \]
+
+  Hierbei ist
+  \[ \pE[\hat{\mu}_2] = \pE[X_1^2] = \rez{2\theta} \int_{-\theta}^\theta x^2
+    \diffop x = \frac{\theta^2}{3} \]
+  und
+  \[ \var_\theta(\hat{\mu}_2) = \rez{n} \var_\theta (X_1^2) =
+    \rez{n} (\pE[X_1^4] - \pE_\theta[X_1^2]^2) = \ldots =
+    \rez{n} \left( \frac{\theta^4}{5}-\frac{\theta^4}{9} \right)
+    = \rez{n} \frac{4}{45} \theta^4, \]
+  sodass
+  \[ \frac{\hat{\mu}_2
+      - \frac{\theta}{3}}{\sqrt{\rez{n} \frac{4}{45} \theta^4}}
+    \xrightarrow{d} Z \sim \ndist(0,1). \]
+  Da
+  \[ \sigma_n = \sqrt{\frac{4}{45} \rez{n} \theta^4} \to 0, \quad n \to
+    \infty \]
+  ist Lemma 3.32 anwendbar. Setze $g: \real_+ \to \real : x \mapsto \sqrt{3x}$,
+  dann ist $g$ differenzierbar mit $g'(x) = \rez{2} \sqrt{\frac{3}{x}} \ne 0$
+  und es folgt
+  \[ \frac{g(\hat{\mu}_2) -
+      g(\pE_\theta[\hat{\mu}_2])}
+    {g'(\pE_\theta[\hat{\mu}_2]) \sqrt{\var(\hat{\mu}_2)}}
+    = \sqrt{5n} \frac{\hat{\theta}_n-\theta}{\theta}
+    \xrightarrow{d} Z \sim \ndist(0,1), \quad n \to \infty. \]
+\end{exmp}
+
+Im Allgemeinen erhält man mit der Beweistechnik von Lemma 3.32:
+\begin{prp}[Delta-Methode]
+  Sei $\hat{\theta}_n$ eine Folge von Schätzern in $\real^m$, so dass
+  \[ \frac{\hat{\theta}_n - \mu}{c_n} \xrightarrow{d} Z \sim \ndist(0, \Sigma),
+  \quad n \to \infty, \]
+  wobei $\mu \in \real^m$, $c_n \in \real$ mit $\lim_{n \to \infty} c_n = 0$,
+  $\Sigma \in \realmat{m}{m}$ symmetrisch und nicht-negativ definit (positiv
+  semidefinit).
+
+  Sei $g : \real^n \to \real^k$ eine Funktion definiert durch
+  \[ g(x) = (g_1(x), \ldots, g_k(x))^\top, \quad x \in \real^m, \]
+  welche komponentenweise in einer Umgebung von $\mu$ stetig differenzierbar ist
+  und setze
+  \[ D = \left( \pdiff{g_i}{x_j}(\mu) \right)_{
+      \substack{i=1,\ldots,k \\ j=1,\ldots,m}}. \]
+  Sind alle Diagonalelemente von $D \Sigma D^\top$ nicht null, so gilt:
+  \[ \frac{g(\hat{\theta}_n) - g(\mu)}{c_n} \xrightarrow{d}
+  Z' \sim \ndist(0, D \Sigma D^\top), \quad n \to \infty. \]
+\end{prp}
+
+\begin{exmp}
+  Seien $X_i \sim \ndist(\mu,\sigma^2)$ unabhängig mit unbekannten Parametern
+  $(\mu,\sigma^2) = \theta$. Dann sind die Momentenschätzer für $\mu$ und
+  $\sigma^2$ (Bsp. 3.18):
+  \[ \hat{\mu} = \bar{X} - \hat{\mu}_1 \quad \text{und} \quad
+    \hat{\sigma}^2 = \rez{n} \sum_{i=1}^n X_i^2 - \hat{\mu}_2
+    = \hat{\mu}_2 - (\hat{\mu}_1)^2. \]
+  Definiere $Y_i = \pmat{X_i \\ X_i^2}$, dann sind die $Y_i$ i.i.d. und nach dem
+  zentralen Grenzwertsatz gilt
+  \[ \sqrt{n} ( \bar{Y} - \pE_\theta[Y_1]) \xrightarrow{d} Z \sim(0,\Sigma) \]
+  mit
+  \[ \Sigma = \pE_\theta[Y_1 Y_1^\top] = \pE
+    \left[ \pmat{ X_1^2 & X_1^3 \\ X_1^3 X_1^4} \right] \cdot
+    \begin{pmatrix}
+      \mu^2 + \sigma^2 & \mu^3 + 3 \mu \sigma^2 \\
+      \mu^3 + 3 \mu \sigma^2 & \mu^4 + 6 \mu^2 \sigma^2 + 3 \sigma^4
+    \end{pmatrix},
+  \]
+  also mit $\pmat{\hat{\mu}_1 \\ \hat{\mu}_2} = \bar{Y}$ asymptotisch
+  normalverteilt.
+
+  Definiere nun:
+  \[ g : \real^2 \to \real^2, (x,y)^\top \mapsto (x, y+x^2)^\top, \]
+  \[ D := \left( \pdiff{g}{x_j} \pE_\theta[Y] \right)
+    = \pmat{ 1 & 0 \\ -2 \mu & 1 }, \]
+  \[ D \Sigma D^\top =
+    \begin{pmatrix}
+      \mu^2 + \sigma^2 & \mu( \sigma^2 - \mu^2 ) \\
+      \mu( \sigma^2 - \mu^2 ) & (\sigma^2 - \mu^2) + 2 \sigma^4
+    \end{pmatrix}
+  \]
+  Die Delta-Methode (Satz 3.34) liefert nun
+  \[ \sqrt{n} \left( \pmat{ \hat{\mu} \\ \hat{sigma}^2} -
+      \pmat{\mu \\ \sigma^2} \right)
+    \xrightarrow{d} Z \sim \ndist(0, D \Sigma D^\top )\]
+\end{exmp}
+
+\begin{defn}
+  Sei $(X_1, \ldots, X_n)$ eine Zufallsstichprobe von i.i.d. Zufallsvariablen
+  $X_i \sim F_\theta$, $\theta \in \Theta$, wobei $\Theta$ ein offenes Intervall
+  in $\real$ und $\{ F_\theta, \theta \in \Theta \}$ eine Verteilungsfamilie
+  ist, welche nur absolutstetige oder nur diskrete Verteilungen beinhaltet.
+  Sei
+  \[ \begin{aligned}
+      L(x_1, \ldots, x_n; \theta) = \begin{cases}
+        \prod_{i=1}^n f_\theta(x_i), &
+        \text{im absolutstetigen Fall,} \\
+        \prod_{i=1}^n p_\theta(x_i), &
+        \text{im diskreten Fall,}
+      \end{cases}
+    \end{aligned}
+  \]
+  die Likelihood-Funktion (und damit die (Zähl-)Dichte) von $(X_1, \ldots,
+  X_n)$. Dann ist die \emph{Fisher-Information} der Stichprobe gerade
+  \[ I_n(\theta) := \pE_\theta \left[ 
+      \left( \pdiff{}{\theta} \log L(X_1, \ldots, X_n; \theta) \right)^2
+    \right], \quad \theta \in \Theta. \]
+\end{defn}
+
+\begin{thm} [Asymptotische Normalität der Maximum-Likelihood-Schätzer]
+  Sei $m=1$ und $\Theta$ ein offenes Intervall in $\real$. Sei $\{ F_\theta,
+  \theta \in \Theta \}$ eine Verteilungsfamilie, welche nur absolutstetige oder
+  nur diskrete Verteilungen beinhaltet und identifizierbar ist. Sei
+  $(X_1, \ldots, X_n)$ eine Zufallsstichprobe aus i.i.d. Zufallsvariablen $X_i
+  \sim F_\theta$, so dass die folgenden Bedingungen erfüllt sind:
+  \begin{enumerate}
+  \item $0 < I_1(\theta) < \infty$.
+  \item $B := \operatorname{supp} L(x; \theta) = \{ x \in \real : L(x,\theta) >
+    0 \}$ hängt nicht von $\theta$ ab.
+  \item $L(x;\theta)$ ist dreimal stetig differenzierbar in $\theta$ und es
+    gelten für $k = 1,2$ und $\theta \in \Theta$ die Regularitätsbedingungen
+    \[ \int_B \frac{\partial^k}{\partial \theta^k} L(x;\theta) \diffop x
+      = \frac{\partial^k}{\partial \theta^k} \int_B L(x;\theta) \diffop x =
+      0. \]
+  \item Für jedes $\theta_0 \in \Theta$ existieren eine Konstante $\delta =
+    \delta( \theta_0 )$, sowie eine messbare Funktion $g_{\theta_0} : B \to
+    [0, \infty]$ mit $\pE[g_{\theta_0}(X_1)] < \infty$, so dass
+    \[ \left| \frac{\partial^3}{\partial \theta^3} \log L(x;\theta) \right|
+      \le g_{\theta_0} (x), \quad \forall x \in B, |\theta-\theta_0| < \delta. \]
+  \end{enumerate}
+  Ist $\hat{\theta} = T(X_1, \ldots, X_n)$ ein schwach konsistenter ML-Schätzer
+  für $\theta$, so ist $\hat{\theta}$ asymptotisch normalverteilt:
+  \[ \sqrt{n \cdot I_1(\theta)} (\hat{\theta} - \theta) \xrightarrow{d} Z \sim
+    \ndist( 0, 1 ), \quad n \to \infty. \]
+\end{thm}
+
+Für den Beweis benötigt man das folgende Lemma:
+\begin{lem}
+  Sei $(X_1, \ldots, X_n)$ eine Zufallsstichprobe mit Fisher-Information
+  $I^{(n)}(\theta)$ entsprechend Definition 3.36. Es gelten die Bedingungen 1.
+  bis 3. von Satz 3.37. Dann gilt
+  \[ n \cdot I_1(\theta) = I_n(\theta) = \var_\theta\left(
+    \pdiff{}{\theta} \log L(X_1, \ldots, X_n; \theta) \right). \]
+\end{lem}
+
+\begin{proof}
+  Es gilt
+  \begin{align*}
+    \pdiff{}{\theta} \log L(X_1, \ldots, X_n; \theta)
+    &= \pdiff{}{\theta} \sum_{i=1}^n \log L(X_i; \theta) \\
+    &= \sum_{i=1}^n \pdiff{}{\theta}  \log L(X_i; \theta) \\
+    &= \sum_{i=1}^n \frac{\pdiff{}{\theta} L(X_i; \theta)}{L(X_i; \theta)},
+  \end{align*}
+  so dass (exemplarisch im absolutstetigen) Fall
+  \begin{align*}
+    \pE_\theta \left[ \pdiff{}{\theta} \log L(X_1, \ldots, X_n; \theta) \right]
+    &= \sum_{i=1}^n \pE_\theta
+      \left[ \frac{\pdiff{}{\theta} L(X_i; \theta)}{L(X_i; \theta)} \right] \\
+    &= \sum_{i=1}^n \int_B
+      \left[ \frac{\pdiff{}{\theta} L(X_i; \theta)}{L(X_i; \theta)} \right]
+      \diffop x \\
+    &= 0
+  \end{align*}
+  nach Bedingung 3.
+
+  Insgesamt folgt damit
+  \begin{align*}
+    I_n(\theta)
+    &= \var_\theta \left( \pdiff{}{\theta}
+      \log L(X_1, \ldots, X_n; \theta) \right) \\
+    &= \var_\theta \left( \sum_{i=1}^n \pdiff{}{\theta}
+      \log L(X_i; \theta) \right) \\
+    &= \sum_{i=1}^n \var_\theta \left( \pdiff{}{\theta}
+      \log L(X_i; \theta) \right)
+      \quad \text{($X_i$ unabhängig)} \\
+    &= n \cdot \var_\theta \left( \pdiff{}{\theta}
+      \log L(X_1; \theta) \right)
+      \quad \text{($X_i$ gleichverteilt)} \\
+    &= n \cdot \pE_\theta \left( \pdiff{}{\theta}
+      \log L(X_1; \theta) \right)^2
+      \quad \text{(analog zu obiger Rechnung)} \\
+    &= n \cdot I_1(\theta). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{proof}[Beweis zu Satz 3.37]
+  Wir setzen
+  \[ \ell_n(\theta) := \log L(X_1, \ldots, X_n; \theta), \quad \theta \in
+    \Theta, \]
+  sowie
+  \[ \ell^{(k)}_n(\theta) := \frac{\diffop^k}{\diffop \theta^k \ell_n(\theta)},
+    \quad k = 1, 2, 3. \]
+  Ist $\hat{\theta}$ ein ML-Schätzer für $\theta$, so gilt
+  $\ell_n^{(1)}(\hat{\theta}) = 0$. Andererseits folgt mittels Taylorentwicklung
+  \[ \ell_n^{(1)}(\hat{\theta}) = \ell_n^{(1)} + (\hat{\theta} - \theta
+    \ell_n^{(2)}(\theta)) + (\hat{\theta} - \theta)^2 \cdot
+    \frac{\ell_n^{(3)}(\theta^*)}{2}, \]
+  mit $\theta^*$ zwischen $\theta$ und $\hat{\theta}$, so dass insgesamt
+  \begin{align*}
+    \ell_n^{(1)}(\theta)
+    &= -(\hat{\theta}-\theta) \left( \ell_n^{(2)}(\theta)
+      + (\hat{\theta}-\theta) \cdot \frac{\ell_n^{(3)}(\theta^*)}{2} \right) \\
+    (\hat{\theta}-\theta)
+    &= \frac{\ell_n^{(1)}(\theta)}{\ell_n^{(2)}(\theta)
+      + (\hat{\theta}-\theta) \cdot \frac{\ell_n^{(3)}(\theta^*)}{2}} \\
+    \sqrt{n} (\hat{\theta}-\theta)
+    &= \frac{\frac{\ell_n^{(1)}(\theta)}{\sqrt{n}}}{
+      - \frac{\ell_n^{(2)}(\theta)}{n}
+      + (\hat{\theta}-\theta) \cdot \frac{\ell_n^{(3)}(\theta^*)}{2n}}.
+  \end{align*}
+  Falls nun gelten
+  \[ \frac{\ell_n^{(1)}(\theta)}{\sqrt{n}} \xrightarrow[n \to \infty]{d} Z'
+    \sim \ndist(0,I_1(\theta)), \tag{i} \]
+  \[ - \frac{\ell_n^{(2)}(\theta)}{n} \xrightarrow[n \to \infty]{\text{f.s.}}
+    I_1(\theta), \tag{ii} \]
+  \[ (\hat{\theta}-\theta) \cdot \frac{\ell_n^{(3)}(\theta^*)}{n}
+    \xrightarrow[n \to \infty]{\pP} 0, \tag{iii} \]
+  so folgt nach dem Satz von Slutzky auch
+  \[ \sqrt{n} (\hat{\theta}-\theta) \xrightarrow[n \to \infty]{d}
+    Z'' \sim \ndist(0, I_1(\theta)^{-1})\]
+  und damit die Behauptung.
+
+  Zu (i): Es gilt
+  \[ \ell_n^{(1)}(\theta) = \pdiff{}{\theta} \log \prod_{i=1}^n L(X_i;\theta)
+    = \pdiff{}{\theta} \sum_{i=1}^n \log L(X_i;\theta)
+    = \sum_{i=1}^n \pdiff{}{\theta} \log L(X_i;\theta), \]
+  wobei die $\pdiff{}{\theta} \log L(X_i;\theta)$ i.i.d. Zufallsvariablen mit
+  Erwartungswert 0 und Varianz $I_1(\theta)$ sind (siehe Lemma 3.38). Also folgt
+  nach dem zentralen Grenzwertsatz
+  \[ \frac{\ell_n^{(1)}(\theta)}{\sqrt{n}} = \rez{\sqrt{n}} \sum_{i=1}^n
+    \pdiff{}{\theta} \log L(X_i;\theta) \xrightarrow[n \to \infty]{d}
+    Z' \sim \ndist(0,I_1(\theta)). \]
+
+  Zu (ii): Nach dem starken Gesetz der großen Zahlen gilt mit
+  $L^{(k)}(X_i;\theta) := \frac{\partial^k}{\partial \theta^k} L(X_i;\theta)$
+  \begin{align*}
+    - \frac{\ell_n^{(2)}(\theta)}{n}
+    &= - \rez{n} \sum_{i=1}^n \frac{\partial^2}{\partial \theta^2}
+      \log L(X_i; \theta) \\
+    &= - \rez{n} \sum_{i=1}^n \frac{\partial}{\partial \theta}
+      \frac{L^{(1)}(X_i; \theta)}{L(X_i; \theta)} \\
+    &= \rez{n} \sum_{i=1}^n
+      \left( \frac{L^{(1)}(X_i; \theta)}{L(X_i; \theta)}  \right)^2
+      - \rez{n} \sum_{i=1}^n
+      \frac{L^{(2)}(X_i; \theta)}{L(X_i; \theta)} \\
+    &\xrightarrow[n \to \infty]{\text{f.s.}}
+      \pE_\theta \left[ \left(
+      \frac{L^{(1)}(X_i; \theta)}{L(X_i; \theta)}
+      \right)^2 \right]
+      - \pE_\theta \left[
+      \frac{L^{(2)}(X_i; \theta)}{L(X_i; \theta)}
+      \right] \\
+    &= I_1(\theta),
+  \end{align*}
+  denn
+  \[ \pE_\theta \left[ \frac{L^{(2)}(X_i; \theta)}{L(X_i; \theta)} \right]
+    = \int_B \frac{\partial^2}{\partial \theta^2} L(x;\theta) \diffop x = 0 \]
+  nach Bedingung 3.
+
+  Zu (iii): Es gilt $\hat{\theta} \xrightarrow[n \to \infty]{\pP} \theta$, da
+  $\hat{\theta}$ schwach konsistent ist, das heißt für alle $\eps > 0$ gilt
+  \[ \pP_\theta \left( |\hat{\theta}-\theta| \le \eps \right) \to 1, \quad
+    n \to \infty. \]
+  Andererseits gilt nach Bedingung 4 für alle $\theta$, so dass
+  $|\hat{\theta}-\theta| < \delta$:
+  \begin{align*}
+    \left| \frac{\ell_n^{(3)}(\theta^*)}{n} \right|
+    &\le \rez{n} \sum_{i=1}^n \left| \frac{\partial^3}{\partial \theta^3}
+      \log L(X_i; \theta^*) \right| \\
+    &\le \rez{n} \sum_{i=1}^n g_\theta(X_i) \\
+    &\xrightarrow[n \to \infty]{\text{f.s.}}
+      \pE_\theta [g_\theta(X_1)] < \infty.
+  \end{align*}
+  Es existiert also eine Konstante $c > 0$, so dass
+  \[ \pP_\theta \left( \left|
+        \frac{\ell_n^{(3)}(\theta^*)}{n}
+      \right| < c \right) \xrightarrow{n \to \infty} 1, \]
+  und insgesamt folgt
+  \[ (\hat{\theta}-\theta) \cdot \frac{\ell_n^{(3)}(\theta^*)}{2n}
+    \xrightarrow[n \to \infty]{\pP} 0. \qedhere \]
+\end{proof}
+
+\section{Suffizienz und Effizienz}
+\paragraph{Suffizienz} Schätzer/Statistiken bilden (Zufalls-)Stichproben auf
+einen Schätzer/Schätzwert ab und reduzieren damit die enthaltene Information.
+Suffiziente Schätzer vergeben dabei keine relevante Information. Formal:
+\begin{defn} %3.39
+  Sei $X=(X_1,\ldots, X_n)$ eine Zufallsstichprobe mit Verteilung $F_\theta$,
+  $\theta \in \Theta$. $T(X)$ sei ein Schätzer für $\theta$. Dann ist $T$
+  \emph{suffizient für $\theta$}, falls für alle $\theta_1, \theta_2 \in \Theta$
+  \[ \pP_{\theta_1}( X = (x_1,\ldots, x_n) | T(X) = t ) =
+    \pP_{\theta_2}( X = (x_1, \ldots, x_n) | T(X)=t ) \]
+  gilt.
+\end{defn}
+
+\begin{thm}[Faktorisierungssatz von Neyman-Fisher] %% 3.40
+  Sei $X = X_1, \ldots, X_n$ eine Zufallsstichprobe mit Verteilung $F_\theta$,
+  $\theta \in \Theta$. $\{F_\theta, \theta \in \Theta\}$ enthalte nur diskrete
+  oder absolutstetige Verteilungen. $T: \real^n \to \real^m$ sei ein Schätzer
+  für $\theta$. Dann ist $T$ suffizient für $\theta$ genau dann, wenn
+  $g : \real^m \times \Theta \to \real$ und $h: \real^n \to \real$ existieren,
+  so dass
+  \begin{equation} %% 3.5
+    L(x; \theta) = g(T(x);\theta) \cdot h(x)
+  \end{equation}
+  für alle $x \in \real^n$, $\theta \in \Theta$.
+\end{thm}
+
+\begin{exmp} %% 3.41
+  Sei $X=(X_1,\ldots,X_n)$ mit $X_i \sim \mathrm{Bernoulli}(\theta)$, $\theta
+  \in [0,1]$. $T(X) = \bar{X}$ ist der ML-Schätzer für $\theta$ (Bsp. 3.23). Es
+  gilt
+  \begin{align*}
+  L(x_1, \ldots, x_n; \theta)
+    &= \prod_{i=1}^n \theta^{x_i} (1-\theta)^{x_i}
+      \ind_{x_i \in \{0,1\}} \\
+    &= \theta^{\sum_{i=1}^n x_i} (1-\theta)^{n - \sum_{i=1}^n x_i}
+      \ind_{x \in \{0,1\}^n} \\
+    &= \theta^{n T(x)} (1-\theta)^{n(1-T(x))}
+      \ind_{x \in \{0,1\}^n} \\
+    &= g(T(x), \theta) \cdot h(x)
+  \end{align*}
+  und $T$ ist nach Satz 3.40 suffizient.
+\end{exmp}
+
+\begin{proof}[Beweis zu Satz 3.40]
+  Hier nur diskret, der absolutstetige Fall läuft analog.
+
+  Da $X$ diskret ist, ist auch $T(X)$ diskret und wir schreiben
+  \[ q(t, \theta) = \pP_\theta(T(X) = t), \quad t =(t_1,\ldots, t_m) \in
+    \real^m. \]
+  Sei $T$ suffizient. Setze
+  \[ g(t,\theta) := q(t;\theta), \quad h(x) = \pP_\theta(X=x | T(X) = T(x)), \]
+  dann ist $h$ unabhängig von $\theta$, da $T$ suffizient ist. Zudem
+  \begin{align*}
+    g(T(x), \theta) \cdot h(x)
+    &= \pP_\theta(T(X)=T(x)) \cdot \pP_\theta(X=x|T(X) = T(x)) \\
+    &= \pP_\theta(T(X)=T(x), X=x) \\
+    &= \pP_\theta(X=x) \\
+    &= L(x,\theta).
+  \end{align*}
+  
+  Umgekehrt sei eine Faktorisierung wie in (3.5) gegeben. Sei $T(x) = t$, dann
+  \begin{align*}
+    \pP_\theta(X=x|T(X) = t)
+    &= \frac{\pP_\theta(X=x}{\pP_\theta(T(X)=t)} \\
+    &= \frac{\pP_\theta(X=x)}{\pP_\theta(T(X)=T(x))} \\
+    &= \frac{L(x,\theta)}{\sum_{y:T(y) = T(x)} L(y; \theta)} \\
+    &\overset{(3.5)}{=} \frac{g(T(x),\theta) \cdot h(x)}
+      {\sum_{y:T(y) = T(x)} g(T(y),\theta) \cdot h(y)} \\
+    &= \frac{h(x)}
+      {\sum_{y:T(y) = T(x)} h(y)}
+  \end{align*}
+  unabhängig von $\theta$.
+
+  Ist $T(x) \ne t$, so gilt
+  \[ \pP_\theta(X=x|T(x)=t) = 0, \]
+  also unabhängig von $\theta$. Damit ist $T$ suffizient.
+\end{proof}
+
+Entsprechend zu Definition 3.36 definiere die \emph{Fisher-Information einer
+  Statistik} $T: \real^n \to \real^m$ mit (Zähl-)dichte $q(t,\theta)$ als
+\[ I_T(\theta) := \pE_\theta \left[ \left( \pdiff{}{\theta} \log q(T;\theta)
+    \right)^2 \right], \quad \theta \in \Theta. \]
+
+\begin{lem} %% 4.42
+  Sei $X = X_1, \ldots, X_n$ eine Zufallsstichprobe mit Verteilung $F_\theta$,
+  $\theta \in \Theta$. $\{F_\theta, \theta \in \Theta\}$ enthalte nur diskrete
+  oder absolutstetige Verteilungen. $T: \real^n \to \real^m$ sei ein Schätzer
+  für $\theta$ mit (Zähl-)dichte $q(t;\theta)$. Ist $T$ suffizient, so gilt
+  \[ I_T(\theta) = I_n(\theta) \]
+  für alle $\theta \in \Theta$.
+\end{lem}
+
+\begin{proof}
+  Da $T$ suffizient ist, gilt nach Satz 3.40
+  \[ L(x; \theta) = g(T(x);\theta) \cdot h(x) \]
+  für alle $x \in \real^n$, $\theta \in \Theta$, wobei $g(t;\theta) =
+  q(t; \Theta)$ gewählt werden kann. Es folgt also für alle $x \in \real^n$,
+  $\theta \in \Theta$ und $t = T(x) \in \real^m$
+  \[ \log L(x; \theta) = \log q(t; \theta) + \log h(x). \]
+  Also
+  \begin{align*}
+    \pdiff{}{\theta} \log L(x;\theta)
+    &= \pdiff{}{\theta} \log q(t;\theta) + \pdiff{}{\theta} \log h(x) \\
+    &= \pdiff{}{\theta} \log q(t;\theta),
+  \end{align*}
+  so dass
+  \[ I_n(\theta) =
+    \pE_\theta \left[ \left( \pdiff{}{\theta} \log L(X;\theta) \right)^2 \right]
+    =
+    \pE_\theta \left[ \left( \pdiff{}{\theta} \log q(T;\theta) \right)^2 \right]
+    = I_T(\theta). \qedhere
+  \]
+\end{proof}
+
+\paragraph{Effizienz}
+In Def 3.8: Standardfehler als Gütemaß eines Schätzers.
+
+\begin{thm}[Cramer-Rao-Ungleichung] %% 3.43
+  Sei $m=1$ und $\Theta$ ein offenes Intervall in $\real$. $\{F_\theta,\theta
+  \in \Theta\}$ beinhalte nur diskrete oder nur absolutstetige Verteilungen und
+  sei identifizierbar. Sei $X=(X_1,\ldots,X_n)$ eine Zufallsstichprobe mit $X_i
+  \sim F_\theta$, so dass
+  \begin{enumerate}[(i)]
+  \item $0 < I_1(\theta) < \infty$,
+  \item $B := \mathrm{supp} L(x,\theta)$ hängt nicht von $\theta$ ab,
+  \item $L(x;\theta)$ ist stetig differenzierbar in $\theta$ und
+    \[ \int_B \tilde{T}(x) \pdiff{}{\theta} L(x;\theta) \diffop x =
+      \pdiff{}{\theta} \int_B \tilde{T}(x) L(x;\theta) \diffop x \]
+    für alle $\theta \in \Theta$ und alle Schätzer $\tilde{T}(X)$ mit
+    $\pE_\theta[|\tilde{T}(X)|] < \infty$.
+  \end{enumerate}
+  Sei $T(X)$ Schätzer für $\theta$ mit $\var_\theta(T(X)) < \infty$ und
+  $\psi(\theta) := \pE_\theta[T(X)]$,  dann gilt
+  \[ \var_\theta(\theta) \ge \frac{\psi'(T(X))^2}{I_n(\theta)} \]
+  für alle $\theta \in \Theta$.
+
+  Ist $T$ erwartungstreu, so gilt
+  \[ \var_\theta(T(X)) \ge \rez{I_n(\theta)}. \]
+\end{thm}
+
+\begin{defn} %% 3.44
+  Es gelten die Bedingungen von Satz 3.43. Dann heißt $T$
+  \emph{(Cramer-Rao)-effizient}, falls
+  \[ \var_\theta(T(X)) = \frac{\psi'(\theta)^2}{I_n(\theta)}. \]
+\end{defn}
+
+\begin{proof}[Beweis von Satz 3.43]
+  Bemerke, dass Lemma 3.38 unter den gegebenen Bedingungen gilt, so dass
+  \begin{equation} %% 3.6
+    \pE_\theta \left[ \pdiff{}{\theta} \log L(X;\theta) \right] = 0
+  \end{equation}
+  und
+  \begin{equation} %% 3.7
+    \var_\theta \left( \pdiff{}{\theta} \log L(X;\theta) \right)
+    = I_n(\theta) = n \cdot I_1(\theta).
+  \end{equation}
+  Damit gilt
+  \begin{align*}
+    \psi'(\theta)
+    &= \pdiff{}{\theta} \int_B T(x) L(x;\theta) \diffop x \\
+    &\overset{(\text{iii})}{=} \int_B T(x)
+      \pdiff{}{\theta} L(x;\theta) \diffop x \\
+    &= \int_B T(x) L(x;\theta) \pdiff{}{\theta} \log L(x;\theta) \diffop x \\
+    &= \int_B (T(x) - \psi(\theta)) L(x;\theta)
+      \pdiff{}{\theta} \log L(x;\theta) \diffop x
+      + \int_B \psi(\theta) L(x;\theta)
+      \pdiff{}{\theta} \log L(x;\theta) \diffop x \\
+    &= \pE_\theta \left[
+      (T(X) - \psi(\theta)) \pdiff{}{\theta} \log L(X;\theta)
+      \right]
+      + \psi(\theta) \underbrace{\pE_\theta \left[ 
+      \pdiff{}{\theta} \log L(X;\theta) 
+      \right]}_{=0\, (3.6)}
+  \end{align*}
+  Cauchy-Schwarz-Ungleichung:
+  \begin{align*}
+    (\psi'(\theta))^2
+    &= \left( \pE_\theta \left[
+      (T(X)-\psi(\theta)) \pdiff{}{\theta} \log L(X;\theta)
+      \right] \right)^2 \\
+    &\le \pE_\theta \left[
+      (T(X)-\psi(\theta))^2
+      \right] \cdot \pE_\theta \left[ \left(
+      \pdiff{}{\theta} \log L(X;\theta)
+      \right)^2 \right] \\
+    &= \var_\theta(T(X)) \cdot I_n(\theta). \qedhere
+  \end{align*}
+\end{proof}

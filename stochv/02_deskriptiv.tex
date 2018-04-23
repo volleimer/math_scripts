@@ -1,0 +1,498 @@
+\chapter{Deskriptive Statistik}
+Gegeben sei stets $(x_1, \ldots, x_n)$, eine Stichprobe vom Umfang $n \in \nat$.
+Die $x_i$ können dabei als Realisierungen der i.i.d. Zufallsvariablen $X_i$, $i
+= 1, \ldots, n$ mit Verteilungsfunktion $F$ (unbekannt) aufgefasst werden.
+
+\section{Empirische Verteilung und ihre Darstellung}
+Frage: Wie können wir $F$ beschreiben und darstellen?
+
+\begin{defn}
+  Im Fall eines diskreten Merkmals mit den Ausprägungen $a_1, \ldots, a_m$
+  bezeichnet
+  \[ n_j := \sharp \{ x_i, i = 1, \ldots, n : x_i = a_j \}, \quad j =1, \ldots,
+    m \]
+  die \emph{absolute Häufigkeit},
+  \[ r_j := \frac{n_j}{n} \]
+  die \emph{relative Häufigkeit}
+  der $a_j$.
+\end{defn}
+
+Diese Häufigkeiten lassen sich gut in Balken-, Säulen- oder Kreisdiagrammen
+veranschaulichen.
+
+Bei stetigen Merkmalen gilt typischerweise $n \approx m$, deshalb werden diese
+Daten zunächst gruppiert: Bilde Klassen $I_j := (b_j, b_{j+1}]$, $j = 1, \ldots,
+l$, wobei
+\begin{itemize}
+\item $b_1 \le \min \{ x_i, i = 1, \ldots, n \}$ und $b_{l+n} \ge \max\{x_i, i =
+  1, \ldots, n\}$.
+\item Die Klassenbreite $b_{j+1}-b_j$ ist konstant.
+\item Faustregel: $5 \le l \le 25$ und $l \approx \sqrt{n}$.
+\end{itemize}
+
+%% TODO: Hier fehlt ein Unterpunkt. Im Skript nachschauen!
+\addtocounter{thm}{1}
+\begin{defn} %2.3
+  Für ein stetiges Merkmal, welches in die Klassen $I_j = (b_j, b_{j+1}]$, $j =
+  1, \ldots, l$ gruppiert wurde, sind
+  \[ n_j := \sharp \{ x_i \in (b_j, b_{j+1} ], \quad j = 1, \ldots, l \} \]
+  die \emph{absoluten Häufigkeiten} und
+  \[ r_j = \frac{n_j}{n} \]
+  die \emph{relativen Häufigkeiten} der Klassen $I_j$.
+\end{defn}
+
+Diese werden typischerweise in Histogrammen visualisiert.
+
+\begin{exmp}[Histogramme in R]
+  Die bisher genannten Methoden dienten zur Visualisierung der empirischen
+  (Zähl-)Dichte des beobachteten Merkmals. Aus diesem können die ersten
+  Rückschlüsse auf die unbekannte Verteilung $F$ bzw. ihre Dichte gezogen
+  werden. Zum Beispiel können wir bei quantitativen Daten erkennen, ob $F$
+  \emph{symmetrisch}, \emph{rechtsschief/linkssteil},
+  \emph{linksschief,rechtssteil} ist, oder ob $F$ \emph{unimodal},
+  \emph{bimodal}, \emph{multimodal} ist.
+\end{exmp}
+
+Neben der Dichte kann auch die empirische Verteilungsfunktion direkt betrachtet
+werden:
+\begin{defn}
+  Für ordinalskalierte Daten $(x_1, \ldots, x_n)$ mit den Ausprägungen $a_1 <
+  a_2 < \ldots < a_n$ sind die \emph{kumulierten Häufigkeiten}
+  \[ H(x) := \sharp\{ x_i : x_i \le x \} = \sum_{i=1}^n \ind_{x_i \le x} =
+    \sum_{j : a_j < x} n_j \]
+  definiert. Die Funktion
+  \[ \hat{F}_n(x) := \frac{H(x)}{n} \]
+  ist dann die \emph{empirische Verteilungsfunktion} der Stichprobe $(x_1,
+  \ldots, x_n)$.
+\end{defn}
+
+\begin{exmp}
+  Die empirische Verteilungsfunktion in R: \verb+ecdf()+ (empirical cumulative
+  distribution function). Geplottete Ausgabe mit \verb+plot(ecdf())+.
+\end{exmp}
+
+\begin{prp}[Eigenschaften der empirischen Verteilungsfunktion]
+  Die empirische Verteilungsfunktion $\hat{F}_n(x) : \real \to [0,1]$ einer
+  Stichprobe $(x_1, \ldots, x_n) \in \real^n$  erfüllt:
+  \begin{enumerate}
+  \item $\hat{F}_n(x)$ ist monoton wachsend.
+  \item $\hat{F}_n(x)$ ist rechtsseitig stetig.
+  \item Es gilt
+    \[ \lim_{x \to - \infty} \hat{F}_n(x) = 0, \qquad \lim_{x \to \infty}
+      \hat{F}_n(x) = 1. \]
+  \end{enumerate}
+\end{prp}
+Das heißt, $\hat{F}_n$ ist eine Verteilungsfunktion.
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\section{Kenngrößen empirischer Verteilungen}
+
+\begin{center}
+  \includegraphics[width=.95\textwidth]{img/kenngroessen}
+\end{center}
+
+Gegeben ist: Stichprobe $(x_1, \ldots, x_n)$, wobei die $x_i$ als Realisierungen
+von i.i.d. Zufallsvariablen $X_i \sim F$ aufgefasst werden können.
+
+\subsection{Lagemaße}
+\paragraph{Empirischer Erwartungswert bzw. arithmetisches Mittel}
+Für quantitative Daten:
+\[ \bar{x} := \rez{n} \sum_{i=1}^n x_i. \]
+Das arithmetische Mittel reagiert empfindlich auf Ausreißer in den Daten,
+speziell bei kleinen Datensätzen.
+
+R-Befehl: \verb+mean(.)+
+
+\paragraph{Geometrisches Mittel}
+Für Daten in (Q$\infty$) definiert:
+\[ \bar{x}_g = \sqrt[n]{ x_1 \cdot \ldots \cdot x_n }. \]
+Wird hauptsächlich für Wachstum und Zinsfaktoren verwendet. Es gilt
+\[ \log \bar{x}_g = \rez{n} \sum_{i=1}^n \log x_i \le \log \left( \rez{n}
+    \sum_{i=1}^n x_i \right) = \log \bar{x}, \]
+also auch $\bar{x}_g \le \bar{x}$, mit Gleichheit genau dann, wenn $x_1 = x_2 =
+\ldots = x_n$.
+
+R-Befehl: \verb+exp(mean(log(.)))+
+
+\paragraph{Harmonisches Mittel}
+Für Daten in $\real \setminus \{0\}$, so dass $\rez{n} \sum x_i^{-1} \ne 0$:
+\[ \bar{x}_h := \left( \rez{n} \sum_{i=1}^n x_i^{-1} \right)^{-1} \]
+(z.B. für gemittelte Geschwindigkeiten)
+
+Sind zum Beispiel die $x_i$ Geschwindigkeiten, mit denen Bauteile eine
+Produktionslinie der Länge $l$ durchlaufen, dann ergibt sich die
+Gesamtbearbeitungszeit $\frac{l}{x_1} + \ldots + \frac{l}{x_n}$. Also ist
+\[ \bar{x}_h := \rez{\rez{n} \sum_{i=1}^n x_i^{-1}} =
+  \frac{l + \ldots + l}{\frac{l}{x_1} + \ldots + \frac{l}{x_n}} \]
+die Durchschnittsgeschwindigkeit der Bauteile.
+
+\paragraph{Gewichtete/getrimmte Mittel}
+Zur Begrenzung des Einflusses von Ausreißern oder um Teildatensätze stärker zu
+gewichten, verwendet man getrimmte oder gewichtete Mittel:
+\begin{itemize}
+\item Beim 10 \%1-getrimmten Mittel werden die 10 \% der niedrigsten und die 10
+  \% der höchsten Ausprägungen (insgesamt also 20 \% der Daten) weggelassen.
+\item Für gewichtete Mittel definiere zunächst Gewichte $w_i \ge 0$, $i = 1,
+  \ldots, n$ mit $\sum_{i=1}^n w_i = 1$ und berechne zum Beispiel
+  \[ \bar{x}_w = \sum_{i=1}^n w_i x_i. \]
+\end{itemize}
+
+\paragraph{Ordnungsstatistik, Median und empirische Quantile}
+Die Ordnungsstatistiken $x_{(i)}$, $i = 1, \ldots, n$ für die Stichprobe $(x_1,
+\ldots, x_n)$ sind durch die Permutation der Stichprobe gegeben, für welche
+\[ x_{(1)} \le \ldots \le x_{(n)} \]
+gilt.
+
+Der empirische Median ist dann
+\[ x_{\text{med}} := \begin{cases}
+    \rez{2} (x_{(n/2)} + x_{(n/2 + 1)}), & n \text{ gerade,} \\
+    x_{((n+1)/2)}, & n \text{ ungerade,}
+  \end{cases} \]
+so dass also mindestens 50 \% der Daten kleiner oder gleich bzw. größer oder
+gleich $x_{\text{med}}$ sind.
+
+Allgemeiner ist für $\alpha \in [0,1]$;
+\[ x_{\alpha} := \begin{cases}
+    \rez{2} (x_{(\alpha n)} + x_{(\alpha n + 1)}), & \alpha n \in \nat, \\
+    x_{(\lfloor \alpha n \rfloor + 1)}, & \alpha n \notin \nat,
+  \end{cases} \]
+das \emph{empirische $\alpha$-Quantil}.
+
+Insbesondere: $x_{1/2} = x_{\text{med}}$; $x_{0,25}$ und $x_{0,75}$ sind das
+\emph{untere} und \emph{obere Quantil}.
+
+Die Informationen aus den Quantilen lassen sich gut in einem \emph{Boxplot}
+visualisieren.
+
+Der Median ist ein robustes Lagemaß, da er gegenüber Ausreißern nicht sensibel
+ist. beachte zudem, dass auf der Modellebene entsprechende Definitionen gelten:
+\begin{defn} %2.8
+  Sei $X$ reellwertige Zufallsvariable mit Verteilungsfunktion $F$. Die
+  verallgemeinerte Inverse von $F$
+  \[ F^{\leftarrow}(y) = \inf \{ x \in \real, F(x) \ge y \}\]
+  heißt auch \emph{Quantilfunktion} von $F$ bzw. $X$.
+
+  Für $\alpha \in [0,1]$ heißt $F^{\leftarrow}(\alpha)$ \emph{$\alpha$-Quantil}
+  von $F$ bzw. $X$. Das $0.5$-Quantil wird auch als \emph{Median} bezeichnet.
+\end{defn}
+
+\begin{exmp}%2.9
+  Boxplots für Dax-Daten.
+\end{exmp}
+
+\paragraph{Empirischer Modus / Modalwert}
+$x_{\mathrm{mod}}$ ist die Ausprägung mit der größten Häufigkeit im Datensatz.
+
+Der Modus ist sowohl für quantitative als auch qualitative Daten definiert,
+sofern die Häufigkeitsverteilung ein eindeutiges Maximum besitzt.
+
+Bei stetigen Merkmalen kann der Modus als Klassenmittelpunkt der Klasse mit der
+größten Häufigkeit angegeben werden, hängt aber damit von der Klassenbildung ab.
+
+Mittels Modus, Median und arithmetischem Mittel lassen sich Rückschlüsse auf die
+Schiefe der Verteilung ziehen:\\
+Bei einer symmetrischen Verteilung gilt etwa
+\[ \obar{x} \approx x_{\mathrm{med}} \approx x_{\mathrm{mod}}, \]
+bei einer rechtssteilen Verteilung
+\[ \obar{x} < x_{\mathrm{med}} < x_{\mathrm{mod}}, \]
+bei einer linkssteilen Verteilung
+\[ \obar{x} > x_{\mathrm{med}} > x_{\mathrm{mod}}. \]
+
+\subsection{Streuungsmaße}
+Folgende Maßzahlen sind nur für quantitative Daten definiert. Sei also $(x_1,
+\ldots, x_n)$ eine Stichprobe mit Werten in $\real$.
+
+\paragraph{Empirische Varianz}
+\[ s^2 := \rez{n-1} \sum_{i=1}^n (x_i - \obar{x})^2. \]
+Bei der Berechnung helfen:
+\begin{lem}[Verschiebungssatz] \label{lem:verschiebung} %2.10
+  Für alle $a \in \real$ gilt
+  \[ \sum_{i=1}^n (x_i - a)^2 = \sum_{i=1}^n (x_i - \obar{x})^2 + n(\obar{x} -
+    a)^2, \]
+  sodass für $a = 0$ folgt
+  \[ \frac{n-1}{n} s^2 = \left( \rez{n} \sum_{i=1}^n x_i^2 \right) - \obar{x}^2. \]
+\end{lem}
+
+\begin{proof}
+  Nachrechnen:
+  \begin{align*}
+    \sum_{i=1}^n (x_i - a)^2
+    &= \sum_{i=1}^n (x_i - \obar{x} + \obar{x} - a)^2 \\
+    &= \sum_{i=1}^n ((x_i - \obar{x})^2
+      + 2(x_i-\obar{x})(\obar{x}-a) + (\obar{x}-a)^2) \\
+    &= \sum_{i=1}^n (x_i - \obar{x})^2 + n(\obar{x}-a)^2). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{lem}[Transformationsregel] %2.11
+  Für $y_i = a x_i + b$ folgt
+  \[ s_y^2 = a^2 s_x^2, \]
+  wobei $s_x^2$ und $s_y^2$ die empirischen Varianzen der $x_i$ bzw. $y_i$ sind.
+\end{lem}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+R-Befehl: \verb+var(data)+.
+
+\paragraph{Empirische Standardabweichung}
+\[ s := \sqrt{s^2} \]
+Hat, anders als die Varianz, dieselbe Maßeinheit wie die Daten. Analog zu Lemma
+2.11 gilt die Transformationsregel
+\[ s_y = |a| s_x \]
+für $y_i = a x_i + b$.
+
+R-Befehl: \verb+sd(data)+.
+
+\paragraph{Mittlere lineare Streuung}
+(auch mean absolute deviation, MAD)
+\[ s_L := \rez{n} \sum_{i=1}^n | x_i - \obar{x} | \]
+
+\paragraph{Interquartilabstand}
+(inter quartile range)
+\[ \operatorname{IQR} = x_{0.75} - x_{0.25} \]
+wurde bereits im Boxplot verwendet. Der IQR ist ein robustes Streuungsmaß.
+
+\paragraph{Variationsbreite/Spannweite}
+\[ x_{(n)} - x_{(1)} \]
+Das ist offensichtlich nicht robust gegenüber Ausreißern.
+
+\paragraph{Empirischer Variationskoeffizient}
+\[ \operatorname{CV} := \frac{s}{x} \]
+Dieser ist maßstabsunabhängig und erlaubt damit den Vegleich verschiedener
+Stichproben.
+
+\subsection{Maße für Schiefe und Wölbung}
+\paragraph{Empirische Schiefe}
+(skewness)
+\[ b_3 := \frac{m_3}{s^3} \quad \text{mit} \quad m_3 := \rez{n} \sum_{i=1}^n
+  (x_i - \obar{x})^3 \]
+ist durch die Normierung mit $s^3$ maßstabsunabhängig. Typischerweise gilt \\
+$b_3 \approx 0$ für symmetrische Verteilungen, \\
+$b_3 < 0$ für linksschiefe Verteilungen, \\
+$b_3 > 0$ für rechtsschiefe Verteilungen.
+
+\paragraph{Empirische Wölbung}
+(auch Exzess, Kurtosis)
+\[ b_4 := \frac{m_4}{s^4} - 3 \quad \text{mit} \quad m_4 := \rez{n} \sum_{i=1}^n
+  (x_i - \obar{x})^4 \]
+charakterisiert, wie stark oder schwach Randbereiche und der zentrale Bereich
+der Daten besetzt sind.
+
+\subsection{Konzentrationsmaße}
+Wir gehen in der Folger davon aus, dass uns ordinalskalierte Daten vorliegen,
+wobei alle Ausprägungen $x_1, \ldots, x_n$ nicht-negativ und bereits geordnet
+sind:
+\[ 0 \le x_1 \le x_2 \le \ldots \le x_n. \]
+
+\paragraph{Lorenzkurve}
+Die Lorenzkurve der Daten $x_1 \le \ldots \le x_n$ ist der Streckenzug durch die
+Punkte
+\[ (0,0), (u_1, v_1), (u_2, v_2), \ldots, (u_n, v_n) = (1,1), \]
+wobei
+\[ u_j := \frac{j}{n}, \qquad j = 1, \ldots, n, \]
+der Anteil der Merkmalsträger ist, welcher die kumulierte relative
+Merkmalssumme
+\[ v_j := \frac{ \sum_{i=1}^j x_i }{ \sum_{i=1}^n x_i}, \qquad j = 1, \ldots,
+  n, \]
+auf sich konzentriert.
+
+Entsprechend lässt sich aus der Lorenzkurve direkt ablesen, dass auf $u_j \cdot
+100 \%$ der kleinsten Merkmalsträger $v_j \cdot 100 \%$ der Merkmalssumme
+entfallen.
+
+Zum Beispiel ``Auf 20 \% der Haushalte im Land entfallen 80 \% des
+Gesamteinkommens.''
+
+Eine Interpretation ist aber nur an den Knoten $(u_j, v_j)$ möglich!
+
+Die Lorenzkurve ist stets monoton wachsend und konvex.
+
+\paragraph{Gini-Koeffizient}
+\[ \begin{aligned}
+    G &:= \frac{\text{Fläche zwischen Diagonale und Lorenzkurve}}
+    {\text{Fläche zwischen Diagonale und $u$-Achse}} \\
+    &= 2 \cdot \text{Fläche zwischen Diagonale und Lorenzkurve}
+  \end{aligned} \]
+Nimmt Werte zwischen 0 (Nullkonzentration) und $\frac{n-1}{n}$ (maximale
+Konzentration\footnote{%
+  Das heißt, die gesamte Merkmalssumme konzentriert sich auf einen
+  Merkmalsträger.}%
+) an.
+
+\section{PP- und QQ-Plots}
+Nach der bisherigen Analyse der Stichprobe $(x_1, \ldots, x_n)$ haben wir
+vielleicht eine Vermutung, mit welcher Verteilung die Stichprobe modelliert
+werden könnte.
+
+Derartige Vermutungen überprüft man mit PP-Plots (probality-probality plot).
+\begin{defn} %2.12
+  Sei $(x_1, \ldots, x_n)$ eine ordinalskalierte Stichprobe mit
+  Ordnungsstatistik $(x_{(1)}, \ldots, x_{(n)})$ und sei $G$ eine
+  Verteilungsfunktion. Dann ist
+  \[ \left\{ \left( G(x_{(i)}), \frac{i}{n+1} \right), \quad i = 1, \ldots, n
+    \right\} \subset [0,1]^2 \]
+  der \emph{PP-Plot von $(x_1, \ldots, x_n)$ bezüglich $G$}.
+\end{defn}
+
+Sind die Daten gemäß $G$ verteilt\footnote{%
+  Das heißt, die Stichprobe ist eine Realisierung von i.i.d. Zufallsvariablen
+  $X_i$, $i = 1, \ldots, n$ mit Verteilung $G$}%
+, so sollte $G$ etwa der empirischen Verteilungsfunktion $\hat{F}_n$ der Daten
+entsprechen. Für diese gilt (Def. 2.5):
+\[ \hat{F}_n(x_{(i)} = \rez{n} H( x_{(i)} ) = \rez{n} \sum_{j=1}^n
+  \ind_{\{ x_j \le x_{(i)} \}} = \frac{i}{n}. \]
+Es sollte also für große $n$
+\[ G(x_{(i)}) \approx \frac{i}{n} \approx \frac{i}{n+1} \]
+gelten, so dass der PP-Plot etwa auf der Winkelhalbierenden liegt.
+
+Beachte: Wir betrachten nicht die Paare $(G(x_{(i)}), i/n)$, um den Punkt
+$(G(x_{(n)}), 1)$ zu vermeiden. Dieser kann nur dann auf der Winkelhalbierenden
+liegen, wenn $G$ ein endliches Maximum besitzt und dieses von $x_{(n)}$
+angenommen wird.
+
+\begin{defn} %2.13
+  Sei $(x_1, \ldots, x_n)$ eine ordinalskalierte Stichprobe mit
+  Ordnungsstatistik $(x_{(1)}, \ldots, x_{(n)})$ und sei $G$ eine
+  Verteilungsfunktion. Dann ist
+  \[ \left\{ \left( G^{\leftarrow}\left( \frac{i}{n+1} \right), x_{(i)} \right),
+      \quad i = 1, \ldots, n \right\} \]
+  der \emph{QQ-Plot von $(x_1, \ldots, x_n)$ bezüglich G} mit $G^\leftarrow$ der
+  Quantilfunktion aus Definition 2.8.
+\end{defn}
+
+Sind die Daten gemäß $G$ verteilt, dann sollte auch der QQ-Plot etwa auf der
+Winkelhalbierenden liegen.
+
+QQ-Plots werden insbesondere verwendet, wenn die Ränder der Verteilung stärker
+gewichtet werden sollen. Für $i \approx 1$ oder $i \approx n$ gilt
+\[ G(x_{(i)}) \approx 0 \approx \rez{n} \quad \text{bzw.} \quad G(x_{(i)})
+  \approx 1 \approx \frac{i}{n+1}, \]
+egal, ob $G$ die Daten gut beschreibt oder nicht. Der PP-Plot liegt in den
+Randbereichen also immer nahe der Winkelhalbierenden, der QQ-Plot aber nicht.
+
+\section{Multivariate Deskription}
+Wir betrachten nicht ein, sondern mehrere Merkmale der statistischen Einheiten
+$\rightsquigarrow$ bivariat.
+
+Gegeben sein also eine Stichprobe $((x_1, y_1), \ldots, (x_n,y_n))$, wobei die
+$(x_i,y_i)$ als Realisierungen der i.i.d. Zufallsvariablen $(X_i,Y_i)$ mit
+gemeinsamer Verteilung $F$ (unbekannt) aufgefasst werden können.
+
+\subsection{Darstellung bivariater Stichproben}
+\paragraph{Kontingenztabelle}
+Trage die (absoluten) Häufigkeiten der möglichen Ausprägungspaare in einer
+Tabelle ein:
+\begin{center}
+  \begin{tabular}{l|ccc|r}
+    & $b_1$ & $\cdots$ & $b_l$ \\
+    \hline
+    $a_1$ & $n_{1,1}$ & $\cdots$ & $n_{1,l}$ & $n_{1,\cdot}$ \\
+    $\vdots$ & $\vdots$ & & $\vdots$ & $\vdots$ \\
+    $a_k$ & $n_{k,1}$ & $\cdots$ & $n_{k,l}$ & $n_{k,\cdot}$ \\
+    \hline
+    & $n_{\cdot,1}$ & $\cdots$ & $n_{\cdot,l}$ & n
+  \end{tabular}
+\end{center}
+Dabei sind $a_1, \ldots, a_k$ und $b_1, \ldots, b_l$ mögliche Ausprägungen der
+beobachteten Merkmale und
+\[ n_{ij} = \sharp \{ (x_m, y_m), m = 1, \ldots, n : (x_m,y_m) = (a_i, b_j)
+  \}. \]
+Die Summen
+\[ n_{i,\cdot} = \sum_{j=1}^l n_{i,j}, \qquad n_{\cdot,j} = \sum_{i=1}^k
+  n_{i,j} \]
+werden als \emph{Randhäufigkeiten} bezeichnet und entsprechen den Häufigkeiten
+der Merkmalsausprägungen der einzelnen Merkmale (Def. 2.1)
+\begin{itemize}
+\item In einer \emph{relativen Kontingenztabelle} stehen anstelle der absoluten
+  die relativen Häufigkeiten.
+\item Offenbar lässt sich die Kontingenztabelle auch für gruppierte stetige
+  Merkmale erstellen.
+\end{itemize}
+
+R-Befehl: \verb+table(.)+ bzw \verb+ftable(.)+ (flat table)
+
+\paragraph{Streudiagramm}
+Trage die Datenpaare $(x_i, y_i)$ in ein
+Koordinatensystem ein. Die Form der entstehenden Punktwolke erlaubt
+gegebenenfalls Rückschlüsse auf den Zusammenhang der Daten (linear, polynomiell,
+...). Diese Zusammenhänge werden in der Regressionstheore weiter untersucht.
+
+\subsection{Zusammenhangsmaße}
+\paragraph{Empirische Kovarianz}
+\[ s_{xy}^2 = \rez{n-1} \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}). \]
+Für $x=y$ ist das die empirische Varianz.
+
+\paragraph{Empirische Korrelation}
+(Bravais-Pearson-Korrelationskoeffizient)
+\[ \rho_{xy} = \frac{ s_{xy}^2 }{ \sqrt{ s_{xx}^2 \cdot s_{yy}^2 } } \]
+hat dieselben Eigenschaften wie die $\pW$-theoretische Korrelation:
+\begin{itemize}
+\item $|\rho_{xy}| \le 1$,
+\item $\rho_{xy} = \pm 1$ impliziert einen linearen Zusammenhang, das heißt alle
+  $(x_i, y_i)$ liegen auf einer Geraden mit positivem ($\rho_{xy} = 1$) bzw.
+  negativem ($\rho_{xy} = -1$) Anstieg.
+\end{itemize}
+Einen alternativen Korellationskoeffizienten erhält man, wenn man die
+Stichprobenwerte $x_i$ und $y_i$ durch die \emph{Ränge} $\rg(x_i)$ bzw.
+$\rg(y_i)$ ersetzt. Dabei gilt:
+\[ \rg(x_i) = j, \quad \text{falls } x_i = x_{(j)} \text{ für ein } j \in \{ 1,
+  \ldots, n \}, i = 1, \ldots, n. \]
+Insbesondere folgt
+\[ \rg(x_{(i)}) = i \text{ für alle } i = 1, \ldots, n \text{ falls } x_i \ne
+  x_j \text{ für } i \ne j. \]
+Falls die Stichprobe $(x_1, \ldots, x_n)$ mehrere identische Werte $x_i$
+(sogenannte \emph{Bindungen}) enthält, wird diesen Werten der Durchschnittsrang
+zugewiesen, also das arithmetische Mittel der in Frage kommenden Ränge.
+\begin{center}
+  \begin{tabular}{l|ccccccc}
+    $x_i$ & 7,2 & 1,3 & 2,6 & 1,3 & 2,7 & 1,3 & 9,1 \\
+    \hline
+    $x_{(i)}$ & 1,3 & 1,3 & 1,3 & 2,6 & 2,7 & 7,2 & 9,1 \\
+    $\rg(x_i)$ & 2 & 2 & 2 & 4 & 5 & 6 & 7
+  \end{tabular}
+\end{center}
+Damit kann der \emph{Spearman-Korellationskoeffizient} definiert werden als
+Bravais-Pearson-Korellationskoeffizient der Rangstichproben:
+\[ \rho_{xy}^{\mathrm{SP}} := \frac{
+    \sum_{i=1}^n (\rg(x_i) - \obar{\rg}(x)) (\rg(y_i) - \obar{\rg}(y))
+  }
+  {
+    \sqrt{
+      \sum_{i=1}^n (\rg(x_i) - \obar{\rg}(x))^2
+      \sum_{i=1}^n (\rg(j_i) - \obar{\rg}(y))^2
+    }
+  },
+\]
+wobei
+\[ \obar{\rg}(x) = \rez{n} \sum_{i=1}^n \rg(x) = \rez{n} \sum_{i=1}^n i =
+  \rez{n} \frac{n(n+1)}{2} = \frac{n+1}{2} = \obar{\rg}(y). \]
+Auch Spearmans Korellationskoeffizient erbt die Eigenschaften der
+$\pW$-theoretischen Korrelation:
+\begin{itemize}
+\item $|\rho_{xy}^{\mathrm{SP}}| \le 1$,
+\item $| \rho_{xy}^{\mathrm{SP}} | = 1$ bedeutet, dass die Paare $(\rg(x_i),
+  \rg(y_i))$ auf einer Geraden liegen. Es gilt also
+  \[ x_i < x_j \qLRq y_i < y_j \quad (\rho_{xy}^{\mathrm{SP}} = 1)
+    \qquad \text{bzw.} \qquad
+    x_i < x_j \qLRq y_i > y_j \quad (\rho_{xy}^{\mathrm{SP}} = -1). \]
+\end{itemize}
+Beachte: Ein im Absolutbetrag hoher Korrelationskoeffizient ist nur ein Hinweis
+auf einen \emph{möglichen} Zusammenhang zwischen zwei Merkmalen. Um auf einen
+tatsächlich vorliegenden (kausalen) Zusammenhang zu schließen, müssen
+sachlogische Überlegungen heran gezogen werden!
+
+\paragraph{Scheinkorrelation}
+Es wird eine hohe Korrelation gemessen, die jedoch inhaltlich nicht
+gerechtfertigt ist. Ursache kann ein unberücksichtigtes drittes Merkmal sein.
+Beispiel: Wortschatz $\leftrightarrow$ Größe des Kindes (ohne Berücksüchtigung
+des Alters).
+
+\paragraph{Verdeckte Korrelation}
+Kausaler Zusammenhang ist vorhanden, aber der Korrelationskoeffizient ist
+niedrig. Ursache kann sein, dass die untersuchte Teilpopulation in Gruppen mit
+gegenläufigem Verhalten zerfällt.

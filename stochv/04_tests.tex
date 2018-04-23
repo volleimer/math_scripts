@@ -1,0 +1,511 @@
+\chapter{Hypothesentests}
+\emph{Ziel:} Behauptungen über die Beschaffenheit der (unbekannten) Verteilung
+$F$ überprüfen.
+
+\emph{Parametrische Tests:} Behauptungen können in Abhängigkeit vom Parameter
+$\theta$ der Verteilung $F_\theta$ formuliert werden.
+
+Es sei also stets $(X_1, \ldots, X_n)$ eine Zufallsstichprobe mit $X_i \sim F =
+F_\theta$ mit $F_\theta \in \{ F_{\theta'} : \theta' \in \Theta\}$. $(x_1,
+\ldots, x_n)$ ist eine Realisierung von $(X_1, \ldots, X_n)$.
+
+\section{Das statistische Testproblem}
+Allgemeine Vorgehensweise bei parametrischen Tests:
+\begin{itemize}
+\item \emph{Aufstellen von Hypothesen und Gegenhypothesen.} Formuliere die zu
+  überprüfende Behauptung über $F_\theta$ in Form der sogenannten
+  \emph{Nullhypothese}:
+  \[ H_0 : \theta \in \Theta_0 \subset \Theta. \]
+  Entsprechend ergibt sich als \emph{Gegenhypothese}:
+  \[ H_0 : \theta \in \Theta_1 = \Theta \setminus \Theta_0 \qLRq \theta \notin
+    \Theta_0. \]
+\item \emph{Definition einer Entscheidungsregel.} Lege fest, für welche
+  Bedingung der Zufallsstichprobe die Nullhypothese abgelehnt wird.
+
+  Dazu: Definiere eine geeignete \emph{Teststatistik} $T$, also eine messbare
+  Abbildung
+  \[ T: \real^n \to \real: (X_1, \ldots, X_n) \mapsto T(X_1, \ldots, X_n)\]
+  und einen \emph{Ablehnungsbereich} $K \subset \real$ (kritischer Bereich,
+  rejection region) und damit die \emph{Entscheidungsregel}:
+  \begin{align*}
+    \{ (X_1, \ldots, X_n) : \text{ Test lehnt $H_0$ ab } \}
+    &= \{ (X_1, \ldots, X_n) : T(X_1, \ldots, X_n) \in K \} \\
+        \{ (X_1, \ldots, X_n) : \text{ Test lehnt $H_1$ ab } \}
+    &= \{ (X_1, \ldots, X_n) : T(X_1, \ldots, X_n) \in K^c \}
+  \end{align*}
+\end{itemize}
+
+\begin{exmp}
+  Angenommen $X_1, \ldots, X_5 \sim \mathrm{Bernoulli}(\theta)$ mit $\theta \in
+  [0,1]$ unbekannt. Wir wollen testen
+  \[ H_0 : \theta \le \rez{2}, \qquad H_1 : \theta > \rez{2}. \]
+  Als Teststatistik verwenden wir $Y = \sum_{i=1}^5 X_i$ mit den Realisierungen
+  $\{0, 1, \ldots, 5\}$.
+  \begin{itemize}
+  \item Test 1: $H_0$ wird abgelehnt, falls $Y = 5$, also $X_i = 1$ für $i =
+    1, \ldots, 5$.
+  \item Test 2: $H_0$ wird abgelehnt, falls $Y \in \{3,4,5\}$.
+  \end{itemize}
+  Was ist ``besser''?
+\end{exmp}
+
+\paragraph{Bestimmen der Präzision der Tests}
+Die Präzision wird mit der \emph{Gütefunktion}
+\[ \beta( \theta ) = \pP_\theta( T(X_1, \ldots, X_n) \in K ), \quad \theta
+  \in \Theta \]
+bewertet. Mit dieser lassen sich die möglicherweise auftretenden Fehler des
+Tests bestimmen:
+\begin{center}
+  \begin{tabular}{r|l|l}
+    & Test lehnt $H_0$ ab. & Test lehnt $H_0$ nicht ab. \\
+    \hline & \\
+    $H_0$ wahr & $\alpha(\theta) = \beta(\theta)$, $\theta \in \Theta_0$ 
+                           & Kein Fehler \\
+    & Fehler 1. Art \\
+    \hline & \\
+    $H_1$ wahr & Kein Fehler & $1 - \beta(\theta)$, $\theta \in \Theta_1$ \\
+    & & Fehler 2. Art
+  \end{tabular}
+\end{center}
+
+\begin{itemize}
+\item \emph{Macht} (power) des Tests: $\beta(\theta)$, $\theta \in \Theta_1$
+\item \emph{Signifikanzniveau}, \emph{Testniveau}:
+  \[ \alpha := \sup_{\theta \in \Theta_0} \alpha(\theta) = \sup_{\theta \in
+      \theta_0} \beta(\theta) \]
+\end{itemize}
+
+Im Beispiel ergeben sich:
+\begin{footnotesize}
+  \begin{center}
+    \begin{tabular}{r|l|l}
+      & Test 1
+      & Test 2 \\
+      \hline & \\
+      Gütefunktion
+      & $\beta_1(\theta) = \pP_\theta(Y = 5) = \theta^5$
+      & $\begin{aligned}
+        \beta_2 &= \pP_\theta(Y \ge 3) \\
+        &= \theta^5 + \binom{5}{4} \theta^4 (1 - \theta)
+        + \binom{5}{3} \theta^3 (1-\theta)^2 \end{aligned}$ \\
+      \hline & \\
+      Fehler 1. Art
+      & $\alpha_1(\theta) = \theta^5$, $\theta \le \rez{2}$
+      & $\begin{aligned}
+        \alpha_2 &= \theta^5 + \binom{5}{4} \theta^4 (1 - \theta)
+        + \binom{5}{3} \theta^3 (1-\theta)^2 \\
+        \theta &\le \rez{2}
+      \end{aligned}$ \\
+      \hline & \\
+      Signifikanzniveau
+      & $\begin{aligned}
+        \alpha_1 &= \sup \alpha_1(\theta) = \alpha_1(\rez{2}) \\
+        &= 2^{-5} = \num{.03}, \, \theta \le \rez{2}
+      \end{aligned}$,
+      & $\begin{aligned}
+        \alpha_2 &= \sup \alpha_2(\theta) = \rez{2} \\
+        \theta &\le \rez{2}
+      \end{aligned}$ \\
+      \hline & \\
+      Fehler 2. Art
+      & $1 - \theta^5$, $\theta > \rez{2}$
+      & $\begin{aligned}
+        &1 - \left( \theta^5 + \binom{5}{4} \theta^4 (1-\theta)
+          + \binom{5}{3} \theta^3 (1-\theta)^2 \right) \\
+        &\theta > \rez{2}
+      \end{aligned}$ \\
+      \hline & \\
+      \shortstack[r]{Maximale \\ Fehlerwahrscheinlichkeit \\ 2. Art}
+      & $\begin{aligned}
+        &\sup (1-\beta_1(\theta)) = 1 - 2^{-5} \approx \num{.97} \\
+        &\theta > \rez{2}
+      \end{aligned}$
+      & $1 - \num{.5} = \num{.5}$
+    \end{tabular}
+  \end{center}
+\end{footnotesize}
+
+Test 1 hat also ein sehr gutes Signifikanzniveau, jedoch einen großen Fehler
+2. Art. Bei Test 2 ist der Fehler 2. Art kleiner, das Signifikanzniveau ist
+aber schlecht.
+
+\clearpage
+
+\emph{Beachte:}
+\begin{itemize}
+\item Ein idealer Test hätte einen kleinen Fehler 1. Art und einen kleinen
+  Fehler 2. Art. Solch ein Test existiert aber im Allgemeinen nicht.
+  
+  Man kontrolliert daher den Fehler 1. Art: Ein Signifikanzniveau wird
+  vorgegeben und der Test wird passend konstruiert (mit möglichst kleinem
+  Fehler 2. Art).
+\item Ein statistischer Test kann die Nullhypothese nur
+  \emph{ablehnen}/\emph{verwerfen} oder \emph{nicht ablehnen}/\emph{nicht
+    verwerfen}, jedoch \emph{niemals} ``annehmen''.
+\item Die eigentliche Vermutung (die man zeigen möchte) muss daher als
+  Gegenhypothese formuliert werden.
+\end{itemize}
+  
+%\emph{Tests}
+%\begin{itemize}
+%\item $H_0 : \theta \in \Theta_0$ gegen $H_1: \theta \notin \Theta_0$.
+%\item Test lehnt $H_0$ ab, falls $T(X_1, \ldots, X_k) \in K$ mit $T$
+%  Teststatistik, $K$ Ablehnungsbereich.
+%\item $\alpha = \sup_{\theta \in \Theta_0} \beta(\theta) \in
+%  K)$ Signifikanzniveau (max. Fehler 1. Art) mit Gütefunktion $\beta(\theta) :=
+%  \pP_\theta(T(X_1, \ldots, X_n)$.
+%\end{itemize}
+
+\section{Einstichprobentests}
+\subsection{Tests für normalverteilte Stichproben}
+\begin{exmp}[Gauss-Test]
+  Gegeben sei eine Zufallsstichprobe $(X_1, \ldots, X_n)$ mit i.i.d.
+  Zufallsvariablen mit $X_i \sim \ndist(\mu, \sigma^2)$, wobei $\sigma^2$
+  bekannt sei, $\mu$ unbekannt.
+
+  Es wird vermutet, dass $\mu > \mu_0$ für $\mu_0 \in \real$  gegeben. Wir
+  setzen also 
+  \[ H_0 : \mu \le \mu_0 \qquad \text{und} \qquad H_1: \mu > \mu_0. \]
+  Das ist ein \emph{einseitiges} Testproblem.
+
+  Als Teststatistik verwenden wir das standardisierte arithmetische Mittel
+  \[ T = T(X_1, \ldots, X_n) = \frac{\bar{X}-\mu_0}{\sigma / \sqrt{n}}. \]
+
+  Unter $H_0$ nimmt $T$ mehrheitlich negative Werte an. Eine sinnvolle
+  Entscheidungsregel ist daher
+  \[ \text{Verwerfe } H_0 \qLRq \frac{\bar{X}-\mu_0}{\sigma / \sqrt{n}} > c \]
+  für eine Konstante $c > 0$.
+
+  Wollen wir einen Test zum vorgegebenen Signifikanzniveau $\alpha$ erstellen,
+  so muss gelten
+  \[ \alpha \ge \sup_{\mu \le \mu_0} \beta(\mu), \]
+  wobei
+  \begin{align*}
+    \beta(\mu)
+    &= \pP_\mu \left( \frac{\bar{X}-\mu_0}{\sigma / \sqrt{n}} > c \right) \\
+    &= \pP_\mu \left( \frac{\bar{X}-\mu}{\sigma / \sqrt{n}} > c
+      + \frac{\mu_0 - \mu}{\sigma / \sqrt{n}} \right) \\
+    \intertext{Es gilt
+    $\frac{\bar{X}-\mu}{\sigma / \sqrt{n}} \sim \ndist(0,1)$
+    unter $\pP_\mu$.}
+    &= 1 - \pP_\mu \left( \frac{\bar{X}-\mu}{\sigma / \sqrt{n}} \le c
+      + \frac{\mu_0 - \mu}{\sigma / \sqrt{n}} \right) \\
+    &= 1 - \Phi \left(c + \frac{\mu_0 - \mu}{\sigma / \sqrt{n}} \right)
+      \overset{\text{unter } H_0}{\le} 1 - \Phi(c)
+  \end{align*}
+  mit $\Phi$ Verteilungsfunktion der Standardnormalverteilung.
+
+  Gilt also
+  \[ \alpha \ge 1 - \Phi(c), \]
+  so erhalten wir einen Test zum Niveau $\alpha$. Setze also $c = z_{1-\alpha}$
+  ($1-\alpha$-Quantil der Standardnormalverteilung).
+
+  Wir erhalten also
+  \begin{mdframed}
+    \textbf{Einseitiger Gauss-Test}
+    \[ H_0 : \mu \le \mu_0, \qquad H_1 : \mu > \mu_0 \]
+    Verwerfe $H_0$ zum Niveau $\alpha$ $\Leftrightarrow$
+    \[ \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} > z_{1-\alpha} \]
+  \end{mdframed}
+  
+  Beachte, dass die Gütefunktion auch von $n$ abhängt: Für wachsendes $n$ sinkt
+  die Fehlerwahrscheinlichkeit zweiter Art.
+
+  Angenommen, wir möchten nun einen einseitigen Gausstest zur Nullhypothese $\mu
+  \le \mu_0$, konstruieren, der einen Fehler erster Art $\le \num{.1}$ und einen 
+  maximalen Fehler zweiter Art von \num{.2} für $\mu \ge \mu_0 + \sigma$ hat.
+  Wie müssen $\alpha$ und $n$ gewählt werden?
+
+  Es muss gelten
+  \[ \begin{aligned}
+      \beta(\mu) &\le \num{.1}, & \mu &\le \mu_0, \\
+      1 - \beta(\mu) &\le \num{.2}, & \mu &\ge \mu_0 + \sigma.
+    \end{aligned}
+  \]
+  Aus der ersten Gleichung folgt direkt $\alpha = \num{.1}$. Zudem soll
+  $\beta(\mu) \ge \num{.8}$ gelten für alle $\mu \ge \mu_0 + \sigma$, wobei
+  $\beta(\mu)$ in $\mu$ wächst. Also muss gelten
+  \begin{align*}
+    \num{.8}
+    &\le \beta(\mu_0 + \sigma) \\
+    &= 1 - \Phi \left(
+      c + \frac{\mu_0 - (\mu_0 + \sigma)}{\sigma / \sqrt{n}}
+      \right) \\
+    &= 1 - \Phi( c - n^{-1/2})
+  \end{align*}
+  mit $c = z_{1-\alpha} = z_{\num{.9}} = \num{1.28}$. Da jedoch
+  \[ \num{.8} = 1 - \Phi(\num{-.84}) \]
+  folgt
+  \[ \num{1.28} - n^{-1/2} \le \num{-.84} \]
+  und damit $n \ge \num{4.49}$, also $n > 4$.
+\end{exmp}
+
+\clearpage
+
+Weitere Tests für normalverteilte Daten:
+\begin{mdframed}
+  \textbf{Zweiseitiger Gauss-Test}
+  (Test von $\mu$ bei bekanntem $\sigma$).
+  
+  Hypothesen:
+  \[ H_0 : \mu = \mu_0, \qquad H_1 : \mu \ne \mu_0, \]
+  Teststatistik:
+  \[ T = \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}. \]
+
+  Unter $H_0$ gilt $T \sim \ndist(0,1)$. Entscheidungsregel:
+  \[ \text{Verwerfe $H_0$ zum Niveau $\alpha$} \qLRq |T| > z_{1-\alpha/2}. \]
+\end{mdframed}
+
+\begin{mdframed}
+  \textbf{t-Test} (Zweiseitiger Test von $\mu$ bei unbekanntem $\sigma$)
+
+  Hypothesen:
+  \[ H_0 : \mu = \mu_0, \qquad H_1 : \mu \ne \mu_0, \]
+  Teststatistik:
+  \[ T = \frac{\bar{X}-\mu_0}{s/\sqrt{n}} \]
+  mit der empirischen Varianz $s^2$.
+
+  Unter $H_0$ gilt $T \sim t_{n-1}$ (Bsp. 3.28). Entscheidungsregel:
+  \[ \text{Verwerfe $H_0$ zum Niveau $\alpha$} \qLRq |T| > t_{n-1,1-\alpha/2}. \]
+\end{mdframed}
+
+\begin{mdframed}
+  Zweiseitiger Test von $\sigma^2$ bei bekanntem $\mu$
+
+  Hypothesen:
+  \[ H_0 : \sigma^2 = \sigma_0^2, \qquad H_1 : \sigma^2 \ne \sigma_0^2, \]
+  Teststatistik:
+  \[ T = T(X_1, \ldots, X_n) =
+    \sum_{i=1}^n \frac{X_i-\mu^2}{\sigma_0^2}
+    = \frac{n \tilde{s}^2}{\sigma_0^2}. \]
+
+  Unter $H_0$ gilt $T \sim \chi_n^2$. Entscheidungsregel:
+  \[ \text{Verwerfe $H_0$ zum Niveau $\alpha$} \qLRq T \notin
+    [\chi_{n,\alpha/2}^2, \chi_{n,1-\alpha/2}^2]. \]  
+\end{mdframed}
+
+\clearpage
+
+\begin{mdframed}
+  Zweiseitiger Test von $\sigma^2$ bei unbekanntem $\mu$
+
+  Hypothesen:
+  \[ H_0 : \sigma^2 = \sigma_0^2, \qquad H_1 : \sigma^2 \ne \sigma_0^2, \]
+  Teststatistik:
+  \[ T = T(X_1, \ldots, X_n) = \frac{(n-1)s^2}{\sigma_0^2} \]
+  
+  Unter $H_0$ gilt $T \sim \chi_{n-1}^2$ (Beispiel 3.28). Entscheidungsregel:
+  \[ \text{Verwerfe $H_0$ zum Niveau $\alpha$} \qLRq T \notin
+    [\chi_{n-1,\alpha/2}^2, \chi_{n-1,1-\alpha/2}^2]. \]  
+\end{mdframed}
+
+\subsection{Asymptotische Tests}
+Für eine Zufallsstichprobe $(X_1, \ldots, X_n)$ mit i.i.d. Zufallsvariablen $X_i
+\sim F_\theta$, $\theta \in \Theta \subseteq \real$ testen wir die Hypothesen
+\[ H_0 : \theta = \theta_0 \quad \text{gegen} \quad H_1 : \theta \ne
+  \theta_0. \]
+Gegeben sei ein erwartungstreuer, asymptotisch normalverteilter Schätzer
+$\hat{\theta}$ für $\theta$, sowie ein konsistenter Schätzer $\hat{\theta}^2$
+für die Varianz von $\hat{\theta}$.
+
+Dann gilt unter $H_0$
+\[ \frac{\hat{\theta}-\theta_0}{\hat{\sigma}} \xrightarrow{d} 
+  Y \sim \ndist(0,1), \quad n \to \infty. \]
+Als Teststatistik verwendet man daher
+\[ T(X_1, \ldots, X_n) := \frac{\hat{\theta}-\theta_0}{\hat{\sigma}} \]
+und die Entscheidungsregel lautet: Verwerfe $H_0$ zum asymptotischen Niveau
+$\alpha$ $\Leftrightarrow$
+\[ |T| > z_{1-\alpha/2}. \]
+
+\begin{rmrk*}
+  \begin{itemize}
+  \item Basiert auf dem Wald-Test für ML.
+  \item Das Testniveau $\alpha$ wird nur asymptotisch erreicht! Der Test sollte
+    also nur für große $n$ verwendet werden.
+  \end{itemize}
+\end{rmrk*}
+
+\begin{exmp}[Binomialverteilung]
+  $X_i \sim \mathrm{Bernoulli}( \theta )$, $\theta \in (0,1)$. Wir testen
+  \[ H_0 : \theta = \theta_0 \quad \text{gegen} \quad
+    H_1 : \theta \ne \theta_0. \]
+  Entspechend Beispiel 3.23.1: $\bar{X}$ ist ML-Schätzer für $\theta$. $\bar{X}$
+  ist erwartungstreu und asymptotisch normalverteilt nach Satz 3.37. Unter $H_0$
+  gilt:
+  \[ \sqrt{n} (\bar{X}-\theta_0) \xrightarrow{d} \ndist(0,
+    \theta_0(1-\theta_0)), \quad n \to \infty. \]
+  Zudem verwenden wir als Schätzer für die Varianz von $\hat{\theta}$
+  \[ \hat{\sigma}^2 := \rez{n} \bar{X} (1-\bar{X})
+    = \rez{n} (\hat{\mu}_2^2 - \hat{\mu}_1^2) \]
+  und dieser Schätzer ist nach Satz 3.16 sogar stark konsistent, denn
+  \[ \var \bar{X} = \var \left( \rez{n} \sum_{i=1}^n X_i \right)
+    = \rez{n^2} \sum_{i=1}^n \var(X_i)
+    = \rez{n} (\pE[X_1^2] - \pE[X_1]^2). \]
+  Es folgt unter $H_0$
+  \[ \sqrt{n} \frac{\bar{X}-\theta_0}{\sqrt{\bar{X}(1-\bar{X})}}
+    \xrightarrow{d} Z \sim \ndist(0,1), \quad n \to \infty, \]
+  falls $\bar{X} \notin \{0,1\}$.
+
+  Die Entscheidungsregel lautet also: Verwerfe $H_0$ zum asymptotischen Niveau
+  $\alpha$ $\Leftrightarrow$
+  \[ \left| \sqrt{n} \frac{\bar{X}-\theta_0}{\sqrt{\bar{X}(1-\bar{X})}} \right|
+  > Z_{1-\alpha/2}. \]
+\end{exmp}
+
+\subsection{Die Wahl von $\alpha$ und der $p$-Wert}
+Die Wahl von $\alpha$ hängt vom Sachzusammenhang ab. Bei Präzisionsmessungen
+wird $\alpha$ sehr klein gewählt. In Sozialwissenschaften genügt häufig
+$\alpha = \num{.1}$. Oft berechnet man daher den $p$-Wert.
+
+\begin{defn}
+  Seien $(x_1, \ldots, x_n)$ eine Realisierung von $(X_1, \ldots, X_n)$ und
+  $T(X_1, \ldots, X_n)$ eine Teststatistik für einen gegebenen Hypothesentest.
+  Der \emph{$p$-Wert} des Tests ist das kleinste Signifikanzniveau, bei welchem
+  \[ t = T(x_1, \ldots, x_n) \]
+  zur Ablehnung der Nullhypothese führt.
+\end{defn}
+
+\begin{exmp}
+  Ein Analyst behauptet, die jährlichen Returns der DAX30-Unternehmen im
+  Finanzsektor liegen über 35.
+
+  Wir verwenden die Daten aus Tabelle 1 und nehmen an, dass diese (approximativ)
+  normalverteilt sind.
+
+  Wir wollen die Aussage des Analysten bestätigen und verwenden einen
+  einseitigen t-Test mit
+  \[ H_0 : \mu \le 35 = \mu_0, \qquad H_1 : \mu > 35. \]
+  Die Teststatistik ist
+  \[ T = \frac{\bar{X}-\mu_0}{s / \sqrt{n}} \]
+  mit $n = 30$ (fünf Unternehmen, sechs Jahre).
+
+  Auswerten ergibt
+  \[ \bar{X} = \num{39.54}, \quad s = \num{15.2} \qRq t = \num{1.65}. \]
+
+  Die Nullhypothese wird abgelehnt, falls $t > t_{29,1-\alpha}$, so dass
+  \[ p = \inf \{ \alpha : t_{29, 1-\alpha} < \num{1.63} \}. \]
+  Da
+  \[ t_{29,\num{.94}} = \num{1.6} < t < \num{1.7} < t_{29,\num{.95}}, \]
+  folgt für den $p$-Wert $\num{.05} < p < \num{.06}$ (genau $p = \num{.05649}$).
+  In R hätte man auch direkt einen t-Test durchführen können.
+\end{exmp}
+
+\textbf{Beachte:}
+\begin{itemize}
+\item Der $p$-Wert ist immer datenabhängig.
+\item Man ist meist an kleinen $p$-Werten interessiert.
+\item Der $p$-Wert sagt jedoch nichts über den Fehler 2. Art aus.
+\end{itemize}
+
+\section{Zweistichprobentests}
+Gegeben sind Zufallsstichproben
+\begin{align*}
+  X &= (X_1, \ldots, X_n),
+      \quad X_i \sim F_X \in \{ F_theta, \theta \in \Theta \}, \\
+  Y &= (Y_1, \ldots, Y_n),
+      \quad Y_i \sim F_Y \in \{ F_theta, \theta \in \Theta \}
+\end{align*}
+mit Realisierungen $(x_1, \ldots, x_n)$ und $(y_1, \ldots, y_n)$.
+
+Sind $X$ und $Y$ kausal unabhängig, so sprechen wir von \emph{unverbundenen}
+Stichproben. \emph{Verbundene} Sichproben liegen vor, wenn zum Beispiel
+verschiedene Merkmale an denselben statistischen Einheiten betrachtet werden.
+
+\subsection{Tests für unverbundene, normalverteilte Sichproben}
+Es seien stets $X_i \sim \ndist(\mu_X, \sigma_X^2)$, $Y_j \sim \ndist(\mu_Y,
+\sigma_Y^2)$, $X$ und $Y$ unabhängig.
+
+\begin{mdframed}
+  \textbf{Test auf Gleicheit der Erwartungswerte bei Varianzhomogenität}
+
+  Es gelte $\sigma_X^2 = \sigma_Y^2 = \sigma^2$.
+
+  Hypothesen:
+  \[ H_0 : \mu_X = \mu_Y \quad \text{gegen} \quad
+    H_1 : \mu_X \ne \mu_Y. \]
+  Teststatistik:
+  \[ T = T(X_1, \ldots, X_n, Y_1, \ldots, Y_k) =
+    \frac{\bar{X}-\bar{Y}}{s_p \sqrt{\rez{n}+\rez{k}}} \]
+  mit
+  \[ s_p^2 := \rez{n+k-2} \left(
+      \sum_{i=1}^n (X_i - \bar{X})^2
+      + \sum_{j=1}^k (Y_j - \bar{Y})^2
+    \right). \]
+  Unter $H_0$ gilt: $T \sim t_{n+k-2}$ ($\ast$). Also verwerfe $H_0$ zum Niveau
+  $\alpha$ $\Leftrightarrow$
+  \[ |T| > t_{n+k-2, 1 - \alpha / 2}. \]
+\end{mdframed}
+
+Um ($\ast$) zu zeigen, beachte:
+\[ \bar{X} \sim \ndist \left( \mu_x, \frac{\sigma^2}{n} \right)
+  \text{ und }
+  \bar{Y} \sim \ndist \left( \mu_y, \frac{\sigma^2}{k} \right)
+\]
+und unter $H_0$ gilt also
+\[ \bar{X} - \bar{Y} \sim \ndist 
+  \left(
+    0, \sigma^2 \left( \rez{n} + \rez{k} \right)
+  \right) \]
+Zudem ist $s_p$ ein unverzerrter Schätzer\footnote{%
+  $s^2 = \rez{n-1} \sum \left( X_i - \bar{X} \right)^2$, 
+  $\pE(s^2) = \sigma^2.$
+} für $\sigma$ (Nachrechnen bzw.
+vergleiche Beispiel 3.3), für welchen gilt
+\[ \frac{n+k-2}{\sigma^2} s_p^2
+  = \underbrace{\sum_{i=1}^n \frac{(X_i - \bar{X})^2}{\sigma^2}}_{\sim
+    \chi^2_{n-1}}
+  + \underbrace{\sum_{j=1}^k \frac{(Y_i - \bar{Y})^2}{\sigma^2}}_{\sim
+    \chi^2_{k-1}}
+  \sim \chi^2_{n+k-2}.
+\]
+Damit folgt
+\[ T = \frac{\bar{X}-\bar{Y}}{\sigma \sqrt{\rez{n}+\rez{k}}}
+  \sqrt{(n+k-2) \frac{\sigma^2}{(n+k-2)s_p^2}}
+  \sim t_{n+k-2}. \]
+
+\begin{mdframed}
+  \textbf{Welch-Test} Test auf Gleichheit der Erwartungswerte bei
+  Varianzinhomogenität
+
+  Es gelte $\sigma_x^2 \ne \sigma_y^2$ (beide unbekannt).
+
+  Hypothesen:
+  \[ H_0 : \mu_x = \mu_y, \qquad H_1 = \mu_x \ne \mu_y. \]
+  Teststatistik:
+  \[ T = T(X_1, \ldots, X_n, Y_1, \ldots, Y_k)
+    := \frac{\bar{X}-\bar{Y}}{s_{XY} \sqrt{\rez{n}+\rez{k}}} \]
+  mit
+  \[ s_{XY}^2 := \frac{(n-1) s_X^2 + (k-1) s_Y^2}{n+k-2}. \]
+  Unter $H_0$ ist $T \sim t_{n+k-2}$, also verwerfe $H_0$ zum Niveau $\alpha$
+  $\Leftrightarrow$
+  \[ |T| > t_{n+k-2,1 - \alpha/2}. \]
+\end{mdframed}
+
+Vorgeschaltet wird meistens:
+\begin{mdframed}
+  \textbf{Test auf Varianzinhomogenität}
+
+  Hypothesen:
+  \[ H_0 : \sigma_x^2 = \sigma_y^2, \qquad H_1 : \sigma_x^2 \ne \sigma_y^2. \]
+  Teststatistik:
+  \[ T = T(X_1, \ldots, X_n, Y_1, \ldots, Y_k) := \frac{s_x^2}{s_y^2}. \]
+  Unter $H_0$ gilt $T \sim  F_{n-1,k-1}$. Verwerfe also $H_0$ zum Niveau
+  $\alpha$ $\Leftrightarrow$
+  \[ |T| > t_{n+k-2,1 - \alpha/2}. \]
+\end{mdframed}
+
+\subsection{Verbundene Stichproben (Matched Pairs)}
+Es gelte $n=k$ und
+\[ W_i = X_i - Y_i \sim \ndist(\mu_w,\sigma_w^2). \]
+Hier erhält man parallel zum klassischen t-Test:
+
+\begin{mdframed}
+  Hypothesen:
+  \[ H_0 : \mu_w < 0 \quad \text{gegen} \quad H_1 \mu_w \ge 0. \]
+  Teststatistik:
+  \[ T := \frac{\bar{W}}{s_w / \sqrt{n}}. \]
+  
+  Unter $H_0$ gilt $T \sim t_{n-1}$. Verwerfe daher $H_0$ zum Niveau $\alpha$
+  $\Leftrightarrow$
+  \[ T > t_{n-1,1-\alpha}. \]
+\end{mdframed}

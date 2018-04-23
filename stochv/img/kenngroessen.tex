@@ -1,0 +1,44 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{0mm}
+\pagestyle{empty}
+
+\begin{document}
+\tikzstyle{blk} = [
+  draw, fill=blue!20, text width=10em, 
+  text centered, minimum height=2.5em,
+  rounded corners ]
+\tikzstyle{root_blk} = [
+  draw, fill=blue!20, text width=6em, 
+  text centered, minimum height=2.5em,
+  minimum width = 12.5em,
+  rounded corners ]
+
+\def\blockdist{5}
+\def\rowdist{2.0}
+\def\edgedist{2.5}
+
+\begin{tikzpicture}
+  \node (root) [root_blk] {Kenngrößen\\Maßzahlen};
+  \path (root)+(-1.5*\blockdist,-\rowdist) node (1) [blk] {Lagemaße};
+  \path (root)+(-0.5*\blockdist,-\rowdist) node (2) [blk] {Streuungsmaße};
+  \path (root)+( 0.5*\blockdist,-\rowdist) node (3) [blk] {Maße für Schiefe\\und Wölbung};
+  \path (root)+( 1.5*\blockdist,-\rowdist) node (4) [blk] {Konzentrationsmaße};
+
+  \draw [-] (root.south)+(-3em,0) -- (1.north);
+  \draw [-] (root.south)+(-1em,0) -- (2.north);
+  \draw [-] (root.south)+( 1em,0) -- (3.north);
+  \draw [-] (root.south)+( 3em,0) -- (4.north);
+  
+\end{tikzpicture}
+
+\end{document}
