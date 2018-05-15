@@ -2,41 +2,59 @@
  a4paper,
  12pt,
  parskip=half
- ]{scrartcl}
-
+ ]{scrreprt}
+ \setcounter{secnumdepth}{3}
+ 
 \usepackage{../.tex/settings}
 
 \usepackage{../.tex/mathpkgs}
 \usepackage{../.tex/mathcmds}
 
-\usepackage[numbers]{fancy_thm}
+\usepackage{stackengine}
+\newcommand\groupequation[1]{%
+  \setbox0=\hbox{$\displaystyle#1$}%
+  \setbox2=\hbox{\,(\theequation)}%
+  \stackengine{0pt}{\copy0}{%
+    \makebox[\linewidth]{\hfill$\left.\rule{0pt}{\ht0}\right\}$\kern\wd2}}
+    {O}{c}{F}{T}{L}
+}
+
+\usepackage[numbers_per_chapter]{fancy_thm}
 
 \theoremstyle{plain}
-%\newtheorem{aus}[thm]{Aussage}
+\newtheorem*{thm*}{Satz}
 %\newtheorem{flg}[thm]{Folgerung}
 
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
+\newtheorem{prgp}{}
 \newtheorem{rmrk}{Bemerkung}
 \newtheorem{exmp}{Beispiel}
 
-\numberwithin{rmrk}{section}
-\numberwithin{defn}{section}
-\numberwithin{exmp}{section}
+\numberwithin{rmrk}{chapter}
+\numberwithin{defn}{chapter}
+\numberwithin{exmp}{chapter}
 
+\numberwithin{prgp}{subsection}
+
+\numberwithin{thm}{chapter}
 
 \newtheorem*{rmrk*}{Bemerkung}
 %\newtheorem*{exmp*}{Beispiel}
-%\newtheorem*{defn*}{Definition}
+\newtheorem*{defn*}{Definition}
 %\newtheorem*{deno*}{Bezeichnungen}
 
-\numberwithin{equation}{section}
+\numberwithin{equation}{chapter}
 
 \hypersetup{
   pdftitle={OPTINUM},
   pdfauthor={Jonas Hippold},
   hidelinks
 }
+
+\DeclareMathOperator*{\KA}{KA}
+\DeclareMathOperator*{\FT}{FT}
+\DeclareMathOperator*{\GP}{GP}
 
 %opening
 \title{Vorlesung\\Optimierung und Numerik}
@@ -53,134 +71,49 @@
 
 \input{01_einleitung}
 
-\clearpage
-
 \input{02_grundlagen}
 
-\clearpage
+\input{03_linear}
 
-\section{Lineare Optimierung}
-Wir betrachten nun das Problem
-\begin{equation}
-  z = c^T x \to \min \subjto x \in G := \{x \in \real^n : Ax = b, x \ge 0 \}
-\end{equation}
-mit $A \in \realmat{m}{n}$, $b \in \real^m_+$. Außerdem seien $\rang(A) =
-\operatorname{rg}(A) = m$ und $m < n$.
+\input{04_diskret}
 
-\begin{rmrk}
-  \begin{enumerate}[(1)]
-  \item $G$ ist polyedrisch.
-  \item Alle endlich-dimensionalen Optimierungsprobleme lassen sich in der
-    \emph{Standardform} (3.1) schreiben (Übung).
-  \end{enumerate}
-\end{rmrk}
+\input{05_graphen}
 
-\subsection{Basislösungen und Ecken}
-Sei $I = \{1, \ldots, n \}$. Da $\rang(A) = m$gilt, existiert eine Indexmenge
-$I_B \subset I$ mit $|I_B| = m$ derart, dass die Spalten $A^i$, $i \in I_B$
-linear unabhängig sind. $I_B$ wird \emph{Basis-Indexmenge} genannt. Mit $I_N :=
-I \setminus I_B$ (Nichtbasis) definieren wir
-\[ A_B := (A^i)_{i \in I_B}, \qquad A_N := (A^i)_{i \in I_N}. \]
-Dann kann (3.1) geschrieben werden in der Form
-\begin{equation}
-  \begin{aligned}
-    z = c_B^T x_B + c_N^T x_N = \sum_{i \in I_B} c_i x_i + \sum_{i \in I_N} c_i
-    x_i \to \min \subjto \\
-    A_B x_B + A_N x_N = \sum_{i \in I_B} A^i x_i + \sum_{i \in I_N} A^i x_i = b, \\
-    x_B \ge 0, x_N \ge 0.
-  \end{aligned}
-\end{equation}
-bzw. nach Auflösen nach $x_B$:
-\begin{equation}
-  \begin{aligned}
-    z = (c_N^T - c_B^T A_B^{-1} A_N) x_N + c_B^T A_B^{-1} b \to \min
-    \subjto \\
-    x_B = -A_B^{-1} A_N x_N + A_B^{-1} b, \\
-    x_N \ge 0, (x_B \ge 0).
-  \end{aligned}
-\end{equation}
-$x_B$ heißt \emph{Basisvariable} (``abhängige Variable''). $x_N$ heißt
-\emph{Nichtbasisvariable} (``unabhängige Variable'').
+\appendix
+%% Nochmal zum Simplex-Verfahren
+\chapter*{Anmerkungen}
+\addcontentsline{toc}{chapter}{Anmerkungen}
 
-\begin{defn} %3.1
-  Der Punkt (Vektor)
-  \[ x \leftrightarrow \pmat{ x_B \\ x_N } = \pmat{A_B^{-1} b \\ 0 } \]
-  heißt \emph{Basislösung} zu $I_B$. Gilt zusätzlich $A_b^{-1} b \ge 0$, dann
-  heißt $x$ \emph{zulässige Basislösung}.
-\end{defn}
+\section*{Klee-Minty-Cube}
+\addcontentsline{toc}{section}{Klee-Minty-Cube}
+\begin{align*}
+  x_1 &\le 5 \\
+  4 x_1 + x_2 &\le 25 \\
+  8 x_1 + 4 x_2 + x_5 &\le 125 \\
+      &\vdots \\
+  2^D x_1 + 2^{D-1} + \ldots + 4 x_{D-1} + x_D &\le 5^D \\
+  x_1, x_2, \ldots, x_D &\ge 0
+\end{align*}
+\[ z = 2^{D-1} x_1 + 2^{D-2} x_2 + \ldots + 2 x_{D-1} + x_D \to \max. \]
 
-\begin{defn} %3.2
-  Ein Punkt $x \in G$ heißt \emph{Ecke} von $G$, falls aus $x = \rez{2}(x+y)$
-  mit $y,z \in G$ stets $x = y = z$ folgt.
-\end{defn}
+Behauptung: Das Simplex-Verfahren benötigt $2^{D-1}$ Schritte, falls die
+sogenannte Dantzig-Rule\footnote{%
+  Dabei wird immer der kleinste transformierte Zielfunktionskoeffizient zur Wahl
+  der Pivotspalte bei Min-Formulierung benutzt.
+} verwendet wird. Also ist das Simplexverfahren nicht polynomial.
 
-\clearpage
-
-\begin{thm} %3.1
-  Gilt $\rang(A) = m$, dann ist jede zulässige Basislösung eine Ecke von $G$.
-  Umgekehrt gibt es zu jeder Ecke von $G$ mindestens eine Basislösung.
-\end{thm}
-
-\begin{thm} %3.2
-  Sei $G \ne \emptyset$. Dann besitzt $G$
-  \begin{enumerate}[(1)]
-  \item mindestens eine Ecke,
-  \item höchstens endlich viele Ecken.
-  \end{enumerate}
-\end{thm}
-
-\begin{thm} %3.3
-  Ist (3.1) lösbar, dann gibt es eine Ecke von $G$, die (3.1) löst.
-\end{thm}
-
-\begin{aus}[Optimalitätskriterium] %3.4
-  Gilt für die Basislösung $x \leftrightarrow \pmat{x_B \\ x_N } =
-  \pmat{A_B^{-1} b \\ 0 }$ die Bedingung $A_B^{-1} b \ge 0$ und
-  \[ c_N^T - c_B^T A_B^{-1} A_N \ge 0, \]
-  das heißt
-  \[ c_i - (c_B^T A_B^{-1})A^i \ge 0, \quad i \in I_N, \]
-  dann ist $x$ Lösung von (3.1).
-\end{aus}
-
-\begin{proof}
-  Sei $x$ zulässige Basislösung. Wir zeigen zunächst
-  \[ Z(x) \subseteq \{ d \in \real^n : Ad = 0, d_N \ge 0 \}. \]
-  Sei $d \in Z(x)$, dann existiert $\obar{t} \ge 0$ mit $0 \le t \le \obar{t}$
-  \[ A(x+td) = Ax + t \cdot Ad = b, \]
-  also gilt $Ad = 0$.
-
-  Wegen $x_N \ge 0$ ergibt sich aus $x + td \overset{!}{\ge} 0$ und $x_N \ge 0$
-  die Bedingung $d_N \ge 0$. Insbesondere gilt
-  \[ A_B d_B + A_N d_N = 0 \qRq d_B = - A_B^{-1} A_N d_N \text{ für alle } d
-    \in Z(x). \]
-  Damit folgt unter Berücksichtigung von (3.3)
-  \[ \nabla f(x)^T d = c^T d = ( c_N^T - c_B^T A_B^{-1} A_N) d_N \ge 0 \text{
-      für alle} d \in Z(x). \]
-  Also genügt $x$ den notwendigen Optimalitätsbedingungen (2.2). Wegen Aussage
-  2.2 folgt dann, dass $x$ Lösung von (3.1) ist.
-\end{proof}
-
-\subsection{Das primale Simplexverfahren}
-Das primale Simplexverfahren durchläuft zwei Phasen, falls erforderlich. \\
-\emph{Phase 1} besteht in der Ermittlung einer ersten zulässigen Basislösung
-(Ecke), \\
-\emph{Phase 2} in der Bestimmung einer optimalen Ecke.
-
-\subsubsection{Phase 2}
-Wir betrachten zunächst den Fall, dass eine erste zulässige  Basislösung bekannt
-sei. Zur Vereinfachung schreiben wir (3.3) in Form des \emph{Simplex-Tableaus}.
-
-\begin{tabular}{r|cc}
-  $\mathrm{ST}_0$ & $x_N$ & 1 \\
-  \hline
-  $x_B =$ & $P$ & $p$ \\
-  \hline
-  $z =$ & $q^T$ & $q_0$
-\end{tabular}
-mit $P = -A_B^{-1} A_N$, $p = A_B^{-1} b$, $q^T = c_N^T - c_B^T A_B^{-1} A_N$,
-$q_0 = c_B^T A_B^{-1} b$.
-
-O.B.d.A. nehmen wir (zunächst) an, dass $x_B = (x_1, \ldots, x_m)^T$ und $x_N
-= (x_{m+1}, \ldots, x_n)^T$. Die zu $\mathrm{ST}_0$ gehörige Basislösung ist
-somit $x \leftrightarrow \pmat{x_B \\ x_N} = \pmat{p \\ 0}$.
+\section*{Packungsprobleme}
+\addcontentsline{toc}{section}{Packungsprobleme}
+%% Bild
+Fragestellungen:
+\begin{enumerate}
+\item Finde alle Rechtecke (mit Mindestgröße) $\to \Omega_{\max}$, diese müssen
+  nicht disjunkt sein.
+\item Finde eine Überdeckung der Nutzfläche mit minimaler Anzahl von Rechtecken
+  (aus $\Omega_{\max}$).
+\item Finde eine Packung mit maximaler Fläche von Rechtecken mit Mindestgrößen
+  oder aus $\Omega_{\max}$.
+\item Finde eine Packung mit maximaler Fläche mit höchstens $k$ Rechtecken ($k
+  \in \nat$).
+\end{enumerate}
 \end{document}

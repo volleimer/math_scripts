@@ -1,0 +1,605 @@
+\chapter{Optimierung auf Graphen}
+1739 Euler: Königsberger Brückenproblem
+
+\section{Definitionen}
+Graph $G = (V,E)$, $V$ ist die Menge der Knoten, $E$ die Menge der Kanten oder
+Bögen.
+\begin{itemize}
+\item Kanten: \emph{ungerichteter} Graph, Bögen: \emph{gerichteter} Graph
+\item $G$ heißt \emph{schlicht}, falls er keine Mehrfachkanten bzw. -bögen und
+  keine Schleifen enthält.
+\item In ungerichteten Graphen ist $E$ eine Teilmenge aller 2-elementigen
+  Teilmengen von $V$, in gerichteten Graphen eine Teilmenge von $V \times V$.
+\item Bezeichnung: Kante $\{u,v\}$ bzw. Bogen $(u,v)$ mit $u, v \in V$.
+\item Zwei Knoten $u$ und $v$ heißen \emph{adjuzent} oder verbunden, falls
+  $\{u,v\} \in E$. Ein Knoten $u \in V$ und eine Kante bzw. ein Bogen $e \in
+  E$ heißen \emph{inzident}, wenn $u \in e$ bzw. $e = \{ u, v \}$ für ein $v
+  \in V$.
+\item \emph{Kantengrad} eines Knotens:
+  \[ \deg (v) = \delta (v) := | \{ u \in V : \{ u, v \} \in E \} |. \]
+  Bei gerichteten Graphen ist der \emph{Eingangsgrad}
+  \[ \delta^-(v) := |\{ (u,v) \in E \}| \]
+  bzw. \emph{Ausgangsgrad}
+  \[ \delta^+(v) := |\{ (v,u) \in E \}|. \]
+\item Ist $\delta(v) = 0$, so ist $v$ ein \emph{isolierter Knoten}.
+\item $v$ heißt \emph{Vorgänger} bzw. \emph{Nachfolger} von $u \in V$ in einem
+  gerichteten Graphen, falls $(v,u) \in E$ bzw. $(u,v) \in E$.
+\item Die Menge der Vorgänger von $v$:
+  \[ N^-(v) := \{ u \in V : (u,v) \in E \} \]
+  bzw. Menge der Nachfolger von $v$:
+  \[ N^+(v) := \{ u \in V : (v,u) \in E \}. \]
+\item Falls $\delta^-(v) = 0$, dann ist $v$ eine \emph{Quelle}. Falls
+  $\delta^+(v) = 0$ , dann ist $v$ eine \emph{Senke}.
+\item Sei $G = (V,E)$ ein ungerichteter (gerichteter) Graph und $W = (v_{i_1},
+  v_{i_2}, \ldots, v_{i_n})$ eine Folge von Knoten von $V$ mit $\{ v_{i_k},
+  v_{i_{k+1}} \} \in E$ ($(v_{i_k}, v_{i_{k+1}}) \in E$) für alle $k = 1,
+  \ldots, n-1$. Dann heißt $W$ \emph{Weg} in $G$.
+\item $W$ heißt \emph{Kette}, falls $\{v_{i_k}, v_{i_{k+1}}\} \in E$ oder
+  $(v_{i_{k+1}}, v_{i_k}) \in E$ für alle $k$ gilt.
+\item Ein Weg $W$ heißt \emph{Pfad} oder \emph{elementarer Weg}, falls alle
+  Knoten in $W$ enthalten sind.
+\item $W$ ist ein \emph{Zyklus}, falls $v_{i_1} = v_{i_n}$. $W$ ist ein
+  \emph{Kreis}, falls der Zyklus zusätzlich elementar ist.
+\item Die \emph{Länge} von $W = |W| - 1$, die Anzahl der Kanten bzw. Bögen.
+\item $G$ heißt \emph{zusammenhängend} (stark zusammenhängend), falls zu jedem
+  Knotenpaar eine Kette (Weg) existiert.
+\item $G$ heißt \emph{vollständig}, wenn alle möglichen Kanten bzw. Bögen
+  vorhanden sind.
+\item $G$ heißt \emph{(Kanten-)gewichteter} Graph, falls jede Kante $e \in
+  E$ ein Gewicht $c(e) \in \real$ zugeordnet ist, kurz $G = (V, E, c)$.
+\end{itemize}
+
+\section{Das Minimalgerüstproblem}
+Gegeben sei ein ungerichteter, zusammenhängender und kantengewichteter Graph $G
+= (V,E,c)$.
+
+\begin{defn}
+  Eine Kantenmenge $T \subset E$ mit $|T| = |V| - 1$ heißt \emph{Gerüst}
+  (Spannbaum, spanning tree), falls der induzierte Subgraph $G_T = (V,T)$
+  zyklenfrei ist.
+
+  Das \emph{Minimalgerüstproblem} besteht darin, ein Gerüst mit minimalem
+  Gesamtgewicht
+  \[ \sum_{e \in T} c(e) \]
+  zu finden.
+\end{defn}
+
+\begin{rmrk*}
+  $G_T$ ist zusammenhängend.
+\end{rmrk*}
+
+\subsection{Algorithmus von Kruskal}
+\emph{Prinzip}. Führe den folgenden Schritt so oft wie möglich aus: \\
+Wähle unter den noch nicht betrachteten Kanten von $G$ eine kürzeste Kante, die
+mit den schon für das Gerüst gewählten Kanten \emph{keinen} Zyklus bildet.
+
+\paragraph{Algorithmus von Kruskal}
+\[ \begin{aligned}
+    &T := \emptyset \\
+    &\text{Solange } |T| < n - 1: & &\text{Ermittle eine kürzeste Kante } e \in
+    E. \\
+    & & &\text{Setze } E := E \setminus \{ e \} \text{ und falls } T \cup \{ e
+    \} \text{zyklenfrei,} \\
+    & & &\text{setze } T := T \cup \{e\}.
+  \end{aligned}
+\]
+Laufzeit: $O(|E| \log |E|)$, wobei $|E| \le |V| ( |V| - 1 )$, also $O(n^2 \log
+n)$.
+
+%% Beispiel?
+\begin{exmp}
+  .
+\end{exmp}
+
+\subsection{Algorithmus von Prim/Dijkstra}
+\emph{Prinzip.} Wähle einen Knoten $v_0 \in V$ und setze $T := \emptyset$.
+Solange $|T| < |V| - 1$ gilt, wähle eine Kante $e \in E$ mit minimalem Gewicht,
+so dass $T \cup \{ e \}$ zyklenfrei und zusammenhängend ist.
+
+\paragraph{Algorithmus von Prim/Dijkstra}
+$T := \emptyset, S := \{u\}$ mit $u \in V$
+
+Für alle $v \in V \setminus \{u\}$ setze, falls $(u,v) \in E$:
+\[ h(v) := c(u,v), p(u,v) := u, \]
+anderenfalls $h(v) := \infty$.
+
+Solange $|T| < n - 1$, bestimme $v \in V \setminus S$ mit
+\[ h(v) = \min \{ h(t) : t \in V \setminus S \}, \]
+setze
+\[ T := T \cup \{ (p(v), v) \}, \quad S := S \cup \{ v \}, \]
+für alle $t \in T \setminus S$ mit $(v,t) \in E$ und $c(v,t) < h(t)$ setze $h(t)
+:= c(v,t)$, $p(t) := v$.
+
+\begin{rmrk*}
+  Es gilt $h(v) = \min \{ c(u,v) : u \in S \}$, $v \in V \setminus S$. $p(v)$
+  lässt sich als ``Vorgänger'' interpretieren.
+
+  Bei ``vielen'' Kanten ist Prim/Dijkstra besser, Kruskal kann aber
+  für ``wenige'' Kanten unter Umständen schneller sein.
+
+  Ein weiterer gebräuchlicher Algorithmus ist der Sollin-Algorithmus $O(n^2)$.
+\end{rmrk*}
+
+%% Beispiel
+\begin{exmp}
+  .
+\end{exmp}
+
+\section{Optimale Wege}
+\subsection{Das Kürzeste-Wege-Problem}
+(shortest path problem)
+
+Gegeben sei ein gerichteter, bogenbewerteter Graph $G = (V,E,c)$ mit $c(e) \ge
+0$ für alle $e \in E$.
+
+\begin{defn}
+  Das \emph{Kürzeste-Wege-Problem} (KW-Problem) besteht darin, ausgehend von
+  einem Startknoten $v_1 \in V$ zu jedem Knoten $v_k \in V \setminus \{ v_1 \}$
+  einen kürzesten Weg $v_1 \to v_{k,1} \to v_{k,2} \to \cdots \to  v_{k,t(k)} =
+  v_k$ zu finden.
+\end{defn}
+
+\begin{aus}
+  Es existiert eine Bogenmenge $E_w \subset E$ mit $|E_w| = |V| -1$, die für
+  jeden Knoten $v_k \in V$, $v_k \ne v_1$ einen kürzesten Weg von $v_1$ nach
+  $v_k$ repräsentiert.
+\end{aus}
+
+\begin{proof}
+  (Indirekt) Angenommen, die Menge der Bögen, die die kürzesten Wege zu allen
+  Knoten $v_k \ne v_1$ bilden, entählt mehr als $|V| - 1$ Bögen. Dann existiert
+  ein Knoten $v \ne v_1$ mit Eingangsgrad $\delta^-(v) \ge 2$. Das heißt, es
+  gibt zwei optimale Wege von $v_1$ nach $v$. Nur einer der Bögen, die in $v$
+  enden, ist erforderlich, um eine Bogenmenge zu erhalten, die kürzeste Wege zu
+  allen Knoten $v_k \ne v_1$ repräsentiert.
+\end{proof}
+
+\begin{flg}
+  $E_w$ ist zusammenhängend, also ein gerichtetes Gerüst (arborescence).
+\end{flg}
+
+\subsection*{Algorithmus von Dijkstra}
+\emph{Prinzip.} Ausgehend von $v_1$ werden bereits bekannte kürzeste Wege durch
+Hinzufügen weiterer Bögen verlängert, um zum Knoten einen Weg zu finden oder
+einen kürzeren Weg als die bisher bekannten.
+ 
+\emph{Bezeichnungen.}
+\begin{itemize}
+\item $v_k$ wird durch $k$ repräsentiert.
+\item $K$: Menge der Knoten, zu denen bereits ein kürzester Weg bekannt ist.
+\item $S$: Menge der Knoten, zu denen ein Weg gefunden wurde.
+\item $p(k)$: Vorgängerknoten von $k$ auf dem bisher kürzesten Weg zu $k$.
+\item $l(k)$: Länge des bisher kürzesten Wegs zu $k$.
+\end{itemize}
+
+\paragraph{Algorithmus von Dijkstra}
+\begin{enumerate}[S1:]
+  \setcounter{enumi}{-1}
+\item $K := \{v_1\}$, $S := \{ v_k \in V : (v_1, v_k) \in E \}$,
+  \[ p(k) := \begin{cases}
+      -1, &v_k \in V \setminus S, \\
+      1, &v_k \in S,
+    \end{cases}
+    \qquad
+    l(k) := \begin{cases}
+      0, & v_k = v_1 \\
+      c(v_1,v_k), & (v_1, v_k) \in E, \\
+      \infty, & v_k \notin S.
+    \end{cases}
+  \]
+\item Wähle $v_i \in S$ mit $l(i) \le l(k)$ für alle $v_k \in S$. \\
+  Setze $K := K \cup \{ v_i \}$, $S := S \setminus \{v_i\}$. \\
+  Für alle $v_k \in S$ mit $(v_i, v_k) \in E$: Falls $l(i) + c(v_i,v_k) \le
+  l(k)$, dann setze $p(k) := i$ und $l(k) := l(i) + c(v_i,v_k)$. \\
+  Für alle $v_k \in V \setminus (K \cup S)$ mit $(v_i, v_k) \in E$: Setze $p(k) =
+  i$ und $l(k) := l(i) + l(i) + c(v_i,v_k)$.
+\item[] Falls $S \ne \emptyset$, gehe zu $S1$.
+\end{enumerate}
+
+Laufzeit: $O(n^2)$.
+
+\begin{aus}
+  Der Algorithmus von Dijkstra liefert die kürzeste Weglänge $l(k)$ von $v_k \ne
+  v$.
+\end{aus}
+
+\begin{proof}
+  Im Algorithmus werden kürzeste Wege, nach wachsender Weglänge geordnet,
+  erzeugt. In einem beliebigen Schritt seien $l(i)$, $i \in K$, die kürzesten
+  Weglängen von $v_1$ zu $v_i$. Von $v_i$ aus Algorithmus aus werden höchstens
+  längere Wege konstruiert (da $c(e) \ge 0$), von denen einer zu einem Knoten
+  (nicht in $K$) einen weiteren kürzesten Weg liefert.
+\end{proof}
+
+\subsection{Das Längste-Wege-Problem}
+(longest path problem)
+
+Gegeben sei ein gerichteter, bogenbewerteter Graph $G = (V,E,c)$.
+
+\begin{defn}
+  Das \emph{Längste-Wege-Problem} besteht darin, ausgehend von einem Startknoten
+  $v_1$ zu jedem Knoten $v_k \ne v_1$ einen längsten Weg zu finden.
+\end{defn}
+
+\textbf{Prinzip.} Ausgehend von $v_1$ werden bereits bekannte Wege durch
+Hinzufügen weiterer Bögen verlängert, um zu neuen Knoten zu gelangen bzw.
+längere Wege zu finden.
+
+\textbf{Bezeichnungen.}
+\begin{itemize}
+\item $K$: Menge der Knoten, zu denen im vorherigen Iterationsschritt ein
+  längerer Weg gefunden wurde.
+\item $S$: Menge der Knoten, zu denen im aktuellen Iterationsschritt ein
+  längerer Weg gefunden wird.
+\item $p(k)$: Vorgängerknoten auf dem Weg zu $v_k$.
+\item $l(k)$: Länge des bisher längsten Wegs zu $v_k$.
+\item $\nu$: Iterationszähler.
+\end{itemize}
+
+\subsubsection*{Algorithmus von Ford/Moore}
+\begin{enumerate}[S1]
+  \setcounter{enumi}{-1}
+\item $K := \{v_1\}$, $S := \{ v_k \in V : (v_1, v_k) \in E \}$, $\nu := 1$.
+  \begin{align*}
+    p(k) &:= \begin{cases}
+      1 & \text{für } v_k \in S, \\
+      0 & \text{für } v_k \in V \setminus ( S \cup \{ v_1 \}, )
+    \end{cases} \\
+    l(k) &:= \begin{cases}
+      0 & \text{für } v_k = v_1, \\
+      c(v_1, v_k) & \text{für } v_k \in S, \\
+      -\infty & \text{sonst.}
+    \end{cases}
+  \end{align*}
+\item Falls $S = \emptyset$ $\rightarrow$ \verb+STOP+.\\
+  Falls $\nu = |V|$ $\rightarrow$ \verb+STOP+.
+\item Setze $K := S$, $S := \emptyset$, $\nu := \nu + 1$.
+  
+  Für alle $v_i \in K$ und alle $v_k \in V$ mit $l(i) + c(v_i, v_k) > l(k)$
+  setze $S := S \cup \{ v_k \}$, $p(k) := i$, $l(k) := l(i) + c(v_i, v_k)$. Gehe
+  zu S1.
+\end{enumerate}
+
+\begin{aus}
+  Der Algorithmus von Ford/Moore ermittelt zu jedem Knoten, der von $v_1$
+  erreichbar ist, einen längsten Weg, sofern der Algorithmus mit $S = \emptyset$
+  stoppt. Anderenfalls enthält der Graph Kreise positiver Länge.
+\end{aus}
+
+\begin{proof}
+  Es werden \emph{alle} bereits betrachteten Wege auf Verlängerung untersucht.
+  Existiert kein Kreis positiver Länge, dann erfolgt der Abbruch nach $|V|$
+  Iterationsschritten. 
+\end{proof}
+
+\begin{exmp}
+  .
+\end{exmp}
+
+\begin{rmrk*}
+  Der Algorithmus von Ford/Moore kann auch zur Bestimmung kürzester Wege benutzt
+  werden. Die Bedingung $c(e) \ge 0$ muss nicht erfüllt sein.
+\end{rmrk*}
+
+\subsection{Minimale Wege zwischen allen Knoten}
+Gegeben sei ein gerichteter, bogenbewerteter Graph $G = (V,E,c)$. Ziel ist nun
+die Bestimmung jeweils eines kürzesten Weges von jedem Knoten zu \emph{allen}
+anderen.
+
+\textbf{Bezeichnungen.}
+\begin{itemize}
+\item $P$: Vorgängermatrix, $p_{ik} = h$, $v_k \in V$, wenn $(v_h, v_k)$ der
+  letzte Bogen auf dem Weg von $v_i$ nach $v_k$ ist. $p_{ik} = 0$, wenn kein Weg
+  von $v_i$ nach $v_k$ existiert.
+\item $L$: Entfernungsmatrix, $l_{ik} =$ Länge des kürzesten Weges (bisher
+  gefunden) von $v_i$ nach $v_k$, sonst $l_{ik} = \infty$.
+\end{itemize}
+
+\subsubsection*{Tripel-Algorithmus von Floyd}
+Setze $p_{ik} := i$ und $l_{ik} := c(i,k)$ für $(v_i, v_k) \in E$ und
+$p_{ik} := 0$ nud $l_{ik} := \infty$ sonst.
+
+Führe für alle $v_k \in V$ folgende allgemeine Schritte aus:
+
+Bilde für alle $v_i, v_k \in V \setminus \{ v_k \}$ die Summe
+\[ l_{ik}^h = l_{ih} + l_{hk}. \]
+Falls $l_{ik}^h < l_{ik}$, setze $l_{ik} := l_{ik}^h$ und $p_{ik} := p_{hk}$.
+
+Laufzeit: $O(n^3)$ (ohne Voraussetzung $c(e) \ge 0$).
+
+\subsection{Netzplantechnik: Metra-Potential-Methode}
+Ein Gesamtprojekt bestehe aus Teilprojekten (Aktivitäten). Modellierung als
+Knoten- und kantenbewerteter Graph.
+\begin{itemize}
+\item Knoten $\simeq$ Aktivitäten, $i \in I = \{1, \ldots, N \}$, Dauer der
+  Aktivitäten: $d_i$ ($\ge 0$), $i \in I$.
+\item Kanten $\simeq$ Koppelbedingungen, $\KA(i,j)$ $\simeq$ Abstand
+  (Koppelabstand)
+  \begin{enumerate}[a)]
+  \item$\KA(i,j) \ge 0$ bedeute, dass die Aktivität $j$ \emph{frühestens} nach
+    $\KA(i,j)$ Zeiteinheiten nach Beginn von Aktivität $i$ beginnen kann.
+  \item $\KA(i,j) \le - 0$ bedeute, dass die Aktivität $j$ \emph{spätestens}
+    nach $|\KA(i,j)|$ Zeiteinheiten nach Beginn von $i$ beginnen muss.
+  \end{enumerate}
+\item $\FT(i)$: Frühestmöglicher Anfangstermin für $i$
+\item $\ST(i)$: Spätester zulässiger Anfangstermin für $i$
+  \begin{enumerate}[a)]
+  \item $\FT(j) \ge \FT(i) + \KA(i,j)$
+  \item $\FT(j) \le \FT(i) - \KA(i,j)$
+  \end{enumerate}
+\item Die Zuordnung eines Bogens ist wie folgt:
+  \begin{enumerate}[a)]
+  \item Bogen von $i$ nach $j$: $\KA(i,j) \ge 0$.
+  \item Wegen
+    \[ \FT(i) \ge \FT(j) + \KA(i,j) \]
+   vertauschen $i$ und $j$ ihre Rollen, deshalb gilt bei Bögen von $j$ nach $i$:
+   $\KA(j,i) \le -0$.
+  \end{enumerate}
+\end{itemize}
+
+\subsubsection*{Sonderfälle}
+\begin{enumerate}
+\item $\KA(i,j) = d_i$ bedeutet, $j$ kann frühestens nach Abschluss von $i$
+  beginnen.
+\item $\KA(i,j) = \pm 0$ bedeutet, dass $i$ und $j$ gleichzeitig beginnen.
+\end{enumerate}
+
+Der Knoten $A$ ist der Beginn des Projekts, $E$ ist die Abschlusssektion.
+
+\begin{lem}
+  Bei der Aufstellung eines Netzplans sind solche Kreise unzulässig, für die die
+  Summe der zugehörigen $\KA$ positiv ist.
+\end{lem}
+
+%% Beispiel
+\begin{exmp}
+  .
+\end{exmp}
+
+\begin{aus}
+  Der frühestmögliche Anfangstermin $\FT(j)$ für den Beginn der Aktion $j$ ist
+  gleich der maximalen Länge aller Wege vom Startknoten $A$ zum Knoten $j$.
+\end{aus}
+
+\begin{proof}
+  Jeder Weg beschreibt eine Folge von Aktivitäten. Bevor $j$ beginnen kann,
+  müssen alle Aktivitäten berücksichtigt worden sein. Die zugehörige Zeit ist
+  gleich der Weglänge. Aus der Berücksichtigung der ungünstigsten Folge von $A$
+  nach $j$ folgt, dass die maximale Weglänge $\FT(j)$ definiert.
+\end{proof}
+
+Analog gilt
+\begin{aus}
+  Der späteste zulässige Termin $\ST(j)$ ist gleich dem Wert $\FT(E)$ abzüglich
+  der maximalen Länge aller Wege von $j$ zum Projektende $E$.
+\end{aus}
+
+\begin{flg}
+  Die Bestimmung der $\FT(j)$ und $\ST(j)$ kann mit dem Algorithmus
+  FML\footnotemark erfolgen.
+\end{flg}
+\footnotetext{Ford/Moore für längste Wege}
+
+Ein Weg mit der Länge $T = \FT(E)$ heißt \emph{kritischer Weg}.
+
+Die \emph{minimale Projektdauer} ist
+\[ \max_j \{ \FT(j) + d_j \}. \]
+
+\subsubsection*{MPM-Algorithmus}
+\begin{enumerate}[(i)]
+\item Setze $v_a := A$ mit $i = v_a$ und
+  \[ c_{ij} := \begin{cases}
+      \KA(i,j) &\text{für } \KA(i,j) \ge 0, \\
+      \KA(j,i) &\text{für } \KA(i,j) \le - 0. \\
+    \end{cases}
+  \]
+\item Wende den FLM-Algorithmus an (liefert $l(j)$). Setze $\FT(j) := l(j)$,
+  $T := \FT(E)$.
+\item Setze $v_a := E$ und orientiere die Bögen um, gemäß
+  \[ c_{ij} := \begin{cases}
+      \KA(i,j) &\text{für } \KA(i,j) \ge 0, \\
+      \KA(j,i) &\text{für } \KA(i,j) \le - 0. \\
+    \end{cases}
+  \]
+\item Wende den Algorithmus FML an (liefert wieder $l(j)$). Setze $\ST(j) := T -
+  l(j)$.
+\end{enumerate}
+
+\begin{lem}
+  Es gilt
+  \[ \FT(j) \le \ST(j) \]
+  für alle $j$.
+\end{lem}
+
+Die Größen $\GP(j) := \ST(j) - \FT(j)$ heißen \emph{Pufferzeit}. Eine Aktivität
+$j$ mit $\GP(j) = 0$ heißt \emph{kritisch}.
+
+\begin{aus}
+  Kritische Aktivitäten liegen genau auf kritischen Wegen.
+\end{aus}
+
+\begin{aus}
+  Ein Bogen mit $\KA(i,j)$ zwischen $i$ und $j$ liegt genau dann auf einem
+  kritischen Weg, wenn
+  \[ \GP(i) = \GP(j) = 0 \quad \text{und} \quad \ST(j) - \FT(i) = \KA(i,j). \]
+\end{aus}
+
+\begin{rmrk*}
+  Identifiziert man $i$ mit dem Start einer Aktivität $(i,j)$ zum Knoten $j$ und
+  setzt die Dauer dieser Aktivität zu
+  \[ d(i,j) = \KA(i,j) \ge 0, \]
+  so erhält man die Methode CPM\footnote{Critical path method}.
+\end{rmrk*}
+
+\section{Maximale Flüsse in Graphen}
+\subsection{Problemstellung}
+Sei $G = (V,E,k)$ ein gerichteter Graph mit Kapazitätsschranken $k_l \ge 0$ für
+alle $e \in E$. Weiterhin sei $q \in V$ die \emph{einzige} Quelle und $s \in V$
+die \emph{einzige} Senke. Alle Daten seien ganzzahlig.
+\begin{align*}
+  E^+(v) &:= \{ e \in E: e = (v,u) \}, \\
+  E^-(v) &:= \{ e \in E: e = (u,v) \}. \\
+\end{align*}
+
+\begin{defn} %% 5.4
+  Eine Funktion $x:E \to \real^1$ heißt \emph{Fluss}, wenn
+  \[ 0 \le x_e \le k_e \]
+  für alle $e \in E$ und
+  \[ \sum_{e\in E^-(v)} x_e = \sum_{e \in E^+(v)} x_e \]
+  für alle $v \in V \setminus \{ q, s \}$.
+\end{defn}
+
+
+
+%% Stückware
+
+\subsubsection*{Max-Flow-Problem}
+Finde einen Fluss $x$ mit maximaler Flussstärke $f(x)$.
+
+\begin{exmp} %% 5.5
+  Bogenmarkierungen $x_l / x_k$
+
+  %% Bild
+
+  Der Fluss ist nicht maximal.
+
+  O.B.d.A. gelte für alle $e = (u,v) \in E$, dass auch $(v,u) \in E$ sei. Falls
+  dies nicht der Fall ist für ein $e = (u,v) \in E$, dann wird $(v,u)$
+  hinzugefügt  und $k(v,u) := 0$ gesetzt.
+\end{exmp}
+
+\begin{defn} %% 5.5
+  Sei $x : E \to \real^1$ ein zulässiger Fluss, das heißt unter anderem es gilt
+  $0 \le x_e \le k_e$ für alle $e \in E$. Für $e = (u,v) \in E$ definiert
+  \[ r(e) = r(u,v) := k_e - x_e \]
+  das \emph{Residuum} von $e$ (Restkapazität). Weiterhin sei
+  \[ E(x) := \{ e \in E : x(e) > 0 \}. \]
+  Der \emph{Residualgraph} (Restgraph) ist definiert als
+  \[ G(x) := (V, E(x), r(e)_{e \in E}). \]
+\end{defn}
+
+\begin{rmrk*}
+  Ist $x$ ein  Fluss, so ist für eine Kante $(u,v) \in E$  das Residuum die
+  maximal zusätzliche Flussmenge, die von $q$ über $(u,v)$ und $(v,u)$ nach $s$
+  geschickt werden kann. Offenbar gilt bei Flüssen $r(e) \ge 0$ für alle $e \in
+  E$. Der Graph $G(x)$ enthält gerade jene Bögen, die Möglichkeiten zur
+  Flusserhöhung repräsentieren.
+\end{rmrk*}
+
+\subsection{Algorithmus von Ford/Fulkerson (1956)}
+\begin{enumerate}
+\item Start mit $x = 0$.
+\item Finde einen Fluss $x'$ von $q$ nach $s$ in $G(x)$ bzw. eine
+  flussvergrößernde Kette in $G(x)$ mit Flussstärke $f'$ (maximale Flussstärke
+  entlang des Weges). Aktualisiere $x$ durch $x := x + x'$.
+\item Wiederhole Schritt 2, solange ein positiver Fluss in $G(x)$ existiert.
+\end{enumerate}
+
+\textbf{Aufwand:} Bei ganzzahligen Kapazitäten erfolgt eine Flussvergrößerung um
+mindestens eine Einheit, damit ist der Algorithmus endlich.
+
+Unter Umständen proportional zum Optimalwert, das heißt pseudopolynomial.
+
+\subsection{Algorithmus von Edmonds/Karp (1972)}
+Wie im Algorithmus von Ford/Fulkerson, aber in Schritt 2 erfolgt stets eine
+Breitensuche, das heißt es wird ein Weg von $q$ nach $s$ in $G(x)$ mit kleinster
+Bogenzahl ermittelt.
+
+Es bezeichne $\delta(u,v)$ die Abstand zwischen $u \in V$ und $v \in V$ in
+$G(x)$, also die Anzahl der Bögen auf einem kürzesten Weg von $u$ nach $v$.
+
+\begin{lem} %% 5.11
+  Im Ablauf des Edmonds/Karp-Algorithmus sei $x'$ ein Fluss, der aus dem Fluss
+  $x$ durch eine flussvergrößernde Kette $P$ erhalten wird. Dann gilt
+  \[ \delta_x (q,v) \le \delta_{x'}(q,v) \]
+  für alle $v \in V \setminus \{q\}$.
+\end{lem}
+
+\begin{proof}
+  Angenommen, es gilt $\delta_x(q,v) > \delta_{x'}(q,v)$ für ein $v \in V$.
+  O.B.d.A. habe $v$ zusätzlich minimales $\delta_{x'}(q,v)$. Also gilt für alle
+  anderen $u \in V$:
+  \[ \delta_x(q,u) \le \delta_x(q,v) \qLRq \delta_x(q,u) \le \delta_{x'}
+    (q,u). \tag{$*$} \]
+  Sei $P'$ ein kürzester Weg von $q$ nach $v$ in $G(x)$ und $u$ der letzte
+  Knoten vor $v$ auf $P'$. Dann gilt
+  \[ \delta_x (q,u) \le \delta_{x'}(q,u). \tag{$**$} \]
+  Betrachten wir $x(u,v)$ vor der Flussvergrößerung:
+
+  Fall a): Falls $x(u,v) < k(u,v)$, dann ist $(u,v) \in G(x)$ und es gilt
+  \[ \delta_x(q,v) \le \delta_x(q,u) + 1
+    \le \delta_{x'}(q,u) + 1 \le \delta_{x'}(q,v) \]
+
+  Fall b): Falls $x(u,v) = k(u,v)$, dann ist $(u,v)$ \emph{nicht} in $G(x)$,
+  aber in $G(x')$. Daraus folgt, dass die flussvergrößernde Katte den Bogen
+  $(u,v)$ enthalten muss und es gilt:
+  \[ \delta_x(q,v) = \delta_x(q,u) - 1
+    \overset{(**)}{\le} \delta_{x'}(q,u) - 1
+    =\footnotemark \delta_{x'}(q,v) - 2
+    \le \delta_{x'}(q,v).
+  \]
+  \footnotetext{Weil $u$ direkter Vorgänger von $v$ ist.}
+  Das ist ein Widerspruch.
+\end{proof}
+
+\begin{lem} %% 5.12
+  Der Edmonds/Karp-Algorithmus führt höchstens $O(|V| \cdot |E|)$
+  Flussvergrößerungen (Augmentierungen) durch.
+\end{lem}
+
+\begin{proof}
+  Ein Bogen $(u,v)$ heißt \emph{kritisch} auf dem augmentierten Weg $P$ genau
+  dann, wenn
+  \[ r_x(u,v) = k_x(P) := \min \{ r_x(e) : e \in P \}. \]
+  Ein kritischer Bogen verschwindet bei einer Augmentierung aus dem
+  Residualgraph. Wie kann ein Bogen $(u,v)$ kritisch werden? Ein Bogen $(u,v)$
+  kann in einem späteren Residualgraphen wieder auftreten, wenn er irgendwie
+  wieder Restkapazität $> 0$ erhält. Das heißt, $(v,u)$ liegt dann auf einem
+  augmentierenden Weg.
+
+  Sei $x$ ein Fluss, bei dem $(u,v)$ kritisch war, das heißt
+  \[ \delta_x(q,v) = \delta_x(q,u) + 1. \]
+  $x'$ sei der Fluss, bei dem der Bogen $(v,u)$ das nächste Mal wieder auf dem
+  kritischen Weg liegt. Dann gilt:
+  \[ \delta_{x'}(q,u) = \delta_{x'} (q,v) + 1
+    \ge\footnotemark \delta_x(q,v) + 1 = \delta_x(q,u) + 2.  \]
+  \footnotetext{Wegen Lemma 5.11}
+  Also gilt: Zwischen zwei Schritten, in denen ein Bogen $(u,v)$ kritisch ist,
+  erhöht sich der Abstand von $q$ um mindestens 2. Der Abstand kann höchstens
+  $|V| - 2$ sein, damit wird jeder Bogen höchstens $(|V|-2)/2 = O(|V|)$ mal
+  kritisch.
+\end{proof}
+
+%% ...
+
+\begin{aus} %% 5.15
+  Ein zulässiger Fluss $x$ mit Stärke $\omega$ ist genau dann optimal, wenn der
+  Residualgraph $G(x)$ keinen Zyklus negativer Länge enthält.
+\end{aus}
+
+\begin{proof}[Beweisidee]
+  Man zeigt: Ein zulässiger Fluss der Stärke $\omega$ ist genau dann nicht
+  $\omega$-optimal, wenn im Residualgraphen $G(x)$ eine Flusszirkulation
+  existiert, deren Gesamtkosten negativ sind.
+\end{proof}
+
+\begin{exmp} %% 5.8
+  Bogenmarkierungen $x_e / k_e / c_e$.  Start mit $x_e = 0$ für alle $e \in E$.
+
+  %% Bild
+
+  Der kürzeste Weg ist in $G(x)$ ist: $v_1 \to v_2 \to v_3 \to v_4 \to v_5$.
+
+  %% G(x)
+
+  $v_1 \to v_3 \to v_2 \to v_4 \to v_5 \to v_6$ mit Stärke 2
+
+  %% Mehr Graphen
+
+  Maximaler Fluss: $\omega = 5$, Kosten $c(x) = 38$.
+\end{exmp}
+
+\begin{rmrk*}
+  Der Algorithmus von Busacker/Gower ist pseudopolynomial. Es gibt auch
+  polynomiale Algorithmen, siehe Ahuja/Magnanti/Orlin ``Network Flows''.
+\end{rmrk*}

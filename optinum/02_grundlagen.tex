@@ -1,5 +1,5 @@
-\section{Grundlagen}
-\subsection{Existenz von Lösungen}
+\chapter{Grundlagen}
+\section{Existenz von Lösungen}
 Wir betrachten die Aufgabe
 \begin{equation}
   f(x) \to \min \subjto x \in G,
@@ -90,14 +90,16 @@ wobei folgende Voraussetzungen erfüllt seien:
 \end{thm}
 
 \begin{proof}
-  Zu (1): Sei $\obar{x}$ ein lokales Minimum. Wir nehmen an, dass $\tilde{x}$
-  existiert $f(\tilde{x}) < f(\obar{x})$. Mit der Konvexität von $f$ folgt
+  Zu (1): Sei $\tilde{x}$ ein lokales Minimum. Wir nehmen an, dass $\bar{x}$
+  existiert mit $f(\bar{x}) < f(\tilde{x})$. Mit der Konvexität von $f$ folgt
   \[ \begin{aligned}
-      f( x(\lambda) ) = f( \obar{x} + \lambda(\tilde{x} - \obar{x}) )
-      &\le f( \obar{x} ) + \lambda(f(\tilde{x}) - f(\obar{x})) \\
-      &= \underbrace{\lambda f( \tilde{x} )}
-    \end{aligned} \] %% Nicht fertig! TODO!
-  Widerspruch zur Optimalität von $\obar{x}$.
+      f( x(\lambda) ) = f( \tilde{x} + \lambda(\bar{x} - \tilde{x}) )
+      &\le f( \tilde{x} ) + \lambda(f(\tilde{x}) - f(\obar{x})) \\
+      &= \underbrace{\lambda f( \bar{x} )}_{< \lambda f(\tilde{x})}
+      + (1-\lambda) f( \tilde{x} )
+      &< f(\tilde{x})
+    \end{aligned} \]
+  für alle $\lambda \in (0,1)$. Widerspruch zur Optimalität von $\tilde{x}$.
 
   Zu (2): Die Annahme von zwei globalen Lösungen $x \ne y \in G$, das heißt
   $f(x) = f(y) = f^*$, ergibt wegen
@@ -116,7 +118,7 @@ wobei folgende Voraussetzungen erfüllt seien:
   Übung.
 \end{proof}
 
-\subsection{Notwendige Optimalitätsbedingungen}
+\section{Notwendige Optimalitätsbedingungen}
 \begin{defn}
   Eine Menge $K \subset X$ heißt \emph{Kegel}, falls gilt:
   \[ x \in K \qRq \lambda x \in K \text{ für alle } \lambda \ge 0. \]
@@ -129,14 +131,14 @@ wobei folgende Voraussetzungen erfüllt seien:
     \text{ sodass } \obar{x} + t \cdot d \in G \forall t \in [0,\obar{t}] \}. \]
 \end{defn}
 
-\begin{aus}[Notwendige Optimalitätsbedingung]
+\begin{aus}[Notwendiges Optimalitätskriterium]
   Ist $f$ stetig differenzierbar und $\obar{x}$ ein lokales Minimum, dann gilt:
   \begin{equation}
-    \nabla f(\obar{x})^T d \ge 0 \text{ für alle } d \in Z(\obar{x}),
+    \nabla f(\obar{x})^\top d \ge 0 \text{ für alle } d \in Z(\obar{x}),
   \end{equation}
   Ist $G$ konvex, dann kann (2.2) wie folgt geschrieben werden:
   \begin{equation}
-    \nabla f(\obar{x})^T d \ge 0 \text{ für alle } x \in G.
+    \nabla f(\obar{x})^\top d \ge 0 \text{ für alle } x \in G.
   \end{equation}
 \end{aus}
 
@@ -171,7 +173,7 @@ wobei folgende Voraussetzungen erfüllt seien:
 
 \begin{proof}
   Wenn $f$ konvex und stetig differenzierbar ist, so gilt (s. Übung)
-  \[ f(x) \ge f( \bar{x} ) + \nabla f( \bar{x} )^T (x - \bar{x}) \]
+  \[ f(x) \ge f( \bar{x} ) + \nabla f( \bar{x} )^\top (x - \bar{x}) \]
   für alle $x \in G$.
 
   Wegen (2.3) folgt unmittelbar die Optimalität und wegen Satz 2.2 die globale
@@ -186,7 +188,7 @@ einfachere Struktur besitzt.
   $G \subset \real^n$ heißt \emph{polyedrisch}, falls eine Darstellung
   \[ G = \{ x \in \real^n : Ax \le b \} \]
   existiert, wobei $A \in \realmat{m}{n}$ und $b \in \real^m$. Hierbei gilt:
-  \[ Ax \le b \qLRq a^T x = \sum_{j=1}^n a_{ij} x_j \le b_i \text{ für alle } i
+  \[ Ax \le b \qLRq a^\top x = \sum_{j=1}^n a_{ij} x_j \le b_i \text{ für alle } i
     \in I = \{ 1, \ldots, m \}. \]
   $a_i$ ist die $i$-te Zeile von $A$.
 \end{defn}
@@ -198,22 +200,22 @@ einfachere Struktur besitzt.
 
 \begin{defn} %2.5
   Für $x \in G$ ist \emph{Indexmenge der aktiven Restriktion} definiert durch
-  \[ I_0(x) := \{ i \in I : a_i^T x = b_i \}. \]
+  \[ I_0(x) := \{ i \in I : a_i^\top x = b_i \}. \]
   Aus $d \in Z(x)$ ergibt sich
-  \[ a_i^T (x + t d) \le b_i \qLRq t a_i^T  d \le b_i - a_i^T x \quad
+  \[ a_i^\top (x + t d) \le b_i \qLRq t a_i^\top  d \le b_i - a_i^\top x \quad
     \text{für alle} i \in I, \text{ für alle } t \in [0, \bar{t}] \]
   und damit die Bedingung
-  \[ a_i^T d \le 0 \quad \text{für alle } i \in I_0(x). \]
+  \[ a_i^\top d \le 0 \quad \text{für alle } i \in I_0(x). \]
   Die \emph{inaktiven} Restriktionen ergeben keine weitere Einschränkung an
   $Z(x)$. Somit ist die Größe $\bar{t}$ wohldefiniert und positiv:
   \begin{equation} %2.4
-    \bar{t} := \min \left\{ \frac{b_i - a_i^T x}{a_i^T d} : i \in I(x,d)
+    \bar{t} := \min \left\{ \frac{b_i - a_i^\top x}{a_i^\top d} : i \in I(x,d)
     \right\},
   \end{equation}
-  wobei $I(x,d) := \{ i \in I: a_i^T d > 0 \}$. Damit kann $Z(x)$ für beliebige
+  wobei $I(x,d) := \{ i \in I: a_i^\top d > 0 \}$. Damit kann $Z(x)$ für beliebige
   $x \in G$ angegeben werden in der Form
   \begin{equation} %2.5
-    d \in Z(x) \qLRq a_i^T d \le 0 \quad \text{für alle } i \in I_0(x).
+    d \in Z(x) \qLRq a_i^\top d \le 0 \quad \text{für alle } i \in I_0(x).
   \end{equation}
 \end{defn}
 
@@ -222,14 +224,14 @@ einfachere Struktur besitzt.
 \end{rmrk}
 
 %%\[ f(x) \to \min \subjto  x \in G = \{ x \in \real^n : Ax \le b \}. \]
-%% $a_i \in \real^n$, $a_i^T =$ $i$-te Zeile von $A$, $I = \{1, \ldots, m\}$.
+%% $a_i \in \real^n$, $a_i^\top =$ $i$-te Zeile von $A$, $I = \{1, \ldots, m\}$.
 \begin{flg} %2.6
   Sei $G$ polyedrisch, das heißt $G = \{ x \in \real^n : Ax \le b\}$. Ist
   $\obar{x}$ eine lokale Lösung von (2.1), so gilt
   \begin{equation} %2.6
-    \nabla f( \obar{x} )^T d \ge 0 \quad \text{für alle } d \in \real^n
+    \nabla f( \obar{x} )^\top d \ge 0 \quad \text{für alle } d \in \real^n
   \end{equation}
-  mit $a_i^T d \le 0$ für alle $i \in I_0(\obar{x})$.
+  mit $a_i^\top d \le 0$ für alle $i \in I_0(\obar{x})$.
 
   Ist $f$ zusätzlich konvex, dann impliziert (2.6) die globale Optimalität von
   $\obar{x}$.
@@ -244,7 +246,7 @@ einfachere Struktur besitzt.
   darstellen lässt, wobei die $a_j \in \real^n$ gegeben sind. Eine alternative
   Darstellung ist
   \begin{equation} %2.8
-    K = \{ x \in \real^n : b_j^T x \le 0, j = 1, \ldots, m \},
+    K = \{ x \in \real^n : b_j^\top x \le 0, j = 1, \ldots, m \},
   \end{equation}
   wobei die $b_j$ bekannt sind.
 \end{defn}
@@ -270,27 +272,27 @@ einfachere Struktur besitzt.
   für alle $x \in G$ (globales Minimum).
 
   Die Anwendung von (2.3) ergibt
-  \[ \nabla f( \obar{x} )^T (x-\obar{x}) = - (q-\obar{x})^T(x-\obar{x}) \ge 0
+  \[ \nabla f( \obar{x} )^\top (x-\obar{x}) = - (q-\obar{x})^\top(x-\obar{x}) \ge 0
     \quad \text{für alle } x \in G. \]
 
   Spezialfall: Ist $G$ affin lineare Menge (z.B. Unterraum)
-  \[ \nabla(\obar{x})^T (x-\obar{x}) = - (q-\obar{x})^T(x-\obar{x}) = 0. \]
-  Ist $G$ ein Unterraum: $(q-\obar{x})^T x = 0$ bzw. $q-\obar{x} \perp x$ für
+  \[ \nabla(\obar{x})^\top (x-\obar{x}) = - (q-\obar{x})^\top(x-\obar{x}) = 0. \]
+  Ist $G$ ein Unterraum: $(q-\obar{x})^\top x = 0$ bzw. $q-\obar{x} \perp x$ für
   alle $x \in G$.
 
   \paragraph{Geometrische Interpretation}
   (für beliebiges, abgeschlossenes, konvexes $G$)
-  Mit $s := q - \obar{x}, \quad s_0 := s^T x^T$ gilt
-  \[ s^T x \le s_0 \quad \text{für alle } x \in G, \]
-  \emph{aber} $s^T q > s_0$.
+  Mit $s := q - \obar{x}, \quad s_0 := s^\top x^\top$ gilt
+  \[ s^\top x \le s_0 \quad \text{für alle } x \in G, \]
+  \emph{aber} $s^\top q > s_0$.
 \end{exmp}
 
-\subsection{Lemma von Farkas}
-\begin{lem}[Farkas] %2.8
+\section{Lemma von Farkas}\label{sect:kkt-bed}
+\begin{lem}[Farkas] \label{lem:farkas} %2.8
   Es seien $A \in \realmat{m}{n}$ und $a \in \real^n$. Von den Systemen
   \begin{align*}
-    Az &\le 0, & a^T z &> 0, \tag{1} \\
-    A^T u &= a, & u &\ge 0 \tag{2}
+    Az &\le 0, & a^\top z &> 0, \tag{1} \\
+    A^\top u &= a, & u &\ge 0 \tag{2}
   \end{align*}
   ist \emph{genau} eines lösbar. Dabei sind $A z \le 0$ und $u > 0$
   komponentenweise zu verstehen.
@@ -299,30 +301,30 @@ einfachere Struktur besitzt.
 \begin{proof}
   Seien (1) und (2) gleichzeitig lösbar und $z,u$ die zugehörigen Lösungen. Dann
   gilt
-  \[ 0 \ge u^T A z = (A^T u)^T z = a^T z > 0. \]
+  \[ 0 \ge u^\top A z = (A^\top u)^\top z = a^\top z > 0. \]
   Widerspruch!
 
   Wir zeigen noch: Die Unlösbarkeit von (1) impliziert die Lösbarkeit von (2).
   Sei (1) nicht lösbar, das heißt
-  \[ a \notin K := \{ x = A^T u : u \in \real^m_+ \}. \]
+  \[ a \notin K := \{ x = A^\top u : u \in \real^m_+ \}. \]
   Wir betrachten die Optimierungsaufgabe
-  \[ f(x) := \rez{2} \| a - x \|_2^2 = \rez{2} (a-x)^T (a-x) \to \min \subjto x
+  \[ f(x) := \rez{2} \| a - x \|_2^2 = \rez{2} (a-x)^\top (a-x) \to \min \subjto x
     \in K. \]
   Dann existiert eine (globale) Lsöung $\obar{x} \in K$ mit
-  \[ \nabla f(\obar{x})^T \obar{x} = 0 \tag{3}\]
+  \[ \nabla f(\obar{x})^\top \obar{x} = 0 \tag{3}\]
   und
-  \[ \nabla f(\obar{x})^T x \ge 0 \]
+  \[ \nabla f(\obar{x})^\top x \ge 0 \]
   für alle $x \in K$.
 
   Nun zeigen wir, dass $z := a - \obar{x}$ das System (1) löst. Es gilt
   $\nabla f( \obar{x} ) = -z$ und damit
-  \[ 0 = \nabla f(\obar{x})^T \obar{x} = -(a-\obar{x})^T(\obar{x}-a+a)
-    \qRq a^T z = z^T z > 0. \]
+  \[ 0 = \nabla f(\obar{x})^\top \obar{x} = -(a-\obar{x})^\top(\obar{x}-a+a)
+    \qRq a^\top z = z^\top z > 0. \]
   Weiter gilt $\obar{x} \in K$ genau dann, wenn ein $u \in \real^m_+$ existiert
-  mit $\obar{x} = A^T u$. Aus (4) folgt
-  \[ -(a-\obar{x})^T A^T u \ge 0 \quad \text{für alle } u \in \real^m_+. \]
+  mit $\obar{x} = A^\top u$. Aus (4) folgt
+  \[ -(a-\obar{x})^\top A^\top u \ge 0 \quad \text{für alle } u \in \real^m_+. \]
   Also gilt
-  \[ (Ax)^T u \le 0 \text{ für alle } u \in \real^m_+ \qRq Ax \le 0. \qedhere \]
+  \[ (Ax)^\top u \le 0 \text{ für alle } u \in \real^m_+ \qRq Ax \le 0. \qedhere \]
 \end{proof}
 
 Damit können die notwendigen Optimalitätskriterien für den Spezialfall affin
@@ -330,8 +332,8 @@ linearer Ungleichungen insgesamt zu folgendem System zusammengefasst werden:
 \begin{equation} %2.9
   \text{(KKT)} \left\{ \quad \begin{aligned}
       \nabla f(x) + \sum_{i =1}^m u_i a_i = 0, & \\
-      u_i \ge 0, \quad a_i^T x \le b_i, & &i = 1, \ldots, m, \\
-      u^T(Ax - b) = 0, 
+      u_i \ge 0, \quad a_i^\top x \le b_i, & &i = 1, \ldots, m, \\
+      u^\top(Ax - b) = 0, 
     \end{aligned} \right.
 \end{equation}
 
@@ -339,22 +341,22 @@ linearer Ungleichungen insgesamt zu folgendem System zusammengefasst werden:
   \begin{enumerate}[(1)]
   \item KKT steht für Karush-Kuhn-Tucker.
   \item Die $u$-Variablen werden als \emph{Lagrange-Multiplikatoren} bezeichnet.
-  \item Gibt es neben den Ungleichungs- auch Gleichungsrestriktionen $a_i^T x =
+  \item Gibt es neben den Ungleichungs- auch Gleichungsrestriktionen $a_i^\top x =
     b_i$, $i = m+1, \ldots, \obar{m}$ ($\obar{m} > m$), dann erhält man das
     folgende KKT-System:
-    \begin{equation} %2.10
+    \begin{equation} \label{eq:kkt-bed} %2.10 
       \text{(KKT)} \left\{ \quad \begin{aligned}
           \nabla f(x) + \sum_{i =1}^m u_i a_i + \sum_{i=m+1}^{\obar{m}} u_i a_i =
           0, & \\
-          u_i \ge 0, \quad a_i^T x - b_i \le 0, & &i = 1, \ldots, m, \\
-          u_i(a_i^T x - b_i) = 0, & &i = 1, \ldots, m, \\
-          a_i^T x - b_i = 0, & &i = m + 1, \ldots, \obar{m}.
+          u_i \ge 0, \quad a_i^\top x - b_i \le 0, & &i = 1, \ldots, m, \\
+          u_i(a_i^\top x - b_i) = 0, & &i = 1, \ldots, m, \\
+          a_i^\top x - b_i = 0, & &i = m + 1, \ldots, \obar{m}.
         \end{aligned} \right.
     \end{equation}
   \end{enumerate}
 \end{rmrk*}
 
-\subsection{KKT-Bedingungen für nichtlineare Optimierungsprobleme}
+\section{KKT-Bedingungen für nichtlineare Optimierungsprobleme}
 Wir betrachten
 \begin{equation} %2.11
   f(x) \to \min \subjto x \in G,
@@ -371,15 +373,15 @@ explizit beschreibbar ist.
 Daher ersetzt man die nichtlinearen Bedingungen durch deren
 \emph{Linearisierung} (Tangente, Tangentialebene).
 \[ \begin{aligned}
-    g_i(x) &\approx g_i(\obar{x}) + \nabla g_i(\obar{x})^T (x-\obar{x}),
+    g_i(x) &\approx g_i(\obar{x}) + \nabla g_i(\obar{x})^\top (x-\obar{x}),
     & i \in I, \\
-    h_j(x) &\approx h_j(\obar{x}) + \nabla h_j(\obar{x})^T (x-\obar{x}),
+    h_j(x) &\approx h_j(\obar{x}) + \nabla h_j(\obar{x})^\top (x-\obar{x}),
     & j \in J.
   \end{aligned} \]
 
 Anstelle von $Z(\obar{x})$ wird der \emph{Linearisierungskegel}
-\[ L( \obar{x} ) := \{ d \in \real^n : \nabla g_i(\obar{x})^T d \ge 0, i \in
-  I_0(\obar{x}), \nabla h_j(\obar{x})^T d = 0, j \in J \} \]
+\[ L( \obar{x} ) := \{ d \in \real^n : \nabla g_i(\obar{x})^\top d \ge 0, i \in
+  I_0(\obar{x}), \nabla h_j(\obar{x})^\top d = 0, j \in J \} \]
 verwendet.
 
 \clearpage
@@ -395,7 +397,7 @@ verwendet.
   \begin{equation} %2.12
     \text{(KKT)} \left\{ \quad \begin{aligned} 
         \nabla f(x) + \sum_{i =1}^m u_i \nabla g_i(\obar{x}) = 0, & \\
-        u_i \ge 0, \quad a_i^T x \le b_i, & &i \in I, \\
+        u_i \ge 0, \quad a_i^\top x \le b_i, & &i \in I, \\
         g_i(\obar{x}) \le 0, & &i \in I, \\
         u_i g_i(x) = 0, & &i \in I.
       \end{aligned} \qquad \right.

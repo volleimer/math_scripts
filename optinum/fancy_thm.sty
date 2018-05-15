@@ -55,8 +55,8 @@
 \renewcommand{\kortitle}{Korollar~\thekor}
 \renewcommand{\prptitle}{Proposition~\theprp}
 
-\renewcommand{\flgtitle}{Folgerung~\theprp}
-\renewcommand{\austitle}{Aussage~\theprp}
+\renewcommand{\flgtitle}{Folgerung~\theflg}
+\renewcommand{\austitle}{Aussage~\theaus}
 }
 
 % Individual counters
@@ -95,15 +95,24 @@
 \newcommand{\thekor}{\thethm}
 \newcommand{\theprp}{\thethm}
 
+\newcommand{\theflg}{\thethm}
+\newcommand{\theaus}{\thethm}
+
 \renewcommand{\incthm}{\refstepcounter{thm}}
 \renewcommand{\inclem}{\refstepcounter{thm}}
 \renewcommand{\inckor}{\refstepcounter{thm}}
 \renewcommand{\incprp}{\refstepcounter{thm}}
 
+\renewcommand{\incflg}{\refstepcounter{thm}}
+\renewcommand{\incaus}{\refstepcounter{thm}}
+
 \renewcommand{\thmtitle}{Satz~\thethm}
 \renewcommand{\lemtitle}{Lemma~\thelem}
 \renewcommand{\kortitle}{Korollar~\thekor}
 \renewcommand{\prptitle}{Proposition~\theprp}
+
+\renewcommand{\flgtitle}{Folgerung~\theflg}
+\renewcommand{\austitle}{Aussage~\theaus}
 }
 
 \ProcessOptions

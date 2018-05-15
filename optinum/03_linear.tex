@@ -1,0 +1,1264 @@
+\chapter{Lineare Optimierung}
+Wir betrachten nun das Problem
+\begin{equation}
+  z = c^\top x \to \min \subjto x \in G := \{x \in \real^n : Ax = b, x \ge 0 \}
+\end{equation}
+mit $A \in \realmat{m}{n}$, $b \in \real^m_+$. Außerdem seien $\rang(A) =
+\operatorname{rg}(A) = m$ und $m < n$.
+
+\begin{rmrk}
+  \begin{enumerate}[(1)]
+  \item $G$ ist polyedrisch.
+  \item Alle endlich-dimensionalen Optimierungsprobleme lassen sich in der
+    \emph{Standardform} (3.1) schreiben (Übung).
+  \end{enumerate}
+\end{rmrk}
+
+\section{Basislösungen und Ecken}
+Sei $I = \{1, \ldots, n \}$. Da $\rang(A) = m$ gilt, existiert eine Indexmenge
+$I_B \subset I$ mit $|I_B| = m$ derart, dass die Spalten $A^i$, $i \in I_B$
+linear unabhängig sind. $I_B$ wird \emph{Basis-Indexmenge} genannt. Mit $I_N :=
+I \setminus I_B$ (Nichtbasis) definieren wir
+\[ A_B := (A^i)_{i \in I_B}, \qquad A_N := (A^i)_{i \in I_N}. \]
+Dann kann (3.1) geschrieben werden in der Form
+\begin{equation}\groupequation{
+  \begin{aligned}
+    z = c_B^\top x_B + c_N^\top x_N = \sum_{i \in I_B} c_i x_i + \sum_{i \in I_N} c_i
+    x_i \to \min \subjto \\
+    A_B x_B + A_N x_N = \sum_{i \in I_B} A^i x_i + \sum_{i \in I_N} A^i x_i = b, \\
+    x_B \ge 0, x_N \ge 0.
+  \end{aligned}
+}\end{equation}
+bzw. nach Auflösen nach $x_B$:
+\begin{equation}\groupequation{
+  \begin{aligned}
+    z = (c_N^\top - c_B^\top A_B^{-1} A_N) x_N + c_B^\top A_B^{-1} b \to \min
+    \subjto \\
+    x_B = -A_B^{-1} A_N x_N + A_B^{-1} b, \\
+    x_N \ge 0, (x_B \ge 0).
+  \end{aligned}
+}\end{equation}
+$x_B$ heißt \emph{Basisvariable} (``abhängige Variable''). $x_N$ heißt
+\emph{Nichtbasisvariable} (``unabhängige Variable'').
+
+\begin{defn} %3.1
+  Der Punkt (Vektor)
+  \[ x \leftrightarrow \pmat{ x_B \\ x_N } = \pmat{A_B^{-1} b \\ 0 } \]
+  heißt \emph{Basislösung} zu $I_B$. Gilt zusätzlich $A_b^{-1} b \ge 0$, dann
+  heißt $x$ \emph{zulässige Basislösung}.
+\end{defn}
+
+\begin{defn} %3.2
+  Ein Punkt $x \in G$ heißt \emph{Ecke} von $G$, falls aus $x = \rez{2}(y+z)$
+  mit $y,z \in G$ stets $x = y = z$ folgt.
+\end{defn}
+
+\clearpage
+
+\begin{thm} %3.1
+  Gilt $\rang(A) = m$, dann ist jede zulässige Basislösung eine Ecke von $G$.
+  Umgekehrt gibt es zu jeder Ecke von $G$ mindestens eine Basislösung.
+\end{thm}
+
+\begin{thm} %3.2
+  Sei $G \ne \emptyset$. Dann besitzt $G$
+  \begin{enumerate}[(1)]
+  \item mindestens eine Ecke,
+  \item höchstens endlich viele Ecken.
+  \end{enumerate}
+\end{thm}
+
+\begin{thm} %3.3
+  Ist (3.1) lösbar, dann gibt es eine Ecke von $G$, die (3.1) löst.
+\end{thm}
+
+\begin{aus}[Optimalitätskriterium] %3.4
+  Gilt für die Basislösung $x \leftrightarrow \pmat{x_B \\ x_N } =
+  \pmat{A_B^{-1} b \\ 0 }$ die Bedingung $A_B^{-1} b \ge 0$ und
+  \[ c_N^\top - c_B^\top A_B^{-1} A_N \ge 0, \]
+  das heißt
+  \[ c_i - (c_B^\top A_B^{-1})A^i \ge 0, \quad i \in I_N, \]
+  dann ist $x$ Lösung von (3.1).
+\end{aus}
+
+\begin{proof}
+  Sei $x$ zulässige Basislösung. Wir zeigen zunächst
+  \[ Z(x) \subseteq \{ d \in \real^n : Ad = 0, d_N \ge 0 \}. \]
+  Sei $d \in Z(x)$, dann existiert $\obar{t} \ge 0$ mit $0 \le t \le \obar{t}$
+  \[ A(x+td) = Ax + t \cdot Ad = b, \]
+  also gilt $Ad = 0$.
+
+  Wegen $x_N \ge 0$ ergibt sich aus $x + td \overset{!}{\ge} 0$ und $x_N \ge 0$
+  die Bedingung $d_N \ge 0$. Insbesondere gilt
+  \[ A_B d_B + A_N d_N = 0 \qRq d_B = - A_B^{-1} A_N d_N \text{ für alle } d
+    \in Z(x). \]
+  Damit folgt unter Berücksichtigung von (3.3)
+  \[ \nabla f(x)^\top d = c^\top d = ( c_N^\top - c_B^\top A_B^{-1} A_N) d_N \ge 0 \text{
+      für alle} d \in Z(x). \]
+  Also genügt $x$ den notwendigen Optimalitätsbedingungen (2.2). Wegen Aussage
+  2.2 folgt dann, dass $x$ Lösung von (3.1) ist.
+\end{proof}
+
+\section{Das primale Simplexverfahren}
+Das primale Simplexverfahren durchläuft zwei Phasen, falls erforderlich. \\
+\emph{Phase 1} besteht in der Ermittlung einer ersten zulässigen Basislösung
+(Ecke), \\
+\emph{Phase 2} in der Bestimmung einer optimalen Ecke.
+
+\subsection{Phase 2}
+Wir betrachten zunächst den Fall, dass eine erste zulässige  Basislösung bekannt
+sei. Zur Vereinfachung schreiben wir (3.3) in Form des \emph{Simplex-Tableaus}.
+\begin{equation}
+  \begin{array}{r|cc}
+    \mathrm{ST}_0 & x_N & 1 \\
+    \hline
+    x_B = & P & p \\
+    \hline
+    z = & q^\top & q_0
+  \end{array}
+\end{equation}
+mit $P = -A_B^{-1} A_N$, $p = A_B^{-1} b$, $q^\top = c_N^\top - c_B^\top A_B^{-1} A_N$,
+$q_0 = c_B^\top A_B^{-1} b$.
+
+O.B.d.A. nehmen wir (zunächst) an, dass $x_B = (x_1, \ldots, x_m)^\top$ und $x_N
+= (x_{m+1}, \ldots, x_n)^\top$. Die zu $\mathrm{ST}_0$ gehörige Basislösung ist
+somit $x \leftrightarrow \pmat{x_B \\ x_N} = \pmat{p \\ 0}$.
+
+Frage: Wenn $x$ nicht optimal ist, wie kann eine bessere zulässige Lösung
+gefunden werden?
+
+Antwort: Wahl einer zulässigen Richtung, das heißt $d \in Z(x)$ mit maximaler
+Schrittweite, die eine Verkleinerung des Zielfunktionals ergibt.
+
+Nach Aussage 3.4 ist $x$ optimal, falls $q \ge 0$ gilt. Sei nun $q_\tau < 0$ für
+ein $\tau \in I_N$. Wir setzen $x_\tau := t$ und verfolgen die zulässige
+Richtung
+\begin{equation}
+  d_i := \begin{cases}
+    P_{i\tau}, &i \in I_B \\
+    1, &i = \tau \\
+    0, &i \in I_N \setminus \{ \tau \}.
+  \end{cases}
+\end{equation}
+Wegen der Bedingung $x(t) := x + td \ge 0$ folgt $t \ge 0$ und wegen (2.4)
+\[ t \le \bar{t} := \min \left\{ \frac{-p_i}{P_{i\tau}} : P_{i\tau} < 0, i \in
+    I_B \right\}, \]
+\[ i \in I_B : [x_B] = p_i + P_{i\tau} t \overset{!}{\ge} 0 \]
+bzw. $\bar{t} := + \infty$, falls $P_{i\tau} \ge 0$ für alle $i \in I_B$.
+
+\begin{aus}
+  Im Fall $\bar{t} = \infty$ besitzt (3.1) keine Lösung, da der
+  Zielfunktionswert nach unten unbeschränkt ist.
+\end{aus}
+
+\begin{proof}
+  Wegen $q_\tau < 0$ gilt
+  \[ z = q^\top x_N + q_0 = \underbrace{q_\tau}_{<0} \cdot t + q_0 \xrightarrow{t
+      \to \infty} -\infty \]
+  und $x(t) \in G$ für $t \to \infty$.
+\end{proof}
+
+\begin{rmrk}
+  Die beiden Fälle
+  \begin{enumerate}[(1)]
+  \item $q_i \ge 0$ für \emph{alle} $i \in I_N$ und
+  \item es existiert ein $\tau \in I_N$ mit $q_\tau < 0$ $P_{i\tau} \ge 0$ für
+    alle $i \in I_B$
+  \end{enumerate}
+  werden \emph{entscheidbar} genannt.
+
+  Im sogenannten \emph{nicht entscheidbaren} Fall, das heißt
+  \[ (\exists \tau \in I_N : q_\tau < 0)
+    \wedge
+    \left( \exists \sigma \in I_B : \bar{t} = - \frac{p_\tau}{P_{\sigma\tau}} =
+      \min \left\{ -\frac{p_i}{P_{i\tau}} : P_{i\tau} < 0, i \in I_B \right\}
+    \right) \]
+  ergibt die (maximale) Schrittweite $\bar{t}$ den Punkt
+  $\bar{x} := x + \bar{t} d \in G$ mit
+  \[ f(\bar{x}) = q^\top \bar{x}_N + q_0 = f(x) + \bar{t} q_\tau = q_0 +
+    \underbrace{\bar{t}}_{\ge 0} \cdot
+    \underbrace{q_\tau}_{\le 0}
+    \le q_0. \]
+\end{rmrk}
+
+\begin{thm}
+  $\bar{x}$ ist eine Ecke von $G$ mit der Basis-Indexmenge
+  \begin{equation}
+    \bar{I}_B = I_B(\bar{x}) = (I_B \setminus \{ \sigma \} ) \cup \{ \tau
+    \}, \qquad \bar{I}_N := (I_n \setminus \{ \tau \}) \cup \{ \sigma \}.
+  \end{equation}
+\end{thm}
+
+Um zu zeigen, dass die Matrix $\bar{A}_B = (A^j)_{j \in \bar{I}_B}$ regulär ist,
+benutzen wir das
+\begin{lem}[Sherman/Morrison]
+  Es seien $B \in \realmat{m}{n}$ regulär und $u,v \in \real^m$. Die Matrix
+  $\bar{B} := B + uv^\top$ ist genau dann regulär, wenn $1 + v^\top B^{-1} u \ne 0$
+  und es gilt
+  \begin{equation}
+    \bar{B}^{-1} := B^{-1} + \frac{B^{-1} u v^\top B^{-1}}{1 + v^\top B^{-1} u}.
+  \end{equation}
+\end{lem}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{proof}[Beweis zu Satz 3.6]
+  Der ``Austausch'' der Spalten $A^\sigma$ und $A^\tau$ kann durch ein
+  dyadisches Produkt $uv^\top$ beschrieben werden:
+  \[ \bar{A}_B = A_B + uv^\top \quad \text{mit} \quad u = A^\tau - A^\sigma, v =
+    e^\sigma. \]
+  Dabei ist $e^\sigma$ der $\sigma$-te Einheitsvektor.
+
+  Wegen
+  \[ \begin{aligned}
+      1 + v^\top A_B^{-1} u
+      &= 1 + (e^\sigma)^\top (A_B^{-1}) (A^\sigma - A^\tau) \\
+      &= 1 + (e^\sigma)^\top A_B^{-1} A^\tau - 1 \\
+      &= - P_{\sigma \tau} \ne 0
+    \end{aligned} \]
+  folgt mit dem Lemma von Sherman/Morrison die Regularität von $\bar{A}_B$.
+\end{proof}
+
+\begin{exmp}
+  Betrachtet werde
+  \[ \begin{aligned} z = x_1 + x_2 \to \max \subjto x_1 + 2 x_2 &\le 6, \\
+      4x_1 + x_2 &\le 10, \\
+      x_1, x_2 \ge 0.
+    \end{aligned}
+  \]
+  Schlupfvariable: $x_3, x_4 \ge 0$.
+  \[ x_1 + 2x_2 + x_3 = 6, \quad 4x_1 + x_2 + x_4 = 10. \]
+  Umwandlung zu Minimierungsaufgabe:
+  \[ -z = -x_1 - x_2 \to \min. \]
+  Wahl
+  \begin{align*}
+    I_B &= \{3,4\}, & I_N &= \{1,2\}, & A_B &= \pmat{ 1 & 0 \\ 0 & 1 }, & \ldots
+    \\
+    c_B^\top &= (0,0), & c_N^\top &= (-1,-1), & x_B &= (x_3, x_4)^\top
+  \end{align*}
+  \begin{center}
+    \begin{tabular}{r|ccc}
+      $\mathrm{ST}_0$ & $x_1$ & $x_2$ & 1 \\
+      \hline
+      $x_3$ & $-1$ & $-2$ & $6$ \\
+      $x_4$ & $-4$ & $-1$ & $10$ \\
+      \hline
+      $-z$ & $-1$ & $-1$ & $0$
+    \end{tabular}
+  \end{center}
+  Mit $\tau = 1$ erhält man $\sigma = 4$, $\bar{t} = \frac{5}{2}$.
+  \[ \bar{x} = x + td = \pmat{ 0 \\ 0 \\ 6 \\ 10 } + \frac{5}{2}
+    \pmat{1 \\ 0 \\ -1 \\ -4} =\pmat{ 5/2 \\ 0 \\ 7/2 \\ 0 } \quad \text{(Ecke
+      von $G$)} \]
+  \[ Z(\bar{x}) = -1 \cdot \bar{t} + 0 = -\frac{5}{2} < 0. \]
+\end{exmp}
+
+Der Austausch von $x_\tau$ mit $x_\sigma$ im Simplexverfahren kann durch die
+sogenannten \emph{Austauschregeln} erfolgen:
+\begin{center}
+  \begin{tabular}{r|cc}
+    $\mathrm{ST}_0$ & $x_N$ & 1 \\
+    \hline
+    $x_B$ & $P$ & $p$ \\
+    \hline
+    $z$ & $q^\top$ & $q_0$
+  \end{tabular}
+  \hspace{1cm}
+  $\Rightarrow$
+  \hspace{1cm}
+  \begin{tabular}{r|cc}
+    $\mathrm{ST}_1$ & $\bar{x}_N$ & 1 \\
+    \hline
+    $\bar{x}_B$ & $\bar{P}$ & $\bar{p}$ \\
+    \hline
+    $z$ & $\bar{q}^\top$ & $\bar{q}_0$
+  \end{tabular}  
+\end{center}
+mit $\bar{I}_B := (I_B \setminus \{ \sigma \} ) \cup \{ \tau \}$, $\bar{I}_N :=
+(I_N \setminus \{ \tau \} ) \cup \{ \sigma \}$.
+
+Austauschregeln:
+\begin{align*}
+  \bar{P}_{\sigma \tau}
+  &:= \rez{P_{\sigma \tau}} \\
+  \bar{P}_{\sigma j}
+  &:= - \frac{P_{\sigma j}}{P_{\sigma \tau}}, \quad
+    j \in I_N \setminus \{ \tau \},
+  & \bar{p}_\sigma
+  &:= - \frac{p_\sigma}{P_{\sigma \tau}}, \\
+  \bar{P}_{i \tau}
+  &:= \frac{P_{i \tau}}{P_{\sigma \tau}}, \quad
+    i \in I_B \setminus \{ \sigma \},
+  & \bar{q}_\tau
+  &:= \frac{q_\tau}{P_{\sigma \tau}}, \\
+  \bar{P}_{ij}
+  &:= P_{ij} - \frac{P_{\sigma j}}{P_{\sigma \tau}} \cdot P_{i \tau}, \quad
+    i \in I_B \setminus \{\sigma\}, \quad j \in I_N \setminus \{ \tau \}, \\
+  \bar{q}_j
+  &:= q_j - \frac{P_{\sigma j}}{P_{\sigma \tau}} q_\tau, \quad
+    j \in I_N \setminus \{ \tau \}, \\
+  \bar{q}_0
+  &:= q_0 - \frac{ p_\sigma }{ P_{\sigma \tau} \cdot q_\tau}.
+\end{align*}
+
+\begin{exmp}
+  Wie in 3.1 \\[1.5em]
+  \begin{tabular}{r|rrr}
+    $\mathrm{ST}_0$ & $x_1$ & $x_2$ & 1 \\
+    \hline
+    $x_3$ & $-1$ & $-2$ & $6$ \\
+    $x_4$ & $-4$ & $-1$ & $10$ \\
+    \hline
+    $-z$ & $-1$ & $-1$ & $0$ \\
+    \hline
+    $k$ & $-1/2$ & & $3$
+  \end{tabular}
+  \hspace{1cm}
+  $\tau = 2$, $\bar{t} = 3$ \\[1.5em]
+  \begin{tabular}{r|rrr}
+    $\mathrm{ST}_1$ & $x_1$ & $x_3$ & 1 \\
+    \hline
+    $x_2$ & $1/2$ & $-1/2$ & $3$ \\
+    $x_4$ & $-7/2$ & $1/2$ & $7$ \\
+    \hline
+    $-z$ & $-1/2$ & $1/2$ & $-3$ \\
+    \hline
+    $k$ & & $1/7$ & $2$
+  \end{tabular} \\[1.5em]
+  \begin{tabular}{r|rrr}
+    $\mathrm{ST}_2$ & $x_4$ & $x_3$ & 1 \\
+    \hline
+    $x_2$ & & & $2$ \\
+    $x_1$ & & & $2$ \\
+    \hline
+    $-z$ & $1/7$ & $3/7$ & $-4$
+  \end{tabular}
+  \hspace{1cm}
+  $q = \pmat{1/7 \\ 3/7}$.
+
+  $\mathrm{ST}_2$ ist optimal, da $q \ge 0$. (Eine) Lösung: $x^* = (2,2,0,0)^\top$.
+  $-z_{\min} = -4$, $z_{\max} = 4$. $x^*$ ist eindeutige Lösung, da $g_j > 0$
+  für alle $j \in I_N = \{3,4\}$.
+\end{exmp}
+
+\subsection{Phase 1}
+Wir betrachten das Problem
+\begin{equation} %% 3.8
+  z = c^\top x \to \min \subjto Ax = b, x \in \real^n_+.
+\end{equation}
+Falls nicht einfach möglich, kann durch folgendes Hilfsproblem eine erste
+zulässige Basislösung gefunden werden, falls eine existiert.
+\begin{equation} %% 3.9
+  h = e^\top y \to \min \subjto y + Ax = b, x \in \real^n_+, y \in \real^n_+
+\end{equation}
+mit $e =(1, \ldots, 1)^\top \in \real^m$.
+
+Die erste Basislösung zu (3.9) ist
+\begin{equation}
+  \begin{array}{r|cc}
+    & x & 1 \\
+    \hline
+    y = & -A & b \\
+    h = & -e^\top A & e^\top b
+  \end{array}
+\end{equation}
+
+\begin{thm}
+  Das Ausgangsproblem (3.8) besitzt genau dann eine zulässige Lösung, wenn
+  $h_{\min} = 0$ den Optimalwert von (3.9) bildet.
+\end{thm}
+
+\begin{proof}
+  Nach Definition der Hilfszielfunktion gilt $h_{\min} = 0$ genau dann, wenn
+  $y=0$. Besitzt (3.8) eine zulässige Lösung $\bar{x}$, dann ist $\pmat{\bar{x}
+    \\ \bar{y}}$ mit $\bar{y} = 0$ zulässig für (3.9). Wegen $0 \le h \le e^\top
+  \bar{y} = 0$ ist $\pmat{\bar{x} \\ \bar{y}}$ optimal mit $h_{\min} = 0$.
+
+  Hat man umgekehrt $h_{\min} = 0$,  so gilt $\bar{y} = 0$ für jede (optimale)
+  Lösung von (3.9). Aus der Zulässigkeit von $\pmat{\bar{x} \\ \bar{y}}$ folgt
+  die Zulässigkeit von $\bar{x}$ für (3.8).
+\end{proof}
+
+\subsection{Das revidierte Simplexverfahren}
+Bei der in Abschnitt 3.2.1 vorgestellen Vorgehensweise wird je Simplexschritt
+die Nichtbasismatrix $A_N$, die das Format $n \times (n-m)$, transformiert,
+während im Abschnitt 3.1 eine $m \times m$-Matrix aufdatiert wird. Ist $n \gg
+m$, kann letzteres effizienter sein.
+
+$A^j$ bezeichne wieder die $j$-te Spalte von $A$.
+
+\paragraph{Revidiertes Simplexverfahren}
+\begin{enumerate}[(1)]
+  \setcounter{enumi}{-1}
+\item Ermittle eine erste zulässige Basislösung $x_b = p$, $x_N = 0$ mit $p =
+  (A_B)^{-1} b$ und Indexmengen $I_B$, $I_N$ sowie $A_B = (A^j)_{j \in I_B}$.
+\item Optimalitätstest: Berechne entsprechend der Aussage 3.4
+  \[ \bar{c} := \min_{j \in I_N} \bar{c}_j := \min_{j \in I_N} c_j - d^\top A^j, \]
+  wobei $d^\top := c_B^\top A_B^{-1}$.
+
+  Gilt $\bar{c} \ge 0$, dann ist $\pmat{x_B \\ x_N} = \pmat{p \\ 0}$ Lösung von
+  (3.1). Anderenfalls sei $\bar{c} = \bar{c}_\tau$ ($\tau \in I_N$).
+\item Berechne die transformierte Spalte von $A^\tau$: $\bar{a} := -(A_B^{-1})
+  A^\tau$. Falls  $\bar{a}_i \ge 0$ für alle $i \in I_B$, dann hat (3.1) keine
+  Lösung ($z$ ist nach unten unbeschränkt). Bestimme $\sigma$ gemäß
+  \[ \frac{ p_\sigma }{ \bar{a}_\sigma } := \min \left\{ \frac{p_i}{\bar{a_i}} :
+      \bar{a_i} < 0, i \in I_B \right\}. \]
+\item Ersetze die Spalte $A^\sigma$ durch $A^\tau$ in $A_B$, aktualisiere $I_B$,
+  $I_N$ und berechne das neue $p$ (bzw. neue $A_B^{-1}$) und gehe zu (1).
+\end{enumerate}
+
+\begin{rmrk}
+  In ``guten'' Implementierungen werden lineare Gleichungssysteme gelöst.
+  \[ A_B p = b, \quad A_B^\top d = c_B, \quad A_B  \bar{a} = -A^\tau \]
+  mit $LU$-Zerlegung und entsprechender Aufdatierung.
+\end{rmrk}
+
+\begin{rmrk}
+  Der Schritt (1) kann zu Aufwandseinsparungen führen, wenn $A$ eine
+  \emph{sparse} Matrix ist (wie zum Beispiel beim Transportproblem) oder eine
+  Struktur besitzt, die die Anwendung der sogenannten \emph{Spaltengenerierung}
+  erlaubt.
+\end{rmrk}
+
+\subsection{Spaltengenerierung}
+Wir betrachten die \emph{$LP$-Relaxation} des Gilmore/Gomory-Modells beim
+1-dimensionalen CSP\footnote{cutting stock problem, S. \pageref{sect:csp}}: Aus
+möglichst wenig Material der Länge $L$ sind $b_i$ Teile der Länge $l_i$, $i \in
+I = \{1, \ldots, m\}$ zuzuschneiden.
+
+Zuschnittvariante
+\[ a^j = (a_{1j}, \ldots, a_{nj})^\top \in \integer^m_+ \quad \text{mit} \quad
+  \sum_{i \in I} l_i a_{ij} \le L, \]
+$x_j \in \integer_0$ ... Häufigkeit, wie oft Zuschnittvariante $a^j$ in der
+Lösung verwendet wird.
+
+GG-Modell der LP-Relaxation:
+\[ \begin{aligned}
+    z = \sum_{j \in J} x_j \to \min \subjto
+    \sum_{j \in J} a_{ij} x_j &= b_i  \quad \forall i \in I, \\
+    x_j &\ge 0 \quad \forall j \in J.
+  \end{aligned}
+\]
+Hier: $c = e = (1, \ldots, 1) \in \real^{|J|}$, $J$ ist die Indexmenge aller
+zulässigen Zuschnittvarianten. $A = (A^1, \ldots, A^{|J|}) \in
+\realmat{m}{|J|}$, wobei die $A^j$ in $A$ nur für $\sum_{i \in I} l_i A_{ij} \le
+L$. 
+
+Da $(A_B)^{-1} A_j$ für $j \in J$ einen Einheitsvektor ergibt, gilt stets
+\[ \bar{c} = \min_{j \in J_N} (c_j - d^\top A^j) < 0 \qLRq 
+  \min_{j \in J} c_j - d^\top A^j < 0. \]
+
+Schritt (1) im revidierten Simplexverfahren ist nun: Bestimme
+\[ \begin{aligned}
+    \min_{j \in J_N} \{ c_j - d^\top A^j \} 
+    &= \min_{j \in J_N} \{ 1 - d^\top A^j \} \\
+    &= 1 - \max_{j \in J_N} d^\top A^j \\
+    &= 1 - \max_{j \in J} d^\top A^j, & \text{falls } d^\top A^j > 1.
+  \end{aligned} \]
+
+Im Fall des 1-dimensionalen CSP gilt damit mit $l = (l_1, \ldots, l_m)$
+\[ \max_{j \in J} d^\top A^j = \max \{ d^\top a : l^\top a \le L, a \in
+  \integer_0^m \}, \]
+das heißt es ist ein lineares Rucksackproblem zu lösen.
+
+\section{Das duale Simplexverfahren}
+Nach  Aussage 3.4 ist ein Simplextableau optimal, wenn $p \ge 0$ und $q \ge 0$
+gilt. Nach Konstruktion gilt beim primalen Simplexverfahren stets $p \ge 0$.
+Beim dualen Simplexverfahren soll nun stets $q \ge 0$ gelten.
+
+Sei nun ein Tableau mit $q \ge 0$ und $p \ngeq 0$ gegeben, das heißt es gibt ein
+$\sigma \in I_B$ mit $p_\sigma < 0$ (formal richtige Schreibweise:
+$[x_B]_\sigma, [x_N]_\tau$). Die zu $\ST_\sigma$ gehörige Basislösung ist
+somit \emph{nicht} zulässig.
+
+Unter Beibehaltung von $q \ge 0$ für jedes erzeugte Simplextableau soll eine
+Basislösung gefunden werden, sofern eine existiert. Entsprechend der
+Austauschregeln ergeben sich die Bedingungen
+\[ \tilde{q} := q_j - \frac{p_{\sigma j}}{p_{\sigma \tau}} q_\tau \ge 0, \quad
+  \text{für alle } j \in I_N \setminus {\tau}, \]
+\[ \tilde{q}_\tau := \frac{q_\tau}{P_{\sigma \tau}} \overset{!}{\ge} 0, \qquad
+  \tilde{p}_\sigma := - \frac{p_\sigma}{p_{\sigma \tau}} \overset{!}{\ge} 0. \]
+Wegen $p_\sigma < 0$ ist somit $p_{\sigma \tau} > 0$ (Pivot) zu wählen mit
+\[ \frac{q_{\tau}}{p_{\sigma \tau}} = \min \left\{ \frac{q_j}{p_{\sigma j}} :
+    p_{\sigma j} > 0, j \in I_N \right\}. \]
+
+\begin{rmrk}
+  Im Unterschied zum primalen SV, bei dem die Folge der Zielfunktionswerte nicht
+  wachsend (fallend) ist, ist diese beim dualen ZV nichtfallend (wachsend).
+\end{rmrk}
+
+\begin{rmrk}
+  Falls eine zulässige Lösung gefunden wird, das heißt $p \ge 0$ wird erreicht,
+  dann ist diese optimal.
+\end{rmrk}
+
+\begin{exmp}
+  Betrachte
+  \[ \begin{aligned}
+      z = 6 x_1 + 5 x_2 + 12 x_3 + 8 x_4 + 9 x_5 \to \min \subjto \\
+      x_1 + x_3 + x_4 + x_5 &\ge 300, \\
+      x_2 + 2 x_3 + x_4 &\ge 400, \\
+      \forall i : x_i &\ge 0.
+  \end{aligned}
+\]
+\begin{align*}
+    &\begin{array}{r|cccccc}
+      \ST_1 & x_1 & x_2 & x_3 & x_4 & x_5 & 1 \\
+      \hline
+      x_6 = & 1 & 0 & 1 & 1 & 1 & -300 \\
+      x_7 = & 0 & \boxed{1} & 2 & 1 & 0 & -400 \\
+      \hline
+      z =   & 6 & 5 & 12 & 8 & 9 & 0 \\
+      \hline
+      (x_z =) k & 0 & \ast & -2 & -1 & 0 & 400 
+    \end{array}
+    &\quad &\leftarrow \sigma = 2 \\
+    &\begin{array}{r|cccccc}
+      \ST_2 & x_1 & x_7 & x_3 & x_4 & x_5 & 1 \\
+      \hline
+      x_6 = & 1 & 0 & \boxed{1} & 1 & 1 & -300 \\
+      x_2 = & 0 & 1 & -2 & -1 & 0 & 400 \\
+      \hline
+      z = 6 & 5 & 2 & 3 & 9 & 2000 \\
+      \hline
+      (x_3 = ) k & -1 & 0 & \ast & -1 & -1 & 300
+    \end{array}
+    &\quad &\leftarrow \sigma = 3 \\
+    &\begin{array}{r|cccccc}
+       \ST_3 & x_1 & x_7 & x_6 & x_4 & x_5 & 1 \\
+       \hline
+       x_3 = & -1 & 0 & 1 & -1 & -1 & 300 \\
+       x_2 = & 2 & -2 & -2 & \boxed{1} & 2 & -200 \\
+       \hline
+       z = & 4 & 5 & 2 & 1 & 7 & 2600 \\
+       \hline
+      (x_4 = ) k & -2 & 2 & 2 & \ast & -2 & 200 \\
+    \end{array}
+    &\quad &\leftarrow \sigma = 4
+\end{align*}
+\[ \begin{array}{r|cccccc}
+      \ST_4 & x_1 & x_7 & x_6 & x_2 & x_5 & 1 \\
+      \hline
+      x_3 = \\
+      x_2 = \\
+      \hline
+      z = & 2 & 7 & 4 & 1 & 5 & 2800
+    \end{array}
+\]
+$ST_4$ ist optimal.
+\[ x^* = (0, 0, 100, 200, 0)^\top,  \qquad x_6 = x_7 = 0, \qquad z_{\min} =
+  2800. \]
+$x_6 = x_7 = 0$ $\rightsquigarrow$ Die Ungleichungsbedingungen werden mit
+Gleichheit erfüllt!
+\end{exmp}
+
+\section{Dualität}
+\subsection{Herleitung dualer Optimierungsaufgaben}
+Wir betrachten die Optimierungsaufgabe
+\addtocounter{equation}{3}
+\begin{equation} %% 3.13
+  \begin{aligned} z = c^\top x \to \min \subjto Ax \ge b, x \ge 0, \\
+    I =\{ 1, \ldots, m \}, J = \{1, \ldots, n \}, A \in \realmat{m}{n}.
+  \end{aligned}
+  \tag{P, \theequation}
+\end{equation}
+
+\begin{thm}[Charakterisierungssatz]
+  Ein $\bar{x} \in \real^n$ ist genau dann Lösung von (P), wenn ein $\bar{u}$
+  existiert, so dass insgesamt das System erfüllt ist:
+  \begin{align*}
+    A \bar{x} - \bar{b} &\ge 0, & \bar{x} &\ge 0, \tag{1} \\
+    A^\top \bar{u} - c &\le 0, & \bar{u} &\ge 0, \tag{2} \\
+    \bar{u}^\top (A \bar{x} - b) &= 0, & \bar{x}^\top (A^\top \bar{u} - c) &= 0. \tag{3}
+  \end{align*}
+\end{thm}
+
+\begin{proof}
+  Wegen (1) ist $\bar{x}$ zulässig. Weiterhin muss $\bar{x}$ die notwendigen
+  Optimalitätsbedingungen (\ref{eq:kkt-bed}) aus Abschnitt \ref{sect:kkt-bed}
+  erfüllen, falls es Lösung von (P) ist.
+
+  Es seien $I_0(\bar{x}) := \{ i \in I : [Ax - b]_i = 0 \}$, $J_0(\bar{x}) = \{
+  j \in J : \bar{x}_j = 0 \}$. Damit kann der Kegel der zulässigen Richtungen
+  $Z(\bar{x})$ wie folgt beschrieben werden:
+  \[ Z(\bar{x}) = \{ d \in \real^n : d^\top a_i \ge 0, i \in I_0(\bar{x}),
+    d^\top e^j \ge 0, j \in J_0(\bar{x}) \}, \]
+  wobei $a_i \in \real^n$ die $i$-te Zeile von $A$ bezeichnet.
+
+  Falls $\bar{x}$ Lösung von (P) ist, dann existiert \emph{kein} $d \in
+  Z(\bar{x})$ mit $d^T c < 0$. Mit dem Farkas-Lemma (S. \pageref{lem:farkas})
+  ist dies äquivalent zu
+  \[ \exists u_i \ge 0, \quad i \in I_0 (\bar{x}), \qquad
+    \bar{v}_j, \quad j \in J_0(\bar{x}) : \qquad 
+    \sum_{i \in I_0(\bar{x})} \bar{u}_i a_i + \sum_{j \in J_0(\bar{x})} \bar{v}_j
+    e^j = c \]
+  Durch ``Auffüllen mit 0'' erhält man die äquivalente Formulierung
+  \[ \exists \bar{u} \in \real^n_*, \quad
+    \bar{v} \in \real^n_+: \qquad
+    A^\top u + v = c. \tag{4} \]
+  \[ \bar{u}_i [A \bar{x} - b ]_i = 0, \quad i \in I, \qquad
+    \bar{v}_j \bar{x}_j = 0, \quad j \in J. \tag{5} \]
+  Weitere Umformungen ergeben
+  \[ (4) \text{ und } \bar{v} \ge 0 \qLRq
+    (-v) = A^\top u - c \ge 0, \]
+  also (2). Wegen $\bar{x} \ge 0$, $\bar{u} \ge 0$:
+  \[ (5) \qLRq \bar{u}^\top (A \bar{x} - b) = 0, \qquad
+    \bar{x}^\top (A^\top \bar{u} - c) = 0, \]
+  also (3).
+
+  Da nur Äquivalenz-Transformationen benutzt wurden, folgt die Gültigkeit des
+  Satzes.
+\end{proof}
+
+\begin{defn}
+  Das Problem
+  \[ w = b^\top u \to \max \subjto A^\top u \le c, \quad u
+    \ge 0 \tag{D} \]
+  heißt \emph{duale Optimierungsaufgabe} zu (P).
+\end{defn}
+
+\emph{Begründung:} Die Anwendung von Satz 3.9 ergibt wieder das Problem (P).
+Dazu schreibe (D) als Minimum-Aufgabe
+\[ -w = (-b)^\top u \to \min \subjto (-A)^\top u \ge -c, \quad u \in
+  \real^m_+. \]
+Damit hat es die Form von (P) in Satz 3.9.
+
+Einsetzen in (1) bis (3):
+\[ \begin{aligned}
+    (1) &\Rightarrow & (-A)^\top u - (-c) &\ge 0, & u &\ge 0 \\
+    (2) &\Rightarrow & ((-A)^\top)^\top v - (-b) &\le 0 & v &\ge 0 \\
+    (3) &\Rightarrow & v^\top ((-A)^\top u - (-c)) &= 0, & u^\top
+    ((-A)^\top)^\top v - (-b) &= 0.
+  \end{aligned} \]
+Umformung ergibt
+\[ \begin{aligned}
+    (1) &\Rightarrow & A^\top u - c &\le 0, & u &\ge 0 \\
+    (2) &\Rightarrow & A v - b) &\ge 0 & v &\ge 0 \\
+    (3) &\Rightarrow & v^\top (A^\top u - c) &= 0, & u^\top
+    (Ax - b) &= 0. 
+  \end{aligned} \]
+(D) liefert also das \emph{gleiche} System (1)-(3) wie (P).
+
+\begin{thm}[Schwache Dualität]
+  Gegeben seien die Optimierungsaufgaben
+  \begin{align*}
+    c^\top x &\to \min \subjto & Ax \ge b, x \ge 0, \tag{P} \\
+    b^\top u &\to \max \subjto & A^\top \le c, u \ge 0. \tag{D}
+  \end{align*}
+  Sei $x$ zulässig für (P) und $u$ zulässig für (D). Dann gilt $b^\top u \le
+  c^\top x$.
+\end{thm}
+
+\clearpage
+
+\begin{thm}[Starke Dualität]
+  Das lineare Optimierungsproblem (P) ist genau dann lösbar, wenn das zugehörige
+  duale Problem (D) lösbar ist. Für Lösungen $\bar{x}$ von (P) und $\bar{u}$ von
+  (D) gilt dann
+  \[ \boxed{b^\top u = c^\top x }, \]
+  also Gleichheit der Optimalwerte.
+\end{thm}
+
+\begin{proof}
+  Der erste Teil des Satzes folgt aus Satz 3.10. Aus (3) folgt die Gleichheit
+  der Optimalwerte.
+  \[ \bar{u}^\top ( A \bar{x} - b ) = 0, \qquad \bar{x}^\top (A^\top \bar{u} -
+    c) = 0, \qquad \bar{u}^\top b = \bar{u}^\top A \bar{x} = c^\top \bar{x}.
+    \qedhere \]
+\end{proof}
+
+\begin{flg}
+  Es gilt:
+  \[ \text{(P) lösbar} \qLRq
+    \text{(Q) lösbar} \qLRq
+    \exists x \ge 0, u \ge 0 : Ax \ge b, A^\top u \le c. \]
+\end{flg}
+
+\subsection{Gleichzeitiges Lösen von (P) und (Q)}
+\begin{align*}
+  z_P &= c^\top x \to \min & &\text{bei} & Ax \ge b, \quad x \ge 0 \tag{P} \\
+  z_D &= -b^\top u \to \max & &\text{bei} & -A^\top u \le c, \quad u
+        \ge 0 \tag{D}
+\end{align*}
+Einführen von Schlupfvariablen:
+\begin{align*}
+  z_P &= c^\top x \to \min & &\text{bei} & Ax + s = b, \quad x \ge 0, \quad s \ge 0 \tag{P} \\
+  z_D &= b^\top (-u) \to \max & &\text{bei} & A^\top (-u) + v = c, \quad u
+        \ge 0, \quad v \ge 0 \tag{D}
+\end{align*}
+Es gilt $Ax \le b$ $\Leftrightarrow$ $-Ax \ge -b$.
+\[ \begin{array}{r|cc}
+     (\mathrm{P}) & x & 1 \\
+     \hline
+     s = & -A & b \\
+     z_P = & c^\top & 0
+   \end{array}
+   \qquad
+   \begin{array}{r|cc}
+     (\mathrm{D}) & -u & 1 \\
+     \hline
+     v = & -A^\top & c \\
+     z_D = & b^\top & 0
+   \end{array}
+\]
+Beide Schemata sind ``zueinander transponiert''. Damit gilt: primales Schema
+für (P) $\hat{=}$ duales Schema für (D).
+
+\begin{exmp}[Fortsetzung von Beispiel 3.3]
+  \begin{align*}
+    z &= c^\top x \to \min & &\text{bei} & Ax \ge b, \quad x \ge 0 \tag{P} \\
+    z &= b^\top u \to \max & &\text{bei} & A^\top u \le c, \quad u
+                                              \ge 0 \tag{D}
+  \end{align*}
+  $m=2$, $n=5$.
+  \[
+    \begin{array}{r|ccc}
+      & u_1 & u_2 & 1 \\
+      \hline
+      v_1 = & \boxed{-1} & 0 & 6 \\
+      v_2 = & 0 & 1 & 5 \\
+      v_3 = & -1 & -2 & 12 \\
+      v_4 = & -1 & -1 & 8 \\
+      v_5 = & -10 & 0 & 9 \\
+      \hline
+      z_D = & -300 & -400 & 0 \\
+      \hline
+      k & \ast & 0 & 6
+    \end{array}
+    \qquad
+    \begin{array}{r|ccc}
+      & v_1 & u_2 & 1 \\
+      \hline
+      u_1 = & -1 & 0 & 6 \\
+      v_2 = & 0 & -1 & 5 \\
+      v_3 = & 1 & -2 & 6 \\
+      v_4 = & 1 & \boxed{-1} & 2 \\
+      v_5 = & 1 & 0 & 3 \\
+      \hline
+      z_D = & 300 & -400 & -1800
+    \end{array}
+  \]
+  $u_2 \leftrightarrow v_4$, $v_1 \leftrightarrow v_3$ $\Rightarrow$
+  \[
+    \begin{array}{r|ccc}
+      & v_3 & v_4 & 1 \\
+      \hline
+      u_1 = & & & 4 \\
+      v_2 = & & & 1 \\
+      v_1 = & & & 2 \\
+      u_2 = & & & 4 \\
+      v_5 = & & & 5 \\
+      \hline
+      z_D = & 100 & 200 & -2800
+    \end{array}
+  \]
+  %% Marvin nochmal fragen
+  Lösung:
+  \begin{align*}
+    u_1 &= 4 & u_1 &= 4 \\
+    u_2 &= 4 & u_2 &= 4 \\
+    v &= (2, 1, 0, 0, 5)^\top & v &= (2, 1, 0, 0, 5)^\top
+  \end{align*}
+\end{exmp}
+
+\subsection{Zusammenhang Dualität - Sattelpunkte der Lagrange-Funktion}
+Zugehörig zum Optimierungsproblem
+\[ f(x) \to \min \subjto g_i (x) \le 0, \quad i \in I = \{1, \ldots, m \} \]
+wird die \emph{Lagrange-Funktion}
+\[ L(x,u) := f(x) + u^\top g(x) = f(x) + \sum_{i \in I} u_i g_i(x), \quad x \in
+  \real^n, u \in \real^m_+ \]
+definiert. Für das lineare Optimierungsproblem (P) in (3.13), das heißt für
+\[ z = c^\top x \to \min \subjto Ax \ge b, \quad x \ge 0 \]
+erhält man
+\addtocounter{equation}{3}
+\begin{equation}
+  L(x,u) = c^\top x + u^\top (b-Ax) = b^\top u + x^\top (c - A^\top u), \quad
+  x \ge 0, u \ge 0.
+\end{equation}
+
+\begin{defn}
+  Ein Punkt $(\bar{x}, \bar{u}) \in \real^n_+ \times \real^m_+$ heißt
+  \emph{Sattelpunkt} von $L$, falls die folgende Bedingung erfüllt ist:
+  \[ L( \bar{x}, u ) \le L(\bar{x},\bar{u}) \le L(x, \bar{u} )\]
+  für alle $x \in \real^n_+$, $u \in \real^m_+$.
+\end{defn}
+
+\begin{thm}[Sattelpunktstheorem]
+  Ein Punkt $(\bar{x}, \bar{u}) \in \real^n_+ \times \real^m_+$ ist genau dann
+  ein Sattelpunkt von $L$, wenn $\bar{x}$ und $\bar{u}$ Lösungen von (P) bzw.
+  (D) sind.
+\end{thm}
+
+\begin{proof}
+  Unter Verwendung von (3.17)\footnote{$L$ ist linear und damit konvex.} erhält
+  man 
+  \begin{align*}
+    &
+    & L( \bar{x}, \bar{u} ) &\le L(x, \bar{u})
+    & \forall x \in \real^n_+ \\
+    &\Leftrightarrow
+    & \partial_x L( \bar{x}, \bar{u})^\top (x-\bar{x}) &\ge 0
+    & \forall x \in \real^n_+ \\
+    &\Leftrightarrow
+    & (c - A^\top \bar{u})^\top (x-\bar{x}) &\ge 0
+    & \forall x \in \real^n_+ \\
+    \intertext{Speziell: $x^1 = 2 \bar{x}, x^2 = \rez{2} \bar{x}$,
+    $\bar{x} \ge 0$ $\Rightarrow$ $x^1 \ge 0, x^2 \ge 0$}
+    &\Leftrightarrow
+    & (c - A^\top \bar{u})^\top \bar{x} &= 0, \quad c - A^\top \bar{u} \ge 0.
+  \end{align*}
+  Analog für den zweiten Teil:
+  \begin{align*}
+    &
+    & L( \bar{x}, \bar{u} ) &\le L(\bar{x}, u)
+    & \forall u \in \real^m_+ \\
+    &\Leftrightarrow
+    & \partial_u L( \bar{x}, \bar{u})^\top (u-\bar{u}) &\le 0
+    & \forall u \in \real^m_+ \\
+    &\Leftrightarrow
+    & (b - A \bar{x})^\top (u-\bar{u}) &\le 0
+    & \forall u \in \real^m_+ \\
+    \intertext{Speziell: $u^1 = 2 \bar{u}, u^2 = \rez{2} \bar{u}$,
+    $\bar{u} \ge 0$ $\Rightarrow$ $u^1 \ge 0, u^2 \ge 0$}
+    &\Leftrightarrow
+    & (b - A \bar{x})^\top \bar{u} &= 0, \quad b - A \bar{x} \le 0.
+  \end{align*}
+  Insgesamt gilt damit $(\bar{x}, \bar{u}) \in \real^n_+ \times \real^m_+$ ist
+  genau dann Sattelpunkt, wenn $\bar{x}$ und $\bar{u}$ Lösung von (1) bis (3)
+  sind.
+\end{proof}
+
+\section{Transportoptimierung}
+\subsection{Problemstellung}
+Es gebe Erzeuger $i \in I = \{1, \ldots, r\}$ und Verbraucher $k \in K = \{1,
+\ldots, s\}$. Weiterhin seien die Kosten $c_{ik}$ für den Transport einer
+Einheit von $i$ nach $k$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_k > 0$ für
+alle $i \in I$ und $k \in K$ bekannt. Wie muss der Transport erfolgen, damit
+alle Bedarfe erfüllt werden und die Gesamtkosten minimal sind?
+
+Variablen $x_{ik} \in \real_+$ für alle $i \in I$, $k \in K$.
+\begin{equation}\groupequation{
+  \begin{aligned}
+    & & z = &\sum_{i \in I} \sum_{k \in K} c_{ik} x_{ik} \to \min \\
+    &\text{bei} &
+    &\sum_{k \in K} x_{ik} = a_i, \quad i \in I, \\
+    & &
+    &\sum_{i \in I} x_{ik} = b_k, \quad k \in K.
+  \end{aligned}
+}\end{equation}
+Mit $x = (x_ {11}, x_{12}, \ldots, x_{1s}, x_{21}, \ldots, x_{2s}, \ldots,
+x_{r1}, \ldots, x_{rs})^\top \in \real^{r \cdot s}$ hat man also $n = r \cdot s$
+Variablen und $m = r + s$ Gleichungen. Damit ergibt sich die Form
+\begin{equation}\groupequation{
+  \begin{aligned}
+    &z = c^\top x \to \min \subjto Ax = \tilde{b}, \quad x \ge 0, \\
+    &A = \begin{pmatrix}
+      1 & \cdots & 1 & 0 & \cdots & 0 \\
+      0 & \cdots & 0 & 1 & \cdots & 0 \\
+      & & \vdots & \vdots \\
+      0 & \cdots & 0 & 0 & \cdots & 1 \\
+      1 & & & 1 \\
+      & \ddots & & &\ddots \\
+      & & 1 & & & 1
+    \end{pmatrix},
+    \qquad
+    \tilde{b} = \begin{pmatrix}
+      a_1 \\ a_2 \\ \vdots \\ a_r \\ b_1 \\ \vdots \\ b_s
+    \end{pmatrix},
+    \qquad
+    c = \pmat{c_{11} \\ c_{21} \\ \vdots \\ c_{r,s-1} \\ c_{1s} \\ \vdots \\ c_{rs}}
+  \end{aligned}
+}\end{equation}
+Zeile $A^i$ für $i = 1, \ldots, r$ bildet die
+Vorratsbedingungen ab:
+\[a_{ij} = \begin{cases}
+    1, &j = 1 + (i-1) \cdot s, \ldots, i \cdot s, \\
+    0, &\text{sonst.} 
+  \end{cases}
+\]
+Zeile $A^i$ für $i = r+1, \ldots, r+s$ bildet die Bedarfsbedingungen ab. Es sind
+also $s$ Einheitsmatrizen.
+
+\begin{rmrk} % 3.9
+  Das Transportproblem ist ein (sehr) spezielles Optimierungsproblem. Die
+  Koeffizientenmatrix $A$ hat $m = r + s$ Zeilen und $n = r \cdot s$ Spalten und
+  ist schwach besetzt. Insbesondere hat die Spalte von $A$, die zu $x_{ik}$
+  geört, die Gestalt $A^{ik} = \pmat{ e^i & \ldots & e^k}^\top \in \real^{r+s}$.
+\end{rmrk}
+
+\begin{thm} %% 3.14
+  Das Transportproblem ist genau dann lösbar, wenn die
+  \emph{Sättigungsbedingung}
+  \begin{equation} %% 3.20
+    \sum_{i=1}^r a_i = \sum_{k=1}^s b_k
+  \end{equation}
+  gilt.
+\end{thm}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+  \item Wir zeigen zuerst
+    \[ G \ne \emptyset \qLRq  \sum_{i=1}^r a_i = \sum_{k=1}^s b_k. \]
+    Ist $G$ nicht leer, so folgt
+    \[ \sum_{i=1}^r a_i = \sum_{i=1}^r \sum_{k=1}^s x_{ik} =
+      \sum_{k=1}^s \sum_{i=1}^r x_{ik} = \sum_{k=1}^s b_k, \]
+    also ist (3.20) erfüllt.
+
+    Gilt (3.20) mit $\delta = \sum_i a_i$, dann ist
+    \[ x_{ik} := \frac{ a_i b_k }{\delta} \in G, \]
+    also ist $G \ne \emptyset$.
+  \item Der zulässige Bereich $G$ ist polyedrisch und damit abgeschlossen. Wegen
+    $0 \le x_{ik} \le \min \{a_i, b_k\}$ ist er auch beschränkt und damit
+    kompakt. Nach dem Satz von Weierstrass folgt die Lösbarkeit, falls (3.20)
+    gilt. \qedhere
+  \end{enumerate}
+\end{proof}
+
+Die duale Aufgabe zu (3.18) bzw. (3.19) lautet
+\begin{equation} %3.21
+  w = a^\top u + b^\top v \to \max \subjto A^\top \pmat{u\\v} \le c, \quad
+  u \in \real^r_+, \quad v \in \real^s_+.
+\end{equation}
+
+Es gilt
+\begin{align*}
+  &\begin{aligned} (\text{P}) \quad
+    &z = c^\top x \to \min \subjto \\
+    &Ax = \pmat{a\\b} = \bar{a}, \\
+    &x \ge 0,
+  \end{aligned}
+    & &\Leftrightarrow &
+  &\begin{aligned} (\text{P}) \quad
+    &z = c^\top x \to \min \subjto \\
+    &Ax \ge \bar{a} : u^1 \ge 0,  \\
+    &-Ax \le -\bar{a} : u^2 \ge 0,  \\
+    &x \ge 0
+  \end{aligned}
+\intertext{sowie}
+  &\begin{aligned} (\text{D}) \quad
+    &w = \bar{a}^\top u^1 - \bar{a}^\top u^2 \to \max \subjto \\
+    &A^\top u^1 - A^\top u^2 \le c, \\
+    &u^1 \ge 0, u^2 \ge 0,
+  \end{aligned}
+    & &\Leftrightarrow &
+  &\begin{aligned} (\text{D}) \quad
+    &w = \bar{a}^\top \tilde{u} \to \max \subjto \\
+    &A^\top \tilde{u} \le c, \\
+    &\tilde{u} = u_1 - u_2 \text{ frei}.
+  \end{aligned}
+\end{align*}
+Damit können wir (3.21) formulieren als
+\begin{equation} %% 3.22
+  w = \sum_{i\in I} a_i u_i + \sum_{k \in K} b_k v_k \subjto
+  u_i + v_k \le c_{ik}, \quad u_i \ge 0, v_k \ge 0 \quad
+  \forall i,k.
+\end{equation}
+
+\begin{thm}[Optimalitätskriterium] %% 3.15
+  Sei $x \in G$, das heißt $x$ ein zulässiger Transportplan, dann gilt
+  \[ x \text{ optimal} \qLRq \exists u \in \real^r_+, v \in \real^s_+ \]
+  mit $u_i + v_k \le c_{ik}$, $x_{ik}(c_{ik}-u_i-v_k) = 0$ für alle $i \in I$,
+  $k \in K$.
+\end{thm}
+
+\begin{proof}
+  Nach dem Charakterisierungssatz der linearen Optimierung gilt: $x \in G$, $u
+  \in \real^r_+$, $v \in \real^s_+$ sind optimal genau dann, wenn
+  \[ \underbrace{x^\top}_{\ge 0}
+    \underbrace{\left( c - A^\top \pmat{u\\v} \right)}_{\ge 0} = 0, \qquad
+    A^\top \pmat{u\\v} \le c \]
+  gilt, was unmittelbar die Aussage des Satzes liefert.
+\end{proof}
+
+\begin{aus} %% 3.16
+  Der Rang von $A$ ist $|I| + |K| - 1 = r + s - 1$.
+\end{aus}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{flg}
+  Jede Ecke des zulässigen Bereiches $G$ hat höchstens $r+s-1$ positive
+  Komponenten.
+\end{flg}
+
+\begin{defn} %% 3.5
+  Eine Folge von Zellen (Indexpaaren)
+  \[ (i_1, k_1), (i_2, k_1), (i_2, k_2), \ldots,
+    (i_l, k_l), (i_1, k_l), (i_1, k_1) \]
+  mit $i_p \ne i_q$ und $k_p \ne k_q$ für alle $p \ne q$ heißt \emph{Zyklus}
+  (der Länge $2l$).
+\end{defn}
+
+\begin{exmp} %% 3.5
+  \[ \text{Grundschema }
+    \begin{array}{c|cccc}
+      & 1 & 2 & 3 & 4 \\
+      \hline
+      1 \\ 2 \\ 3 \\ 4
+    \end{array}
+    \qquad \text{Zyklus }
+    \begin{array}{c|ccccc}
+      & 1 & 2 & 3 & 4 & 5 \\
+      \hline
+      1 & \times & & \times \\
+      2 & & \times & & & \times \\
+      3 & \times & & & & \times \\
+      4 & & \times & \times
+    \end{array}
+  \]
+  Zyklus: $x_{11} \to x_{13} \to x_{43} \to x_{42} \to x_{22} \to x_{25} \to
+  x_{35} \to x_{31} \to x_{11}$.
+\end{exmp}
+
+\begin{aus}
+  \begin{enumerate}[(i)]
+  \item Sei $J$ eine Menge von Zellen. Gilt $|J| \ge r + s$, so enthält $J$
+    mindestens einen Zyklus.
+  \item Sei $x = (x_{ik})$ ein zulässiger Transportplan. $x$ ist genau dann Ecke
+    von $G$, wenn
+    \[ J_* := \{ (i,k) : x_{ik} > 0 \} \]
+    keinen Zyklus enthält.
+  \end{enumerate}
+\end{aus}
+
+\begin{proof}
+  Siehe Großmann/Terno 1997.
+\end{proof}
+
+\subsection{Erzeugung eines ersten Transportplans}
+Die Erzeugung eines ersten Transportplans entspricht der Phase 1 im
+Simplexverfahren, das heißt die Bestimmung einer Ecke von $G$. Aufgrund der
+speziellen Struktur beim Transportproblem erfolgt die Darstellung des
+Simplexverfahrens in geänderter Form:
+\begin{align*}
+  &\text{Eingabe-Daten:} &
+  &\text{Transportplan:} \\
+  &\begin{array}{c|cccc}
+    & b_1 & b_2 & \cdots & b_s \\
+    \hline
+    a_1 & c_{11} & c_{12} & \cdots & c_{1s} \\
+    a_2 & c_{21} & c_{22} & \cdots & c_{2s} \\
+    \vdots \\
+    a_r & c_{r1} & c_{r2} & \cdots & c_{rs}
+  \end{array}
+  &
+  &\begin{array}{c|cccc}
+    x &  \\
+    \hline
+     & x_{11} & x_{12} & \cdots & x_{1s} \\
+     & x_{21} & x_{22} & \cdots & x_{2s} \\
+     & \vdots \\
+     & x_{r1} & x_{r2} & \cdots & x_{rs}
+  \end{array}
+\end{align*}
+
+Zur Ermittlung eines ersten Transportplans können Heuristiken verwendet werden.
+\begin{enumerate}
+\item \emph{Nordwest-Ecken-Regel.} Die jeweilige, noch nicht belegte
+  Nordwest-Zelle wird mit der maximal verfügbaren Transportmenge belegt.
+\item \emph{Regel der minimalen Kosten.} In jedem Schritt wird eine noch nicht
+  belegte Zelle mit geringstem Kostenkoeffizient maximal belegt.
+\item \emph{Methode von Vogel.} Bestimme in jeder Zeile und Spalte die Differenz
+  der zwei kleinsten Kostenkoeffizienten der noch freien Zellen. Wähle eine
+  Zeile oder Spalte mit maximaler Differenz und belege die Zelle mit kleinsten
+  Kosten maximal.
+\end{enumerate}
+
+\begin{exmp} %% 3.6
+  \begin{align*}
+    & & &\text{Nordwest:} & &\text{Minimale Kosten:} \\
+    &\begin{array}{c|ccccc}
+      & 12 & 5 & 6 & 7 & 7 \\
+      \hline
+      4 & 12 & 6 & 10 & 9 & 5 \\
+      19 & 10 & 16 & 17 & 3 & 7 \\
+      14 & 4 & 11 & 5 & 8 & 10
+    \end{array}
+    &
+    &\begin{array}{c|ccccc}
+       & \\
+       \hline
+       & 4^1 & 0 & 0 & 0 & 0 \\
+       & 8^2 & 5 ^3 & 6^4 & 0 & 0 \\
+       & 0   & 0 & 0 & 7^5 & 7^6
+    \end{array} &
+    &\begin{array}{c|ccccc}
+       & \\
+       \hline
+       & 0 & 0 & 0 & 0 & 4^3 \\
+       & 0 & 5^5 & 4^6 & 7^1 & 3^4 \\
+       & 12^2 & 0 & 2^3 & 0 & 0
+    \end{array}
+  \end{align*}
+  \[ z_{\text{NW}} = 48 + 80 + 80 + 102 + 56 + 70 = 456, \qquad z_{\text{min.
+        K}} = 268. \]
+\end{exmp}
+
+Motiv:
+\[ \sum_{i \in I}\sum_{k \in K} c_{ik} x_{ik} =
+  \sum_{i \in I}\sum_{k \in K} \left( c_{ik} -
+    \min \{ c_{il} : l \in K \} \right) x_{ik}
+  + \sum_{i \in I}\sum_{k \in K} \min \{ c_{il} : l \in K \} x_{ik}
+\]
+
+\subsection{Der Transportalgorithmus}
+Ein Transportplan $X = (x_k)$ ist optimal, falls duale Variablen $u$ und $v$
+existieren mit
+\[ z(X) = \sum_{i \in I} \sum_{k \in K} c_{ik} x_{ik}
+  = \sum_{i \in I} a_i u_i + \sum_{k \in K} b_k v_k.\]
+Das folgt aus dem starken Dualitätssatz. $u$ und $v$ werden mittels des
+Charakterisierungssatzes bestimmt.
+
+Verwendung von zwei Schemata, eines für $x$, eines für die Bestimmung von $u$
+und $v$.
+\[
+  \begin{array}{l|cccc}
+    X \\
+    \hline
+    & x_{11} & x_{12} & \cdots & x_{1s} \\
+    & \vdots \\
+    & x_{r1} & x_{r2} & \cdots & x_{rs}
+  \end{array}
+  \qquad
+  \begin{array}{l|cccc}
+    D \\
+    \hline
+    & d_{11} & d_{12} & \cdots & d_{1s} \\
+    & \vdots \\
+    & d_{r1} & d_{r2} & \cdots & d_{rs}
+  \end{array}
+\]
+mit $d_{ik} := c_{ik} - u_i - v_k$.
+ 
+Vorgehensweise:
+\begin{enumerate}[(1)]
+\item Ausgangspunkt ist ein zulässiges, zyklenfreies Transportproblem $X_0$ mit
+  genau $r+s-1$ (markierten) Basiszellen (Menge $J$). Trage in Schema $D$ die
+  Kostenkoeffizienten für alle $(i,k) \in J$ ein und markiere sie.
+\item Bestimme die $u_i$ und $v_k$ aus dem Gleichungssystem
+  \begin{equation} %% 3.23
+    u_i + v_k = c_{ik} \quad \forall (i,k) \in J.
+  \end{equation}
+  Da (3.23) unbestimmt ist, kann eine Variable frei gewählt werden.
+\item Berechne die transformierten Zielfunktionskoeffizienten durch
+  \[ d_{ik} := c_{ik} - u_i - v_k \quad \forall (i,k) \notin J. \]
+  Falls $d_{ik} \ge 0$ für alle $(i,k)$, dann ist $X_0$ optimal. Anderenfalls
+  wähle eine Zelle $(p,q)$ mit
+  \[ d_{p,q} = \min \left\{  d_{ik} : i \in I, k \in K \right\}. \]
+\item Markiere die Zelle $(p,q)$ im Schema $X$. Bestimme den (eindeutigen)
+  Zyklus $J_{pq}$ in $J \cup \{(p,q)\}$. Markiere bei $(p,q)$ beginnend
+  abwechselnd mit ``$+$'' und ``$-$''. Seien $J_{pq}^+$ und $J_{pq}^-$ die
+  zugehörigen Indexmengen.
+\item Bestimme
+  \[ \delta := \min \{ x_{ik} : (i,k) \in J_{pq} \} \]
+  mit dem zugehörigen $x_{gh}$. Setze $X^1 := (x_{ik}^{\mathrm{neu}})$ mit
+  \[ (x_{ik}^{\mathrm{neu}}) =
+    \begin{cases}
+      x_{ik} + \delta, & (i,k) \in J_{pq}^+, \\
+      x_{ik} - \delta, & (i,k) \in J_{pq}^-, \\
+      x_{ik}, & \text{sonst.}
+    \end{cases}
+  \]
+  Die zugehörige Basisindexmenge ist
+  \[ J^{\mathrm{neu}} := ( J \cup \{(p,q)\} ) \setminus \{ (g,h) \}. \]
+\end{enumerate}
+
+\begin{exmp} %% 3.7
+  \[
+    \begin{array}{r|ccccc}
+      c & 12 & 5 & 6 & 7 & 7 \\
+      \hline
+      4 & 12 & 6 & 10 & 9 & 5 \\
+      19 & 10 & 16 & 17 & 3 & 7 \\
+      14 & 4 & 11 & 5 & 8 & 10
+    \end{array}
+  \]
+  Beachte: Linke Spalte von $D_\tau$ sind die $u_i$, erste Zeile sind die $v_k$.
+  \begin{align*}
+    &\begin{array}{r|ccccc}
+      X_0^* & 12 & 5 & 7 & 7 \\
+      \hline
+      4 &  &  &  &  & 4 \\
+      19 &  & 5 & 4 & 7 & 3 \\
+      14 & 12 & & 2 
+    \end{array}
+                     &
+    &\begin{array}{r|ccccc}
+      D_0 & 16 & 16 & 17 & 3 & 7 \\
+      \hline
+       -2 & -2 & -8 & -5 & & \boxed{5} \\
+       0 & -6 & \boxed{16} & \boxed{17} & \boxed{3} & \boxed{7}  \\
+       -12 & \boxed{4} & & \boxed{5} 
+    \end{array} \\
+    &\begin{array}{r|ccccc}
+      X_1 &  \\
+      \hline
+       & & 4 & & & 0 \\
+       & & 1 & 4 & 7 & 7 \\
+       & 12 & & 2 & &
+    \end{array}
+                      &
+    &\begin{array}{r|ccccc}
+      D_1 & 16 & 16 & 17 & 3 & 7  \\
+      \hline
+      -10 & & 6 & & & \\
+      0 & -6 & 16 & 17 & 3 & 7 \\
+      -12 & 4 & & 5 & &
+     \end{array}\\
+    &\begin{array}{r|ccccc}
+      X_2 &  \\
+      \hline
+       & & 4 & & & \\
+       & 4 & 1 & & 7 & 7 \\
+       & 8 & & 6 & &
+    \end{array}
+                      &
+    &\begin{array}{r|ccccc}
+      D_2 & 10 & 16 & 11 & 3 & 7  \\
+      \hline
+      -10 & & 6 & & & \\
+      0 & 10 & 16 & & 3 & 7 \\
+      -6  & 4 & & 5 & &
+     \end{array}
+  \end{align*}
+  Für $D_2$ gilt $d_{ik} \ge 0$ für alle $(i,k)$, also ist $X_2$ optimal.
+  \begin{align*}
+    z(X_0) &= 268,
+    & Z(X_1) &= z(X_0) + \delta d_{pq} = 236,
+    & z(X_2) &= 236 - 24 = 212.
+  \end{align*}
+\end{exmp}
+
+\begin{rmrk*}
+  Wegen $d_{ik} = 0$ für $x_{ik}$ mit $(i,k) \in J$ kann ein komprimiertes
+  Schema verwendet werden:
+  \[
+    \begin{array}{r|cccc}
+      & v_1 & v_2 \cdots & v_s \\
+      \hline
+      u_1 & d_{11} & d_{12} & \cdots & d_{1s} \\
+      u_2 & \vdots & d_{21} & \cdots & \boxed{x_{2s}} \\
+      \vdots \\
+      u_r & & \boxed{x_{2r}}
+    \end{array}
+  \]
+\end{rmrk*}
+
+\subsection{Modifizierte Problemstellungen} %% 3.5.4
+\begin{enumerate}[(i)]
+\item Verbotene Wege: Vom Erzeuger $p$ soll kein Transport zum Verbraucher $q$
+  erfolgen. Lösung durch $x_{pq} = 0$ oder $c_{pq} := \infty$.
+\item Überkapazität, also $\sum_{i} a_i > \sum_k b_k$. Definiere einen
+  Scheinverbraucher $s+1$ durch
+  \[ b_{s+1} = \sum_i a_i - \sum_k b_k. \]
+  Die Kosten $c_{i,s+1}$ können als Lager- bzw. Entsorgungskosten interpretiert
+  werden.
+\item Unterkapazität: Definiere einen Scheinerzeuger $r+1$ mit
+  \[ a_{r+1} := \sum_k b_k - \sum_i a_i. \]
+  Die Kosten $c_{r+1,i}$ können als Vertragsstrafen interpretiert werden.
+\item Kapazitätsbeschränkung: $x_{ik} \le u_{ik}$. 
+\end{enumerate}

@@ -1,5 +1,5 @@
-\section{Einleitung}
-\subsection{Aufgabenstellung und Grundbegriffe}
+\chapter{Einleitung}
+\section{Aufgabenstellung und Grundbegriffe}
 Es seien $G \subset \real^n$ und $f: G \to \real$ gegeben. Optimierungsproblem:
 \begin{equation}
   f(x) \to \min \quad \text{bei } x \in G.
@@ -24,13 +24,13 @@ Optimierungsproblem (OP).
 (1.1) ist ein \emph{stetiges} oder \emph{kontinuierliches} OP, falls alle
 Variablen ``stetig'' sind. Sonst gemischt-ganzzahliges Problem.
 
-(1.1) ist ein \emph{lineares} OP, falls $f(x) = c^T x$ und $G$ durch lineare
+(1.1) ist ein \emph{lineares} OP, falls $f(x) = c^\top x$ und $G$ durch lineare
 Restklassen gegeben ist:
 \begin{equation}
   G = \{ x \in \real^n : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J \},
 \end{equation}
 wobei $g_i, h_j$ für alle $i,j$ affin linear sind. In diesem Fall kann (1.1) als
-\[ c^T x \to \min \quad \text{bei } x \in G:= \{ x \in \real^n, Ax = a, Bx \le b
+\[ c^\top x \to \min \quad \text{bei } x \in G:= \{ x \in \real^n, Ax = a, Bx \le b
   \} \]
 geschrieben werden.
 
@@ -44,6 +44,8 @@ geschrieben werden.
   Optimalwert von (Q) kann als (untere) Schranke bzw. Schrankenwert für (P)
   bezeichnet werden.
 \end{defn}
+
+\clearpage
 
 \begin{thm}
   Sei $\obar{x}$ Lösung von (Q) und gelte $\obar{x} \in D$ sowie $f(\obar{x}) =
@@ -60,8 +62,8 @@ geschrieben werden.
   für \emph{jede} Instanz von (P) ist.
 \end{defn}
 
-\subsection{Beispiele zur kontinuierlichen Optimierung}
-\subsubsection{Transportoptimierung}
+\section{Beispiele zur kontinuierlichen Optimierung}
+\subsection{Transportoptimierung}
 Lineare Optimierung
 
 Es seien Erzeuger $i \in I := \{1, \ldots, n\}$ und Verbraucher $j \in J := \{1,
@@ -74,7 +76,7 @@ Variable $x_{ij} \ge 0$ ... Transportmenge von $i$ nach $j$.
 \[ \sum_{i \in I} \sum_{j \in J} c_{ij} \cdot x_{ij} \to \min \quad \text{bei }
   \sum_{j \in J} x_{ij} = a_i, \quad i \in I. \]
 
-\subsubsection{Kürzeste euklidische Entfernung eines Punktes zu einer Menge}
+\subsection{Kürzeste euklidische Entfernung eines Punktes zu einer Menge}
 Nichtlineare Optimierung
 
 Gegeben sind ein Punkt $\tilde{x}$ und Menge $G \subset \real^n$ mit $\tilde{x}
@@ -84,7 +86,7 @@ G. \]
 Falls $G$ konvex ist, dann ist es der Spezialfall der \emph{konvexen
   Optimierung}.
 
-\subsubsection{Tschebyscheff-Approximation}
+\subsection{Tschebyscheff-Approximation}
 Semi-infinite Optimierung
 
 Seien $f: \real \to \real$ und $S: \real^{n+1} \to \real$ stetig, zum Beispiel
@@ -98,8 +100,8 @@ Umformulierung:
 Das ist ein Beispiel mit endlich vielen Variablen und unendlich vielen
 Restriktionen.
 
-\subsection{Beispiele zur diskreten Optimierung}
-\subsubsection{Rucksackproblem}
+\section{Beispiele zur diskreten Optimierung}
+\subsection{Rucksackproblem}
 Gegeben sind ein Rucksack mit Volumen $b$, Teile mit Volumen $a_i$ und Bewertung
 $c_i$, $i \in I$.
 
@@ -119,13 +121,13 @@ Alternative Formulierung:
   b, x_i \in \integer_+ \text{ für alle } i. \]
 Hier bezeichnet $x_i$ die Anzahl, wie oft Teil $i$ mitgenommen wird.
 
-\subsubsection{Das eindimensionale Zuschnittproblem}
+\subsection{Das eindimensionale Zuschnittproblem}\label{sect:csp}
 Cutting Stock Problem, CSP
 
 Aus möglichst wenig Ausgangsmaterial der Länge $L$ sind $b_i$ Teile der Länge
 $l_i$, $i \in I := \{ 1, \ldots, n \}$ zuzuschneiden.
 
-Zuschnittvariante $a_j = (a_{1j}, \ldots, a_{nj})^T \in \integer_+^n$ mit
+Zuschnittvariante $a_j = (a_{1j}, \ldots, a_{nj})^\top \in \integer_+^n$ mit
 $\sum_{i \in I} l_i a_{ij} \le L$ für alle $j \in J$.
 
 \paragraph{Kantorovich-Modell}
@@ -148,17 +150,16 @@ Annahme: \emph{Alle} ZV sind bekannt, das heißt die $a_{ij}$ sind Koeffizienten
 
 Variablen: $x_j \in \integer_+$ ... Anzahl, wie oft Variante $j$ genommen wird.
 \[ \begin{aligned}
-    z &= \sim_{i \in J} x_j \to \min \quad \text{bei } &
-    \sum_{j \in J} a_{ij} x_j = b_i, & \forall i \in I \\
-    & &
-    x_j &\ge 0, \text{ ganzzahlig}, & \forall j \in J.
+    z = \sum_{i \in J} x_j \to \min \quad \text{bei } \quad
+    &\sum_{j \in J} a_{ij} x_j = b_i, & \forall i \in I \\
+    &x_j \ge 0, \text{ ganzzahlig}, & \forall j \in J.
   \end{aligned} \]
 
 Vermutung: $z^* - z_{LP} < 2$ für alle Instanzen.
 
 Bemerkung: Das größte bekannte Gap ist 1.
 
-\subsubsection{Facility Location Problem}
+\subsection{Facility Location Problem}
 Ein großer Dienstleistungsbetrieb möchte neue Filialen aufbauen, um den Kunden
 $k \in K$ mit Leistungen zu dienen. Aus der Menge $S := \{1, \ldots, n\}$ der
 möglichen Standorte $s$ ist eine Auswahl zu treffen, an denen die Filialen
@@ -183,7 +184,7 @@ $y_{ks} \in [0,1]$ ... Teil des Bedarfs von $k$, der von $s$ erledigt wird.
   \end{aligned}
 \]
 
-\subsubsection{Quadratic Alignment Problem}
+\subsection{Quadratic Alignment Problem}
 In einem Gebäude müssen $m$ Personen auf $n$ Räume verteilt werden. Person $i$
 muss Person $j$ persönlich treffen und zwar $c_{ij}$-mal täglich ($c_{ij} \ge
 0$). Büro $k$ hat von Büro $l$ die Entfernung $d_{kl} \ge 0$.
@@ -195,7 +196,7 @@ die Entfernung $2 d_{kl} c_{ij}$ zurücklegen.
 \[ f(x) = \sum_{i=1}^n \sum_{j=1}^n 2 c_{ij} d_{\pi(i) \pi(j)} \to \min \quad
   \text{bei } \pi \in \Pi(1, \ldots, n). \]
 
-\paragraph{Modellierung mit bodeschen Variablen}
+\paragraph{Modellierung mit booleschen Variablen}
 \[ x_{ik} := \begin{cases}
     1, &\text{falls Person $i$ in Zimmer $k$}, \\
     0, &\text{sonst.}
@@ -203,12 +204,10 @@ die Entfernung $2 d_{kl} c_{ij}$ zurücklegen.
 \[ z = 2 \cdot \sum_{i \in I} \sum_{j \in J} \sum_{k \in K} \sum_{l \in L} c_{ij}
   x_{ik} \cdot x_{jl} \to \min \]
 mit den Zuordnungsbedingungen
-\[ \begin{aligned}
-    \sum_{k = 1}^n x_{ik} &= 1 & \text{für alle } i, \\
-    \sum_{i = 1}^n x_{ik} &= 1 & \text{für alle } k
-  \end{aligned} \]
+\[ \sum_{k = 1}^n x_{ik} = 1 \quad \text{für alle } i, \qquad
+    \sum_{i = 1}^n x_{ik} = 1 \quad \text{für alle } k \]
 bei $x_{ik} \in \boole$.
 
-\subsubsection{Ganzzahlige lineare Optimierung}
-\[ z = c^T x \to \min \quad \text{bei} \quad Ax \le b, x \ge 0, x \in
+\subsection{Ganzzahlige lineare Optimierung}
+\[ z = c^\top x \to \min \quad \text{bei} \quad Ax \le b, x \ge 0, x \in
   \integer. \]

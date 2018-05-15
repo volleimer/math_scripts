@@ -1,0 +1,657 @@
+\chapter{Diskrete Optimierung}
+\section{Branch and bound-Methode}
+\subsection{Grundlagen}
+Problem:
+\[ (\text{P}) = (\text{P}_0) \qquad f(x) \to \min \subjto x \in D \cap E. \]
+Relaxation zu (P):
+\[ (\text{Q}) \qquad g(x) \to \min \subjto x \in E, \]
+wobei $g(x) \le f(x)$ für alle $x \in D \cap E$.
+
+\begin{thm*}[Wiederholung Satz 1.1]
+  Sei $\bar{x}$ Lösung von (Q) und gelte $\bar{x} \in
+  D$ sowie $f(\bar{x}) = g(\bar{x})$. Dann ist $\bar{x}$ Lösung von (P).
+\end{thm*}
+
+\emph{Prinzip der b\&b-Methode}: Die Relaxationsmenge $E$ wird durch
+Separationen in Teilmengen $E_i$ zerlegt. Es entstehen Teilprobleme
+\[ (\text{P}_i) \qquad f(x) \to \min \subjto D \cap E_i. \]
+Jedem Teilproblem $(\text{P}_i)$ wird eine Zahl $b( \text{P}_i )$, eine untere
+Schranke, zugeordnet, so dass gilt
+\begin{enumerate}[(a)]
+\item $b( \text{P}_i ) \le \min \{ f(x) : x \in D \cap E_i \}$,
+\item $b( \text{P}_i ) = f(x)$, falls $|D \cap E_i| = |\{x\}| = 1$,
+\item $b( \text{P}_i ) \le b( \text{P}_k )$, falls $E_k \subset E_i$.
+\end{enumerate}
+
+\subsection{Allgemeiner b\&b-Algorithmus}
+Bezeichnungen: \\
+$R$ ... Menge der noch zu betrachtenden Teilprobleme, \\
+$bar{z}$ ... Zielfunktionswert der bisher besten gefundenen zulässigen Lösung.
+
+\begin{enumerate}[S1]
+  \setcounter{enumi}{-1}
+\item \emph{Initialisierung.} Bestimme $b(\text{P}_0)$:
+  \begin{enumerate}[(a)]
+  \item Falls $\bar{x} \in D \cap E$ bekannt ist mit $f(\bar{x}) = b(\text{P}_0)$,
+    \verb+STOP+, $\bar{x}$ ist zulässige Lösung.
+  \item Setze $R := \{ \text{P}_0 \}$, $\bar{z} := \infty$ oder
+    $\bar{z} := f( \bar{x} )$, wenn $\bar{x} \in D \cap E$ bekannt.
+  \end{enumerate}
+\item \emph{Abbruchtest.} Falls $R = \emptyset$, \verb+STOP+. Falls $\bar{z} =
+  \infty$, dann ist (P) unzulässig, anderenfalls ist $\bar{x}$ Lösung.
+\item \emph{Strategie.} Wähle entsprechend einer Auswahlstrategie ein
+  $\text{P}_i \in R$ und setze $R := R \setminus \text{P}_i$.
+\item \emph{Zerlegung} (branch). Zerlege $\text{P}_i$ durch Separation in
+  Teilprobleme $\text{P}_{i,1}, \ldots, \text{P}_{i,k}$. Setze $j := 1$.
+\item \emph{Schranken und Dominanztest.}
+  \begin{enumerate}[(a)]
+  \item Berechne $b(\text{P}_{i,j})$. Falls dabei oder auf andere Weise ein
+    $\tilde{x} \in D \cap E$ gefunden wurde mit $f(\tilde{x}) < \bar{z}$, setze
+    $\bar{x} :=  \tilde{x}$, $\bar{z} = f(\tilde{x})$.
+  \item Falls $b(\text{P}_{i,j}) < \bar{z}$, dann setze $R := R \cup \{
+    \text{P}_{i,j} \}$. Falls $j < k_i$, setze $j := j + 1$ und gehe zu (a).
+  \item Setze $R := R \setminus \{\text{P}_k\}$ für alle $\text{P}_k \in R$ mit
+    $b(\text{P}_k) \ge \bar{z}$.
+  \end{enumerate}
+  Gehe zu S1.
+\end{enumerate}
+
+\begin{rmrk*}
+  \begin{enumerate}[(1)]
+  \item Die Endlichkeit ist zu sichern durch
+    \[ |E_{i,j} \cap D | < | E_i \cap D | \quad \text{für alle } j, \]
+    \[ b( \text{P}_{i,j} ) \ge b( \text{P}_i ) + \eps \quad \text{mit } \eps >
+      0, \text{ für alle } i, j. \]
+  \item Festlegung der Auswahlstrategie:
+    \begin{itemize}
+    \item Minimalstrategie (best bound search)
+      \[ b(\text{P}_i) \le b(\text{P}_k) \quad \text{für alle } \text{P}_k \in
+        R. \] 
+    \item LIFO (last-in-first-out, depth first search) bzw. FIFO
+      (first-in-first-out, breadth first search). Jeweils Auswahl von
+      $\text{P}_i$ unter den Teilproblemen mit minimaler bzw. maximaler
+      Verzweigungstiefe und kleinster Schranke.
+    \end{itemize}
+  \item Repräsentation durch Verzweigungsbaum.
+  \item Wichtige zusätzliche Tests sind in S4 möglich:
+    \begin{itemize}
+    \item Zulässigkeitstest: $D \cap E_{i,j} = \emptyset$ $\Rightarrow$ $R := R
+      \setminus \{ \text{P}_{i,j} \}$.
+    \item Dominanztest: $\text{P}_i$ dominiert $\text{P}_k$, falls eine Lösung
+      von $\text{P}_i$ mindestens so gut wie eine Lösung von $\text{P}_k$ ist.
+    \end{itemize}
+  \end{enumerate}
+\end{rmrk*}
+
+\subsection{Beispiele für b\&b-Algorithmen}
+\subsubsection{Das 0/1-Rucksackproblem}
+Voraussetzung: $c_i > 0$, $0 < a_i \le b$ für alle $i \in I = \{ 1, \ldots, n
+\}$. 
+\begin{align*}
+  f(x) &= c^\top x \to \max \subjto a^\top x \le b, 
+         x \in \boole^n = \{0,1\}^n \tag{P} \\
+  g(x) &= c^\top x \to \max \subjto a^\top x \le b, 
+         x \in [0,1]^n \tag{Q}
+\end{align*}
+Also
+\[ E = \{ x \in \real^n : 0 \le x_i \le 1, i \in I \}, \qquad D = \boole^n
+  (=\integer^n). \]
+O.B.d.A. Voraussetzung:
+\[ \frac{c_i}{a_i} \ge \frac{c_{i+1}}{a_{i+1}}, \qquad i = 1, \ldots, n-1. \]
+Definiere Teilprobleme ($\bar{x}_i$, $i = 1, \ldots, k$, seien bereits
+fixierte Variablen):
+\[ \begin{aligned}
+    \text{P}_k(\bar{x}) : \quad
+    &\sum_{i=1}^k c_i \bar{x}_i + \sum_{i=k+1}^n c_i x_i \to \max \subjto \\
+    &\sum_{i=k+1}^n a_i x_i \le b - \sum_{i=1}^k a_i \bar{x}_i,
+    \quad x_i \in \boole, i = k+1, \ldots, n.
+  \end{aligned}
+\]
+Zugehörige Relaxation $=$ stetige Relaxation:
+\[ \text{Q}_k(y) : \quad
+  z_k(y) := \max \left\{ \sum_{i=k+1}^n c_i x_i : \sum_{i=k+1}^n a_i x_i \le
+    y, 0 \le x_i \le 1 \text{ für alle } i \right\}. \]
+Damit ergibt sich aber eine Schranke für $\text{P}_i$:
+\[ b( \text{P}_i ) := \sum_{i=1}^k c_i \bar{x}_i + z_k(y). \]
+Es gilt
+\[ z_k(y) = \sum_{i=k+1}^p c_i + \rez{a_{p+1}} \cdot \left( y - \sum_{i=k+1}^p
+    a_i \right), \]
+wobei
+\[ \sum_{i=k+1}^p a_i \le y \le \sum_{i=k+1}^{p+1} a_i. \]
+
+\begin{exmp}
+  Beispiel:
+  \[ \begin{aligned}
+      z = c^\top x &= 8x_1 + 16x_2 + 20x_3 + 12x_4 + 6 x_5 + 10x_6 + 4x_7 \to
+      \max \subjto \\
+      a^\top x &= 3x_1 + 7x_2 + 9x_3 + 6x_4 + 3x_5 + 5x_6 + 2x_7 \le 17, \quad
+      x_i \in \{0,1\}.
+    \end{aligned}
+  \]
+  Es gilt
+  \[ b(\text{P}_0) = 8 + 16 + \frac{20}{9} \cdot 7 = \lfloor \ldots \rfloor =
+    39. \]
+  Mögliche Teilprobleme: $\text{P}_1 : x_1 = 1$, $\text{P}_2 : x_1 = 0$.
+  \begin{align*}
+    b(\text{P}_1) &= 39, \\
+    b(\text{P}_2) &= 16 + 20 + \frac{12}{6} \cdot (17-7-9)
+                    = \lfloor \ldots \rfloor = 38, \\
+    b(\text{P}_3) &= 39, \\
+    b(\text{P}_4) &= 8 + 20 + \frac{12}{6} \cdot 5 = 38, \\
+    b(\text{P}_5) &= \infty & D \cap E_5 = \emptyset, \\
+    b(\text{P}_6) &= 8 + 16 + 0 + 2 \cdot 7 = 38.
+  \end{align*}
+  Aus ``Heuristik'' ist
+  \[ \bar{x} = (1,1,0,0,0,1,1)^\top, \qquad z(\bar{x}) = 38 \]
+  bekannt. 38 ist der Optimalwert, $\bar{x}$ die Lösung.
+\end{exmp}
+
+\subsubsection{Ganzzahlige lineare Optimierung}
+Generelle Voraussetzung: Alle Daten sind ganzzahlig.
+
+Verfahren von Land/Doig/Dakin zur Lösung von
+\[ (\text{P}) = (\text{P}_0) : \quad
+  z = c^\top x \to \min \subjto x \in D \cap E \]
+mit $D = \integer^n$, $E = E_0 = \{ x \in \real^n : Ax = b, x \ge 0 \}$.
+
+Teilproblem:
+\[ (\text{P}_i) : \quad
+  c^\top x \to \min \subjto x \in D \cap E_i, \]
+wobei $E_i$ durch eine oder mehrere zusätzliche Ungleichungen aus $E$
+entsteht.
+\[ (\text{Q}): \quad
+  z(E_i) := \min \{ c^\top x : x \in E_i \}. \]
+Sei $x^{\text{LP}}$ Lösung der LP-Relaxation zu $(\text{P}_i)$ mit
+$x_j^{\text{LP}} \notin \integer$.
+
+Verzweigung mittels Alternativkonzept:
+\begin{align*}
+  (\text{P}_{i,1}) \quad E_{i,1}
+  &= \left\{ x \in E_i : x_j \le \lfloor x_j^{\text{LP}} \rfloor \right\}, \\
+  (\text{P}_{i,2}) \quad E_{i,2}
+  &= \left\{ x \in E_i : x_j \ge \lceil x_j^{\text{LP}} \rceil \right\}. \\
+\end{align*}
+
+\setcounter{exmp}{2}
+\begin{exmp} %% 4.3
+  Betrachte
+  \[ z = 7 x_1 + 2 x_2 \to \max \subjto -x_1 + 2 x_2 \le 4, 5x_1 + x_2 \le 20,
+    x_1, x_2 \in \integer_+. \]
+  Tableau:
+  \[
+    \begin{array}{c|ccc}
+      \ST_1 & x_1 & x_2 & 1 \\
+      \hline
+      x_3 = & 1 & -2 & 4 \\
+      x_4 = & \boxed{-5} & -1 & 20 \\
+      \hline
+      - z = & -7 & -2 & 0 \\
+      \hline
+            & \ast & - \rez{5} & 4
+    \end{array}
+    \quad
+    \begin{array}{c|ccc}
+      \ST_2 & x_4 & x_2 & 1 \\
+      \hline
+      x_3 = & -\rez{5} & \boxed{-\frac{11}{5}} & 8 \\
+      x_1 = & -\rez{5} & -\rez{5} & 4 \\
+      \hline
+      - z = & \frac{7}{5} & -\frac{3}{5} & -28 \\
+      \hline
+            & -\rez{11} & \ast & \frac{40}{11}
+    \end{array}
+    \quad
+    \begin{array}{c|ccc}
+      \ST_3 & x_4 & x_3 & 1 \\
+      \hline
+      x_2 = & -\rez{11} & -\frac{5}{11} & \frac{40}{11} \\
+      x_1 = & -\frac{2}{11} & \frac{1}{11} & \frac{36}{11} \\
+      \hline
+      - z = & \frac{16}{11} & \frac{3}{11} & -\frac{332}{11}
+    \end{array}
+  \]
+  Verzweigung nach $x_2$, da
+  \[ \min \left\{ 4 - \frac{40}{11}, \frac{40}{11}-3 \right\} >
+    \min \left\{ 4 - \frac{36}{11}, \frac{36}{11}-3 \right\} \]
+  \begin{enumerate}[1. TP:]
+  \item $x_2 \ge 4$ $\Rightarrow$
+    \[ s_2 = x_2 - 4 = -\rez{11} x_4 - \frac{5}{11} x_3 - \frac{4}{11} < 0 \]
+    für alle $x_3, x_4 \ge 0$. Der zulässige Bereich ist leer!
+  \item $x_2 \le 3$ $\Rightarrow$
+    \[ s_2 = 3 - x_2 = \rez{11} x_4 + \frac{5}{11} x_3 - \frac{7}{11}\]
+  \end{enumerate}
+  Neues Tableau:
+  \[
+    \begin{array}{c|ccc}
+      \ST_3^* & x_4 & x_3 & 1 \\
+      \hline
+      x_2 = & -\rez{11} & -\frac{5}{11} & \frac{40}{11} \\
+      x_1 = & -\frac{2}{11} & \frac{1}{11} & \frac{36}{11} \\
+      s_2 = & \frac{1}{11} & \boxed{\frac{5}{11}} & - \frac{7}{11} \\
+      \hline
+      - z = & \frac{16}{11} & \frac{3}{11} & -\frac{332}{11} \\
+      \hline
+              & -\rez{5} & \ast & \frac{7}{5}
+    \end{array}
+    \quad
+    \begin{array}{c|ccc}
+      \ST_4 & x_4 & s_2 & 1 \\
+      \hline
+      x_2 = & 0 & -1 & 3 \\
+      x_1 = & -\rez{5} & \rez{5} & \frac{17}{5} \\
+      x_3 = & -\rez{5} & \frac{11}{5} & \frac{7}{5} \\
+      \hline
+      - z = & \frac{7}{5} & \frac{3}{5} & -\frac{149}{5}
+    \end{array}
+  \]
+  Dieses Tableau ist optimal für das Teilproblem, aber es sind immer noch
+  nicht alle Variablen ganzzahlig.
+  
+  Verzweigung nach $x_1$:
+  \begin{enumerate}[1. TP]
+    \setcounter{enumi}{2}
+  \item $x_1 \ge 4$ $\Rightarrow$ $s_1 = x_1 - 4$.
+    \[
+      \begin{array}{c|ccc}
+        \ST_4^* & x_4 & s_2 & 1 \\
+        \hline
+        x_2 = & 0 & -1 & 3 \\
+        x_1 = & -\rez{5} & \rez{5} & \frac{17}{5} \\
+        x_3 = & -\rez{5} & \frac{11}{5} & \frac{7}{5} \\
+        s_1 = & -\rez{5} & \boxed{\rez{5}} & -\frac{3}{5} \\
+        \hline
+        - z = & \frac{7}{5} & \frac{3}{5} & -\frac{149}{5} \\
+        \hline
+                & 1 & \ast & 3 
+      \end{array}
+      \quad
+      \begin{array}{c|ccc}
+        \ST_5 & x_4 & s_1 & 1 \\
+        \hline
+        x_2 = & & & 0 \\
+        x_1 = & & & 4 \\
+        x_3 = & & & 8 \\
+        s_2 = & & & 3 \\
+        \hline
+        - z = & 2 & 3 & -28
+      \end{array}
+    \]
+  \item $x_1 \le 3$ $\Rightarrow$ $s_1 = 3 - x_1$.
+    \[
+      \begin{array}{c|ccc}
+        \ST_4^* & x_4 & s_2 & 1 \\
+        \hline
+        x_2 = & 0 & -1 & 3 \\
+        x_1 = & -\rez{5} & \rez{5} & \frac{17}{5} \\
+        x_3 = & -\rez{5} & \frac{11}{5} & \frac{7}{5} \\
+        s_1 = & \boxed{\rez{5}} & -\rez{5} & -\frac{2}{5} \\
+        \hline
+        - z = & \frac{7}{5} & \frac{3}{5} & -\frac{149}{5} \\
+        \hline
+                & \ast & 1 & 2 
+      \end{array}
+      \quad
+      \begin{array}{c|ccc}
+        \ST_5 & s_1 & s_2 & 1 \\
+        \hline
+        x_2 = & & & 3 \\
+        x_1 = & & & 3 \\
+        x_3 = & & & 1 \\
+        x_4 = & & & 2 \\
+        \hline
+        - z = & 7 & 2 & -27
+      \end{array}
+    \]
+  \end{enumerate}
+  Also ist die Lösung im 3. TP: $z_{\max} = 28$.
+\end{exmp}
+
+\subsubsection{Das Rundreise-Problem}
+Traveling salesman problem, TSP
+
+Gesucht ist eine Rundreise minimaler Länge zwischen $n$ Orten, die jeden Ort
+\emph{genau einmal} besucht. Anwendung zum Beispiel in der
+Leiterplattenbestückung.
+
+\begin{itemize}
+\item Entfernungsmatrix $C = (c_{ik}) \in \realmat{n}{n}$.
+\item Entscheidungsvariable
+  \[ x_{ik} =
+    \begin{cases}
+      1, &\text{falls ovn $i$ nach $k$ gereist wird,} \\
+      0, &\text{sonst.}
+    \end{cases}
+  \]
+\end{itemize}
+O.B.d.A: $c_{ii} := + \infty$ $\Rightarrow$ $x_{ii} = 0$.
+\[ z = \sum_{i=1}^n \sum_{i=1}^n c_{ik} x_{ik} \to \min \subjto
+  \sum_{k=1}^n x_{ik} = 1, \quad
+  \sum_{i=1}^n x_{ik} = 1, \quad
+  x_{ik} \in \{0,1\} \tag{AP} \]
+für alle $i,k$. Absicherung, dass jeder Ort einmal getroffen wird und
+Verhinderung von ``Subtouren'' durch die weiteren Forderungen
+\[ \sum_{i,k \in S} x_{ik} = |S| - 1 \tag{SEB} \]
+(Subtoureliminationsbedingungen)
+für alle $S \subset \{1, \ldots, n\}$ mit $1 \le |S| \le n-1$. Beachte: Es
+ergeben sich also $2^n$ Nebenbedingungen.
+
+Das ist ein spezielles Transportproblem, da alle $a_i$ und $b_k$ den Wert 1
+haben. Man bezeichnet es als \emph{Zuordnungsproblem} (assignment problem).
+
+Es können von den nötigen $2n-1$ Basisvariablen nur $n$ Stück $\ne 0$
+sein. Das führt zu Zyklen im Simplexverfahren, das heißt es werden immer
+wieder die selben Variablen ausgetauscht, ohne dass sich der ZFW ändert.
+
+Für diese Art Problem existieren Algorithmen, die eine Komplexität $O(n^3)$
+aufweisen.
+
+Es sind unterschiedliche Relaxationen anwendbar:
+\begin{enumerate}[(1)]
+\item Zeilen- und Spaltenrelaxation (Algorithmus von
+  Little/Sweeney/Karel/Murthy, 1963)
+  \[ u_i := \min \left\{ c_{ik} : k \in I=\{1, \ldots, n \} \right\}
+    \qRq \tilde{d}_{ik} := c_{ik} - u_i \]
+  \[ v_k := \min \left\{ \tilde{d}_{ik} : i \in I \right\} \]
+  Es ergibt sich
+  \begin{align*}
+    z &= \sum_{i \in I} \sum_{k \in I} c_{ik} x_{ik} \\
+      &= \sum_{i \in I} \sum_{k \in I}( c_{ik} - u_i ) x_{ik}
+        + \underbrace{\sum_{i \in I} \sum_{k \in I} u_i x_{ik}}_{=\sum_{i \in I} u_i} \\
+      &= \sum_{i \in I} \sum_{k \in I} (c_{ik} - u_i - v_k) x_{ik}
+        + \underbrace{\sum_{i \in I} u_i + \sum_{k \in I} v_k}_{\text{Untere Schranke für $z$}},
+  \end{align*}
+  eine zulässige Lösung der dualen Aufgabe zu AP.
+\item AP-Relaxation, das heißt otimale Lösung von AP
+\item LP-Relaxation von AP und SEB.
+\end{enumerate}
+Für $n \le 40$ ist (1) am wenigsten aufwändig, bis $n = 120$ ist (2) am
+besten, für $n > 120$ ist (3) zu empfehlen.
+
+Realisierung von (3): Start mit AP-Relaxation und Hinzufügen der verletzten
+SEB (Wie finden?).
+
+\paragraph{Verzweigungsstrategie bei Zeilen- und Spaltenreduktion}
+Für jedes Indexpaar $(p,q)$ mit $d_{pq} = c_{pq} - u_p - v_q = 0$ wird ein
+Gewicht $w_{pq} \in \real_+$ ermittelt, welches durch Zeilen- und
+Spaltenreduktion aus $\tilde{D}$ erhalten wird, wobei $\tilde{D} =
+(\tilde{d}_{ik})$ aus $D$ entsteht durch Setzen von
+\[ \tilde{d}_{ik} :=
+  \begin{cases}
+    \infty, &(i,k) = (p,q), \\
+    d_{ik}, &\text{sonst.}
+  \end{cases}
+\]
+
+Aus $d_{ik} := c_{ik} - u_i - v_k$ für alle $i, k$ folgt
+\[ z(X) = \sum_{i,k} d_{ik} x_{ik} + \sum_{i}(u_i + v_i) \ge \sum_i (u_i +
+  v_i), \]
+da $d_{ik} \ge 0$ und $x_{ik} \ge 0$.
+
+Verzweigung:
+\begin{itemize}
+\item $x_{pq} := 1$ $\Rightarrow$ $x_{pk} := 0$ für alle $k \ne q$,
+\item $x_{pq} := 1$ $\Rightarrow$ $x_{iq} := 0$ für alle $i \ne p$, $x_{qp} :=
+  0$ bzw. Verbot des zugehörigen Zyklus $\Rightarrow$ $d_{pq} := \infty$.
+\end{itemize}
+
+\paragraph{Welches $(p,q)$ sollte man wählen?}
+Für jedes Indexpaar $(p,q)$ mit $d_{pq} = 0$ definiere das Gewicht
+\[ w_{pq} := \min_{k \ne q} d_{pk} + \min_{i \ne p} d_{iq}. \]
+Das entpricht dem Mindestzuwachs für $x_{pq} := 0$.
+
+Sein nun $(p,q)$ ein Indexpaar mit \emph{maximalem} Gewicht, dann verzweige
+bezüglich $(p,q)$.
+
+\begin{exmp}
+  Little-Algorithmus mit Zeilen- und Spaltenreduktion.
+  \[
+    \begin{array}{c|ccccc|c}
+      (c_{ik}) & & & & & & \\
+      \hline
+               & \infty & 32 & \underline{22} & 30 & 24 & 22 \\
+               & 10 & \infty & \underline{3} & 18 & \infty & 3 \\
+               & \infty & \underline{9} & \infty & 14 & 12 & 9 \\
+               & 16 & 10 & 7 & \infty & \underline{6} & 6 \\
+               & 15 & 19 & 15 & \underline{12} & \infty & 12 \\
+      \hline
+               & 3 & & & & & \sum 52 + 3
+    \end{array}
+  \]
+  %% Unfertig
+\end{exmp}
+
+Aufwand: Little-Algorithmus $O(n^2)$ wegen Zeilen-/Spaltenreduktion. Je
+Teilproblem: AP-Relaxation $O(n^2)$, LP-Relaxation: Lösung eines LP uns Suche
+von SEB ``$> O(n^2)$''
+
+\begin{rmrk*}
+  Die Zeilen-/Spaltenreduktion liefert die Schranke 58.
+\end{rmrk*}
+
+\section{Dynamische Optimierung}
+(Prinzip wird nur an zwei Beispielen erklärt)
+
+\subsection{Das klassische Rucksackproblem}
+Voraussetzung; $c_i > 0$, $0 < a_i \le b$ für alle $i \in I = \{1, \ldots, n\}$,
+alle Daten ganzzahlig.
+\[ f(x) = c^\top x \to \max \subjto a^\top x \le b, \quad x \in \integer_+^n.
+  \tag{P} \]
+
+\begin{defn*}
+  Für alle $k \in \{1, \ldots, n\}$ und $y \in \{0,1, \ldots, b\}$ definiere
+  \[ F(k,y) := \max \left\{
+      \sum_{i=1}^k c_i x_i : \sum_{i=1}^k a_i x_i \le y, x_i \in \integer_+, i
+      =1, \ldots, k
+    \right\}. \]
+\end{defn*}
+Gesucht ist $F(n,b)$.
+
+Für $k=1$ gilt
+\[ F(1,y) := c_1 \left\lfloor \frac{y}{a_1} \right\rfloor\]
+für alle $y \in \{ 0, \ldots, b \}$.
+
+Aufgrund der Linearität der Zielfunktion und der Nebenbedingungen gilt für $k >
+1$, $y \ge a_k$:
+\[ F(k,y) = \max \left\{ c_k x_k + F(k-1, y - a_k x_k) : x_k = 0, 1, \ldots,
+    \left\lfloor \frac{y}{a_k} \right\rfloor 
+  \right\} \]
+bzw.
+\[ F(k,y) = \max \{
+  \underbrace{F(k-1,y)}_{\text{d.h. } x_k = 0},
+  \underbrace{c_k + F(k, y- a_k)}_{\text{d.h.} x_k \ge 1}
+  \} \]
+
+\paragraph{Interpretation} Der Optimalwert $F(k,y)$ zum \emph{Zustand} $(k,y)$
+wird mit Hilfe von Optimalwerten für ``kleinere'' Zustände berchnet. Also sollte
+man die Reihenfolge der Berechnung dieser Optimalwerte so organisieren, dass
+alle benötigten Zwischenwerte vorher ermittelt werden. Das führt zu den
+Rekursionsformeln der dynamischen Optimierung (DO).
+
+\begin{rmrk*}
+  \begin{enumerate}
+  \item Mit $F(1,y) := c_1 \cdot \lfloor y / a_1  \rfloor$ und (GG) für alle
+    $y \ge 0$ und $k > 1$ ergibt sich der Algorithmus von Gilmore/Gomory.
+  \item Im Unterschied zu rekursiven Programmierung wird in der dynamischen
+    Optimierung jeder Optimalwert nur \emph{einmal} berechnet.
+
+    Fibonacci-Zahl: $F(n) = F(n-1) + F(n-2)$, $F(0) = 0$, $F(1) = 1$.
+  \end{enumerate}
+\end{rmrk*}
+
+\subsubsection*{Algorithmus von Gilmore/Gomory}
+\begin{enumerate}
+\item[$S_1$] Setze $F(1,y) = c_1 \cdot \lfloor y / a_1 \rfloor$,
+  $y = 0, 1, \ldots, b$.
+\item[$S_k$] Für $k = 2, \ldots, n$
+  \begin{align*}
+    &\text{für } y = 0, \ldots, a_{k-1}:
+    & F(k,y) &:= F(k-1,y), \\
+    &\text{für } y = a_k, a_{k+1}, \ldots, a_b:
+    & F(k,y) &:= \max \{ F(k-1,y), c_k + F(k,y-a_k) \}.
+  \end{align*}
+
+  Merken von Indexinformation und Identifizierung einer Lösung
+  \[ p(k,y) = \begin{cases}
+      p(k-1,y), & \text{falls } F(k,y) = F(k+1,y), \\
+      k, &\text{sonst.}
+    \end{cases}
+  \]
+  \[ p(1,y) = \begin{cases}
+      0, & \text{falls } y < a_1, \\
+      1, & \text{falls } y \ge a_1.
+    \end{cases}
+  \]
+\end{enumerate}
+$F: \real^2 \to \real$ ist stückweise konstant und monoton nicht fallend.
+
+\begin{exmp} %% 4.5
+  \begin{align*}
+    &z = 5 x_1 + 10 x_2 + 12 x_3 + 6 x_4 \to \max \\
+    \text{bei } 4 x_1 + 7 x_2 + 9 x_3 + 5 x_4 \le 5, \quad x_i \in \integer_+
+  \end{align*}
+
+  %% Mehr
+\end{exmp}
+
+\subsection{Guillotine-Zuschnitt}
+Aus einem Rechteck $L \times W$ sind kleinere Rechtecke $l_i \times w_i$, $i =
+1, \ldots, n$, durch Guillotine-Schnitte so zuzuschneiden, dass der Abfall
+minimal ist. Gewünschte Rechtecke können mehrfach erhalten werden.
+
+$F(L,W)$ bezeichne den Maximaleintrag bei Guillotine-Zuschnitt aus $L \times W$.
+Mit $F(l, 0) = 0$ für $l = 1, \ldots, L$ und $F(0,w) = 0$ für $w = 1, \ldots,
+W$, gilt für $l = 1, \ldots, L$, $w = 1, \ldots, W$:
+\[ F(l,w) = \max \{ e(l,w), h(l,w), v(l,w) \}, \]
+wobei
+\begin{align*}
+  e(l,w)
+  &= \max \left\{ 0 , \max_i \{ l_i w_i : l_i \le l, w_i \le w \} \right\}, \\
+  h(l,w)
+  &= \max \{ F(r,W) + F(L-r,W) : r = 1, \ldots, \lfloor L/2 \rfloor \}, \\
+  v(l,w)
+  &= \max \{ F(L,s) + F(L,W-s) : s = 1, \ldots, \lfloor W/2 \rfloor \}.
+\end{align*}
+
+Der Aufwand ist $O(LW(L+W))$.
+
+Die Optimalwerte für größere Rechtecke werden aus den Optimalwerten für kleinere
+Rechtecke erhalten.
+
+Im Allgemeinen gilt
+\[ \max \{ f(x) + g(x) \} \ne \max f(x) + \max g(x). \]
+
+\section{Schnittebenenverfahren für GLO}
+\begin{align*}
+  c^\top x \to \min \subjto Ax &= a, \quad x \in \integer_+^n \tag{P} \\
+  c^\top x \to \min \subjto Ax &= a, \quad x \in \real_+^n \tag{q}
+\end{align*}
+Für die konvexe Hülle der gültigen Punkte von (P) gilt
+\[ \operatorname{conv} \{ x \in \integer_+^n : Ax = a \} \subset G, \]
+sie ist immer eine Teilmenge des gültigen Bereichs von (Q).
+
+\subsection{Gomory-Schnitte}
+Sei (Q) mittels Simplexverfahren gelöst und das optimale Tableau sei
+\[ x_B = P x_N + p, \qquad z = q^\top x_N + q_n \]
+mit $P = -A_B^{-1} A_N$.
+
+Alternative Schreibweise:
+\[ I_B x_B - P x_N = p. \]
+
+Die Lösung von (Q) ist dann
+\[ x = \pmat{x_B \\ x_N} = \pmat{p \\ 0}, \]
+beachte $J = J_B \cup J_N = \{ 1, \ldots, n \}$.
+
+Wenn $p$ ganzzahlig ist, dann ist $x$ auch eine Lösung von $p$. Sei also $p$
+\emph{nicht} ganzzahlig.
+
+\textbf{Idee:} Eine Nebenbedingung (oder mehrere) in (P) hinzufügen, die von
+$x = \pmat{x_B \\ x_N} = \pmat{p \\ 0}$ \emph{nicht} erfüllt wird, aber von
+allen zulässigen ganzzahligen Punkten von (P).
+
+Es sei die $i$-te Komponente von $p$ nicht ganzzahlig, also $p_i \notin
+\integer$. Wegen
+\begin{align*}
+  [x_B]_i + \sum_{j \in J_N} (-P_{ij}) x_j &= p_i
+  & \text{für alle }  x \in \real^n \text{ mit } Ax = a, \\
+  [x_B]_i + \sum_{j \in J_N} \lfloor -P_{ij} \rfloor x_j &= \lfloor p_i \rfloor
+  & \text{für alle }  x \in \integer_+^n \text{ mit } Ax = a 
+\end{align*}
+gilt
+\[ \sum_{j \in J_N}
+  \underbrace{((-P_{ij}) - \lfloor P_{ij} \rfloor)}_{=(\lceil P_{ij} \rceil -
+    P_{ij}) x_j = r_{j}^{(i)}}
+  \ge p_i - \lfloor p_i \rfloor = r_i \]
+für alle $x \in \integer_+^n$ mit $Ax = a$.
+
+\begin{defn}
+  Die Ungleichung
+  \[ \sum_{j \in J_n} r_j^{(i)} x_j \ge r_i \]
+  heißt \emph{Gomory-Schnitt} zur Zeile $i$.
+\end{defn}
+
+\begin{rmrk*}
+  Für $x = \pmat{p \\ 0}$ mit $p_i \notin \integer_+$ gilt
+  \[ x^\top r^{(i)} = \sum_{j \in J_N} r_j^{(i)} \cdot 0 = 0 < r_i (\ne 0) \]
+  mit $r_j^{(i)} = 0$ für $j \in J_B$, das heißt die nicht-ganzzahlige Lösung
+  $x$ wird ``abgeschnitten''.
+\end{rmrk*}
+
+\begin{flg}
+  Es gilt
+  \begin{align*}
+    \{ x \in \integer_+^n : Ax = a \}
+    &= \{ x \in \integer_+^n : x_B = P x_N + p \} \\
+    &= \{ x \in \integer_+^n : x_B = P x_N + p, (r^{(i)})^\top x \ge r_i \}.
+  \end{align*}
+\end{flg}
+
+\subsection{Gomory-Verfahren}
+Durch Gomory-Schnitte erhält man eine strengere Relaxation zu (P)
+\[ \begin{aligned}
+    z = q^\top x_N + q_0 \to \min \subjto
+    &x_B = P x_N + p, \\
+    &s = (r^{(i)})^\top x_N - r_i, \\
+    &x_B, x_N \ge 0. 
+  \end{aligned} \tag{$\text{Q}_1$} \]
+
+Die Lösung von ($\text{Q}_1$) erhält man mit dem dualen Simplexverfahren.
+\begin{enumerate}[S1]
+  \setcounter{enumi}{-1}
+\item (Initialisierung) $k := 0$, $(\text{Q}_k) = (\text{Q})$
+\item Löse ($\text{Q}_k$).\\
+  Falls $(\text{Q}_k)$ nicht zulässig ist, dann ist (P) nicht zulässig.
+  $\rightarrow$ \verb+STOP+ \\
+  Falls $z$ unbeschränkt ist für $(\text{Q}_k)$, dann auch für (P). $\rightarrow$
+  \verb+STOP+ \\
+  Falls die Lösung von $(\text{Q}_k)$ ganzzahlig ist, dann ist sie auch
+  Lösung von (P). $\rightarrow$ \verb+STOP+
+\item Füge einen Gomory-Schnitt zu ($\text{Q}_k$) hinzu. Dies ergibt
+  ($\text{Q}_{k+1}$). \\
+  Setze $k := k + 1$ und gehe zu S1.
+\end{enumerate}
+
+\begin{exmp}
+  %% Noch zu füllen
+\end{exmp}
+
+\begin{rmrk*}
+  Die Anzahl der Gomory-Schnitte, die erforderlich sind, um eine ganzzahlige
+  Lösung zu erhalten, ist exponentiell. Die Endlichkeit des Verfahrens ist im
+  Allgemeinen unklar (Zyklen).
+
+  Ist die Menge der zulässigen Punkte beschränkt, so liefert der Algorithmus
+  nach endlich vielen Schritten eine ganzzahlige Lösung oder es existiert keine
+  zulässige Lösung.
+\end{rmrk*}
+
+\textbf{Alternative 1.} Das sogenannte \emph{lexikographische} Gomory-Verfahren
+ist endlich. Wähle immer die Variable mit kleinstem Index, die keinen
+ganzzahligen Wert hat.
+
+\textbf{Alternative 2.} Kombination von b\&b und
+Schnittebenenverfahren $\rightarrow$ branch and cut
+
+\textbf{Alternative 3.} Anwendung allgemeinerer, besserer Schnitte
+(Chvátal-Gomory cuts, facettendefinierte Schnitte)
+
+%% Viel fehlt
