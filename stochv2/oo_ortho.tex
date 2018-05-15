@@ -1,0 +1,470 @@
+\setcounter{chapter}{14}
+\chapter{Orthogonalität}
+Sei $X$ ein linearer Raum, $(\cdot, \cdot)$ das Skalarprodukt. $x,y \in X$
+heißen \emph{orthogonal}, wenn
+\[ (x,y) = 0. \]
+Schreibweise $x \perp y$.
+
+Satz von Pythagoras: Für $x \perp y$ gilt
+\[ \| x + y \|^2 = \| x \|^2 + \| y \|^2. \]
+
+\begin{proof}
+  \[ \|x+y\|^2 = (x+y,x+y) = \ldots \qedhere \]
+\end{proof}
+
+Parallelogrammidentität:
+\[ \|x+y\|^2 + \|x-y\|^2 = 2(\|x\|^2 + \|y\|^2). \]
+
+Sei $x \in X$, $A,B \subset X$. $x$ ist \emph{orthogonal} zu $A$, $x \perp A$,
+wenn $x \perp a$ für alle $a \in A$. $A$ ist \emph{orthogonal} zu $B$, $A \perp
+B$, wenn $a \perp b$ für alle $a \in A$, $b \in B$.
+
+Das \emph{orthogonale Komplement} von $A$ ist
+\[ A^\perp := \{ x \in X : x \perp A \}. \]
+
+\renewcommand{\thethm}{O.\arabic{thm}}
+\setcounter{thm}{0}
+\begin{aufg} %% O.1
+  \begin{enumerate}
+  \item $A^\perp$ ist ein abgeschlossener Teilraum von $X$.
+  \item $\{ 0 \}^\perp = X$ und $X^\perp = \{ 0 \}$.
+  \item Aus $A \subset B$ folgt $B^\perp \subset A^\perp$.
+  \item $A^\perp = (\obar{A})^\perp$ (Abschluss) und $A^\perp = L(A)^\perp =
+    (\obar{L(A)})^\perp$ (lineare Hülle).
+  \end{enumerate}
+\end{aufg}
+
+$M \subset X$ heißt \emph{total}, wenn die lineare Hülle $L(M)$ dicht in $X$
+ist:
+\[ \obar{L(M)} = X. \]
+
+Beispiel: $X = \real^n$, $M := \{e_1, \ldots, e_n\}$ eine Basis, dann ist
+$L(M) = \real^n$.
+
+\clearpage
+
+\begin{thm}[Approximationssatz] %% O.2
+  Sei $X$ ein Hilbertraum, $A$ eine abgeschlossene konvexe Teilmenge von $X$.
+  Dann gibt es zu jedem $x \in X$ genau eine beste Approximation in $A$, das
+  heißt es gibt genau ein $y \in A$ mit
+  \[ \| x - y \| = d(x,A) := \inf \{ \| x - z \| : z \in A \}. \]
+\end{thm}
+
+\begin{proof}
+  Nach der Definition von $d(A,x)$ gibt es eine Folge $\{y_n\}$ aus $A$ mit
+  \[ \| x - y_n \| \xrightarrow{n \to \infty} d(x,A). \]
+  Wir zeigen: $\{y_n\}$ ist eine Cauchy-Folge.
+
+  Parallelogrammidentität $x \to x - y_n$ und $y \to x - y_n$.
+  \begin{align*}
+    \| y_n - y_m \|^2
+    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big) - \| 2x - (y_n + y_m) \|^2 \\
+    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big)
+      - 4 \left\| x - \frac{y_n+y_m}{2} \right\|^2 \\
+    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big)
+      - 4 d(x,A)^2 \xrightarrow{n,m \to \infty} 0. \\
+  \end{align*}
+  Es gilt $\frac{y_n+y_m}{2} \in A$ wegen der Konvexität von $A$.
+
+  Also ist $\{y_n\}$ eine Cauchy-Folge und damit existiert ein $y \in A$ mit
+  $y_n \to y$ und
+  \[ \| x - y \| = \lim_{n \to \infty} \| x - y_n \| = d(x,A). \]
+  Damit ist die Existenz bewiesen.
+
+  Es fehlt noch die Eindeutigkeit: Angenommen, für $y_1$ und $y_2$ gilt
+  \[ \| x - y_1 \| = \| x - y_2 \| = d(x,A), \qquad y_1 \ne y_2. \]
+
+  Oder: Der erste Teil des Beweises zeigt: $y_1, y_2, y_1, y_2, \ldots$ ist eine
+  Cauchy-Folge $\Rightarrow$ $y_1 = y_2$.
+\end{proof}
+
+\begin{thm}[Projektionssatz] % O.3
+  Sei $X$ ein Hilbertraum, $M$ ein abgeschlossener Teilraum. Dann gilt:
+  \begin{enumerate}[a)]
+  \item Jedes $x \in X$ lässt sich eindeutig in der Form $x = y + z$ schreiben
+    mit $y \in M$ und $z \in M^\perp$. $y$ heißt die \emph{orthogonale
+      Projektion} von $x$ auf $M$.
+  \item $(M^\perp)^\perp = M$.
+  \end{enumerate}
+\end{thm}
+
+\clearpage
+
+\begin{aufg} % O.4
+  Sei $X$ ein Hilbertraum und $A \subset X$.
+  \begin{enumerate}[a)]
+  \item $(A^\perp)^\perp = \obar{L(A)}$.
+  \item $A^\perp = \{0\}$ $\Leftrightarrow$ $\obar{L(A)} = X$.
+  \end{enumerate}
+\end{aufg}
+
+\begin{proof}[Beweis zu Satz O.3]
+  Existenz: Wir wählen für $y$ die beste Approximation von $x$ in $M$. Definiere
+  $z := x - y$.
+
+  Noch zu zeigen: $z \in M^\perp$, das heißt $(z,w) = 0$ für alle $w \in M$.
+  O.B.d.A. $w \ne 0$. Es gilt $y + aw \in M$ für alle $a \in K$ ($=\complex$
+  oder $\real$).
+  \begin{align*}
+    d(x,M)^2
+    &\le \| x - (y+aw) \|^2 = \| z - aw \|^2 \\
+    &= \underbrace{\| z \|^2}_{=d(x,M)^2} - 2 \Re( a(z,w) + |a|^2 \|w\|^2 )
+  \end{align*}
+  für alle $a \in K$. Mit $a = \| w \|^{-2} (w,z)$ folgt
+  \[ 0 \le -2 \frac{|(z,w)|^2}{\|w\|^2} + \frac{|(z,w)|^2}{\|w\|^2}
+    = - \frac{|(z,w)|^2}{\|w\|^2}. \]
+  Also muss $(z,w) = 0$ sein.
+
+  Eindeutigkeit: Gilt auch $x = y' + z'$ mit $y' \in M$, $z' \in M^\perp$, so
+  gilt $y - y' \in M$ und $z - z' \in M^\perp$. Wegen
+  \[ y + z = y' + z' \]
+  gilt
+  \[ y - y' = z' - z \in M \cap M^\perp = \{ 0 \}. \]
+  Also gilt $y = y'$ und $z = z'$.
+\end{proof}
+
+\begin{denos*}
+  Seien $M_1$, $M_2$ Teilräume von $X$ mit $M_1 \cap M_2 = \{ 0 \}$.
+  \[ M_1 + M_2 = \{ y_1 + y_2 : y_1 \in M_1, y_2 \in M_2 \} \]
+  ist die sogenannte \emph{direkte Summe} $M_1 + M_2$ (das heißt, jedes Element
+  aus $M_1 + M_2$ hat \emph{genau eine} Darstellung der Form $y_1 + y_2$, $y_j
+  \in M_j$).
+  Sind $M_1$ und $M_2$ orthogonal, so gilt $M_1 \cap M_2 = \{0\}$. In diesem
+  Fall schreibt man $M_1 \oplus M_2$, die \emph{orthogonale Summe}.
+
+  Man schreibt auch $M_1 = M \ominus M_2$, das heißt $M_1$ ist das
+  \emph{orthogonale Komplement} von $M_2$ bezüglich $M$.
+
+  Spezialfall: $Y^\perp = X \ominus Y$.
+\end{denos*}
+
+\clearpage
+
+\begin{thm}
+  Sei $X$ ein Hilbertraum.
+  \begin{enumerate}[a)]
+  \item Sind $M_1$ und $M_2$ orthogonale Teilräume, so ist $M_1 \oplus M_2$
+    genau dann abgeschlossen, wenn $M_1$ und $M_2$ abgeschlossen sind.
+  \item Sind $M_1$ und $M$ abgeschlossene Teilräume mit $M_1 \subset M$, so
+    existiert ein abgeschlossener Teilraum $M_2 \subset M$ mit $M = M_1 \oplus
+    M_2$. 
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  a) folgt aus der Tatsache, dass $\{ y_{1,n} + y_{2,n} \}_{n=1}^\infty$ mit
+  $y_{j,n} \in M_J$ genau dann eine Cauchy-Folge ist, wenn
+  $\{y_{j,n}\}_{n=1}^\infty$ Cauchy-Folgen sind.
+
+  b) O.B.d.A. $M = X$. $M_2 = M_1^\perp$ hat die gewünschte Eigenschaft.
+\end{proof}
+
+\begin{rmrk*}
+  Die Orthogonalität in a) ist notwendig. Sei $H = \ell_2$, das heißt
+  \[ x \in \ell_2 : \{ x = (x_0, x_1, \ldots ) \} \]
+  mit $\sum_j |x_j|^2 < \infty$.
+
+  Seien $X_1 := \{$ alle Folgen in $\ell_2$ mit $ x_{2n} = 0\}$ und $X_2 := \{$
+  alle Folgen in $\ell_2$ mit $x_{2n+1} = n x_{2n} \}$. Dann gilt
+  \begin{enumerate}
+  \item $X_1$ und $X_2$ sind abgeschlossene, lineare Teilräume.
+  \item $X_1 \cap X_2 = \{ 0 \}$.
+  \item $X_1 \dot{+} X_2$ ist dicht in $\ell_2$ (Hinweis: Enthält alle Folgen
+    mit endlichem Träger)
+  \item $X_1 \dot{+} X_2 \ne \ell_2$ (Hinweis: $x_n := \rez{n+1} \in \ell_2$,
+    aber $\notin X_1 \dot{+} X_2$)
+  \end{enumerate}
+  Aufgabe.
+\end{rmrk*}
+
+\begin{exmp}
+  Ist $X = L^2(a,b)$, $a < c < b$, so gilt
+  \[ L^2(a,b) = L^2(a,c) \oplus L^2(c,b), \]
+  da
+  \[ f = f \cdot \ind_{[a,c]} + f \cdot \ind_{[c,b]} \]
+  und
+  \[ \int_a^b f \cdot \ind_{[a,c]} \cdot f \cdot \ind_{[c,b]} \diffop \lambda =
+    0. \]
+\end{exmp}
+
+\begin{exmp}
+  In $X = L^2(-a,a)$ seien
+  \[ L_g^2(-a,a) := \{ f \in L^2(-a,a) :
+    f(x) = f(-x) \text{ fast überall} \} \]
+  und
+  \[ L_g^2(-a,a) = \{ f \in L^2(-a,a) :
+    f(x) = -f(-x) \text{ fast überall} \}. \]
+  Dann gilt
+  \[ L^2(-a,a) = L^2_g(-a,a) \oplus L^2_u(-a,a), \]
+  denn
+  \[ f(x) = f_g + f_u = \frac{f(x) + f(-x)}{2} + \frac{f(x) - f(-x)}{2} \]
+  und
+  \[ \int_{-a}^a f_g \cdot \obar{f_u} \diffop \lambda = 0, \]
+  weil $f_g \cdot \obar{f_u}$ ungerade ist.
+\end{exmp}
+
+Eine Familie $M = \{ e_\alpha : \alpha \in A \}$ in einem Hilbertraum heißt ein
+\emph{Orthonormalsystem}, wenn $e_\alpha \perp e_\beta$ für $\alpha \ne \beta$
+und $\| e_\alpha \| = 1$. Ein totales Orthonormalsystem heißt
+\emph{Orthonormalbasis}.
+
+\begin{thm}
+  \begin{enumerate}[a)]
+  \item Jedes Orthonormalsystem ist linear unabhängig.
+  \item Jede Orthonormalbasis ist ein maximales Orthonormalsystem.
+  \item Im Hilbertraum ist jedes maximale Orthonormalsystem eine
+    Orthonormalbasis.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Aufgabe.
+\end{proof}
+
+\begin{exmp}
+  In $\ell^2(\nat)$, $\ell^2(\integer)$. Orthonormalbasis:
+  \[ \{ e_n \}_{n=1}^\infty; \qquad e_n(n) = 1; \quad e_n(m) = 0, \quad n \ne
+    m. \]
+  Zu zeigen: $(x,e_n) = 0$ für alle $n$ $\Rightarrow$ $x = 0$.
+\end{exmp}
+
+\begin{aufg}
+  Sei $X = L^2(0,1)$.
+  \begin{enumerate}[a)]
+  \item $M = \{e_n : n \in \integer \}$, wobei $e_n(x) = e^{2 \pi i n x}$, $x
+    \in [0,1]$.
+
+    Zu zeigen: $M$ ist Orthonormalbasis.
+  \item $c_n(x) = \sqrt{2} \cos (2 \pi n x)$, $s_n(x) = \sqrt{2} \cos (2 \pi n
+    x)$.
+
+    Zu zeigen: $\{ c_n : n \in \nat_0 \} \cup \{ s_n : n \in \nat \}$ ist
+    Orthonormalbasis.
+  \end{enumerate}
+\end{aufg}
+
+Hinweis: Satz von Weierstraß für trig. Polynomräume.
+
+\clearpage
+
+\begin{thm} %% O.11
+  Sei $X$ ein Prähilbertraum\footnotemark, $\{ e_{\alpha} : \alpha \in A \}$ ein
+  Orthonormalsystem in $X$.
+  \begin{enumerate}[a)]
+  \item Ist $\{ \alpha_n \}$ eine Folge paarweise verschiedener Elemente aus $A$
+    und $\{c_n\}$ eine Folge aus $\mathbb{K}$, so gilt
+    \begin{enumerate}[(i)]
+    \item Ist $\sum_n c_n e_{\alpha_n}$ konvergent bzw.
+      \[ \left\{ \sum_{n=1}^m c_n e_{\alpha_n} \right\} \]
+      eine Cauchy-Folge, so ist $\{ c_n \} \in \ell_2$.
+    \item isr $\{c_n\} \in \ell_2$, so ist
+      \[ \left\{ \sum_{n=1}^m c_n e_{\alpha_n} \right\} \]
+      eine Cauchy-Folge.
+    \end{enumerate}
+  \item Ist $y = \sum_n c_n e_{\alpha_n}$, so gilt $c_n = (e_{\alpha_n}, y)$ und
+    \[ \| y \|^2 = \sum_n |c_n|^2, \qquad
+      (y,x) = \sum_n (y, e_{\alpha_n}) \cdot (e_{\alpha_n}, x)\]
+    für alle $x \in X$.
+  \end{enumerate}
+\end{thm}
+\footnotetext{Ein Raum mit positiv definitem Skalarprodukt, der möglicherweise
+  nicht vollständig ist.}
+
+\begin{thm}[Entwicklungspunktsatz] %% O.12
+  \begin{enumerate}[a)]
+  \item Ist $\{ e_\alpha : \alpha \in A\}$ ein Orthonormalsystem im
+    Prähilbertraum $X$, so gilt für alle $x \in X$ die \emph{Bessel'sche
+      Ungleichung}
+    \[ \sum_{\alpha \in A} |(e_{\alpha},x)|^2 \le \| x \|^2, \]
+    wobei in der Summe über höchstens abzählbar viele Terme $\ne 0$ sind.
+  \item Ein Orthonormalsystem $\{ e_\alpha : \alpha \in A \}$ in $X$ ist genau
+    dann eine Orthonormalbasis, wenn die \emph{Parseval'sche Gleichung}
+    \[ \sum_{\alpha \in A} |(e_\alpha,x)|^2 = \| x \|^2 \]
+    gilt. Es ist dann
+    \[ x = \sum_{\alpha \in A} (e_\alpha, x) \cdot e_\alpha \]
+    (Summe abzählbar).
+  \item ist $\{ e_\alpha : \alpha \in A \}$ ein Orthonormalsystem im Hilbertraum
+    $X$, so ist
+    \[ \sum_{\alpha \in A} (e_\alpha, x) \cdot e_\alpha \]
+    die orthogonale Projektion von $x$ auf den abgeschlossenen Teilraum
+    $\obar{L \{ e_\alpha : \alpha \in A\}}$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+Zu a): Ist $y = \sum_{n=1}^m c_n \cdot e_{\alpha_n} \in L\{ e_\alpha : \alpha
+\in A \}$, so gilt
+\begin{align*}
+  \| x - y \|^2
+  &= \| x \|^2 - 2 \Re \sum_{n=1}^m c_n (x, e_{\alpha_n})
+    + \sum_{n=1}^m | c_n |^2 \\
+  &= \| x \|^2 - \sum_{n=1}^n |(e_{\alpha_n}, x)^2
+    + \sum_{n=1}^m |c_n - (e_{\alpha_n}, x) |^2 \tag{$*$}\\
+  &\ge \| x \|^2 - \sum_{n=1}^m | (e_\alpha, x) |^2.
+\end{align*}
+$\| x - y \|$ also minimal genau dann, wenn $c_n = (e_{\alpha_n}, x)$ (bei
+festen $\alpha_1, \ldots, \alpha_n$). Dann gilt
+\[ \| x - y \|^2 = \| x \|^2 - \sum_{n=1}^m | (e_{\alpha_n}, x) |^2,\]
+also folgt
+\[ \sum_{n=1}^m |(e_{\alpha_n}, x)|^2 \le \| x \|^2. \]
+Da dies für beliebige endliche Familien $\{\alpha_1, \ldots, \alpha_n\}$ aus $A$
+gilt, folgt die Behauptung.
+
+Zu b): Ist $\{ e_\alpha : \alpha \in A \}$ eine Orthonormalbasis, also
+$\obar{L\{e_\alpha : \alpha \in A\}} = X$, dann existieren für alle $\eps > 0$
+eine Familie $\{ \alpha_1, \ldots, \alpha_m \} \subset A$ und $c_1, \ldots, c_m
+\in \mathbb{K}$ mit
+\[ \| x - y \| < \eps \]
+für $y = \sum_{n=1}^m c_n e_n$ und damit folgt mit $(*)$
+\[ \| x \| - \sum_{n=1}^m |(e_{\alpha_n},x)|^2 \le \| x - y \|^2 \le \eps^2, \]
+also
+\[ \sum_{n=1}^m |(e_{\alpha_n},x)^2| \ge \| x \|^2 - \eps^2. \]
+Mit der Bessel'schen Ungleichung folgt damit die Parseval'sche Gleichung.
+
+Ist $\{ \alpha_1, \alpha_2, \ldots \}$ die Menge der $\alpha \in A$ mit
+$(e_\alpha, x) \ne 0$ und
+\[ y_m := \sum_{n=1}^m (e_{\alpha_n}, x) e_{\alpha_n}, \]
+so folgt mit $(*)$ und der Parseval'schen Gleichung
+\[ \| x - y_m \|^2 = \|x\|^2 - \sum_{n=1}^m |(e_{\alpha_m},x)|^2 \xrightarrow{m
+    \to \infty} 0, \]
+das heißt
+\[ x = \lim_{m \to \infty} y_m = \sum_{n=1}^\infty (e_{\alpha_n},x)
+  e_{\alpha_n} = \sum_{\alpha \in A} (e_{\alpha}, x) e_\alpha. \]
+
+Zu c): Sei
+\[ y := \sum_{\alpha \in A} (e_\alpha, x) e_\alpha = \sum_{n=1}^\infty
+  (e_{\alpha_n}, x) e_{\alpha_n}. \]
+Mit $(*)$ folgt für beliebige $c_1, \ldots, c_m \in \mathbb{K}$
+\begin{align*}
+  \| x - y \|^2
+  &= \| x \|^2 - \sum_{\alpha \in A} |(e_\alpha,x)|^2 \\
+  &\le \| x \|^2 - \sum_{n=1}^m |(e_{\alpha_n},x)|^2 \\
+  &\le \left\| x - \sum_{n=1}^m c_n e_{\alpha_n} \right\|^2.
+\end{align*}
+Es gilt $\sum_{n=1}^m c_n e_{\alpha_n} \in \obar{L \{ e_\alpha : \alpha =
+  \alpha_1, \ldots, \alpha_m\}}$. Also
+\begin{align*}
+  \| x - y \|
+  &= \inf \left\{ \| x - z \| : z \in L\{e_\alpha\} \right\} \\
+  &= \inf \left\{ \| y - z \| : z \in \obar{L\{e_\alpha\}} \right\}.
+\end{align*}
+Das heißt $y$ ist die orthogonale Projektion von $x$ auf $\obar{L\{e_\alpha\}}$.
+\end{proof}
+
+Einfaches Beispiel: Sei $X = \real^2$, $e_1 = (1,0)$, $e_2 = (0,1)$ ist eine
+Orthonormalbasis. Die orthogonale Projektion von $x = (2,2) \in X$ auf $\real
+e_2$ ist $(0,2)$.
+
+\begin{thm}[Gram-Schmidt'sche Orthogonalisierung] %% O.13
+  Sei $X$ ein Prähilbertraum, $F = \{ x_n : n \in \nat \}$ oder $F = \{ x_n : n
+  = 1, \ldots, m \}$.
+  Dann existiert ein Orthonormalsystem $M = \{ e_n \}$ mit $L(F) = L(M)$.
+
+  Ist $F$ linear unabhängig, dann kann $M$ so gewählt werden, dass
+  \[ L(\{x_1, \ldots, x_n\}) = L( \{e_1, \ldots, e_n\}) \]
+  für alle $n$. In diesem Fall lassen sich die $e_n$ in der Form
+  \[ e_n = \sum_{j=1}^n c_{n,j} x_j \]
+  schreiben. Mit der zusätzlichen Forderung $c_{n,n} > 0$ werden sie eindeutig
+  bestimmt. 
+\end{thm}
+
+\begin{proof}
+  Aufgabe.
+
+  Hinweis: O.B.d.A. $F$ linear unabhängig.
+  \[ e_1 := \frac{x_1}{\| x_1 \|}, \qquad
+    e_{n+1} := \frac{x_{n+1} + P_n x_{n+1}}{ \| x_{n+1} - P_n x_{n+1} \|}, \]
+wobei $P_n x$ die orthogonale Projektion von $x$ auf $L\{ e_1, \ldots e_n\}$
+ist. $x_{n+1} - P_n x_{n+1} \ne 0$, weil $F$ linear unabhängig ist.
+\end{proof}
+
+\clearpage
+
+\begin{thm}[Existenz von Orthormalbasen] % O.14
+  \begin{enumerate}[a)]
+  \item Jeder separable Prähilbertraum besitzt eine endliche oder abzählbar
+    unendliche Orthonormalbasis.
+  \item Jeder Hilbertraum besitzt eine Orthonormalbasis.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  a): Sei $X$ separabel, dann gibt es eine höchstens abzählbare totale Menge
+  $\{x_n\}$. Wir dürfen annehmen, dass $\{x_n\}$ linear unabhängig ist.
+  Anwendung von O.13 liefert eine orthonormale Basis der gleichen Mächtigkeit.
+
+  b): Sei $\mM$ die Menge aller Orthonormalsysteme in $X$. $\mM$ ist bezüglich
+  der Inklusion ``$\subseteq$'' halbgeordnet.
+
+  \emph{Lemma von Zorn:} Besitzt in einer halbgeordneten Menge jede Teilmenge
+  eine obere Schranke, so existiert (mindestens) ein maximales Element. Ist
+  $\mN$ eine geordnete Teilmenge von $\mM$, so ist die Vereinigung aller $N \in
+  \mN$ eine obere Schranke für alle $M \in \mM$.
+
+  $M$ ist ein Orthonormalsystem: Für $e_1, e_2 \in M$ mit $e_1 \ne e_2$
+  existieren $N_1, N_2 \in \mN$ mit $e_j \in N_j$. Wegen $N_1 \subset N_2$ oder
+  $N_2 \subset N_1$ gilt $e_1, e_2 \in N_2$ oder $e_1, e_2 \in N_1$. Also ist
+  $e_1 \perp e_2$.
+
+  Nach dem Lemma von Zorn existiert ein maximales Element $M_{\max} \in \mM$,
+  dieses ist eine orthonormale Basis: Wäre $\obar{L(M_{\max})} \ne X$, so gäbe
+  es ein $e \in \obar{L(M_{\max})}^\perp$ mit $\| e \| = 1$, das heißt $M_{\max}
+  \cup \{e\}$ wäre ein Orthonormalsystem. Widerspruch zur Maximalität!
+\end{proof}
+
+\begin{folg} % O.15
+  \begin{enumerate}[a)]
+  \item In einem separablen Prähilbertraum kann jedes endliche Orthonormalsystem
+    zur einer Orthonormalbasis ergänzt werden.
+  \item Im Hilbertraum kann jedes Orthonormalsystem zu einer Orthonormalbasis
+    ergänzt werden.
+  \end{enumerate}
+\end{folg}
+
+\begin{proof}
+  a): Zu dem endlichen Orthonormalsystem nimmt man eine abzählbare, dichte
+  Teilmenge dazu. Man streicht eventuelle linear abhängige Elemente heraus und
+  wendet das Gram-Schmidt'sche Verfahren an.
+
+  b): Sei $M_1$ das gegebene Orthonormalsystem und $M_2$ eine Orthonormalbasis
+  von $M_1^\perp$. Dann ist $M_1 \cup M_2$ eine Orthonormalbasis von $X$.
+\end{proof}
+
+\begin{thm} % O.16
+  Alle Orthonormalbasen in einem Prähilbertraum haben die gleiche Mächtigkeit.
+\end{thm}
+
+\begin{proof}
+  Aufgabe.
+\end{proof}
+
+Dieser Satz erlaubt es, die \emph{Hilbertraumdimension} zu definieren: Die
+Mächtigkeit einer Orthonormalbasis.
+
+\begin{rmrk*}
+  Es gibt Hilberträume mit beliebiger Dimension. Ist $A$ eine Menge mit
+  vorgegebener Mächtigkeit, so hat $\ell^2(A)$ (alle quadratisch summierbaren
+  Funktionen auf dieser Menge) die Dimension $|A|$.
+
+  Orthonormalbasis: $\{ \ind_{\{a\}} : a \in A \}$.
+
+  $\ell^2(A) = \{ f : A \to \complex \}$ mit $\sum_{a \in A} |f(a)|^2 < \infty$.
+  Skalarprodukt:
+  \[ (f,g) = \sum_{a \in A} f(a) \cdot \obar{g(a)}. \]
+  Es gilt $(\ind_{\{a\}}, \ind_{\{b\}}) = 0$ für $a \ne b$ und $\| \ind_{\{a\}} \|
+  = 1$.
+\end{rmrk*}
+
+\subsubsection*{Beispiel für die Gram-Schmit-Orthogonalisierung}
+Sei $X$ der lineare Raum aller stetigen Funktionen auf $[0,1]$. Das
+Skalarprodukt sei
+\[ (f,g) = \int_0^1 f(x) \obar{g(x)} \diffop x \]
+oder allgemeiner
+\[ (f,g) = \int_0^1 f(x) \obar{g(x)} \cdot p(x) \diffop x, \]
+wobei $p(x) \ge 0$ stetig.
+
+Die Polynome $1, x, x^2, x^3, \ldots$ sind linear unabhängig.
+
+Aus $c_0 + c_1 x + \ldots + c_n x^n = 0$ für alle $x \in [0,1]$ folgt, dass $c_j
+= 0$ für alle $j$. Anwendung von Gram-Schmidt liefert orthogonale Polynome
+bezüglich $p$.

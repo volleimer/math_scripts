@@ -1,0 +1,176 @@
+\setcounter{chapter}{6}
+\chapter{Charakteristische Funktionen von mehreren Variablen}
+\renewcommand{\thethm}{G.\arabic{thm}}
+
+\begin{defn}
+  Sei $X$ eine $d$-dimensionale Zufallsvariable und sie $\mu$ die Verteilung von
+  $X$ (ein $\pW$-Maß auf $\real^d$). Die \emph{charakteristische Funktion} $f =
+  f_X$ von $X$ ist definiert durch
+  \[ f(t) := \pE( e^{i(t,X)}) = \int_{\real^d} e^{i(t,x)} \diffop \mu(x),
+    \qquad t \in \real^d. \]
+\end{defn}
+
+\begin{thm}
+  Jede charakteristische Funktion $f$ auf $\real^d$ hat die folgenden
+  Eigenschaften:
+  \begin{enumerate}[(i)]
+  \item $f(0) = 1$,
+  \item $|f(t)| \le 1$ für alle $t \in \real^d$,
+  \item $f(-t) = \obar{f(t)}$ für alle $t \in \real^d$,
+  \item $f$ ist gleichmäßig stetig auf $\real^d$,
+  \item $\sum_{i,j=1}^n f(t_i - t_j) c_i \obar{c_j} \ge 0$ für alle $n$, $t_j
+    \in \real^d$, $c_j \in \complex$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+  Aufgabe.
+\end{proof}
+
+\begin{rmrk*}
+  Falls $X$ eine Dichte $p$ besitzt, dann gilt
+  \[ f(t) = \int_{\real^d} e^{i(t,x)} p(x) \diffop x. \]
+  Ist $X$ diskret mit $P(X = x_j) = p_j$, $\sum p_j = 1$, dann gilt
+  \[ f(t) = \sum_{j=1}^n e^{i(t,x_j)}. \]
+\end{rmrk*}
+
+\begin{exmp*}
+  \begin{itemize}
+  \item $t \to e^{i(t,x)}$ ist eine charakteristische Funktion für alle $x \in
+    \real^d$.
+  \item $t \to \cos((t,x)) = \rez{2} e^{i(t,x)} + \rez{2} e^{i(t,-x)}$,
+    das heißt $p_1 = p_2 = \rez{2}$, $x_1 = x$, $x_2 = -x$.
+  \end{itemize}
+\end{exmp*}
+
+Sei $X$ gleichmäßig verteilt auf
+\[ K = [a_1, b_1] \times \ldots \times [a_d, b_d] \]
+mit Dichte
+\[ p = \rez{\lambda(K)} \ind_K, \qquad \lambda(K) = \prod_{j=1}^d (b_j - a_j). \]
+dann gilt
+\begin{align*}
+  f(t)
+  &= \int_{\real^d} e^{i(t,x)} p(x) \diffop x \\
+  &= \int_K \rez{\lambda(K)} e^{i(t,x)} \diffop x \\
+  &= \rez{\lambda(K)} \int_K e^{i(t,x)} \diffop x \\
+  &= \rez{\lambda(K)} \int_K \prod_{j=1}^d e^{i t_j x_j} \diffop x \\
+  \intertext{mit dem Satz von Fubini:}
+  &= \rez{\lambda(K)} \int_{a_d}^{b_d} \cdots \int_{a_1}^{b_1}
+    \prod_{j=1}^d e^{i t_j x_j} \diffop x_1 \diffop x_2 \cdots \diffop x_d \\
+  &= \rez{\lambda(K)} \prod_{j=1}^d \int_{a_j}^{b_j} e^{i t_j x_j} \diffop x_j \\
+  &= \rez{\lambda(K)} \prod_{j=1}^d
+    \left. \frac{e^{i t_j x_j}}{i t_j} \right|_{x_j = a_j}^{b_j} \\
+  &= \prod_{j=1}^d \frac{e^{i t_j b_j} - e^{i t_j a_j}}{i t_j (b_j - a_j)}
+\end{align*}
+für $t_j \ne 0$. Für $t = 0$ vereinfacht sich die Berechnung und es gilt
+\[ f(0) = \rez{\lambda(K)} \int_K e^{i(0,x)} \diffop \lambda
+  = \rez{\lambda(K)} \int_K 1 \diffop \lambda = 1. \]
+
+Die Beweise der folgenden Sätze sind Hausaufgaben.
+
+\begin{thm}
+  Sind $X$ und $Y$ unabhängige, $d$-dimensionale Zufallsvariablen, so gilt
+  \[ f_{X+Y} = f_X \cdot f_Y. \]
+  Weiterhin gilt:
+  \[ f_{AX + b}(t) = e^{i(b,t)} \cdot f_X(A^\top t), \qquad t \in \real^n \]
+  für eine beliebige lineare Abbildung $A : \real^d \to \real^n$ und $b \in
+  \real^n$.
+\end{thm}
+
+\begin{folg}
+  Sind $X$ und $Y$ i.i.d. mit charakteristischer Funktion $f$, dann ist
+  $\obar{f}$ die charakteristische Funktion von $-X$ und $|f|^2$ ist die
+  charakteristische Funktion von $X - Y$.
+\end{folg}
+
+\begin{folg}
+  Das Produkt von zwei charakteristischen Funktionen von $d$-Variablen ist
+  wieder eine charakteristische Funktion.
+\end{folg}
+
+\begin{rmrk*}
+  $f(t) = \cos(t)$ ist eine charakteristische Funktion, $|f|$ aber nicht.
+\end{rmrk*}
+
+\begin{thm}
+  Seien $X_1$ und $X_2$ unabhängige, $d_1$- bzw. $d_2$-dimensionale
+  Zufallsvariablen und $d := d_1 + d_2$. Die charakteristische Funktion von $X
+  := (X_1, X_2)$ ist
+  \[ f_X(t) = f_{X-1}(t_1) \cdot f_{X_2}(t_2), \]
+  wobei $t_1 \in \real^{d_1}$, $t_2 \in \real^{d_2}$, $t := (t_1, t_2) \in
+  \real^d$.
+\end{thm}
+
+\begin{folg} %% G.7
+  Seien $f_1$ und $f_2$ charakteristische Funktionen von $d_1$- bzw.
+  $d_2$-Variablen. Dann ist
+  \[ f(t) = f_1 (t_1) \cdot f_2(t_2) \]
+  eine charakteristische Funktion einer $d_1 + d_2$-Variablen.
+\end{folg}
+
+\begin{thm}
+  Sei $\alpha \in \nat_0^d$ so, dass das Moment\footnotemark $M_\alpha$
+  existiert. Dann existiert die partielle Ableitung $D^\alpha f$ und
+  \begin{enumerate}[(i)]
+  \item $D^\alpha f(t) = i^{|\alpha|} {\displaystyle \int_{\real^d}} x^\alpha
+    e^{i(t,x)} \diffop \mu(x)$ für alle $t \in \real^d$,
+  \item $D^\alpha f(0) = i^{|\alpha|} \cdot M_\alpha$,
+  \item $D^\alpha f$ ist beschränkt und gleichmäßig stetig auf $\real^d$.
+  \end{enumerate}
+\end{thm}
+\footnotetext{Siehe Anhang A,
+  \[ M_\alpha(X) = \int_{\real^d} x^d \diffop \mu(x) \]
+  mit
+  \[ x^\alpha = x_1^{\alpha_1} \cdot x_2^{\alpha_2} \cdot \ldots \cdot
+    x_d^{\alpha_d}. \]
+}
+
+Hinweis: (I.1).
+
+\begin{folg}
+  Sei $X = (X_1, \ldots, X_d)$ ein $d$-dimensionaler Zufallsvektor mit
+  charakteristischer Funktion $f$. Ist $X_j$ quadratisch integrierbar für alle
+  $j$, so ist die Kovarianzmatrix $\cov(X) = (c_{jk})_{j,k=1}^d$ gegeben durch
+  \[ c_{jk} = - \pdiff{f}{t_j \partial t_k}(0) + \pdiff{}{t_j}f(0) +
+    \pdiff{}{t_k} f(0). \]
+\end{folg}
+
+\begin{exmp*}
+  \begin{enumerate}[a)]
+    \item Exponentialverteilung, Parameter $\alpha > 0$, Dichte:
+    \[ p(x) = \alpha e^{-\alpha x}, \qquad x \ge 0.\]
+    \begin{align*}
+      f(t)
+      &= \int_0^\infty e^{itx} \cdot \alpha \cdot e^{-\alpha x} \diffop x \\
+      &= \alpha \int_0^\infty e^{(it - \alpha) x}  \diffop x \\
+      &= \alpha
+        \left. \frac{e^{(it-\alpha)x}}{it - \alpha} \right|_{x=0}^\infty \\
+      &= \frac{\alpha}{\alpha - it},
+    \end{align*}
+    für alle $t \in \real$.
+  \item Laplace-Verteilung, Parameter $\beta > 0$, Dichte:
+    \[ p(x) = \rez{2\beta} e^{-|x|/\beta}, \qquad x \in \real. \]
+    Wie bei a) erhalten wir
+    \[ f(t) = \rez{2 \beta} \int_{-\infty}^\infty e^{(- \rez{\beta} + it)x}
+      \diffop x =
+      \rez{1 + \beta^2 t^2}\]
+    für alle $t \in \real$. $f$ ist reellwertig.
+  \item Binomialverteilung:
+    \[ \mu = \sum_{k=0}^n \binom{n}{k} p^k (1-p)^{n-k} \delta_k, \]
+    es gilt
+    \[ f(t) = \sum_{k=0}^n \binom{n}{k} p^k (1-p)^{n-k} e^{itk}. \]
+
+    Sei $X$ binomialverteilt mit Parametern $n$ und $p$. Dann existieren
+    unabhängige Zufallsgrößen $X_1, \ldots, X_n$ mit $\pP(X_j = 0) = 1-p$,
+    $\pP(X_j = 1) = p$ und
+    \[ X = X_1 + \ldots + X_n. \]
+    Wegen $f_X = f_{X_1} \cdot \ldots \cdot f_{X_n} = f_{X_1}^n$ gilt
+    \[ f_X(t) = ((1-p) + p \cdot e^{it})^n. \]
+  \item Poisson-Verteilung:
+    \[ e^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^k}{k!} \delta_k. \]
+    Es gilt
+    \[ f(t) = e^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^k}{k!} e^{itk}
+      = e^{-\lambda} \sum_{k=0}^\infty \frac{(\lambda e^{it})^k}{k!}
+      = e^{\lambda(e^{it} - 1)} \]
+  \end{enumerate}
+\end{exmp*}

@@ -1,0 +1,137 @@
+\setcounter{chapter}{1}
+\chapter{Semidefinite Matrizen}
+\renewcommand{\thethm}{B.\arabic{thm}}
+
+\begin{defn} %% B.1
+  $X \ne \emptyset$ sei eine beliebige Menge und $\Phi: X \times X \to \complex$
+  ein Kern. Wir definieren $\Phi^*$ durch
+  \[ \Phi(x,y) = \obar{\Phi(y,x)} \]
+  für alle $x, y \in X$.
+
+  $\Phi$ heißt \emph{hermitesch}, wenn $\Phi = \Phi^*$.
+
+  $\Phi$ heißt \emph{positiv definit}, wenn
+  \[ \sum_{j,k = 1}^n \Phi(x_j, x_k) c_j \obar{c_k} > 0 \]
+  für alle $n \in \nat$, $x_1, \ldots, x_n \in X$ mit $x_j \ne x_k$ und $c_1,
+  \ldots, c_n \in \complex$ nicht alle $=0$.
+
+  $\Phi$ heißt \emph{positiv semidefinit}, wenn
+  \[ \sum_{j,k = 1}^n \Phi(x_j, x_k) c_j \obar{c_k} \ge 0. \]
+  In diesem Fall gilt $ge$ auch ohne die Bedingungen $x_j \ne x_k$ und $c_j \ne
+  0$.
+
+  Eine \emph{quadratische Matrix} der Ordnung $n$ ist ein Kern auf $\{1, \ldots,
+  n\} \times \{1, \ldots, n\}$.
+
+  $\diag(\lambda_1, \ldots, \lambda_n)$ ist eine Diagonalmatrix $(d_{ij})$ mit
+  \[ d_{ii} = \lambda_i, \qquad d_{ij} = 0, \quad i \ne j. \]
+\end{defn}
+
+\begin{thm} %% B.2
+  Jeder positiv semidefinite Kern $\phi$ auf $X$ ist hermitesch und
+  \[ \phi(x, x) \ge 0, \qquad x \in X. \]
+\end{thm}
+
+\begin{exmp*}
+  $A = (a_{jk}) = \pmat{ 1 & 1 \\ -1 & 1}$ ist nicht hermitesch, aber
+  \[ \sum_{j,k=1}^2 a_{jk} r_j r_k = r_1^2 + r_2^2 > 0 \]
+  wenn nicht beide $= 0$ sind.
+\end{exmp*}
+
+\clearpage
+
+\begin{thm} %% B.3
+  Ein reeller Kern $\phi$ auf $X$ ist genau dann positiv semidefinit, wenn
+  $\phi$ symmterisch ist, das heißt $\phi(x,y) = \phi(y,x)$ und
+  \[ \sum_{j,k = 1}^n \phi(x_j, x_k) r_j r_k \ge 0 \]
+  für alle $n \in \nat$, $x_j \in X$, $r_j \in \real$.
+\end{thm}
+
+\begin{defn}
+  Sei $A = (a_{jk})$ eine hermitesche Matrix der Ordnung $n$. Die \emph{Anzahl
+    der negativen Quadrate} ist die Anzahl der negativen Eigenwerte, gezählt mit
+  Vielfachheit.
+
+  Sei $E \subseteq \complex^n$ ein linearer Raum mit
+  \[ \sum_{j,k=1}^n a_{jk} x_j \obar{x_k} = (Ax, x) < 0 \]
+  für alle $x \in E \setminus \{ 0 \}$. Dann heißt $E$ \emph{negativer
+    Unterraum}.
+
+  Analog für $\le 0$, $\ge 0$, $> 0$.
+\end{defn}
+
+\begin{rmrk}
+  Bekannt ist bereits, dass eine hermitesche $n \times n$-Matrix $A$ $n$ reelle
+  Eigenwerte $r_1, \ldots, r_n$ besitzt. Weiterhin existiert eine orthonormale
+  Basis von $complex$, die aus Eigenvektoren von $A$ besteht. Eigenvektoren mit
+  negativem Eigenwert erzeugen negative Unterräume.
+\end{rmrk}
+
+\begin{rmrk*}
+  $\det(A) = r_1 \cdot \ldots \cdot r_n$.
+\end{rmrk*}
+
+\begin{thm}
+  Ist $A$ eine hermitesche Matrix, so ist die Anzahl der negativen Quadrate
+  gleich der maximalen Dimension von negativen Unterräumen von $A$.
+\end{thm}
+
+\begin{thm}
+  Ist $A$ eine nicht singuläre $n \times n$ hermitesche Matrix, so ist die
+  Anzahl der negativen Quadrate gleich der Anzahl der Vorzeichenwechsel der
+  Folge
+  \[ 1, \det A_1, \ldots, \det A_n, \]
+  wobei $A_k = (a_{ij})_{i,j = 1}^k$.
+\end{thm}
+
+\begin{folg}
+  Eine hermitesche Matrix $A$ der Ordnung $n$ ist genau dann positiv definit,
+  wenn $\det(A_k) = 0$ für $k = 1, \ldots, n$.
+\end{folg}
+
+\begin{exmp*}
+  $A = \pmat{0 & 0 \\ 0 & -1}$ ist hermitesch, $\det( A_k ) \equiv 0$, aber nicht
+  positiv semidefinit.
+\end{exmp*}
+
+\begin{thm} %% B.9
+  Ein hermitescher Kern $\Phi : X \times X \to \complex$ ist genau dann positiv
+  semidefinit, wenn
+  \[ \det (( \Phi(x_j, x_k))_{j,k \le n}) \ge 0 \]
+  für alle $n$ und für alle $x_1, \ldots, x$
+\end{thm}
+
+\begin{thm} %% B.10
+  Eine $n \times n$-Matrix $A$ ist genau dann positiv semidefinit, wenn eine $n
+  \times n$ hermitesche Matrix $B$ existiert, so dass $A = B^2$. Ist $A$ reell,
+  so kann $B$ auch reell gewählt werden.
+\end{thm}
+
+\begin{proof}
+  Wenn $A = B^2$, dann ist
+  \[ (Ax,x) = (BBx,x) = (Bx,B^* x) = (Bx, Bx) \ge 0. \]
+
+  Sei $A$ positiv semidefinit und sei $\{e_1, \ldots, e_n\}$ eine orthonormale
+  Basis von $\complex^n$ (bzw. $\real^n$), wobei $e_j$ ein Eigenvektor von $A$
+  zum Eigenwert $r_j \ge 0$\footnote{%
+    Wegen $(A e_j, e_j) = (r_j e_j, e_j) = r_j$ muss $r_j \ge 0$ gelten, wenn
+    $A$ positiv semidefinit ist.
+  } ist. Definiere
+  \[ Q := [ e_1, \ldots, e_n] \]
+  mit den $e_j$ als Spaltenvektoren. Das ist eine $n \times n$-Matrix und es
+  gilt
+  \[ Q^* Q = I_n, \]
+  wobei $I_n$ die $n \times n$-Einheitsmatrix ist. Es folgt
+  \[ Q \diag (r_1, \ldots, r_n) Q^* e_j = r_j e_j = A e_j \]
+  für alle $j$. Also ist
+  \[ A = Q \diag( r_1, \ldots, r_n) Q^*, \]
+  damit ist
+  \[ B := Q \diag(\sqrt{r_1}, \ldots, \sqrt{r_n}) Q^* \]
+  hermitesch und es gilt $BB = A$.
+\end{proof}
+
+\begin{thm} %% B.11
+  Sind $A = (a_{ij})$ und $B = (b_{ij})$ positiv semidefinite $n \times
+  n$-Matrizen, so ist es auch das \emph{Hadamard-Produkt}
+  \[ C = (a_{ij} \cdot b_{ij})_{i,j = 1}^n. \]
+\end{thm}

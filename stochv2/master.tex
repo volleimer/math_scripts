@@ -385,231 +385,111 @@ ist $X = 0$ fast sicher.
   Verteilungen der $Z_j$.
 \end{defn}
 
-\section*{Wiederholung/Ergänzung: Orthogonalität}
-\addcontentsline{toc}{section}{Wiederholung/Ergänzung: Orthogonalität}
-Sei $X$ ein linearer Raum, $(\cdot, \cdot)$ das Skalarprodukt. $x,y \in X$
-heißen \emph{orthogonal}, wenn
-\[ (x,y) = 0. \]
-Schreibweise $x \perp y$.
+\section{Die Korrelationsfunktion}
+\begin{defn}
+  Sei $Z$ ein Feld zweiter Ordnung auf $V$. Die Funktion $C: V \times V \to
+  \complex$, die durch
+  \[ C(X,Y) = \pE[ Z(X) \cdot \obar{Z(Y)} ) = ( Z(X), Z(Y) ] \]
+  definiert ist, heißt \emph{Korrelationsfunktion} von $Z$.
 
-Satz von Pythagoras: Für $x \perp y$ gilt
-\[ \| x + y \|^2 = \| x \|^2 + \| y \|^2. \]
+  Die \emph{Kovarianzfunktion} ist durch
+  \[ \sigma(X,Y) = \pE [ (Z(X) - M(X)) \cdot \obar{(Z(Y) - M(Y))}] \]
+  definiert, wobei $M(X) := \pE(Z(X))$ der Mittelwert bzw. Erwartungswert des
+  Feldes ist.
+\end{defn}
 
-\begin{proof}
-  \[ \|x+y\|^2 = (x+y,x+y) = \ldots \qedhere \]
-\end{proof}
-
-Parallelogrammidentität:
-\[ \|x+y\|^2 + \|x-y\|^2 = 2(\|x\|^2 + \|y\|^2). \]
-
-Sei $x \in X$, $A,B \subset X$. $x$ ist \emph{orthogonal} zu $A$, $x \perp A$,
-wenn $x \perp a$ für alle $a \in A$. $A$ ist \emph{orthogonal} zu $B$, $A \perp
-B$, wenn $a \perp b$ für alle $a \in A$, $b \in B$.
-
-Das \emph{orthogonale Komplement} von $A$ ist
-\[ A^\perp := \{ x \in X : x \perp A \}. \]
-
-\renewcommand{\thethm}{O.\arabic{thm}}
-\setcounter{thm}{0}
-\begin{aufg} %% O.1
-  \begin{enumerate}
-  \item $A^\perp$ ist ein abgeschlossener Teilraum von $X$.
-  \item $\{ 0 \}^\perp = X$ und $X^\perp = \{ 0 \}$.
-  \item Aus $A \subset B$ folgt $B^\perp \subset A^\perp$.
-  \item $A^\perp = (\obar{A})^\perp$ (Abschluss) und $A^\perp = L(A)^\perp =
-    (\obar{L(A)})^\perp$ (lineare Hülle).
-  \end{enumerate}
-\end{aufg}
-
-$M \subset X$ heißt \emph{total}, wenn die lineare Hülle $L(M)$ dicht in $X$
-ist:
-\[ \obar{L(M)} = X. \]
-
-Beispiel: $X = \real^n$, $M := \{e_1, \ldots, e_n\}$ eine Basis, dann ist
-$L(M) = \real^n$.
-
-\begin{thm}[Approximationssatz] %% O.2
-  Sei $X$ ein Hilbertraum, $A$ eine abgeschlossene konvexe Teilmenge von $X$.
-  Dann gibt es zu jedem $x \in X$ genau eine beste Approximation in $A$, das
-  heißt es gibt genau ein $y \in A$ mit
-  \[ \| x - y \| = d(x,A) := \inf \{ \| x - z \| : z \in A \}. \]
-\end{thm}
-
-\begin{proof}
-  Nach der Definition von $d(A,x)$ gibt es eine Folge $\{y_n\}$ aus $A$ mit
-  \[ \| x - y_n \| \xrightarrow{n \to \infty} d(x,A). \]
-  Wir zeigen: $\{y_n\}$ ist eine Cauchy-Folge.
-
-  Parallelogrammidentität $x \to x - y_n$ und $y \to x - y_n$.
-  \begin{align*}
-    \| y_n - y_m \|^2
-    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big) - \| 2x - (y_n + y_m) \|^2 \\
-    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big)
-      - 4 \left\| x - \frac{y_n+y_m}{2} \right\|^2 \\
-    &= 2 \big( \|x-y_n\|^2 + \|x-y_m\|^2 \big)
-      - 4 d(x,A)^2 \xrightarrow{n,m \to \infty} 0. \\
-  \end{align*}
-  Es gilt $\frac{y_n+y_m}{2} \in A$ wegen der Konvexität von $A$.
-
-  Also ist $\{y_n\}$ eine Cauchy-Folge und damit existiert ein $y \in A$ mit
-  $y_n \to y$ und
-  \[ \| x - y \| = \lim_{n \to \infty} \| x - y_n \| = d(x,A). \]
-  Damit ist die Existenz bewiesen.
-
-  Es fehlt noch die Eindeutigkeit: Angenommen, für $y_1$ und $y_2$ gilt
-  \[ \| x - y_1 \| = \| x - y_2 \| = d(x,A), \qquad y_1 \ne y_2. \]
-
-  Oder: Der erste Teil des Beweises zeigt: $y_1, y_2, y_1, y_2, \ldots$ ist eine
-  Cauchy-Folge $\Rightarrow$ $y_1 = y_2$.
-\end{proof}
-
-\begin{thm}[Projektionssatz] % O.3
-  Sei $X$ ein Hilbertraum, $M$ ein abgeschlossener Teilraum. Dann gilt:
-  \begin{enumerate}[a)]
-  \item Jedes $x \in X$ lässt sich eindeutig in der Form $x = y + z$ schreiben
-    mit $y \in M$ und $z \in M^\perp$. $y$ heißt die \emph{orthogonale
-      Projektion} von $x$ auf $M$.
-  \item $(M^\perp)^\perp = M$.
-  \end{enumerate}
-\end{thm}
-
-\begin{aufg} % O.4
-  Sei $X$ ein Hilbertraum und $A \subset X$.
-  \begin{enumerate}[a)]
-  \item $(A^\perp)^\perp = \obar{L(A)}$.
-  \item $A^\perp = \{0\}$ $\Leftrightarrow$ $\obar{L(A)} = X$.
-  \end{enumerate}
-\end{aufg}
-
-\begin{proof}[Beweis zu Satz O.3]
-  Existenz: Wir wählen für $y$ die beste Approximation von $x$ in $M$. Definiere
-  $z := x - y$.
-
-  Noch zu zeigen: $z \in M^\perp$, das heißt $(z,w) = 0$ für alle $w \in M$.
-  O.B.d.A. $w \ne 0$. Es gilt $y + aw \in M$ für alle $a \in K$ ($=\complex$
-  oder $\real$).
-  \begin{align*}
-    d(x,M)^2
-    &\le \| x - (y+aw) \|^2 = \| z - aw \|^2 \\
-    &= \underbrace{\| z \|^2}_{=d(x,M)^2} - 2 \Re( a(z,w) + |a|^2 \|w\|^2 )
-  \end{align*}
-  für alle $a \in K$. Mit $a = \| w \|^{-2} (w,z)$ folgt
-  \[ 0 \le -2 \frac{|(z,w)|^2}{\|w\|^2} + \frac{|(z,w)|^2}{\|w\|^2}
-    = - \frac{|(z,w)|^2}{\|w\|^2}. \]
-  Also muss $(z,w) = 0$ sein.
-
-  Eindeutigkeit: Gilt auch $x = y' + z'$ mit $y' \in M$, $z' \in M^\perp$, so
-  gilt $y - y' \in M$ und $z - z' \in M^\perp$. Wegen
-  \[ y + z = y' + z' \]
-  gilt
-  \[ y - y' = z' - z \in M \cap M^\perp = \{ 0 \}. \]
-  Also gilt $y = y'$ und $z = z'$.
-\end{proof}
-
-\begin{denos*}
-  Seien $M_1$, $M_2$ Teilräume von $X$ mit $M_1 \cap M_2 = \{ 0 \}$.
-  \[ M_1 + M_2 = \{ y_1 + y_2 : y_1 \in M_1, y_2 \in M_2 \} \]
-  ist die sogenannte \emph{direkte Summe} $M_1 + M_2$ (das heißt, jedes Element
-  aus $M_1 + M_2$ hat \emph{genau eine} Darstellung der Form $y_1 + y_2$, $y_j
-  \in M_j$).
-  Sind $M_1$ und $M_2$ orthogonal, so gilt $M_1 \cap M_2 = \{0\}$. In diesem
-  Fall schreibt man $M_1 \oplus M_2$, die \emph{orthogonale Summe}.
-
-  Man schreibt auch $M_1 = M \ominus M_2$, das heißt $M_1$ ist das
-  \emph{orthogonale Komplement} von $M_2$ bezüglich $M$.
-
-  Spezialfall: $Y^\perp = X \ominus Y$.
-\end{denos*}
-
-\clearpage
+Es ist leicht zu sehen:
+\[ \sigma( X, Y ) = C(X,Y) - M(X) \cdot \obar{M(Y)}. \]
+Wenn $M \equiv 0$, dann ist $\sigma = C$.
 
 \begin{thm}
-  Sei $X$ ein Hilbertraum.
-  \begin{enumerate}[a)]
-  \item Sind $M_1$ und $M_2$ orthogonale Teilräume, so ist $M_1 \oplus M_2$
-    genau dann abgeschlossen, wenn $M_1$ und $M_2$ abgeschlossen sind.
-  \item Sind $M_1$ und $M$ abgeschlossene Teilräume mit $M_1 \subset M$, so
-    existiert ein abgeschlossener Teilraum $M_2 \subset M$ mit $M = M_1 \oplus
-    M_2$. 
-  \end{enumerate}
+  Eine komplexwertige (reellwertige) Funktion $K$ auf $V \times V$ ist genau
+  dann die Kovarianz- oder Korrelationsfunktion eines komplexen (reellen) Felder
+  zweiter Ordnung, wenn für beliebige $X_1, \ldots, X_n \in V$, $n \in \nat$,
+  die Matrix
+  \[ (K(X_i,X_j))_{i,j=1}^n \]
+  positiv semidefinit (positiv semidefinit und symmetrisch) ist.
 \end{thm}
 
 \begin{proof}
-  a) folgt aus der Tatsache, dass $\{ y_{1,n} + y_{2,n} \}_{n=1}^\infty$ mit
-  $y_{j,n} \in M_J$ genau dann eine Cauchy-Folge ist, wenn
-  $\{y_{j,n}\}_{n=1}^\infty$ Cauchy-Folgen sind.
-
-  b) O.B.d.A. $M = X$. $M_2 = M_1^\perp$ hat die gewünschte Eigenschaft.
-\end{proof}
-
-\begin{exmp}
-  Ist $X = L^2(a,b)$, $a < c < b$, so gilt
-  \[ L^2(a,b) = L^2(a,c) \oplus L^2(c,b), \]
-  da
-  \[ f = f \cdot \ind_{[a,c]} + f \cdot \ind_{[c,b]} \]
-  und
-  \[ \int_a^b f \cdot \ind_{[a,c]} \cdot f \cdot \ind_{[c,b]} \diffop \lambda =
-    0. \]
-\end{exmp}
-
-\begin{exmp}
-  In $X = L^2(-a,a)$ seien
-  \[ L_g^2(-a,a) := \{ f \in L^2(-a,a) :
-    f(x) = f(-x) \text{ fast überall} \} \]
-  und
-  \[ L_g^2(-a,a) = \{ f \in L^2(-a,a) :
-    f(x) = -f(-x) \text{ fast überall} \}. \]
-  Dann gilt
-  \[ L^2(-a,a) = L^2_g(-a,a) \oplus L^2_u(-a,a), \]
+  Nehmen wir an, dass $K$ die Kovarianzfunktion des Feldes $Z$ ist. Dann gilt
+  \[ \sum_{i,j=1}^n K(X_i, X_j) a_i \obar{a_j}
+    = \sum_{i,j=1}^n \pE[ (Z(X_i) - M(X_i)) \cdot \obar{(Z(X_j) - M(X_j))}] a_i
+    \obar{a_j}. \]
+  Es gilt
+  \[ \pE \left| \sum_{j=1}^n (Z(X_j) - M(X_j)) a_j \right|^2 \ge 0, \]
   denn
-  \[ f(x) = f_g + f_u = \frac{f(x) + f(-x)}{2} + \frac{f(x) - f(-x)}{2} \]
-  und
-  \[ \int_{-a}^a f_g \cdot \obar{f_u} \diffop \lambda = 0, \]
-  weil $f_g \cdot \obar{f_u}$ ungerade ist.
-\end{exmp}
+  \[ |w|^2 = w \cdot \obar{w} \]
+  für alle $w \in \complex$, also auch für
+  \[ w := \sum_{j=1}^n (Z(X_j) - M(X_j)) a_j. \]
 
-Eine Familie $M = \{ e_\alpha : \alpha \in A \}$ in einem Hilbertraum heißt ein
-\emph{Orthonormalsystem}, wenn $e_\alpha \perp e_\beta$ für $\alpha \ne \beta$
-und $\| e_\alpha \| = 1$. Ein totales Orthonormalsystem heißt
-\emph{Orthonormalbasis}.
+  Die Fälle $Z$ reell und $K$ Korrelationsfunktion folgen analog. Der zweite
+  Teil des Beweises folgt aus Satz 2.2.4.
+\end{proof}
+
+\begin{lem} %% 2.2.3
+  Sei $C = (c_{jk})_{j,k=1}^n$ eine positiv semidefinite Matrix und
+  \[ A = (a_{jk}) = \Re C, \qquad B = (B_{jk}) = \Im C. \]
+  Dann ist die $(2n) \times (2n)$-Matrix
+  \[ D = (d_{jk}) = \begin{bmatrix}
+      A & -B \\ B & A
+    \end{bmatrix}
+  \]
+  ebenfalls positiv semidefinit.
+\end{lem}
+
+\begin{proof}
+  Aus $c_{jk} = \obar{c_{kj}}$ folgt, dass $A^\top = A$ ud $B^\top = -B$, damit
+  muss $D$ symmetrisch sein.
+
+  Für beliebige $r_1, \ldots, r_{2n} \in \real$ gilt
+  \[ 0 \le \sum_{j,k = 1}^n c_{jk}( r_j - i r_{n+j}) \cdot (r_k + r_{n+k}), \]
+  da $C$ positiv semidefinit ist.
+
+  Es gilt
+  \begin{align*}
+    &\sum_{j,k=1}^n c_{jk} (r_j r_k + r_{n+j} r_{n+k}) - i \sum_{j,k=1}^n c_{jk}
+    (r_{n+j} r_k + r_j r_{n+k}) \\
+    = &\sum_{j,k=1}^n a_{jk} (r_j r_k + r_{n+j} r_{n+k}) + \sum_{j,k=1}^n b_{jk}
+        (r_{n+j} r_k + r_j r_{n+k}) \\
+    = &\sum_{j,k = 1}^n d_{jk} r_j r_k.
+  \end{align*}
+  Die erste Summe ist reell, die zweite rein imaginär, da
+  $c_{jk} = \obar{c_{kj}}$. Die zweite Identität folgt aus der Definition von
+  $D$.
+\end{proof}
 
 \clearpage
 
 \begin{thm}
-  \begin{enumerate}[a)]
-  \item Jedes Orthonormalsystem ist linear unabhängig.
-  \item Jede Orthonormalbasis ist ein maximales Orthonormalsystem.
-  \item Im Hilbertraum ist jedes maximale Orthonormalsystem eine
-    Orthonormalbasis.
-  \end{enumerate}
+  Sei $M : V \to \complex$ beliebig und $K : V \times V \to \complex$ so, dass
+  für beliebige $x_1, \ldots, x_n \in V$ die Matrix
+  \[ (K(x_i, x_j) )_{i,j=1}^n \tag{1} \]
+  positiv semidefinit ist. Dann existiert ein Gauß-Feld $Z$ auf $V$ mit
+  \begin{align*}
+    \pE(Z(x))
+    &= M(x), \tag{2} \\
+    \pE(Z(x) \cdot \obar{Z(y)}) - M(x) \obar(M(y))
+    &= K(x,y), \tag{3} \\
+    \pE(Z(x) \cdot Z(y))
+    &= M(x) \cdot M(y). \tag{4}
+  \end{align*}
+  Sind $M$ und $K$ reellwertig, so existiert ein reelles Gauss-Feld $Z$ so, dass
+  (2) und (3) gelten.
 \end{thm}
 
-\begin{proof}
-  Aufgabe.
-\end{proof}
+\begin{rmrk*}
+  Wenn ein Feld $Z$ (2) und (3) erfüllt, dann ist
+  \[ \pE[ (Z(x) - M(x))^2 ] = 0. \]
+  Wenn also $Z$ reell ist, folgt $Z(x) = M(x)$.
+\end{rmrk*}
 
-\begin{exmp}
-  In $\ell^2(\nat)$, $\ell^2(\integer)$. Orthonormalbasis:
-  \[ \{ e_n \}_{n=1}^\infty; \qquad e_n(n) = 1; \quad e_n(m) = 0, \quad n \ne
-    m. \]
-  Zu zeigen: $(x,e_n) = 0$ für alle $n$ $\Rightarrow$ $x = 0$.
-\end{exmp}
+\appendix
 
-\begin{aufg}
-  Sei $X = L^2(0,1)$.
-  \begin{enumerate}[a)]
-  \item $M = \{e_n : n \in \integer \}$, wobei $e_n(x) = e^{2 \pi i n x}$, $x
-    \in [0,1]$.
+\input{oo_ortho}
 
-    Zu zeigen: $M$ ist Orthonormalbasis.
-  \item $c_n(x) = \sqrt{2} \cos (2 \pi n x)$, $s_n(x) = \sqrt{2} \cos (2 \pi n
-    x)$.
+\input{bb_semidef}
 
-    Zu zeigen: $\{ c_n : n \in \nat_0 \} \cup \{ s_n : n \in \nat \}$ ist
-    Orthonormalbasis.
-  \end{enumerate}
-\end{aufg}
-
-Hinweis: Satz von Weierstraß für trig. Polynomräume.
+\input{gg_char}
 
 \end{document}
